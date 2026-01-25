@@ -176,6 +176,7 @@
                                     data-id="{{ $project->id }}"
                                     data-name="{{ $project->name }}"
                                     data-type="{{ $project->type }}"
+                                    data-video="{{ $project->video_url }}"
                                     data-description="{{ $project->description }}"
                                     data-active="{{ $project->active ? '1' : '0' }}"
                                     onclick="event.stopPropagation(); window.setupEditModal(this)">
@@ -250,6 +251,12 @@
                         </div>
                     </div>
                     
+                    <div>
+                        <label class="block text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-3">Enlace de Proyecto / Video (Opcional)</label>
+                        <input type="url" name="video_url" id="form_video" placeholder="https://www.youtube.com/watch?v=..." 
+                               class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-6 py-5 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 text-sm font-bold text-white placeholder:text-slate-700">
+                    </div>
+
                     <div>
                         <label class="block text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-3">Project Narrative</label>
                         <textarea name="description" id="form_description" rows="3" placeholder="Brief technical summary..." 
@@ -331,6 +338,7 @@
             // Clear fields
             document.getElementById('form_name').value = '';
             document.getElementById('form_type').value = 'Mobile App';
+            document.getElementById('form_video').value = '';
             document.getElementById('form_description').value = '';
             document.getElementById('form_active').checked = true;
             document.getElementById('fileLabel').innerText = 'Select Visual Assets';
@@ -342,6 +350,7 @@
             const id = btn.getAttribute('data-id');
             const name = btn.getAttribute('data-name');
             const type = btn.getAttribute('data-type');
+            const video = btn.getAttribute('data-video') || '';
             const description = btn.getAttribute('data-description');
             const active = btn.getAttribute('data-active') === '1';
 
@@ -356,6 +365,7 @@
             // Populate fields
             document.getElementById('form_name').value = name;
             document.getElementById('form_type').value = type;
+            document.getElementById('form_video').value = video;
             document.getElementById('form_description').value = description || '';
             document.getElementById('form_active').checked = active;
             document.getElementById('fileLabel').innerText = 'Visual Assets Attached';

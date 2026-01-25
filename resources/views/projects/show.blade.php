@@ -145,6 +145,30 @@
                         <p class="text-xl text-slate-400 leading-relaxed font-light mb-10 whitespace-pre-wrap">
                             {{ $project->description ?: 'Este despliegue representa un hito técnico en nuestra infraestructura actual. Aunque la narrativa técnica detallada está pendiente de registro, este activo digital ya está plenamente operativo y cumpliendo con los estándares de calidad del sistema Control.' }}
                         </p>
+
+                        @if($project->video_url)
+                            @php
+                                $videoId = '';
+                                if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $project->video_url, $match)) {
+                                    $videoId = $match[1];
+                                }
+                            @endphp
+
+                            @if($videoId)
+                            <div class="mt-16 pt-16 border-t border-white/10">
+                                <h3 class="text-[10px] font-black text-indigo-500 uppercase tracking-[0.5em] mb-8 text-center">Video Demonstration</h3>
+                                <div class="relative w-full aspect-video rounded-[2.5rem] overflow-hidden gradient-border shadow-2xl">
+                                    <iframe 
+                                        src="https://www.youtube.com/embed/{{ $videoId }}" 
+                                        class="absolute inset-0 w-full h-full"
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen>
+                                    </iframe>
+                                </div>
+                            </div>
+                            @endif
+                        @endif
                         
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16 pt-16 border-t border-white/10">
                             <div class="group p-8 rounded-3xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] transition-all">

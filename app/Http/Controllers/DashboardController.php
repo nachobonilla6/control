@@ -70,6 +70,7 @@ class DashboardController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'type' => 'required|string|max:100',
+            'video_url' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
             'images' => 'nullable|array|max:7',
@@ -78,7 +79,7 @@ class DashboardController extends Controller
         try {
             $imagePaths = [];
             if ($request->hasFile('images')) {
-                // Detect web root (Hostinger often uses public_html)
+                // ... (detect root logic)
                 $webRoot = is_dir(base_path('public_html')) ? base_path('public_html') : public_path();
                 $uploadPath = $webRoot . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'projects';
                 
@@ -96,6 +97,7 @@ class DashboardController extends Controller
             Project::create([
                 'name' => $request->name,
                 'type' => $request->type,
+                'video_url' => $request->video_url,
                 'description' => $request->description,
                 'active' => $request->has('active'),
                 'images' => $imagePaths
@@ -140,6 +142,7 @@ class DashboardController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'type' => 'required|string|max:100',
+            'video_url' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
             'images' => 'nullable|array|max:7',
@@ -151,6 +154,7 @@ class DashboardController extends Controller
             $data = [
                 'name' => $request->name,
                 'type' => $request->type,
+                'video_url' => $request->video_url,
                 'description' => $request->description,
                 'active' => $request->has('active'),
             ];
