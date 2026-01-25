@@ -34,34 +34,53 @@
             <span class="text-slate-700 font-light text-xl">/</span>
             <span class="text-sm font-medium text-slate-400 tracking-wide uppercase">Control Panel</span>
         </div>
-        <div class="flex items-center space-x-6">
+        <div class="flex items-center space-x-5">
             <!-- Notifications -->
-            <button id="notifBtn" class="relative p-2 text-slate-400 hover:text-indigo-400 transition-colors focus:outline-none">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <span id="notifBadge" class="absolute top-1 right-1 bg-indigo-600 text-[10px] font-bold text-white rounded-full w-4 h-4 flex items-center justify-center border-2 border-slate-950 hidden">0</span>
+            <button id="notifBtn" class="relative p-2.5 text-slate-400 hover:text-indigo-400 transition-colors focus:outline-none bg-slate-800/50 rounded-xl border border-slate-800">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span id="notifBadge" class="absolute -top-1 -right-1 bg-indigo-600 text-[10px] font-bold text-white rounded-full w-4 h-4 flex items-center justify-center border-2 border-slate-950 hidden">0</span>
             </button>
 
-            <!-- User Profile -->
-            <div class="flex items-center space-x-3 cursor-pointer group" onclick="document.getElementById('profileModal').classList.remove('hidden')">
-                <div class="text-right hidden md:block">
-                    <p class="text-xs font-bold text-white leading-none">{{ Auth::user()->name }}</p>
-                    <p class="text-[10px] text-slate-500 uppercase tracking-tighter">Admin</p>
-                </div>
-                @if(Auth::user()->profile_photo_url)
-                    <img src="{{ Auth::user()->profile_photo_url }}" class="w-10 h-10 rounded-xl object-cover border border-slate-800 group-hover:border-indigo-500 transition-colors">
-                @else
-                    <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-black group-hover:bg-indigo-500 transition-colors shadow-lg shadow-indigo-600/20">
-                        {{ substr(Auth::user()->name, 0, 1) }}
+            <!-- Account Dropdown -->
+            <div class="relative group">
+                <button class="flex items-center space-x-3 p-1.5 pr-4 bg-slate-800/50 border border-slate-800 rounded-2xl hover:border-indigo-500/30 transition-all">
+                    @if(Auth::user()->profile_photo_url)
+                        <img src="{{ Auth::user()->profile_photo_url }}" class="w-8 h-8 rounded-xl object-cover">
+                    @else
+                        <div class="w-8 h-8 rounded-xl bg-indigo-600 flex items-center justify-center text-white text-xs font-black shadow-lg shadow-indigo-600/20">
+                            {{ substr(Auth::user()->name, 0, 1) }}
+                        </div>
+                    @endif
+                    <div class="text-left hidden md:block">
+                        <p class="text-[11px] font-black text-white uppercase tracking-tighter leading-none">{{ Auth::user()->name }}</p>
+                        <p class="text-[9px] text-slate-500 uppercase tracking-widest font-bold">Account</p>
                     </div>
-                @endif
-            </div>
-
-            <form action="{{ route('logout') }}" method="POST" class="inline">
-                @csrf
-                <button type="submit" class="p-2 text-slate-500 hover:text-red-400 transition-colors">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <svg class="w-4 h-4 text-slate-500 group-hover:text-indigo-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </button>
-            </form>
+
+                <!-- Dropdown Menu -->
+                <div class="absolute right-0 mt-3 w-56 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 p-2">
+                    <div class="px-4 py-3 border-b border-slate-800 mb-2">
+                        <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest leading-none mb-1">Signed in as</p>
+                        <p class="text-xs font-bold text-white truncate">{{ Auth::user()->email }}</p>
+                    </div>
+                    
+                    <button onclick="document.getElementById('profileModal').classList.remove('hidden')" class="w-full flex items-center space-x-3 px-4 py-3 text-sm text-slate-300 hover:bg-slate-800 rounded-xl transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <span>Profile Settings</span>
+                    </button>
+
+                    <div class="my-2 border-t border-slate-800"></div>
+
+                    <form action="{{ route('logout') }}" method="POST" class="w-full">
+                        @csrf
+                        <button type="submit" class="w-full flex items-center space-x-3 px-4 py-3 text-sm text-red-500 hover:bg-red-500/10 rounded-xl transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            <span class="font-bold">Logout System</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
     </nav>
 
