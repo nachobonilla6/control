@@ -170,21 +170,19 @@ class DashboardController extends Controller
                     }
                 }
 
-            if ($request->hasFile('images')) {
-                // Detect web root (Hostinger often uses public_html)
-                $webRoot = is_dir(base_path('public_html')) ? base_path('public_html') : public_path();
-                $uploadPath = $webRoot . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'projects';
+                $imagePaths = [];
+                $uploadPath = is_dir(base_path('public_html')) ? base_path('public_html') : public_path();
+                $uploadPath .= DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'projects';
                 
                 if (!is_dir($uploadPath)) {
                     mkdir($uploadPath, 0755, true);
                 }
-                
+
                 foreach ($request->file('images') as $image) {
                     $filename = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
                     $image->move($uploadPath, $filename);
                     $imagePaths[] = 'uploads/projects/' . $filename;
                 }
-            }
                 $data['images'] = $imagePaths;
             }
 
@@ -194,6 +192,18 @@ class DashboardController extends Controller
         } catch (\Exception $e) {
             return back()->withInput()->withErrors(['error' => 'Update error: ' . $e->getMessage()]);
         }
+    }
+
+    /**
+     * Show single project - Blog Style
+     */
+    public function projectsShow($id)
+    {
+        $project = Project::findOrFail($id);
+        $project->imgs = is_array($project->images) ? $project->images : json_decode($project->images, true);
+        if (!is_array($project->imgs)) $project->imgs = [];
+        
+        return view('projects.show', compact('project'));
     }
 
     /**

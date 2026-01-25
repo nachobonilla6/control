@@ -130,13 +130,16 @@
                 @endphp
                 <div class="bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden group hover:border-indigo-500/30 transition-all flex flex-col shadow-2xl relative">
                     @if(count($imgs) > 0)
-                    <div class="h-56 relative overflow-hidden bg-slate-950">
-                        <img src="{{ asset($imgs[0]) }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <a href="{{ route('projects.show', $project->id) }}" class="block h-56 relative overflow-hidden bg-slate-950 group/img">
+                        <img src="{{ asset($imgs[0]) }}" class="w-full h-full object-cover group-hover/img:scale-110 transition-transform duration-700 opacity-80 group-hover/img:opacity-100">
+                        <div class="absolute inset-0 bg-indigo-900/40 opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
+                            <span class="text-[10px] font-black text-white uppercase tracking-[0.4em] border border-white/20 px-4 py-2 rounded-lg">Ver Detalles</span>
+                        </div>
                         <div class="absolute top-4 right-4 bg-slate-950/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 text-[9px] font-black text-white uppercase tracking-widest flex items-center shadow-2xl">
                             <svg class="w-3 h-3 mr-1.5 text-indigo-400" fill="currentColor" viewBox="0 0 20 20"><path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"/></svg>
                             {{ count($imgs) }} Visuals
                         </div>
-                    </div>
+                    </a>
                     @else
                     <div class="h-56 bg-slate-950 flex flex-col items-center justify-center text-slate-800 space-y-2 border-b border-slate-800">
                         <svg class="w-8 h-8 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -155,7 +158,9 @@
                             </div>
                         </div>
                         
-                        <h3 class="text-xl font-bold text-white mb-3 group-hover:text-indigo-400 transition-colors">{{ $project->name }}</h3>
+                        <a href="{{ route('projects.show', $project->id) }}" class="block group/title">
+                            <h3 class="text-xl font-bold text-white mb-3 group-hover/title:text-indigo-400 transition-colors">{{ $project->name }}</h3>
+                        </a>
                         <p class="text-xs text-slate-500 leading-relaxed line-clamp-3 mb-8 font-medium italic opacity-80">"{{ $project->description ?: 'No narrative provided for this infrastructure.' }}"</p>
                         
                         <div class="mt-auto flex items-center justify-between pt-6 border-t border-white/5">
