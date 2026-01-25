@@ -70,6 +70,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard/facebook', [\App\Http\Controllers\DashboardController::class, 'facebookIndex'])->name('dashboard.facebook');
     Route::post('/dashboard/facebook', [\App\Http\Controllers\DashboardController::class, 'facebookStore'])->name('dashboard.facebook.store');
     Route::post('/dashboard/facebook/settings', [\App\Http\Controllers\DashboardController::class, 'facebookSettingsUpdate'])->name('dashboard.facebook.settings.update');
+    Route::patch('/dashboard/facebook/{id}', [\App\Http\Controllers\DashboardController::class, 'facebookUpdate'])->name('dashboard.facebook.update');
     Route::delete('/dashboard/facebook/{id}', [\App\Http\Controllers\DashboardController::class, 'facebookDestroy'])->name('dashboard.facebook.destroy');
 
     // API & Actions

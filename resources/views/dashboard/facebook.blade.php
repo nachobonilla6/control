@@ -178,6 +178,12 @@
                                     <div class="text-[8px] font-bold text-slate-500 uppercase tracking-widest">
                                         Status: <span class="text-indigo-400">{{ $post->status ?? 'pending' }}</span>
                                     </div>
+                                <div class="flex items-center space-x-2">
+                                    @if($post->status !== 'posted' && $post->status !== 'sent')
+                                        <button onclick="editPost({{ json_encode($post) }})" class="w-8 h-8 flex items-center justify-center bg-indigo-500/10 text-indigo-500 rounded-lg hover:bg-indigo-500 hover:text-white transition-all border border-indigo-500/10">
+                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                        </button>
+                                    @endif
                                     <form action="{{ route('dashboard.facebook.destroy', $post->id) }}" method="POST" onsubmit="return confirm('Abort this post deployment?')">
                                         @csrf
                                         @method('DELETE')
@@ -188,6 +194,7 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
                 @empty
@@ -269,7 +276,77 @@
         </div>
     </div>
 
-    <!-- Settings Modal -->
+    <!-- Edit Post Modal -->
+    <div id="editPostModal" class="fixed inset-0 z-50 hidden bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-2xl rounded-[3rem] overflow-hidden shadow-2xl p-10 animate-in fade-in zoom-in duration-300">
+            <div class="flex justify-between items-start mb-8">
+                <div>
+                    <h2 class="text-2xl font-black text-white italic tracking-tighter mb-1 uppercase">Modify Deployment</h2>
+                    <p class="text-[8px] font-bold text-slate-500 tracking-widest leading-none">Social media content optimization</p>
+                </div>
+                <button onclick="document.getElementById('editPostModal').classList.add('hidden')" class="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-xl text-slate-600 hover:text-white transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </div>
+
+            <form id="editPostForm" method="POST" enctype="multipart/form-data" class="space-y-6">
+                @csrf
+                @method('PATCH')
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Post Content</label>
+                            <textarea name="content" id="edit_content" required rows="6" placeholder="What's happening on the network?" 
+                                      class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-medium text-slate-200 resize-none lowercase"></textarea>
+                        </div>
+                        <div class="relative">
+                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Schedule Deployment</label>
+                            <div class="relative">
+                                <input type="datetime-local" name="post_at" id="edit_post_at"
+                                       class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all appearance-none">
+                                <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-indigo-500/50">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Deployment Status</label>
+                            <select name="status" id="edit_status" class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all appearance-none">
+                                <option value="scheduled">Scheduled</option>
+                                <option value="posted">Posted</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <p class="text-[8px] font-bold text-slate-500 uppercase tracking-widest mb-2">Overwrite Media Assets</p>
+                        <div>
+                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Media Asset 01</label>
+                            <input type="file" name="image1" accept="image/*"
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-[10px] font-bold text-slate-500 transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Media Asset 02</label>
+                            <input type="file" name="image2" accept="image/*"
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-[10px] font-bold text-slate-500 transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Media Asset 03</label>
+                            <input type="file" name="image3" accept="image/*"
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-[10px] font-bold text-slate-500 transition-all">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4">
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-black py-5 rounded-2xl shadow-2xl shadow-indigo-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em] uppercase">
+                        Confirm Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
     <div id="settingsModal" class="fixed inset-0 z-50 hidden bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4">
         <div class="bg-slate-900 border border-slate-800 w-full max-w-lg rounded-[3rem] overflow-hidden shadow-2xl p-10 animate-in fade-in zoom-in duration-300">
             <div class="flex justify-between items-start mb-8">
@@ -306,6 +383,29 @@
             accountBtn.addEventListener('click', () => {
                 window.location.href = "{{ route('dashboard') }}";
             });
+        }
+
+        function editPost(post) {
+            const modal = document.getElementById('editPostModal');
+            const form = document.getElementById('editPostForm');
+            
+            // Set form action
+            form.action = `/dashboard/facebook/${post.id}`;
+            
+            // Fill fields
+            document.getElementById('edit_content').value = post.content;
+            document.getElementById('edit_status').value = post.status || 'scheduled';
+            
+            if (post.post_at) {
+                // Format date for datetime-local input (YYYY-MM-DDTHH:mm)
+                const date = new Date(post.post_at);
+                const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+                document.getElementById('edit_post_at').value = localDate;
+            } else {
+                document.getElementById('edit_post_at').value = '';
+            }
+            
+            modal.classList.remove('hidden');
         }
     </script>
 </body>

@@ -785,6 +785,53 @@ class DashboardController extends Controller
     }
 
     /**
+     * Update existing Facebook Post.
+     */
+    public function facebookUpdate(Request $request, $id)
+    {
+        $request->validate([
+            'content' => 'required|string',
+            'image1' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'image2' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'image3' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'post_at' => 'nullable|date',
+            'status' => 'required|string|in:scheduled,posted,cancelled',
+        ]);
+
+        try {
+            $post = FacebookPost::findOrFail($id);
+            $data = $request->only(['content', 'post_at', 'status']);
+            
+            $webRoot = is_dir(base_path('public_html')) ? base_path('public_html') : public_path();
+            $uploadPath = $webRoot . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'facebook';
+
+            for ($i = 1; $i <= 3; $i++) {
+                $fieldName = 'image' . $i;
+                if ($request->hasFile($fieldName)) {
+                    // Delete old image if exists
+                    if ($post->$fieldName) {
+                        $fullPath = $webRoot . DIRECTORY_SEPARATOR . $post->$fieldName;
+                        if (file_exists($fullPath)) {
+                            unlink($fullPath);
+                        }
+                    }
+                    
+                    $image = $request->file($fieldName);
+                    $filename = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+                    $image->move($uploadPath, $filename);
+                    $data[$fieldName] = 'uploads/facebook/' . $filename;
+                }
+            }
+
+            $post->update($data);
+
+            return redirect()->route('dashboard.facebook')->with('success', 'Post updated successfully.');
+        } catch (\Exception $e) {
+            return back()->withInput()->withErrors(['error' => 'Error updating post: ' . $e->getMessage()]);
+        }
+    }
+
+    /**
      * Delete Facebook Post.
      */
     public function facebookDestroy($id)
