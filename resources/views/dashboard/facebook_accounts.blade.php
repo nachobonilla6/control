@@ -235,7 +235,8 @@
             document.getElementById('edit_link').value = account.link;
             document.getElementById('edit_page_id').value = account.page_id;
             document.getElementById('edit_access_token').value = account.access_token || '';
-            document.getElementById('editAccountForm').action = "{{ route('dashboard.facebook.accounts.update', '') }}/" + account.id;
+            let url = "{{ route('dashboard.facebook.accounts.update', ':id') }}";
+            document.getElementById('editAccountForm').action = url.replace(':id', account.id);
             
             document.getElementById('editAccountModal').classList.remove('hidden');
         }
