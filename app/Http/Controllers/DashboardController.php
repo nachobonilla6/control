@@ -8,6 +8,7 @@ use App\Models\Webhook;
 use App\Models\Project;
 use App\Models\Client;
 use App\Models\Course;
+use App\Models\FacebookPost;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -705,10 +706,45 @@ class DashboardController extends Controller
     }
     
     /**
-     * Facebook Page (Placeholder).
+     * Facebook Page - List posts.
      */
     public function facebookIndex()
     {
-        return view('dashboard.facebook');
+        $posts = FacebookPost::orderBy('created_at', 'desc')->get();
+        return view('dashboard.facebook', compact('posts'));
+    }
+
+    /**
+     * Store new Facebook Post.
+     */
+    public function facebookStore(Request $request)
+    {
+        $request->validate([
+            'content' => 'required|string',
+            'image1' => 'nullable|url',
+            'image2' => 'nullable|url',
+            'image3' => 'nullable|url',
+            'post_at' => 'nullable|date',
+        ]);
+
+        try {
+            FacebookPost::create($request->all());
+            return redirect()->route('dashboard.facebook')->with('success', 'Facebook post scheduled successfully.');
+        } catch (\Exception $e) {
+            return back()->withInput()->withErrors(['error' => 'Error saving post: ' . $e->getMessage()]);
+        }
+    }
+
+    /**
+     * Delete Facebook Post.
+     */
+    public function facebookDestroy($id)
+    {
+        try {
+            FacebookPost::findOrFail($id)->delete();
+            return redirect()->route('dashboard.facebook')->with('success', 'Post removed.');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Error deleting post: ' . $e->getMessage()]);
+        }
     }
 }

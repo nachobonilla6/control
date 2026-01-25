@@ -68,6 +68,8 @@ Route::middleware(['auth'])->group(function () {
     
     // Facebook
     Route::get('/dashboard/facebook', [\App\Http\Controllers\DashboardController::class, 'facebookIndex'])->name('dashboard.facebook');
+    Route::post('/dashboard/facebook', [\App\Http\Controllers\DashboardController::class, 'facebookStore'])->name('dashboard.facebook.store');
+    Route::delete('/dashboard/facebook/{id}', [\App\Http\Controllers\DashboardController::class, 'facebookDestroy'])->name('dashboard.facebook.destroy');
 
     // API & Actions
     Route::post('/chat', [\App\Http\Controllers\DashboardController::class, 'chat'])->name('chat');
