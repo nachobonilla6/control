@@ -36,6 +36,9 @@ Route::middleware(['auth'])->group(function () {
     // Fetch latest notifications as JSON for modal
     Route::get('/notifications', [\App\Http\Controllers\DashboardController::class, 'notifications'])->name('notifications');
 
+    // New chat thread
+    Route::post('/chat/new', [\App\Http\Controllers\DashboardController::class, 'newChat'])->name('chat.new');
+
     Route::post('/logout', function (Request $request) {
         Auth::logout();
         $request->session()->invalidate();

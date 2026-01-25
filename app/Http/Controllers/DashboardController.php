@@ -3,19 +3,44 @@
 namespace App\Http\Controllers;
 
 use App\Models\Notificacion;
+use App\Models\ChatHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 
 class DashboardController extends Controller
 {
     /**
      * Show the dashboard.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // You could pass recent notifications here if you want server‑side rendering
-        $notifications = Notificacion::orderBy('created_at', 'desc')->take(5)->get();
-        return view('dashboard', compact('notifications'));
+        // Use a chat_id from session or generate a new one
+        $chatId = $request->session()->get('current_chat_id');
+        if (!$chatId) {
+            $chatId = Str::uuid();
+            $request->session()->put('current_chat_id', $chatId);
+        }
+
+        // Fetch history from DB
+        $history = ChatHistory::where('chat_id', $chatId)
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        // Also fetch threads/history for sidebar (distinct chat_ids)
+        $threads = ChatHistory::where('username', Auth::user()->name)
+            ->select('chat_id', 'message')
+            ->where('role', 'user')
+            ->groupBy('chat_id')
+            ->orderBy('id', 'desc')
+            ->take(20)
+            ->get();
+
+        return view('dashboard', [
+            'chat_history' => $history,
+            'threads' => $threads
+        ]);
     }
 
     /**
@@ -28,38 +53,66 @@ class DashboardController extends Controller
     }
 
     /**
-     * Send chat message to n8n and store history.
+     * Send chat message to n8n and store history in DB.
      */
     public function chat(Request $request)
     {
         $message = $request->input('message');
-        $chatHistory = $request->session()->get('chat_history', []);
-        
-        // Add user message to history
-        $chatHistory[] = ['role' => 'user', 'content' => $message];
+        $chatId = $request->session()->get('current_chat_id');
+        $username = Auth::user()->name;
+
+        // 1. Save User Message to DB
+        ChatHistory::create([
+            'chat_id' => $chatId,
+            'username' => $username,
+            'role' => 'user',
+            'message' => $message
+        ]);
 
         try {
-            // Send request to n8n webhook
-            $response = \Illuminate\Support\Facades\Http::post('https://n8n.srv1137974.hstgr.cloud/webhook-test/2b14440f-2a6b-4898-8cc7-5cb163b1ad2c', [
+            // 2. Send request to n8n webhook
+            $response = Http::post('https://n8n.srv1137974.hstgr.cloud/webhook-test/2b14440f-2a6b-4898-8cc7-5cb163b1ad2c', [
+                'chat_id' => $chatId,
                 'message' => $message,
-                'user' => Auth::user()->name,
-                'email' => Auth::user()->email,
-                'history' => $chatHistory // Optional: send context
+                'user' => $username,
+                'email' => Auth::user()->email
             ]);
 
             if ($response->successful()) {
                 $responseData = $response->json();
-                // We expect a "response" or "output" key from n8n. If not found, use a default fallback or the raw body.
-                $n8nResponse = $responseData['output'] ?? $responseData['response'] ?? $responseData['message'] ?? 'Message received by n8n (no specific response provided).';
-                $chatHistory[] = ['role' => 'assistant', 'content' => $n8nResponse];
+                $n8nResponse = $responseData['output'] ?? $responseData['response'] ?? $responseData['message'] ?? 'Message received by n8n.';
+                
+                // 3. Save Assistant Message to DB
+                ChatHistory::create([
+                    'chat_id' => $chatId,
+                    'username' => 'n8n_assistant',
+                    'role' => 'assistant',
+                    'message' => $n8nResponse
+                ]);
             } else {
-                $chatHistory[] = ['role' => 'assistant', 'content' => "Error from n8n: " . $response->status()];
+                ChatHistory::create([
+                    'chat_id' => $chatId,
+                    'role' => 'assistant',
+                    'message' => "Error from n8n: " . $response->status()
+                ]);
             }
         } catch (\Exception $e) {
-            $chatHistory[] = ['role' => 'assistant', 'content' => "Could not connect to n8n: " . $e->getMessage()];
+            ChatHistory::create([
+                'chat_id' => $chatId,
+                'role' => 'assistant',
+                'message' => "Connection Error: " . $e->getMessage()
+            ]);
         }
 
-        $request->session()->put('chat_history', $chatHistory);
+        return redirect()->route('dashboard');
+    }
+
+    /**
+     * Start a new chat thread.
+     */
+    public function newChat(Request $request)
+    {
+        $request->session()->put('current_chat_id', (string) Str::uuid());
         return redirect()->route('dashboard');
     }
 }

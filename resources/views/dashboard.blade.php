@@ -35,28 +35,29 @@
     <aside class="w-64 bg-slate-900 border-r border-slate-800 flex flex-col hidden md:flex">
         <div class="p-4 border-b border-slate-800 flex items-center justify-between">
             <span class="text-lg font-bold text-indigo-400">josh dev</span>
-            <button class="p-1 hover:bg-slate-800 rounded">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
+            <form action="{{ route('chat.new') }}" method="POST">
+                @csrf
+                <button type="submit" class="p-1 hover:bg-slate-800 rounded text-slate-400 hover:text-white transition-colors" title="New Chat">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </form>
         </div>
         <div class="flex-1 overflow-y-auto p-2 space-y-1">
-            <div class="text-xs font-semibold text-slate-500 px-3 py-2 uppercase tracking-wider">History</div>
-            @if(session('chat_history'))
-                @foreach(array_reverse(session('chat_history')) as $msg)
-                    @if($msg['role'] == 'user')
-                    <div class="px-3 py-2 rounded-lg hover:bg-slate-800 cursor-pointer text-sm truncate">
-                        {{ $msg['content'] }}
+            <div class="text-xs font-semibold text-slate-500 px-3 py-2 uppercase tracking-wider">Recent Conversations</div>
+            @if(count($threads) > 0)
+                @foreach($threads as $thread)
+                    <div class="px-3 py-2 rounded-lg hover:bg-slate-800 cursor-pointer text-sm truncate text-slate-300">
+                        {{ $thread->message }}
                     </div>
-                    @endif
                 @endforeach
             @else
-                <div class="px-3 py-2 text-sm text-slate-500 italic">No threads found</div>
+                <div class="px-3 py-2 text-sm text-slate-500 italic">No history found</div>
             @endif
         </div>
         <div class="p-4 border-t border-slate-800">
             <div class="flex items-center space-x-3 text-sm font-medium">
-                <div class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white">JD</div>
-                <span>Josh Dev</span>
+                <div class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white text-xs">JD</div>
+                <span class="truncate">{{ Auth::user()->name }}</span>
             </div>
         </div>
     </aside>
@@ -83,7 +84,7 @@
 
         <!-- Chat Area -->
         <div class="flex-1 overflow-y-auto p-4 md:p-10 space-y-6 flex flex-col items-center">
-            @if(!session('chat_history'))
+            @if(count($chat_history) == 0)
                 <div class="flex-1 flex flex-col items-center justify-center space-y-4 opacity-50">
                     <div class="w-16 h-16 rounded-2xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 border border-indigo-500/20">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" stroke-width="1.5"/></svg>
@@ -92,16 +93,17 @@
                 </div>
             @else
                 <div class="w-full max-w-3xl space-y-8">
-                    @foreach(session('chat_history') as $msg)
-                        <div class="flex items-start space-x-4 {{ $msg['role'] == 'user' ? 'justify-end' : '' }}">
-                            @if($msg['role'] != 'user')
-                                <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">JD</div>
+                    @foreach($chat_history as $msg)
+                        <div class="flex items-start space-x-4 {{ $msg->role == 'user' ? 'justify-end' : '' }}">
+                            @if($msg->role != 'user')
+                                <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0 shadow-lg">JD</div>
                             @endif
-                            <div class="max-w-[85%] px-4 py-2 rounded-2xl {{ $msg['role'] == 'user' ? 'bg-slate-800 text-slate-100' : 'bg-transparent text-slate-300' }}">
-                                <p class="leading-relaxed">{{ $msg['content'] }}</p>
+                            <div class="max-w-[85%] px-4 py-2 rounded-2xl {{ $msg->role == 'user' ? 'bg-indigo-600/10 border border-indigo-500/20 text-slate-100' : 'bg-transparent text-slate-300' }}">
+                                <p class="leading-relaxed text-sm">{{ $msg->message }}</p>
+                                <span class="text-[8px] text-slate-600 mt-1 block uppercase tracking-tighter">{{ $msg->created_at->diffForHumans() }}</span>
                             </div>
-                            @if($msg['role'] == 'user')
-                                <div class="w-8 h-8 rounded-lg bg-slate-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">U</div>
+                            @if($msg->role == 'user')
+                                <div class="w-8 h-8 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center text-indigo-400 text-[10px] font-bold flex-shrink-0">U</div>
                             @endif
                         </div>
                     @endforeach
