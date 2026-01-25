@@ -46,6 +46,21 @@
     <!-- Main Content -->
     <main class="flex-1 overflow-auto p-6 md:p-10">
         <div class="max-w-7xl mx-auto">
+
+            <!-- Flash Messages -->
+            @if(session('success'))
+            <div class="mb-6 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-6 py-4 rounded-2xl flex items-center shadow-lg">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span class="text-sm font-bold uppercase tracking-widest">{{ session('success') }}</span>
+            </div>
+            @endif
+
+            @if(session('error'))
+            <div class="mb-6 bg-red-500/10 border border-red-500/20 text-red-500 px-6 py-4 rounded-2xl flex items-center shadow-lg">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span class="text-sm font-bold uppercase tracking-widest">{{ session('error') }}</span>
+            </div>
+            @endif
             
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
                 
@@ -115,16 +130,22 @@
                                 </div>
 
                                 <div class="flex items-center space-x-2 shrink-0 self-end md:self-center">
+                                    <!-- Trigger Webhook -->
+                                    <form action="{{ route('dashboard.webhooks.trigger', $webhook->id) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" title="Activate Webhook" class="p-2.5 rounded-lg bg-indigo-600/10 text-indigo-400 border border-indigo-500/20 hover:bg-indigo-600 hover:text-white transition-all">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                        </button>
+                                    </form>
+
+                                    <!-- Delete Webhook -->
                                     <form action="{{ route('dashboard.webhooks.destroy', $webhook->id) }}" method="POST" onsubmit="return confirm('Disconnect this pipeline?');">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="p-2.5 rounded-lg bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white transition-all border border-red-500/20">
+                                        <button type="submit" title="Remove Pipeline" class="p-2.5 rounded-lg bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white transition-all border border-red-500/20">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                         </button>
                                     </form>
-                                    <button class="p-2.5 rounded-lg bg-indigo-600/10 text-indigo-400 border border-indigo-500/20 hover:bg-indigo-600 hover:text-white transition-all">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                    </button>
                                 </div>
                             </div>
                         </div>

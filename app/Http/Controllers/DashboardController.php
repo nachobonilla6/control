@@ -72,6 +72,35 @@ class DashboardController extends Controller
     }
 
     /**
+     * Trigger/Activate Webhook.
+     */
+    public function webhooksTrigger(Request $request, $id)
+    {
+        $webhook = Webhook::findOrFail($id);
+
+        try {
+            $payload = $webhook->payload_text;
+            
+            // Try to detect if it's JSON
+            $jsonData = json_decode($payload, true);
+            
+            if (json_last_error() === JSON_ERROR_NONE && !is_numeric($payload)) {
+                $response = Http::post($webhook->url, $jsonData);
+            } else {
+                $response = Http::post($webhook->url, ['text' => $payload]);
+            }
+
+            if ($response->successful()) {
+                return redirect()->route('dashboard.webhooks')->with('success', "Webhook '{$webhook->name}' triggered successfully.");
+            } else {
+                return redirect()->route('dashboard.webhooks')->with('error', "Webhook failed with status: " . $response->status());
+            }
+        } catch (\Exception $e) {
+            return redirect()->route('dashboard.webhooks')->with('error', "Connection error: " . $e->getMessage());
+        }
+    }
+
+    /**
      * Bots Page: Shows a list of specific bots and create option.
      */
     public function botsIndex()
