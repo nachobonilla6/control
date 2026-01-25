@@ -78,10 +78,14 @@ class DashboardController extends Controller
         try {
             $imagePaths = [];
             if ($request->hasFile('images')) {
+                $uploadPath = public_path('uploads/projects');
+                if (!is_dir($uploadPath)) {
+                    mkdir($uploadPath, 0755, true);
+                }
                 foreach ($request->file('images') as $image) {
-                    $path = $image->store('projects', 'public');
-                    // Store as /storage/projects/name.ext for easier web access
-                    $imagePaths[] = Storage::url($path);
+                    $filename = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+                    $image->move($uploadPath, $filename);
+                    $imagePaths[] = 'uploads/projects/' . $filename;
                 }
             }
 
@@ -106,11 +110,16 @@ class DashboardController extends Controller
     {
         $project = Project::findOrFail($id);
         
-        // Delete images from storage
+        // Delete images from public folder
         if ($project->images) {
-            foreach ($project->images as $url) {
-                $path = str_replace('/storage/', '', $url);
-                Storage::disk('public')->delete($path);
+            $imgs = is_array($project->images) ? $project->images : json_decode($project->images, true);
+            if (is_array($imgs)) {
+                foreach ($imgs as $path) {
+                    $fullPath = public_path($path);
+                    if (file_exists($fullPath)) {
+                        unlink($fullPath);
+                    }
+                }
             }
         }
 
@@ -144,16 +153,26 @@ class DashboardController extends Controller
             if ($request->hasFile('images')) {
                 // Delete old images
                 if ($project->images) {
-                    foreach ($project->images as $url) {
-                        $path = str_replace('/storage/', '', $url);
-                        Storage::disk('public')->delete($path);
+                    $oldImgs = is_array($project->images) ? $project->images : json_decode($project->images, true);
+                    if (is_array($oldImgs)) {
+                        foreach ($oldImgs as $path) {
+                            $fullPath = public_path($path);
+                            if (file_exists($fullPath)) {
+                                unlink($fullPath);
+                            }
+                        }
                     }
                 }
 
                 $imagePaths = [];
+                $uploadPath = public_path('uploads/projects');
+                if (!is_dir($uploadPath)) {
+                    mkdir($uploadPath, 0755, true);
+                }
                 foreach ($request->file('images') as $image) {
-                    $path = $image->store('projects', 'public');
-                    $imagePaths[] = Storage::url($path);
+                    $filename = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+                    $image->move($uploadPath, $filename);
+                    $imagePaths[] = 'uploads/projects/' . $filename;
                 }
                 $data['images'] = $imagePaths;
             }

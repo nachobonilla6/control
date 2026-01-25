@@ -90,42 +90,6 @@
     <main class="flex-1 overflow-auto p-6 md:p-10">
         <div class="max-w-7xl mx-auto">
 
-            <!-- Healing Mode / Migration Help -->
-            @if(isset($error_type) && $error_type === 'missing_table')
-            <div class="mb-12 bg-indigo-600/10 border-2 border-dashed border-indigo-500/30 rounded-[3rem] p-12 text-center relative overflow-hidden group">
-                <div class="absolute top-0 right-0 p-8 opacity-10 flex space-x-2">
-                    <svg class="w-16 h-16 text-indigo-400 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div>
-                <h2 class="text-2xl font-black text-white uppercase tracking-tighter mb-4 italic text-indigo-400">Database Link Required</h2>
-                <p class="text-slate-400 max-w-xl mx-auto mb-8 font-medium">The projects table does not exist on your server infrastructure. Run the following command in your Hostinger terminal to heal the database:</p>
-                
-                <div class="space-y-6">
-                    <div class="bg-slate-950 rounded-2xl p-6 inline-block border border-white/5 shadow-2xl relative group w-full max-w-2xl">
-                        <p class="text-[10px] font-black text-slate-500 uppercase mb-3 tracking-widest text-left">1. Crear estructura de datos:</p>
-                        <div class="flex items-center justify-between">
-                            <code id="migrateCmd" class="text-emerald-400 font-mono text-xs leading-relaxed">php artisan migrate --path=/database/migrations/2026_01_24_210927_create_projects_table.php</code>
-                            <button onclick="navigator.clipboard.writeText(document.getElementById('migrateCmd').innerText); this.innerText='COPIED!'" class="ml-4 text-[10px] font-black text-slate-500 uppercase hover:text-white transition-colors">Copy</button>
-                        </div>
-                    </div>
-
-                    <div class="bg-slate-950 rounded-2xl p-6 inline-block border border-white/5 shadow-2xl relative group w-full max-w-2xl">
-                        <p class="text-[10px] font-black text-slate-500 uppercase mb-3 tracking-widest text-left">2. Activar fotos (Manual symlink):</p>
-                        <div class="flex items-center justify-between">
-                            <code id="linkCmd" class="text-emerald-400 font-mono text-xs leading-relaxed">ln -s $(pwd)/storage/app/public $(pwd)/public/storage</code>
-                            <button onclick="navigator.clipboard.writeText(document.getElementById('linkCmd').innerText); this.innerText='COPIED!'" class="ml-4 text-[10px] font-black text-slate-500 uppercase hover:text-white transition-colors">Copy</button>
-                        </div>
-                        <p class="text-[9px] text-slate-600 mt-2 italic text-left">* Usa este comando si el comando de Artisan falla en Hostinger.</p>
-                    </div>
-                </div>
-
-                <div class="flex justify-center items-center space-x-6">
-                    <div class="flex items-center text-[10px] font-black text-slate-500 uppercase tracking-widest">
-                        <span class="w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulse"></span> Hostinger Optimized
-                    </div>
-                </div>
-            </div>
-            @endif
-
             @if(session('success'))
             <div class="mb-6 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-6 py-4 rounded-2xl flex items-center shadow-lg">
                 <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
