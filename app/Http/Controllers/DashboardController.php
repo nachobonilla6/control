@@ -567,7 +567,9 @@ class DashboardController extends Controller
      */
     public function coursesIndex()
     {
-        $courses = Course::orderBy('created_at', 'desc')->get();
+        $courses = Course::orderByRaw("FIELD(status, 'pending', 'done', 'postponed', 'archived') ASC")
+            ->orderBy('created_at', 'desc')
+            ->get();
         return view('dashboard.courses', compact('courses'));
     }
 
