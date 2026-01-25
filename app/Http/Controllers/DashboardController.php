@@ -9,6 +9,7 @@ use App\Models\Project;
 use App\Models\Client;
 use App\Models\Course;
 use App\Models\FacebookPost;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -712,7 +713,8 @@ class DashboardController extends Controller
     public function facebookIndex()
     {
         $posts = FacebookPost::orderBy('created_at', 'desc')->get();
-        return view('dashboard.facebook', compact('posts'));
+        $webhookUrl = Setting::get('facebook_webhook_url', 'https://n8n.srv1137974.hstgr.cloud/webhook-test/76497ea0-bfd0-46fa-8ea3-6512ff450b55');
+        return view('dashboard.facebook', compact('posts', 'webhookUrl'));
     }
 
     /**
@@ -754,7 +756,8 @@ class DashboardController extends Controller
 
             // Send to n8n Webhook
             try {
-                Http::post('https://n8n.srv1137974.hstgr.cloud/webhook-test/76497ea0-bfd0-46fa-8ea3-6512ff450b55', [
+                $webhookUrl = Setting::get('facebook_webhook_url', 'https://n8n.srv1137974.hstgr.cloud/webhook-test/76497ea0-bfd0-46fa-8ea3-6512ff450b55');
+                Http::post($webhookUrl, [
                     'id' => $post->id,
                     'content' => $post->content,
                     'image1' => $post->image1 ? asset($post->image1) : null,
@@ -798,5 +801,19 @@ class DashboardController extends Controller
         } catch (\Exception $e) {
             return back()->withErrors(['error' => 'Error deleting post: ' . $e->getMessage()]);
         }
+    }
+
+    /**
+     * Update Facebook settings.
+     */
+    public function facebookSettingsUpdate(Request $request)
+    {
+        $request->validate([
+            'facebook_webhook_url' => 'required|url',
+        ]);
+
+        Setting::set('facebook_webhook_url', $request->facebook_webhook_url);
+
+        return back()->with('success', 'Facebook settings updated successfully.');
     }
 }
