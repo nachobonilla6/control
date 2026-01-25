@@ -713,7 +713,11 @@ class DashboardController extends Controller
      */
     public function facebookIndex()
     {
-        $posts = FacebookPost::with('account')->orderByRaw('COALESCE(post_at, created_at) DESC')->get();
+        $posts = FacebookPost::with('account')
+            ->select('*')
+            ->selectRaw('post_at as post_at_raw')
+            ->orderByRaw('COALESCE(post_at, created_at) DESC')
+            ->get();
         $accounts = FacebookAccount::all();
         try {
             $webhookUrl = Setting::get('facebook_webhook_url', 'https://n8n.srv1137974.hstgr.cloud/webhook-test/76497ea0-bfd0-46fa-8ea3-6512ff450b55');
