@@ -94,6 +94,28 @@
     <main class="flex-1 overflow-auto p-6 md:p-10">
         <div class="max-w-7xl mx-auto">
 
+            <!-- Healing Mode / Migration Help -->
+            @if(isset($error_type) && $error_type === 'missing_table')
+            <div class="mb-12 bg-indigo-600/10 border-2 border-dashed border-indigo-500/30 rounded-[3rem] p-12 text-center relative overflow-hidden group">
+                <div class="absolute top-0 right-0 p-8 opacity-10 flex space-x-2">
+                    <svg class="w-16 h-16 text-indigo-400 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <h2 class="text-2xl font-black text-white uppercase tracking-tighter mb-4 italic text-indigo-400">Database Link Required</h2>
+                <p class="text-slate-400 max-w-xl mx-auto mb-8 font-medium">The projects table does not exist on your server infrastructure. Run the following command in your Hostinger terminal to heal the database:</p>
+                
+                <div class="bg-slate-950 rounded-2xl p-6 mb-8 inline-block border border-white/5 shadow-2xl relative group">
+                    <code id="migrateCmd" class="text-emerald-400 font-mono text-sm leading-relaxed">php artisan migrate --path=/database/migrations/2026_01_24_210927_create_projects_table.php</code>
+                    <button onclick="navigator.clipboard.writeText(document.getElementById('migrateCmd').innerText); this.innerText='COPIED!'" class="ml-4 text-[10px] font-black text-slate-500 uppercase hover:text-white transition-colors">Copy</button>
+                </div>
+
+                <div class="flex justify-center items-center space-x-6">
+                    <div class="flex items-center text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                        <span class="w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulse"></span> Hostinger Optimized
+                    </div>
+                </div>
+            </div>
+            @endif
+
             @if(session('success'))
             <div class="mb-6 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-6 py-4 rounded-2xl flex items-center shadow-lg">
                 <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -216,24 +238,32 @@
                 </div>
 
                 <div>
-                    <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Visual Heritage (Max 7)</label>
-                    <div class="mt-2 flex items-center justify-center w-full">
-                        <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-800 border-dashed rounded-[2rem] cursor-pointer bg-slate-950 hover:bg-slate-900/50 transition-all">
-                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                <svg class="w-8 h-8 mb-3 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                <p class="text-[10px] font-bold text-slate-500 uppercase">Transmit high-res media</p>
-                            </div>
-                            <input type="file" name="images[]" multiple accept="image/*" class="hidden" />
-                        </label>
-                    </div>
+                    <label class="block text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-3">Visual Media (Max 7)</label>
+                    <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-800 border-dashed rounded-[2rem] cursor-pointer bg-slate-950 hover:bg-slate-900/50 transition-all group/file">
+                        <div class="flex flex-col items-center justify-center">
+                            <svg class="w-8 h-8 mb-2 text-slate-700 group-hover/file:text-indigo-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            <p id="fileLabel" class="text-[10px] font-black text-slate-600 uppercase tracking-widest group-hover/file:text-white transition-colors">Select Visual Assets</p>
+                        </div>
+                        <input type="file" name="images[]" id="fileInput" multiple accept="image/*" class="hidden" onchange="document.getElementById('fileLabel').innerText = this.files.length + ' FILES STAGED'" />
+                    </label>
                 </div>
-                
-                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-black py-5 rounded-[1.5rem] shadow-xl shadow-indigo-600/20 transition-all active:scale-95 text-xs uppercase tracking-[0.2em]">
-                    Initialize Deployment
-                </button>
-            </form>
-        </div>
+            </div>
+            
+            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-black py-6 rounded-3xl shadow-2xl shadow-indigo-600/30 transition-all active:scale-[0.98] text-xs uppercase tracking-[0.3em] flex items-center justify-center space-x-3">
+                <svg class="w-4 h-4 animate-spin hidden" id="deploySpinner" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                <span>Execute Project Load</span>
+            </button>
+        </form>
     </div>
+</div>
+
+<script>
+    if ({{ $errors->any() ? 'true' : 'false' }}) {
+        window.onload = () => {
+            document.getElementById('newProjectModal').classList.remove('hidden');
+        }
+    }
+</script>
 
     <!-- Profile Modal (Same as other pages) -->
     <div id="profileModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">

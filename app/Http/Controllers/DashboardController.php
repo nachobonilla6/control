@@ -51,8 +51,15 @@ class DashboardController extends Controller
      */
     public function projectsIndex()
     {
-        $projects = Project::orderBy('created_at', 'desc')->get();
-        return view('dashboard.projects', compact('projects'));
+        try {
+            $projects = Project::orderBy('created_at', 'desc')->get();
+            return view('dashboard.projects', compact('projects'));
+        } catch (\Illuminate\Database\QueryException $e) {
+            // Handle missing table error (common on first deploy to Hostinger)
+            $projects = [];
+            $error_type = ($e->getCode() === '42S02') ? 'missing_table' : 'generic';
+            return view('dashboard.projects', compact('projects', 'error_type'))->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
