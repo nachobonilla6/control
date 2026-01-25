@@ -402,8 +402,12 @@ class DashboardController extends Controller
      */
     public function clientsIndex()
     {
-        $clients = Client::orderBy('created_at', 'desc')->get();
-        return view('dashboard.clients', compact('clients'));
+        $totalClients = Client::count();
+        $extractedCount = Client::where('status', 'extracted')->count();
+        $sentCount = Client::where('status', 'sent')->count();
+        $clients = Client::orderBy('created_at', 'desc')->paginate(5);
+        
+        return view('dashboard.clients', compact('clients', 'totalClients', 'extractedCount', 'sentCount'));
     }
 
     /**

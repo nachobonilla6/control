@@ -117,15 +117,15 @@
                 <div class="flex items-center space-x-6 bg-slate-900 border border-slate-800 p-2 rounded-2xl">
                     <div class="px-6 py-2 text-center border-r border-slate-800">
                         <p class="text-[8px] font-black text-slate-500 uppercase tracking-widest mb-1">Total</p>
-                        <p class="text-xl font-black text-white">{{ count($clients) }}</p>
+                        <p class="text-xl font-black text-white">{{ $totalClients }}</p>
                     </div>
                     <div class="px-6 py-2 text-center border-r border-slate-800">
                         <p class="text-[8px] font-black text-indigo-500 uppercase tracking-widest mb-1">Extracted</p>
-                        <p class="text-xl font-black text-white">{{ $clients->where('status', 'extracted')->count() }}</p>
+                        <p class="text-xl font-black text-white">{{ $extractedCount }}</p>
                     </div>
                     <div class="px-6 py-2 text-center">
                         <p class="text-[8px] font-black text-emerald-500 uppercase tracking-widest mb-1">Sent</p>
-                        <p class="text-xl font-black text-white">{{ $clients->where('status', 'sent')->count() }}</p>
+                        <p class="text-xl font-black text-white">{{ $sentCount }}</p>
                     </div>
                 </div>
 
@@ -222,6 +222,13 @@
                         </tbody>
                     </table>
                 </div>
+                
+                <!-- Pagination -->
+                @if($clients->hasPages())
+                <div class="px-8 py-6 bg-slate-900/50 border-t border-slate-800/50">
+                    {{ $clients->links() }}
+                </div>
+                @endif
             </div>
         </div>
     </main>
