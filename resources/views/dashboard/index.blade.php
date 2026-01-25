@@ -97,7 +97,38 @@
         <div class="max-w-7xl mx-auto">
             <div class="mb-10 text-center">
                 <h1 class="text-4xl font-black text-white mb-2">System Orchestration</h1>
-                <p class="text-slate-400">Select a category to manage your environment.</p>
+                <p class="text-slate-400">Monitor and manage your digital workspace.</p>
+            </div>
+
+            <!-- Bots Section -->
+            <div class="mb-12">
+                <div class="flex items-center justify-between mb-8">
+                    <h2 class="text-xl font-black text-indigo-400 uppercase tracking-[0.3em] italic">Active Intelligence</h2>
+                    <span class="h-[1px] flex-1 bg-slate-800 mx-6 opacity-50"></span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    @foreach($bots as $bot)
+                    <a href="{{ route('dashboard.history', $bot['id']) }}" class="group bg-slate-900/50 border border-slate-800 rounded-3xl p-6 transition-all hover:border-indigo-500/30 hover:bg-indigo-500/[0.02] flex items-center space-x-6 relative overflow-hidden">
+                        <div class="absolute -right-6 -top-6 w-24 h-24 bg-indigo-600/5 blur-2xl group-hover:bg-indigo-600/10 transition-all"></div>
+                        <div class="w-16 h-16 rounded-2xl bg-indigo-600/10 flex items-center justify-center text-indigo-400 border border-indigo-500/20 font-mono font-black text-xl shrink-0">
+                            {{ $bot['icon'] }}
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="text-lg font-bold text-white mb-1 truncate">{{ $bot['name'] }}</h3>
+                            <p class="text-xs text-slate-500 font-medium uppercase tracking-widest">{{ $bot['count'] }} Records</p>
+                        </div>
+                        <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center group-hover:bg-indigo-600 transition-all">
+                            <svg class="w-5 h-5 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </div>
+                    </a>
+                    @endforeach
+                </div>
+            </div>
+
+            <!-- Categories Section -->
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-xl font-black text-slate-500 uppercase tracking-[0.3em] italic">Infrastructure Units</h2>
+                <span class="h-[1px] flex-1 bg-slate-800 mx-6 opacity-30"></span>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
