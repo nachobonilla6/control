@@ -444,6 +444,21 @@ class DashboardController extends Controller
     }
 
     /**
+     * Quick Toggle Client Status.
+     */
+    public function clientsToggleStatus($id)
+    {
+        try {
+            $client = Client::findOrFail($id);
+            $client->status = ($client->status === 'extracted') ? 'sent' : 'extracted';
+            $client->save();
+            return back()->with('success', 'Status actualizado a ' . strtoupper($client->status));
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => $e->getMessage()]);
+        }
+    }
+
+    /**
      * Delete Client.
      */
     public function clientsDestroy($id)

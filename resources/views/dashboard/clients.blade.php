@@ -58,11 +58,27 @@
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
                 <div>
                     <h1 class="text-4xl font-black text-white italic tracking-tighter">Gestión de <span class="text-indigo-500">Clientes</span></h1>
-                    <p class="text-[10px] font-bold text-slate-500 tracking-[0.3em] mt-2">Base de datos de relaciones comerciales</p>
+                    <p class="text-[10px] font-bold text-slate-500 tracking-[0.3em] mt-2 text-center md:text-left">Base de datos de relaciones comerciales</p>
                 </div>
+                
+                <div class="flex items-center space-x-6 bg-slate-900 border border-slate-800 p-2 rounded-2xl">
+                    <div class="px-6 py-2 text-center border-r border-slate-800">
+                        <p class="text-[8px] font-black text-slate-500 uppercase tracking-widest mb-1">Total</p>
+                        <p class="text-xl font-black text-white">{{ count($clients) }}</p>
+                    </div>
+                    <div class="px-6 py-2 text-center border-r border-slate-800">
+                        <p class="text-[8px] font-black text-indigo-500 uppercase tracking-widest mb-1">Extracted</p>
+                        <p class="text-xl font-black text-white">{{ $clients->where('status', 'extracted')->count() }}</p>
+                    </div>
+                    <div class="px-6 py-2 text-center">
+                        <p class="text-[8px] font-black text-emerald-500 uppercase tracking-widest mb-1">Sent</p>
+                        <p class="text-xl font-black text-white">{{ $clients->where('status', 'sent')->count() }}</p>
+                    </div>
+                </div>
+
                 <button onclick="openCreateModal()" class="px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-indigo-600/20 active:scale-95 flex items-center">
                     <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    Nuevo Cliente
+                    Nuevo Registro
                 </button>
             </div>
 
@@ -108,17 +124,23 @@
                                     @endif
                                 </td>
                                 <td class="px-8 py-6">
-                                    @if($client->status === 'sent')
-                                        <span class="flex items-center text-[9px] font-black text-emerald-400 tracking-widest">
-                                            <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-2 animate-pulse"></span>
-                                            SENT
-                                        </span>
-                                    @else
-                                        <span class="flex items-center text-[9px] font-black text-indigo-400 tracking-widest">
-                                            <span class="w-1.5 h-1.5 bg-indigo-500 rounded-full mr-2"></span>
-                                            EXTRACTED
-                                        </span>
-                                    @endif
+                                    <form action="{{ route('dashboard.clients.toggle-status', $client->id) }}" method="POST">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit" title="Haga clic para cambiar status" class="group/status">
+                                            @if($client->status === 'sent')
+                                                <span class="flex items-center text-[9px] font-black text-emerald-400 tracking-widest group-hover/status:text-indigo-400 transition-colors">
+                                                    <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-2 animate-pulse"></span>
+                                                    SENT
+                                                </span>
+                                            @else
+                                                <span class="flex items-center text-[9px] font-black text-indigo-400 tracking-widest group-hover/status:text-emerald-400 transition-colors">
+                                                    <span class="w-1.5 h-1.5 bg-indigo-500 rounded-full mr-2"></span>
+                                                    EXTRACTED
+                                                </span>
+                                            @endif
+                                        </button>
+                                    </form>
                                 </td>
                                 <td class="px-8 py-6 text-right">
                                     <div class="flex items-center justify-end space-x-2">

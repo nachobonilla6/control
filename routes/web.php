@@ -54,6 +54,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard/clients', [\App\Http\Controllers\DashboardController::class, 'clientsIndex'])->name('dashboard.clients');
     Route::post('/dashboard/clients', [\App\Http\Controllers\DashboardController::class, 'clientsStore'])->name('dashboard.clients.store');
     Route::patch('/dashboard/clients/{id}', [\App\Http\Controllers\DashboardController::class, 'clientsUpdate'])->name('dashboard.clients.update');
+    Route::patch('/dashboard/clients/{id}/toggle-status', [\App\Http\Controllers\DashboardController::class, 'clientsToggleStatus'])->name('dashboard.clients.toggle-status');
     Route::delete('/dashboard/clients/{id}', [\App\Http\Controllers\DashboardController::class, 'clientsDestroy'])->name('dashboard.clients.destroy');
 
     // API & Actions
