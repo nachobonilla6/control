@@ -409,6 +409,7 @@ class DashboardController extends Controller
             'location' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:50',
             'industry' => 'nullable|string|max:100',
+            'status' => 'required|string|in:extracted,sent',
         ]);
 
         try {
@@ -430,6 +431,7 @@ class DashboardController extends Controller
             'location' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:50',
             'industry' => 'nullable|string|max:100',
+            'status' => 'required|string|in:extracted,sent',
         ]);
 
         try {

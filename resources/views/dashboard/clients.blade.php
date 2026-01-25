@@ -76,6 +76,7 @@
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Contacto</th>
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Ubicación</th>
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Industria</th>
+                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Status</th>
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em] text-right">Acciones</th>
                             </tr>
                         </thead>
@@ -104,6 +105,19 @@
                                     <span class="px-3 py-1 bg-slate-950 border border-white/5 rounded-lg text-[9px] font-black text-slate-500">{{ $client->industry }}</span>
                                     @else
                                     <span class="text-slate-800 italic text-[10px]">Sin tag</span>
+                                    @endif
+                                </td>
+                                <td class="px-8 py-6">
+                                    @if($client->status === 'sent')
+                                        <span class="flex items-center text-[9px] font-black text-emerald-400 tracking-widest">
+                                            <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-2 animate-pulse"></span>
+                                            SENT
+                                        </span>
+                                    @else
+                                        <span class="flex items-center text-[9px] font-black text-indigo-400 tracking-widest">
+                                            <span class="w-1.5 h-1.5 bg-indigo-500 rounded-full mr-2"></span>
+                                            EXTRACTED
+                                        </span>
                                     @endif
                                 </td>
                                 <td class="px-8 py-6 text-right">
@@ -176,10 +190,19 @@
                                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all">
                         </div>
                     </div>
-                    <div>
-                        <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2">Industria / Sector</label>
-                        <input type="text" name="industry" id="form_industry" placeholder="Ej: Automotriz, Real Estate" 
-                               class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all uppercase">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2">Industria / Sector</label>
+                            <input type="text" name="industry" id="form_industry" placeholder="Ej: Automotriz" 
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all uppercase">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2">Status Operativo</label>
+                            <select name="status" id="form_status" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white appearance-none transition-all cursor-pointer">
+                                <option value="extracted">EXTRACTED</option>
+                                <option value="sent">SENT</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
@@ -203,6 +226,7 @@
             document.getElementById('form_location').value = '';
             document.getElementById('form_phone').value = '';
             document.getElementById('form_industry').value = '';
+            document.getElementById('form_status').value = 'extracted';
             
             document.getElementById('clientModal').classList.remove('hidden');
         }
@@ -219,6 +243,7 @@
             document.getElementById('form_location').value = client.location || '';
             document.getElementById('form_phone').value = client.phone || '';
             document.getElementById('form_industry').value = client.industry || '';
+            document.getElementById('form_status').value = client.status || 'extracted';
             
             document.getElementById('clientModal').classList.remove('hidden');
         }
