@@ -713,7 +713,11 @@ class DashboardController extends Controller
     public function facebookIndex()
     {
         $posts = FacebookPost::orderBy('created_at', 'desc')->get();
-        $webhookUrl = Setting::get('facebook_webhook_url', 'https://n8n.srv1137974.hstgr.cloud/webhook-test/76497ea0-bfd0-46fa-8ea3-6512ff450b55');
+        try {
+            $webhookUrl = Setting::get('facebook_webhook_url', 'https://n8n.srv1137974.hstgr.cloud/webhook-test/76497ea0-bfd0-46fa-8ea3-6512ff450b55');
+        } catch (\Exception $e) {
+            $webhookUrl = 'https://n8n.srv1137974.hstgr.cloud/webhook-test/76497ea0-bfd0-46fa-8ea3-6512ff450b55';
+        }
         return view('dashboard.facebook', compact('posts', 'webhookUrl'));
     }
 
@@ -756,7 +760,11 @@ class DashboardController extends Controller
 
             // Send to n8n Webhook
             try {
-                $webhookUrl = Setting::get('facebook_webhook_url', 'https://n8n.srv1137974.hstgr.cloud/webhook-test/76497ea0-bfd0-46fa-8ea3-6512ff450b55');
+                try {
+                    $webhookUrl = Setting::get('facebook_webhook_url', 'https://n8n.srv1137974.hstgr.cloud/webhook-test/76497ea0-bfd0-46fa-8ea3-6512ff450b55');
+                } catch (\Exception $e) {
+                    $webhookUrl = 'https://n8n.srv1137974.hstgr.cloud/webhook-test/76497ea0-bfd0-46fa-8ea3-6512ff450b55';
+                }
                 Http::post($webhookUrl, [
                     'id' => $post->id,
                     'content' => $post->content,
