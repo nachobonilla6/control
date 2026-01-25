@@ -49,6 +49,12 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/dashboard/projects/{id}', [\App\Http\Controllers\DashboardController::class, 'projectsUpdate'])->name('dashboard.projects.update');
     Route::delete('/dashboard/projects/{id}', [\App\Http\Controllers\DashboardController::class, 'projectsDestroy'])->name('dashboard.projects.destroy');
     Route::get('/projects/{id}', [\App\Http\Controllers\DashboardController::class, 'projectsShow'])->name('projects.show');
+    
+    // Clients
+    Route::get('/dashboard/clients', [\App\Http\Controllers\DashboardController::class, 'clientsIndex'])->name('dashboard.clients');
+    Route::post('/dashboard/clients', [\App\Http\Controllers\DashboardController::class, 'clientsStore'])->name('dashboard.clients.store');
+    Route::patch('/dashboard/clients/{id}', [\App\Http\Controllers\DashboardController::class, 'clientsUpdate'])->name('dashboard.clients.update');
+    Route::delete('/dashboard/clients/{id}', [\App\Http\Controllers\DashboardController::class, 'clientsDestroy'])->name('dashboard.clients.destroy');
 
     // API & Actions
     Route::post('/chat', [\App\Http\Controllers\DashboardController::class, 'chat'])->name('chat');

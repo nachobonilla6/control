@@ -6,6 +6,7 @@ use App\Models\Notificacion;
 use App\Models\ChatHistory;
 use App\Models\Webhook;
 use App\Models\Project;
+use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -40,6 +41,13 @@ class DashboardController extends Controller
                 'description' => 'Showcase and manage your latest development works.',
                 'icon' => '📂',
                 'route' => 'dashboard.projects',
+            ],
+            [
+                'id' => 'clients',
+                'name' => 'Clients',
+                'description' => 'Manage your business relationships and contacts.',
+                'icon' => '👥',
+                'route' => 'dashboard.clients',
             ],
         ];
 
@@ -379,5 +387,70 @@ class DashboardController extends Controller
         $user->save();
 
         return back()->with('success', 'Profile photo updated.');
+    }
+
+    /**
+     * Clients Page: List.
+     */
+    public function clientsIndex()
+    {
+        $clients = Client::orderBy('created_at', 'desc')->get();
+        return view('dashboard.clients', compact('clients'));
+    }
+
+    /**
+     * Store new Client.
+     */
+    public function clientsStore(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:clients,email',
+            'location' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|max:50',
+            'industry' => 'nullable|string|max:100',
+        ]);
+
+        try {
+            Client::create($request->all());
+            return redirect()->route('dashboard.clients')->with('success', 'Cliente registrado exitosamente.');
+        } catch (\Exception $e) {
+            return back()->withInput()->withErrors(['error' => 'Error al guardar: ' . $e->getMessage()]);
+        }
+    }
+
+    /**
+     * Update existing Client.
+     */
+    public function clientsUpdate(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:clients,email,' . $id,
+            'location' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|max:50',
+            'industry' => 'nullable|string|max:100',
+        ]);
+
+        try {
+            $client = Client::findOrFail($id);
+            $client->update($request->all());
+            return redirect()->route('dashboard.clients')->with('success', 'Cliente actualizado exitosamente.');
+        } catch (\Exception $e) {
+            return back()->withInput()->withErrors(['error' => 'Error al actualizar: ' . $e->getMessage()]);
+        }
+    }
+
+    /**
+     * Delete Client.
+     */
+    public function clientsDestroy($id)
+    {
+        try {
+            Client::findOrFail($id)->delete();
+            return redirect()->route('dashboard.clients')->with('success', 'Cliente eliminado del sistema.');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Error al eliminar: ' . $e->getMessage()]);
+        }
     }
 }
