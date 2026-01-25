@@ -137,7 +137,17 @@ class DashboardController extends Controller
     public function notifications()
     {
         $notifications = Notificacion::orderBy('created_at', 'desc')->take(10)->get();
-        return response()->json($notifications);
+        
+        $data = $notifications->map(function($n) {
+            return [
+                'id' => $n->id,
+                'titulo' => $n->titulo,
+                'texto' => $n->texto,
+                'fecha_format' => $n->created_at->format('M d, H:i')
+            ];
+        });
+
+        return response()->json($data);
     }
 
     /**

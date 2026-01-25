@@ -237,7 +237,10 @@
                     badge.classList.remove('hidden');
                     list.innerHTML = data.map(n => `
                         <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl hover:border-indigo-500/30 transition-all text-left">
-                            <h3 class="text-[11px] font-bold text-slate-200 mb-1 leading-tight">${n.titulo}</h3>
+                            <div class="flex justify-between items-start mb-1">
+                                <h3 class="text-[11px] font-bold text-slate-200 leading-tight">${n.titulo}</h3>
+                                <span class="text-[9px] font-medium text-slate-600 whitespace-nowrap ml-2">${n.fecha_format}</span>
+                            </div>
                             <p class="text-[10px] text-slate-500 leading-relaxed">${n.texto}</p>
                         </div>
                     `).join('');
