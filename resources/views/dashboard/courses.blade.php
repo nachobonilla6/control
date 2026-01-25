@@ -82,80 +82,80 @@
                 </button>
             </div>
 
-            <!-- Courses Table -->
-            <div class="bg-slate-900 border border-slate-800 rounded-[2.5rem] overflow-hidden shadow-2xl">
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="border-b border-slate-800 bg-slate-950">
-                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Nombre del Curso</th>
-                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Enlace / URL</th>
-                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Estado</th>
-                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em] text-right">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-800/50">
-                            @forelse($courses as $course)
-                            <tr class="hover:bg-white/[0.02] transition-colors group">
-                                <td class="px-8 py-6">
-                                    <div class="flex items-center space-x-4">
-                                        <div class="w-10 h-10 rounded-xl bg-indigo-600/10 flex items-center justify-center text-indigo-400 font-black text-xs border border-indigo-500/10">
-                                            {{ substr($course->name, 0, 1) }}
-                                        </div>
-                                        <p class="text-sm font-bold text-white leading-none">{{ $course->name }}</p>
-                                    </div>
-                                </td>
-                                <td class="px-8 py-6">
-                                    @if($course->link)
-                                    <a href="{{ $course->link }}" target="_blank" class="text-[9px] font-black text-indigo-400 hover:text-indigo-300 transition-colors tracking-widest break-all">
-                                        OPEN RESOURCE →
-                                    </a>
-                                    @else
-                                    <span class="text-slate-800 italic text-[10px]">Sin link</span>
-                                    @endif
-                                </td>
-                                <td class="px-8 py-6">
-                                    @php
-                                        $statusConfig = [
-                                            'pending' => ['color' => 'text-indigo-400', 'bg' => 'bg-indigo-500'],
-                                            'done' => ['color' => 'text-emerald-400', 'bg' => 'bg-emerald-500'],
-                                            'postponed' => ['color' => 'text-amber-400', 'bg' => 'bg-amber-500'],
-                                            'archived' => ['color' => 'text-slate-500', 'bg' => 'bg-slate-600'],
-                                        ];
-                                        $config = $statusConfig[$course->status] ?? $statusConfig['pending'];
-                                    @endphp
-                                    <span class="flex items-center text-[9px] font-black {{ $config['color'] }} tracking-widest">
-                                        <span class="w-1.5 h-1.5 {{ $config['bg'] }} rounded-full mr-2 {{ $course->status === 'pending' ? 'animate-pulse' : '' }}"></span>
-                                        {{ strtoupper($course->status) }}
-                                    </span>
-                                </td>
-                                <td class="px-8 py-6 text-right">
-                                    <div class="flex items-center justify-end space-x-2">
-                                        <button 
-                                            onclick="openEditModal({{ json_encode($course) }})"
-                                            class="w-9 h-9 flex items-center justify-center bg-indigo-600/10 text-indigo-400 rounded-xl hover:bg-indigo-600 hover:text-white transition-all border border-indigo-500/10">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                        </button>
-                                        <form action="{{ route('dashboard.courses.destroy', $course->id) }}" method="POST" onsubmit="return confirm('¿Eliminar curso del sistema?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="w-9 h-9 flex items-center justify-center bg-red-500/10 text-red-500 rounded-xl hover:bg-red-500 hover:text-white transition-all border border-red-500/10">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="4" class="px-8 py-20 text-center">
-                                    <p class="text-xs font-black text-slate-700 tracking-[0.3em] italic">No discovery modules registered</p>
-                                </td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+            <!-- Courses Grid (YouTube Style) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                @forelse($courses as $course)
+                <div class="group relative flex flex-col bg-slate-900 border border-slate-800 rounded-[2rem] overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:border-indigo-500/30 hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)] active:scale-95">
+                    
+                    <!-- Thumbnail Area -->
+                    <div class="relative aspect-video w-full overflow-hidden bg-slate-950">
+                        <div class="absolute inset-0 bg-gradient-to-br from-indigo-600/20 via-transparent to-slate-950 opacity-40 group-hover:opacity-60 transition-opacity"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="text-4xl filter blur-sm group-hover:blur-none transition-all duration-700 opacity-20 group-hover:opacity-40 select-none">🎓</span>
+                        </div>
+                        
+                        <!-- Status Badge Overlay -->
+                        @php
+                            $statusConfig = [
+                                'pending' => ['color' => 'bg-indigo-600', 'text' => 'PENDING'],
+                                'done' => ['color' => 'bg-emerald-600', 'text' => 'DONE'],
+                                'postponed' => ['color' => 'bg-amber-600', 'text' => 'POSTPONED'],
+                                'archived' => ['color' => 'bg-slate-700', 'text' => 'ARCHIVED'],
+                            ];
+                            $config = $statusConfig[$course->status] ?? $statusConfig['pending'];
+                        @endphp
+                        <div class="absolute top-4 right-4 {{ $config['color'] }} px-3 py-1.5 rounded-lg text-[8px] font-black tracking-widest shadow-lg">
+                            {{ $config['text'] }}
+                        </div>
+
+                        <!-- Action Overlay (Hover) -->
+                        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                             <div class="flex items-center space-x-3">
+                                <button onclick="openEditModal({{ json_encode($course) }})" class="w-12 h-12 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center backdrop-blur-md border border-white/20 transition-all">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                </button>
+                                <form action="{{ route('dashboard.courses.destroy', $course->id) }}" method="POST" onsubmit="return confirm('¿Decommission this module?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="w-12 h-12 bg-red-600/20 hover:bg-red-600 text-red-500 hover:text-white rounded-full flex items-center justify-center backdrop-blur-md border border-red-500/20 transition-all">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    </button>
+                                </form>
+                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Card Body -->
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-sm font-black text-white leading-tight mb-2 line-clamp-2 tracking-tight overflow-hidden italic">
+                                {{ $course->name }}
+                            </h3>
+                            @if($course->link)
+                            <a href="{{ $course->link }}" target="_blank" class="inline-flex items-center text-[8px] font-black text-indigo-400 hover:text-indigo-300 transition-colors tracking-[0.2em] mb-4">
+                                START LEARNING →
+                            </a>
+                            @else
+                            <p class="text-[8px] font-bold text-slate-700 tracking-[0.2em] mb-4 italic">NO LINK ATTACHED</p>
+                            @endif
+                        </div>
+                        
+                        <!-- Timeline Info -->
+                        <div class="pt-4 border-t border-white/5 flex items-center justify-between">
+                            <span class="text-[9px] font-bold text-slate-600 tracking-widest">{{ $course->created_at->format('M / Y') }}</span>
+                            <div class="flex -space-x-2">
+                                <div class="w-5 h-5 rounded-full bg-slate-800 border-2 border-slate-900 flex items-center justify-center text-[7px] font-black text-slate-500">
+                                    {{ substr($course->name, 0, 1) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                @empty
+                <div class="col-span-full py-24 text-center border-2 border-dashed border-slate-800 rounded-[3rem]">
+                    <p class="text-xs font-black text-slate-700 tracking-[0.3em] italic uppercase text-center">No discovery modules registered in library</p>
+                </div>
+                @endforelse
             </div>
         </div>
     </main>
