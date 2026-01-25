@@ -134,8 +134,8 @@
                         <p class="text-xl font-black text-white">{{ $totalClients }}</p>
                     </div>
                     <div class="px-6 py-2 text-center border-r border-slate-800">
-                        <p class="text-[8px] font-black text-indigo-500 uppercase tracking-widest mb-1">Extracted</p>
-                        <p class="text-xl font-black text-white">{{ $extractedCount }}</p>
+                        <p class="text-[8px] font-black text-indigo-500 uppercase tracking-widest mb-1">Queued</p>
+                        <p class="text-xl font-black text-white">{{ $queuedCount }}</p>
                     </div>
                     <div class="px-6 py-2 text-center">
                         <p class="text-[8px] font-black text-emerald-500 uppercase tracking-widest mb-1">Sent</p>
@@ -145,7 +145,7 @@
 
                 <button onclick="openCreateModal()" class="px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-indigo-600/20 active:scale-95 flex items-center">
                     <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    Nuevo Registro
+                    New Record
                 </button>
             </div>
 
@@ -349,7 +349,7 @@
             document.getElementById('form_location').value = '';
             document.getElementById('form_phone').value = '';
             document.getElementById('form_industry').value = '';
-            document.getElementById('form_status').value = 'extracted';
+            document.getElementById('form_status').value = 'queued';
             document.getElementById('magicText').value = '';
 
             // Show AI section for new registration
@@ -371,7 +371,7 @@
             document.getElementById('form_location').value = client.location || '';
             document.getElementById('form_phone').value = client.phone || '';
             document.getElementById('form_industry').value = client.industry || '';
-            document.getElementById('form_status').value = client.status || 'extracted';
+            document.getElementById('form_status').value = client.status || 'queued';
             
             // Hide AI section for editing and make form full width
             document.getElementById('aiSection').classList.add('hidden');
