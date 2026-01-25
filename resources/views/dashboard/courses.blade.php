@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cursos - Control Panel</title>
+    <title>Courses - Control Panel</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -110,8 +110,8 @@
 
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
                 <div>
-                    <h1 class="text-4xl font-black text-white italic tracking-tighter">Gestión de <span class="text-indigo-500">Cursos</span></h1>
-                    <p class="text-[10px] font-bold text-slate-500 tracking-[0.3em] mt-2">Seguimiento de aprendizaje y objetivos</p>
+                    <h1 class="text-4xl font-black text-white italic tracking-tighter">Manage <span class="text-indigo-500">Courses</span></h1>
+                    <p class="text-[10px] font-bold text-slate-500 tracking-[0.3em] mt-2">Learning journey and goals tracking</p>
                 </div>
                 
                 <div class="flex items-center space-x-6 bg-slate-900 border border-slate-800 p-2 rounded-none">
@@ -131,7 +131,7 @@
 
                 <button onclick="openCreateModal()" class="px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-none text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-indigo-600/20 active:scale-95 flex items-center">
                     <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    Nuevo Curso
+                    New Course
                 </button>
             </div>
 
@@ -208,7 +208,7 @@
                                 <button onclick="openEditModal({{ json_encode($course) }})" class="w-7 h-7 flex items-center justify-center bg-indigo-600/10 text-indigo-400 rounded-none hover:bg-indigo-600 hover:text-white transition-all border border-indigo-500/10 active:scale-90">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                 </button>
-                                <form action="{{ route('dashboard.courses.destroy', $course->id) }}" method="POST" onsubmit="return confirm('¿Decommission this module?')">
+                                <form action="{{ route('dashboard.courses.destroy', $course->id) }}" method="POST" onsubmit="return confirm('Decommission this module?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="w-7 h-7 flex items-center justify-center bg-red-500/10 text-red-500 rounded-none hover:bg-red-600 hover:text-white transition-all border border-red-500/10 active:scale-90">
@@ -236,8 +236,8 @@
         <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-none overflow-hidden shadow-2xl p-10 animate-in fade-in zoom-in duration-300">
             <div class="flex justify-between items-start mb-8">
                 <div>
-                    <h2 id="modalTitle" class="text-2xl font-black text-white italic tracking-tighter mb-1">Nuevo Curso</h2>
-                    <p id="modalSubtitle" class="text-[8px] font-bold text-slate-500 tracking-widest leading-none">Integración de módulo de aprendizaje</p>
+                    <h2 id="modalTitle" class="text-2xl font-black text-white italic tracking-tighter mb-1">New Course</h2>
+                    <p id="modalSubtitle" class="text-[8px] font-bold text-slate-500 tracking-widest leading-none">Learning module integration</p>
                 </div>
                 <button onclick="document.getElementById('courseModal').classList.add('hidden')" class="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-none text-slate-600 hover:text-white transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -249,7 +249,7 @@
                 <div id="methodField"></div>
                 <div class="space-y-4">
                     <div class="relative group">
-                        <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2">Enlace / URL del Recurso</label>
+                        <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2">Resource Link / URL</label>
                         <div class="flex space-x-2">
                             <input type="url" name="link" id="form_link" placeholder="https://..." 
                                    class="flex-1 bg-slate-950 border border-slate-800 rounded-none px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all lowercase">
@@ -259,12 +259,12 @@
                         </div>
                     </div>
                     <div>
-                        <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2">Nombre del Curso</label>
-                        <input type="text" name="name" id="form_name" required placeholder="Ej: Mastering Laravel AI" 
+                        <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2">Course Name</label>
+                        <input type="text" name="name" id="form_name" required placeholder="e.g. Mastering Laravel AI" 
                                class="w-full bg-slate-950 border border-slate-800 rounded-none px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all uppercase">
                     </div>
                     <div>
-                        <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2">Estado Escalonado</label>
+                        <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2">Tiered Status</label>
                         <select name="status" id="form_status" required class="w-full bg-slate-950 border border-slate-800 rounded-none px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white appearance-none transition-all cursor-pointer">
                             <option value="pending">PENDING</option>
                             <option value="done">DONE</option>
@@ -275,7 +275,7 @@
                 </div>
 
                 <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-black py-5 rounded-none shadow-2xl shadow-indigo-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em]">
-                    Sincronizar Módulo
+                    Sync Module
                 </button>
             </form>
         </div>
@@ -286,8 +286,8 @@
             const form = document.getElementById('courseForm');
             form.action = "{{ route('dashboard.courses.store') }}";
             document.getElementById('methodField').innerHTML = '';
-            document.getElementById('modalTitle').innerText = 'Nuevo Curso';
-            document.getElementById('modalSubtitle').innerText = 'Integración de módulo de aprendizaje';
+            document.getElementById('modalTitle').innerText = 'New Course';
+            document.getElementById('modalSubtitle').innerText = 'Learning module integration';
             
             document.getElementById('form_name').value = '';
             document.getElementById('form_link').value = '';
@@ -299,8 +299,8 @@
             const form = document.getElementById('courseForm');
             form.action = `/dashboard/courses/${course.id}`;
             document.getElementById('methodField').innerHTML = '<input type="hidden" name="_method" value="PATCH">';
-            document.getElementById('modalTitle').innerText = 'Editar Curso';
-            document.getElementById('modalSubtitle').innerText = 'Actualización de parámetros del módulo';
+            document.getElementById('modalTitle').innerText = 'Edit Course';
+            document.getElementById('modalSubtitle').innerText = 'Module parameter update';
             
             document.getElementById('form_name').value = course.name;
             document.getElementById('form_link').value = course.link || '';

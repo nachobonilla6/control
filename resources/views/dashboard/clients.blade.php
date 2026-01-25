@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clientes - Control Panel</title>
+    <title>Clients - Control Panel</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -124,8 +124,8 @@
 
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
                 <div>
-                    <h1 class="text-4xl font-black text-white italic tracking-tighter">Gestión de <span class="text-indigo-500">Clientes</span></h1>
-                    <p class="text-[10px] font-bold text-slate-500 tracking-[0.3em] mt-2 text-center md:text-left">Base de datos de relaciones comerciales</p>
+                    <h1 class="text-4xl font-black text-white italic tracking-tighter">Manage <span class="text-indigo-500">Clients</span></h1>
+                    <p class="text-[10px] font-bold text-slate-500 tracking-[0.3em] mt-2 text-center md:text-left">Business relationships database</p>
                 </div>
                 
                 <div class="flex items-center space-x-6 bg-slate-900 border border-slate-800 p-2 rounded-2xl">
@@ -155,12 +155,12 @@
                     <table class="w-full text-left border-collapse">
                         <thead>
                             <tr class="border-b border-slate-800 bg-slate-950">
-                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Nombre / Empresa</th>
-                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Contacto</th>
-                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Ubicación</th>
-                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Industria</th>
+                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Name / Company</th>
+                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Contact</th>
+                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Location</th>
+                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Industry</th>
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Status</th>
-                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em] text-right">Acciones</th>
+                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em] text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-800/50">
@@ -187,7 +187,7 @@
                                     @if($client->industry)
                                     <span class="px-3 py-1 bg-slate-950 border border-white/5 rounded-lg text-[9px] font-black text-slate-500">{{ $client->industry }}</span>
                                     @else
-                                    <span class="text-slate-800 italic text-[10px]">Sin tag</span>
+                                    <span class="text-slate-800 italic text-[10px]">No tag</span>
                                     @endif
                                 </td>
                                 <td class="px-8 py-6">
@@ -216,7 +216,7 @@
                                             class="w-9 h-9 flex items-center justify-center bg-indigo-600/10 text-indigo-400 rounded-xl hover:bg-indigo-600 hover:text-white transition-all border border-indigo-500/10">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                         </button>
-                                        <form action="{{ route('dashboard.clients.destroy', $client->id) }}" method="POST" onsubmit="return confirm('¿Eliminar cliente del sistema?')">
+                                        <form action="{{ route('dashboard.clients.destroy', $client->id) }}" method="POST" onsubmit="return confirm('Delete client from system?')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="w-9 h-9 flex items-center justify-center bg-red-500/10 text-red-500 rounded-xl hover:bg-red-500 hover:text-white transition-all border border-red-500/10">
@@ -252,8 +252,8 @@
         <div class="bg-slate-900 border border-slate-800 w-full max-w-7xl rounded-[2.5rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
             <div class="flex justify-between items-start mb-6">
                 <div>
-                    <h2 id="modalTitle" class="text-2xl font-black text-white italic tracking-tighter mb-0.5">Nuevo Registro</h2>
-                    <p id="modalSubtitle" class="text-[8px] font-bold text-slate-500 tracking-widest leading-none">Alta de entidad comercial</p>
+                    <h2 id="modalTitle" class="text-2xl font-black text-white italic tracking-tighter mb-0.5">New Record</h2>
+                    <p id="modalSubtitle" class="text-[8px] font-bold text-slate-500 tracking-widest leading-none">Register business entity</p>
                 </div>
                 <button onclick="document.getElementById('clientModal').classList.add('hidden')" class="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-xl text-slate-600 hover:text-white transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -268,14 +268,14 @@
                         <svg class="w-3 h-3 mr-2 animate-pulse" fill="currentColor" viewBox="0 0 20 20"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM14 11a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1h-1a1 1 0 110-2h1v-1a1 1 0 011-1z"/></svg>
                         Magic Paste (AI Extractor)
                     </label>
-                    <textarea id="magicText" rows="4" placeholder="Pega aquí la firma del correo o info del cliente..." 
+                    <textarea id="magicText" rows="4" placeholder="Paste email signature or client info here..." 
                               class="w-full bg-slate-950/50 border border-slate-800 rounded-2xl px-4 py-3 text-[11px] text-slate-300 focus:outline-none focus:border-indigo-500/50 transition-all resize-none mb-4 placeholder:text-slate-700 h-32"></textarea>
                     <button type="button" onclick="parseMagicText()" id="magicBtn" class="w-full py-3 bg-indigo-600/20 hover:bg-indigo-600 text-indigo-400 hover:text-white rounded-xl text-[9px] font-black tracking-widest uppercase transition-all flex items-center justify-center">
-                        <span>Auto-Sincro Datos</span>
+                        <span>Auto-Sync Data</span>
                     </button>
                     <div class="mt-6">
                         <p class="text-[8px] font-bold text-slate-600 uppercase tracking-[0.2em] leading-relaxed">
-                            Procesa automáticamente nombres, correos y teléfonos usando algoritmos de reconocimiento de patrones.
+                            Automatically process names, emails, and phones using pattern recognition algorithms.
                         </p>
                     </div>
                 </div>
@@ -287,32 +287,32 @@
                         <div id="methodField"></div>
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                             <div>
-                                <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Nombre Completo / Empresa</label>
-                                <input type="text" name="name" id="form_name" required placeholder="Ej: Tech Solutions S.A." 
+                                <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Full Name / Company</label>
+                                <input type="text" name="name" id="form_name" required placeholder="e.g. Tech Solutions S.A." 
                                        class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all uppercase">
                             </div>
                             <div>
-                                <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Email de Contacto</label>
+                                <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Contact Email</label>
                                 <input type="email" name="email" id="form_email" required placeholder="client@example.com" 
                                        class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all lowercase">
                             </div>
                             <div>
-                                <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Ubicación</label>
-                                <input type="text" name="location" id="form_location" placeholder="Ciudad, País" 
+                                <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Location</label>
+                                <input type="text" name="location" id="form_location" placeholder="City, Country" 
                                        class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all uppercase">
                             </div>
                             <div>
-                                <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Teléfono</label>
+                                <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Phone</label>
                                 <input type="text" name="phone" id="form_phone" placeholder="+00 0000-0000" 
                                        class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all">
                             </div>
                             <div>
-                                <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Industria / Sector</label>
-                                <input type="text" name="industry" id="form_industry" placeholder="Ej: Automotriz" 
+                                <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Industry / Sector</label>
+                                <input type="text" name="industry" id="form_industry" placeholder="e.g. Automotive" 
                                        class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all uppercase">
                             </div>
                             <div>
-                                <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Status Operativo</label>
+                                <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Operation Status</label>
                                 <div class="relative">
                                     <select name="status" id="form_status" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white appearance-none transition-all cursor-pointer">
                                         <option value="extracted">EXTRACTED</option>
@@ -327,7 +327,7 @@
 
                         <div class="flex items-center space-x-4 pt-0">
                             <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-black py-4 rounded-2xl shadow-2xl shadow-indigo-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em]">
-                                Procesar Registro
+                                Process Record
                             </button>
                         </div>
                     </form>
@@ -341,8 +341,8 @@
             const form = document.getElementById('clientForm');
             form.action = "{{ route('dashboard.clients.store') }}";
             document.getElementById('methodField').innerHTML = '';
-            document.getElementById('modalTitle').innerText = 'Nuevo Registro';
-            document.getElementById('modalSubtitle').innerText = 'Alta de entidad comercial';
+            document.getElementById('modalTitle').innerText = 'New Record';
+            document.getElementById('modalSubtitle').innerText = 'Register business entity';
             
             document.getElementById('form_name').value = '';
             document.getElementById('form_email').value = '';
@@ -363,8 +363,8 @@
             const form = document.getElementById('clientForm');
             form.action = `/dashboard/clients/${client.id}`;
             document.getElementById('methodField').innerHTML = '<input type="hidden" name="_method" value="PATCH">';
-            document.getElementById('modalTitle').innerText = 'Editar Cliente';
-            document.getElementById('modalSubtitle').innerText = 'Actualizando: ' + client.name;
+            document.getElementById('modalTitle').innerText = 'Edit Client';
+            document.getElementById('modalSubtitle').innerText = 'Updating: ' + client.name;
             
             document.getElementById('form_name').value = client.name;
             document.getElementById('form_email').value = client.email;
@@ -386,7 +386,7 @@
 
             const btn = document.getElementById('magicBtn');
             const originalText = btn.innerHTML;
-            btn.innerHTML = '<span>Procesando...</span>';
+            btn.innerHTML = '<span>Processing...</span>';
             btn.disabled = true;
 
             try {
@@ -409,19 +409,19 @@
                 
                 // Visual feedback
                 document.getElementById('magicText').value = '';
-                btn.innerHTML = '<span>¡Sincronizado!</span>';
+                btn.innerHTML = '<span>Synced!</span>';
                 btn.classList.replace('bg-indigo-600/20', 'bg-emerald-600/20');
                 btn.classList.replace('text-indigo-400', 'text-emerald-400');
                 
                 setTimeout(() => {
-                    btn.innerHTML = '<span>Auto-Sincro Datos</span>';
+                    btn.innerHTML = '<span>Auto-Sync Data</span>';
                     btn.classList.replace('bg-emerald-600/20', 'bg-indigo-600/20');
                     btn.classList.replace('text-emerald-400', 'text-indigo-400');
                     btn.disabled = false;
                 }, 2000);
 
             } catch (e) {
-                alert('Error al procesar el texto.');
+                alert('Error processing text.');
                 btn.innerHTML = originalText;
                 btn.disabled = false;
             }

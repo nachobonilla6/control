@@ -117,12 +117,12 @@
 
             <div class="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-6">
                 <div>
-                    <h1 class="text-3xl font-black text-white uppercase tracking-tighter italic">Infraestructura de <span class="text-indigo-500">Proyectos</span></h1>
-                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em] mt-1">Gestión de activos digitales y despliegues</p>
+                    <h1 class="text-3xl font-black text-white uppercase tracking-tighter italic">Projects <span class="text-indigo-500">Infrastructure</span></h1>
+                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em] mt-1">Digital asset management and deployments</p>
                 </div>
                 <button id="openModalBtn" onclick="event.stopPropagation(); document.getElementById('newProjectModal').classList.remove('hidden')" class="flex items-center space-x-3 px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl text-xs font-black uppercase tracking-[0.2em] transition-all shadow-2xl shadow-indigo-600/20 active:scale-95 group">
                     <svg class="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span>Nuevo Despliegue</span>
+                    <span>New Deployment</span>
                 </button>
             </div>
 
@@ -137,7 +137,7 @@
                     <a href="{{ route('projects.show', $project->id) }}" class="block h-56 relative overflow-hidden bg-slate-950 group/img">
                         <img src="{{ asset($imgs[0]) }}" class="w-full h-full object-cover group-hover/img:scale-110 transition-transform duration-700 opacity-80 group-hover/img:opacity-100">
                         <div class="absolute inset-0 bg-indigo-900/40 opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
-                            <span class="text-[10px] font-black text-white uppercase tracking-[0.4em] border border-white/20 px-4 py-2 rounded-lg">Ver Detalles</span>
+                            <span class="text-[10px] font-black text-white uppercase tracking-[0.4em] border border-white/20 px-4 py-2 rounded-lg">View Details</span>
                         </div>
                         <div class="absolute top-4 right-4 bg-slate-950/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 text-[9px] font-black text-white uppercase tracking-widest flex items-center shadow-2xl">
                             <svg class="w-3 h-3 mr-1.5 text-indigo-400" fill="currentColor" viewBox="0 0 20 20"><path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"/></svg>
@@ -266,7 +266,7 @@
                     </div>
 
                     <div>
-                        <label class="block text-[9px] font-black text-indigo-400 uppercase tracking-widest mb-2">Integraciones (Separadas por coma)</label>
+                        <label class="block text-[9px] font-black text-indigo-400 uppercase tracking-widest mb-2">Integrations (Comma separated)</label>
                         <input type="text" name="integrations" id="form_integrations" placeholder="Zapier, Shopify, Stripe..." 
                                class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white placeholder:text-slate-800 transition-all">
                     </div>
@@ -376,9 +376,9 @@
             const form = document.getElementById('projectForm');
             form.action = `/dashboard/projects/${id}`;
             document.getElementById('methodField').innerHTML = '<input type="hidden" name="_method" value="PATCH">';
-            document.getElementById('modalTitle').innerText = 'Modificar Entidad';
-            document.getElementById('modalSubtitle').innerText = 'Actualizando arquitectura del proyecto: ' + name;
-            document.getElementById('submitBtnText').innerText = 'Sincronizar Cambios';
+            document.getElementById('modalTitle').innerText = 'Modify Entity';
+            document.getElementById('modalSubtitle').innerText = 'Updating project architecture: ' + name;
+            document.getElementById('submitBtnText').innerText = 'Sync Changes';
             document.getElementById('editNotice').classList.remove('hidden');
             
             // Populate fields
