@@ -66,17 +66,7 @@ class DashboardController extends Controller
             ],
         ];
 
-        $bots = [
-            [
-                'id' => 'josh-dev',
-                'name' => 'josh dev',
-                'description' => 'Main Assistant System',
-                'icon' => 'JD',
-                'count' => ChatHistory::count(),
-            ],
-        ];
-
-        return view('dashboard.index', compact('categories', 'bots'));
+        return view('dashboard.index', compact('categories'));
     }
 
     /**
