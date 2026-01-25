@@ -201,11 +201,6 @@
                         <div>
                             <h3 class="text-sm font-black text-white leading-tight mb-2 line-clamp-2 tracking-tight overflow-hidden italic">
                             </h3>
-                            @if($course->description)
-                            <p class="text-[9px] font-bold text-slate-500 line-clamp-2 tracking-wide mb-3 uppercase italic leading-relaxed">
-                                {{ $course->description }}
-                            </p>
-                            @endif
                             @if($course->link)
                             <a href="{{ $course->link }}" target="_blank" class="inline-flex items-center text-[8px] font-black text-indigo-400 hover:text-indigo-300 transition-colors tracking-[0.2em] mb-4">
                                 START LEARNING →
@@ -255,7 +250,7 @@
                     <div class="relative group">
                         <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2">Enlace / URL del Recurso</label>
                         <div class="flex space-x-2">
-                            <input type="url" name="link" id="form_link" placeholder="https://..." onpaste="setTimeout(autoDetectMetadata, 100)"
+                            <input type="url" name="link" id="form_link" placeholder="https://..." 
                                    class="flex-1 bg-slate-950 border border-slate-800 rounded-none px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all lowercase">
                             <button type="button" onclick="autoDetectMetadata()" id="syncBtn" class="px-4 bg-indigo-600/10 border border-indigo-500/20 text-indigo-400 hover:bg-indigo-600 hover:text-white transition-all group/btn">
                                 <svg class="w-4 h-4 group-hover/btn:rotate-180 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -266,11 +261,6 @@
                         <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2">Nombre del Curso</label>
                         <input type="text" name="name" id="form_name" required placeholder="Ej: Mastering Laravel AI" 
                                class="w-full bg-slate-950 border border-slate-800 rounded-none px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all uppercase">
-                    </div>
-                    <div>
-                        <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2">Descripción</label>
-                        <textarea name="description" id="form_description" rows="3" placeholder="Breve resumen del contenido..." 
-                               class="w-full bg-slate-950 border border-slate-800 rounded-none px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all uppercase resize-none"></textarea>
                     </div>
                     <div>
                         <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2">Estado Escalonado</label>
@@ -300,7 +290,6 @@
             
             document.getElementById('form_name').value = '';
             document.getElementById('form_link').value = '';
-            document.getElementById('form_description').value = '';
             document.getElementById('form_status').value = 'pending';
             
             document.getElementById('courseModal').classList.remove('hidden');
@@ -314,7 +303,6 @@
             
             document.getElementById('form_name').value = course.name;
             document.getElementById('form_link').value = course.link || '';
-            document.getElementById('form_description').value = course.description || '';
             document.getElementById('form_status').value = course.status;
             
             document.getElementById('courseModal').classList.remove('hidden');
@@ -342,9 +330,6 @@
                 const data = await response.json();
                 if (data.name) {
                     document.getElementById('form_name').value = data.name;
-                    if (data.description) {
-                        document.getElementById('form_description').value = data.description;
-                    }
                     // Visual feedback success
                     btn.innerHTML = '<svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
                 } else {

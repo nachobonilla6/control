@@ -582,7 +582,6 @@ class DashboardController extends Controller
             'name' => 'required|string|max:255',
             'link' => 'nullable|url|max:255',
             'status' => 'required|string|in:pending,done,postponed,archived',
-            'description' => 'nullable|string',
         ]);
 
         try {
@@ -602,7 +601,6 @@ class DashboardController extends Controller
             'name' => 'required|string|max:255',
             'link' => 'nullable|url|max:255',
             'status' => 'required|string|in:pending,done,postponed,archived',
-            'description' => 'nullable|string',
         ]);
 
         try {
@@ -649,7 +647,6 @@ class DashboardController extends Controller
     {
         $link = $request->input('link');
         $title = '';
-        $description = '';
 
         try {
             // Check if it's YouTube for better extraction
@@ -657,40 +654,27 @@ class DashboardController extends Controller
                 $id = $match[1];
                 $response = Http::get("https://www.youtube.com/watch?v={$id}");
                 if ($response->successful()) {
-                    $body = $response->body();
-                    
-                    // Title extraction
-                    if (preg_match('/<title>(.*?) - YouTube<\/title>/', $body, $matches)) {
+                    if (preg_match('/<title>(.*?) - YouTube<\/title>/', $response->body(), $matches)) {
                         $title = html_entity_decode($matches[1]);
-                    } elseif (preg_match('/<title>(.*?)<\/title>/', $body, $matches)) {
+                    } elseif (preg_match('/<title>(.*?)<\/title>/', $response->body(), $matches)) {
                         $title = html_entity_decode($matches[1]);
-                    }
-
-                    // Description extraction
-                    if (preg_match('/<meta name="description" content="(.*?)">/', $body, $matches)) {
-                        $description = html_entity_decode($matches[1]);
                     }
                 }
             } else {
                 // General website title extraction
                 $response = Http::get($link);
                 if ($response->successful()) {
-                    $body = $response->body();
-                    if (preg_match('/<title>(.*?)<\/title>/', $body, $matches)) {
+                    if (preg_match('/<title>(.*?)<\/title>/', $response->body(), $matches)) {
                         $title = html_entity_decode($matches[1]);
-                    }
-                    if (preg_match('/<meta name="description" content="(.*?)">/i', $body, $matches)) {
-                        $description = html_entity_decode($matches[1]);
                     }
                 }
             }
             
             return response()->json([
-                'name' => $title ?: 'Nuevo Curso de ' . parse_url($link, PHP_URL_HOST),
-                'description' => $description
+                'name' => $title ?: 'Nuevo Curso de ' . parse_url($link, PHP_URL_HOST)
             ]);
         } catch (\Exception $e) {
-            return response()->json(['name' => '', 'description' => '']);
+            return response()->json(['name' => '']);
         }
     }
 
