@@ -109,11 +109,12 @@
                     </div>
 
                     <div class="bg-slate-950 rounded-2xl p-6 inline-block border border-white/5 shadow-2xl relative group w-full max-w-2xl">
-                        <p class="text-[10px] font-black text-slate-500 uppercase mb-3 tracking-widest text-left">2. Activar fotos (Link de almacenamiento):</p>
+                        <p class="text-[10px] font-black text-slate-500 uppercase mb-3 tracking-widest text-left">2. Activar fotos (Manual symlink):</p>
                         <div class="flex items-center justify-between">
-                            <code id="linkCmd" class="text-emerald-400 font-mono text-xs leading-relaxed">php artisan storage:link</code>
+                            <code id="linkCmd" class="text-emerald-400 font-mono text-xs leading-relaxed">ln -s $(pwd)/storage/app/public $(pwd)/public/storage</code>
                             <button onclick="navigator.clipboard.writeText(document.getElementById('linkCmd').innerText); this.innerText='COPIED!'" class="ml-4 text-[10px] font-black text-slate-500 uppercase hover:text-white transition-colors">Copy</button>
                         </div>
+                        <p class="text-[9px] text-slate-600 mt-2 italic text-left">* Usa este comando si el comando de Artisan falla en Hostinger.</p>
                     </div>
                 </div>
 
