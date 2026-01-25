@@ -414,7 +414,8 @@ class DashboardController extends Controller
         $extractedCount = Client::where('status', 'extracted')->count();
         $sentCount = Client::where('status', 'sent')->count();
         $clients = Client::orderByRaw("FIELD(status, 'extracted', 'sent') ASC")
-            ->orderBy('created_at', 'asc')
+            ->orderByRaw("CASE WHEN status = 'extracted' THEN created_at END ASC")
+            ->orderByRaw("CASE WHEN status = 'sent' THEN created_at END DESC")
             ->paginate(5);
         
         return view('dashboard.clients', compact('clients', 'totalClients', 'extractedCount', 'sentCount'));
