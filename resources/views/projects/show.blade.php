@@ -136,19 +136,6 @@
                         </div>
                         @endif
 
-                        <div>
-                            <h3 class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-6">Stack Estándar</h3>
-                            <div class="flex flex-wrap gap-2">
-                                @php
-                                    $tags = ['Next.js', 'Tailwind', 'AI Core', 'Cloud Infrastructure', 'Automation'];
-                                    if(str_contains(strtolower($project->type), 'mobile')) $tags = ['Flutter', 'Firebase', 'Native UI'];
-                                    if(str_contains(strtolower($project->type), 'web')) $tags = ['React', 'Laravel', 'Vercel'];
-                                @endphp
-                                @foreach($tags as $tag)
-                                    <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-[9px] font-bold text-slate-400 uppercase tracking-wider">{{ $tag }}</span>
-                                @endforeach
-                            </div>
-                        </div>
                     </div>
                 </div>
 
