@@ -379,13 +379,24 @@ class DashboardController extends Controller
         $chatId = $request->session()->get('current_chat_id', (string) Str::uuid());
         
         try {
-            Http::post('https://n8n.srv1137974.hstgr.cloud/webhook-test/2b14440f-2a6b-4898-8cc7-5cb163b1ad2c', [
+            $response = Http::post('https://n8n.srv1137974.hstgr.cloud/webhook-test/2b14440f-2a6b-4898-8cc7-5cb163b1ad2c', [
                 'chat_id' => $chatId,
                 'message' => $message,
                 'user' => Auth::user()->name,
                 'email' => Auth::user()->email
             ]);
-        } catch (\Exception $e) {}
+
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => true,
+                    'content' => $response->body()
+                ]);
+            }
+        } catch (\Exception $e) {
+            if ($request->expectsJson()) {
+                return response()->json(['success' => false, 'error' => $e->getMessage()], 500);
+            }
+        }
 
         return back();
     }
@@ -714,8 +725,6 @@ class DashboardController extends Controller
     public function facebookIndex()
     {
         $posts = FacebookPost::with('account')
-            ->select('*')
-            ->selectRaw('post_at as post_at_raw')
             ->orderByRaw('COALESCE(post_at, created_at) DESC')
             ->get();
         $accounts = FacebookAccount::all();

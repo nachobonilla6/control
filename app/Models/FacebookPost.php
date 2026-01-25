@@ -17,7 +17,7 @@ class FacebookPost extends Model
     ];
 
     protected $casts = [
-        'post_at' => 'datetime',
+        // 'post_at' => 'datetime',
     ];
 
     public function account()

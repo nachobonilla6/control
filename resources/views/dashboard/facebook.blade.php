@@ -189,7 +189,7 @@
                                 <div class="flex items-center space-x-2">
                                     <svg class="w-3.5 h-3.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                     <span class="text-[9px] font-black text-emerald-500 tracking-widest uppercase">
-                                        {{ $post->post_at_raw }}
+                                        {{ $post->post_at }}
                                     </span>
                                 </div>
                                 @endif
@@ -240,11 +240,23 @@
 
             <form id="createPostForm" action="{{ route('dashboard.facebook.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6" onsubmit="handleFormSubmit(event, 'createPostBtn')">
                 @csrf
+                <div class="mb-6 animate-in fade-in slide-in-from-top-4">
+                    <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">AI Deployment Strategy</label>
+                    <div class="relative group">
+                        <textarea id="ai_prompt" rows="2" placeholder="Describe your objective (e.g., 'Generate an engaging promotional post for a new AI course focusing on business automation')" 
+                                  class="w-full bg-slate-950/50 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 text-xs font-medium text-slate-300 resize-none transition-all placeholder:text-slate-700"></textarea>
+                        <button type="button" onclick="generateAIContent()" id="aiBtn" class="absolute right-3 bottom-3 bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-xl text-[9px] font-black tracking-widest uppercase transition-all shadow-lg active:scale-95 flex items-center space-x-2">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            <span>Synthesize</span>
+                        </button>
+                    </div>
+                </div>
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div class="space-y-4">
                         <div>
                             <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Post Content</label>
-                            <textarea name="content" required rows="6" placeholder="What's happening on the network?" 
+                            <textarea name="content" id="create_content" required rows="6" placeholder="What's happening on the network?" 
                                       class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-medium text-slate-200 resize-none lowercase"></textarea>
                         </div>
                         <div>
@@ -485,6 +497,38 @@
                         dot.classList.remove('bg-white', 'scale-125');
                     }
                 }
+            }
+        }
+
+        async function generateAIContent() {
+            const prompt = document.getElementById('ai_prompt').value;
+            if (!prompt) return;
+
+            const btn = document.getElementById('aiBtn');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<svg class="animate-spin h-3 w-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>';
+
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({ message: "Generate ONLY the content for a Facebook post based on this prompt: " + prompt + ". Do not include hashtags or emojis unless requested. Just the raw text." })
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    // Assuming the response body is the raw generated text
+                    document.getElementById('create_content').value = data.content;
+                }
+            } catch (error) {
+                console.error('AI Generation failed:', error);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
             }
         }
 
