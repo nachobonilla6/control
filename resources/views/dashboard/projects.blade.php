@@ -99,9 +99,22 @@
                 <h2 class="text-2xl font-black text-white uppercase tracking-tighter mb-4 italic text-indigo-400">Database Link Required</h2>
                 <p class="text-slate-400 max-w-xl mx-auto mb-8 font-medium">The projects table does not exist on your server infrastructure. Run the following command in your Hostinger terminal to heal the database:</p>
                 
-                <div class="bg-slate-950 rounded-2xl p-6 mb-8 inline-block border border-white/5 shadow-2xl relative group">
-                    <code id="migrateCmd" class="text-emerald-400 font-mono text-sm leading-relaxed">php artisan migrate --path=/database/migrations/2026_01_24_210927_create_projects_table.php</code>
-                    <button onclick="navigator.clipboard.writeText(document.getElementById('migrateCmd').innerText); this.innerText='COPIED!'" class="ml-4 text-[10px] font-black text-slate-500 uppercase hover:text-white transition-colors">Copy</button>
+                <div class="space-y-6">
+                    <div class="bg-slate-950 rounded-2xl p-6 inline-block border border-white/5 shadow-2xl relative group w-full max-w-2xl">
+                        <p class="text-[10px] font-black text-slate-500 uppercase mb-3 tracking-widest text-left">1. Crear estructura de datos:</p>
+                        <div class="flex items-center justify-between">
+                            <code id="migrateCmd" class="text-emerald-400 font-mono text-xs leading-relaxed">php artisan migrate --path=/database/migrations/2026_01_24_210927_create_projects_table.php</code>
+                            <button onclick="navigator.clipboard.writeText(document.getElementById('migrateCmd').innerText); this.innerText='COPIED!'" class="ml-4 text-[10px] font-black text-slate-500 uppercase hover:text-white transition-colors">Copy</button>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-950 rounded-2xl p-6 inline-block border border-white/5 shadow-2xl relative group w-full max-w-2xl">
+                        <p class="text-[10px] font-black text-slate-500 uppercase mb-3 tracking-widest text-left">2. Activar fotos (Link de almacenamiento):</p>
+                        <div class="flex items-center justify-between">
+                            <code id="linkCmd" class="text-emerald-400 font-mono text-xs leading-relaxed">php artisan storage:link</code>
+                            <button onclick="navigator.clipboard.writeText(document.getElementById('linkCmd').innerText); this.innerText='COPIED!'" class="ml-4 text-[10px] font-black text-slate-500 uppercase hover:text-white transition-colors">Copy</button>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="flex justify-center items-center space-x-6">
@@ -149,7 +162,7 @@
                 <div class="bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden group hover:border-indigo-500/30 transition-all flex flex-col shadow-2xl">
                     @if($project->images && count($project->images) > 0)
                     <div class="h-48 relative overflow-hidden bg-slate-950">
-                        <img src="{{ $project->images[0] }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <img src="{{ asset($project->images[0]) }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute top-4 right-4 bg-slate-950/80 backdrop-blur-md px-2 py-1 rounded-lg border border-white/10 text-[8px] font-black text-white uppercase tracking-widest">
                             +{{ count($project->images) }} Photos
                         </div>
@@ -176,12 +189,12 @@
                         <div class="mt-auto flex items-center justify-between pt-6 border-t border-slate-800/50">
                             <div class="flex -space-x-2">
                                 @foreach(array_slice($project->images ?? [], 0, 3) as $img)
-                                <img src="{{ $img }}" class="w-8 h-8 rounded-lg border-2 border-slate-900 object-cover shadow-lg">
+                                <img src="{{ asset($img) }}" class="w-8 h-8 rounded-lg border-2 border-slate-900 object-cover shadow-lg">
                                 @endforeach
                             </div>
                             
                             <div class="flex items-center space-x-2">
-                                <button onclick="openEditModal({{ json_encode($project) }})" class="p-2.5 bg-indigo-500/10 text-indigo-500 rounded-xl hover:bg-indigo-500 hover:text-white transition-all border border-indigo-500/20">
+                                <button onclick="event.stopPropagation(); openEditModal({{ json_encode($project) }})" class="p-2.5 bg-indigo-500/10 text-indigo-500 rounded-xl hover:bg-indigo-500 hover:text-white transition-all border border-indigo-500/20">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                 </button>
 
