@@ -68,23 +68,28 @@ class DashboardController extends Controller
             'images' => 'nullable|array|max:7',
         ]);
 
-        $imagePaths = [];
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $image) {
-                $path = $image->store('projects', 'public');
-                $imagePaths[] = Storage::url($path);
+        try {
+            $imagePaths = [];
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $image) {
+                    $path = $image->store('projects', 'public');
+                    // Store as /storage/projects/name.ext for easier web access
+                    $imagePaths[] = Storage::url($path);
+                }
             }
+
+            Project::create([
+                'name' => $request->name,
+                'type' => $request->type,
+                'description' => $request->description,
+                'active' => $request->has('active'),
+                'images' => $imagePaths
+            ]);
+
+            return redirect()->route('dashboard.projects')->with('success', 'Project registered successfully.');
+        } catch (\Exception $e) {
+            return back()->withInput()->withErrors(['error' => 'Database error: ' . $e->getMessage()]);
         }
-
-        Project::create([
-            'name' => $request->name,
-            'type' => $request->type,
-            'description' => $request->description,
-            'active' => $request->has('active'),
-            'images' => $imagePaths
-        ]);
-
-        return redirect()->route('dashboard.projects')->with('success', 'Project registered successfully.');
     }
 
     /**
