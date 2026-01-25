@@ -44,11 +44,16 @@
 <body class="h-full flex flex-col bg-slate-950 text-slate-200 overflow-hidden">
 
     <!-- Navbar -->
-    <nav class="h-16 bg-slate-900 border-b border-slate-800 flex items-center justify-between px-6 sticky top-0 z-30">
-        <div class="flex items-center space-x-3">
-            <span class="text-xl font-bold text-indigo-400">josh dev</span>
-            <span class="text-slate-500">|</span>
-            <span class="text-sm font-medium text-slate-400">Chat History Table</span>
+    <nav class="h-20 bg-slate-950/50 backdrop-blur-md border-b border-slate-800/50 flex items-center justify-between px-6 sticky top-0 z-30">
+        <div class="flex items-center space-x-4">
+            <!-- Card for Josh Dev Name -->
+            <div class="bg-indigo-600/10 border border-indigo-500/20 px-4 py-2 rounded-xl shadow-lg shadow-indigo-500/5 transition-transform hover:scale-105 select-none">
+                <span class="text-xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-indigo-600">
+                    josh dev
+                </span>
+            </div>
+            <span class="text-slate-700 font-light text-xl">/</span>
+            <span class="text-sm font-medium text-slate-400 tracking-wide uppercase">Console History</span>
         </div>
         <div class="flex items-center space-x-4">
             <form action="{{ route('logout') }}" method="POST" class="inline">
