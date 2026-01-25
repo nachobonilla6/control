@@ -12,9 +12,28 @@ use Illuminate\Support\Str;
 class DashboardController extends Controller
 {
     /**
-     * Show the main dashboard with bot cards.
+     * Main Dashboard: Shows category cards.
      */
     public function index(Request $request)
+    {
+        $categories = [
+            [
+                'id' => 'bots',
+                'name' => 'AI Bots',
+                'description' => 'Manage and create intelligent assistants.',
+                'icon' => '🤖',
+                'route' => 'dashboard.bots',
+            ],
+            // You can add more categories here later (e.g. Analytics, Users)
+        ];
+
+        return view('dashboard.index', compact('categories'));
+    }
+
+    /**
+     * Bots Page: Shows a list of specific bots and create option.
+     */
+    public function botsIndex()
     {
         $bots = [
             [
@@ -23,63 +42,29 @@ class DashboardController extends Controller
                 'description' => 'Main Assistant System',
                 'icon' => 'JD',
                 'count' => ChatHistory::count(),
-            ]
+            ],
+            // New bots will appear here
         ];
 
-        return view('dashboard.index', compact('bots'));
+        return view('dashboard.bots', compact('bots'));
     }
 
     /**
-     * Show the chat interface for a specific bot based on chat_id.
+     * Show the detailed table (history) for a specific bot.
      */
-    public function botHistory(Request $request, $botId, $chatId = null)
+    public function botHistory(Request $request, $botId)
     {
-        // 1. Fetch available conversations for this user (unique chat_ids)
-        // We get the latest message from 'user' role as the thread title
-        $threads = ChatHistory::whereIn('id', function($query) {
-                $query->selectRaw('MAX(id)')
-                    ->from('josh_dev_chat_history')
-                    ->where('username', Auth::user()->name)
-                    ->groupBy('chat_id');
-            })
-            ->orderBy('id', 'desc')
-            ->take(20)
-            ->get();
+        // Fetch history for the table view
+        $history = ChatHistory::orderBy('id', 'desc')->paginate(11);
 
-        // 2. Logic to determine which chat_id to show
-        if (!$chatId) {
-            // Try session first
-            $chatId = $request->session()->get('current_chat_id');
-        }
-
-        // If no chatId in URL or session, pick the last one from history
-        if (!$chatId && $threads->count() > 0) {
-            $chatId = $threads->first()->chat_id;
-        }
-
-        // If still no history, generate a completely new one
-        if (!$chatId) {
-            $chatId = (string) Str::uuid();
-        }
-
-        // Update session to keep consistency
-        $request->session()->put('current_chat_id', $chatId);
-
-        // 3. Fetch ONLY messages for this specific conversation
-        $history = ChatHistory::where('chat_id', $chatId)
-            ->orderBy('created_at', 'asc')
-            ->get();
-
-        return view('dashboard.chat', [
+        return view('dashboard.table', [
             'chat_history' => $history,
-            'threads' => $threads,
-            'bot_id' => $botId,
-            'current_chat_id' => $chatId
+            'bot_id' => $botId
         ]);
     }
 
     /**
-     * Return latest notifications as JSON.
+     * Notifications JSON.
      */
     public function notifications()
     {
@@ -88,35 +73,22 @@ class DashboardController extends Controller
     }
 
     /**
-     * Send chat message to n8n.
+     * Keep chat method if needed by n8n or other interactions.
      */
     public function chat(Request $request)
     {
         $message = $request->input('message');
-        $chatId = $request->session()->get('current_chat_id');
-        $username = Auth::user()->name;
-
+        $chatId = $request->session()->get('current_chat_id', (string) Str::uuid());
+        
         try {
             Http::post('https://n8n.srv1137974.hstgr.cloud/webhook-test/2b14440f-2a6b-4898-8cc7-5cb163b1ad2c', [
                 'chat_id' => $chatId,
                 'message' => $message,
-                'user' => $username,
+                'user' => Auth::user()->name,
                 'email' => Auth::user()->email
             ]);
-        } catch (\Exception $e) {
-            // Log error if needed
-        }
+        } catch (\Exception $e) {}
 
-        return redirect()->route('dashboard.history', ['bot' => $request->input('bot_id', 'josh-dev'), 'chatId' => $chatId]);
-    }
-
-    /**
-     * Start a new chat thread.
-     */
-    public function newChat(Request $request)
-    {
-        $newChatId = (string) Str::uuid();
-        $request->session()->put('current_chat_id', $newChatId);
-        return redirect()->route('dashboard.history', ['bot' => $request->input('bot_id', 'josh-dev'), 'chatId' => $newChatId]);
+        return back();
     }
 }

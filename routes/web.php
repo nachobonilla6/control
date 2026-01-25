@@ -29,16 +29,12 @@ Route::post('/login', function (Request $request) {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/dashboard/history/{bot}/{chatId?}', [\App\Http\Controllers\DashboardController::class, 'botHistory'])->name('dashboard.history');
+    Route::get('/dashboard/bots', [\App\Http\Controllers\DashboardController::class, 'botsIndex'])->name('dashboard.bots');
+    Route::get('/dashboard/history/{bot}', [\App\Http\Controllers\DashboardController::class, 'botHistory'])->name('dashboard.history');
 
-    // Chat message handling
+    // API & Actions
     Route::post('/chat', [\App\Http\Controllers\DashboardController::class, 'chat'])->name('chat');
-
-    // Fetch latest notifications as JSON for modal
     Route::get('/notifications', [\App\Http\Controllers\DashboardController::class, 'notifications'])->name('notifications');
-
-    // New chat thread
-    Route::post('/chat/new', [\App\Http\Controllers\DashboardController::class, 'newChat'])->name('chat.new');
 
     Route::post('/logout', function (Request $request) {
         Auth::logout();
