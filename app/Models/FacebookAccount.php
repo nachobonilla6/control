@@ -10,5 +10,6 @@ class FacebookAccount extends Model
         'name',
         'link',
         'page_id',
+        'access_token',
     ];
 }

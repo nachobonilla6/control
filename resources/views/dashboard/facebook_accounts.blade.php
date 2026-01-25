@@ -163,6 +163,11 @@
                     <input type="text" name="page_id" required placeholder="123456789012345" 
                            class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all">
                 </div>
+                <div>
+                    <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Access Token</label>
+                    <input type="text" name="access_token" required placeholder="EAAb..." 
+                           class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all">
+                </div>
 
                 <div class="pt-4">
                     <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-black py-5 rounded-2xl shadow-2xl shadow-indigo-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em] uppercase">

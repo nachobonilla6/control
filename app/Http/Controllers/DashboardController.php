@@ -777,6 +777,7 @@ class DashboardController extends Controller
                     'post_at' => $post->post_at ? $post->post_at->toIso8601String() : null,
                     'created_at' => $post->created_at->toIso8601String(),
                     'page_id' => $post->account ? $post->account->page_id : null, 
+                    'access_token' => $post->account ? $post->account->access_token : null, 
                 ]);
             } catch (\Exception $e) {
                 // We don't block the main flow if webhook fails, but we could log it
@@ -894,6 +895,7 @@ class DashboardController extends Controller
             'name' => 'required|string|max:255',
             'link' => 'required|url',
             'page_id' => 'required|string|max:100',
+            'access_token' => 'required|string',
         ]);
 
         try {
