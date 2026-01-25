@@ -12,15 +12,36 @@ use Illuminate\Support\Str;
 class DashboardController extends Controller
 {
     /**
-     * Show the dashboard.
+     * Show the main dashboard with bot cards.
      */
     public function index(Request $request)
     {
-        // Fetch history from DB for the table view with pagination
+        // For now, we'll manually define the 'josh dev' bot.
+        // In the future, this could be dynamic from a 'bots' table.
+        $bots = [
+            [
+                'id' => 'josh-dev',
+                'name' => 'josh dev',
+                'description' => 'Main Assistant System',
+                'icon' => 'JD',
+                'count' => ChatHistory::count(),
+            ]
+        ];
+
+        return view('dashboard.index', compact('bots'));
+    }
+
+    /**
+     * Show the detailed table for a specific bot.
+     */
+    public function botHistory(Request $request, $botId)
+    {
+        // We filter by username if needed, here we just show the table as requested.
         $history = ChatHistory::orderBy('id', 'desc')->paginate(11);
 
-        return view('dashboard', [
-            'chat_history' => $history
+        return view('dashboard.table', [
+            'chat_history' => $history,
+            'bot_id' => $botId
         ]);
     }
 
