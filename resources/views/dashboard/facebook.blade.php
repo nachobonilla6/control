@@ -125,9 +125,9 @@
                                 @endforeach
                             </div>
                         @else
-                            <div class="w-full h-full flex items-center justify-center opacity-20">
-                                <span class="text-6xl">📱</span>
-                            </div>
+                            <img src="https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?auto=format&fit=crop&w=800&q=80" 
+                                 class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500" 
+                                 alt="Default Post Image">
                         @endif
 
                         @if($imgCount > 1)
