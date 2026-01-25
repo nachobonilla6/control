@@ -57,6 +57,13 @@ class DashboardController extends Controller
                 'icon' => '🎓',
                 'route' => 'dashboard.courses',
             ],
+            [
+                'id' => 'facebook',
+                'name' => 'Facebook',
+                'description' => 'Manage and automate your Facebook posts and interactions.',
+                'icon' => '📱',
+                'route' => 'dashboard.facebook',
+            ],
         ];
 
         return view('dashboard.index', compact('categories'));
@@ -695,5 +702,13 @@ class DashboardController extends Controller
         } catch (\Exception $e) {
             return back()->withErrors(['error' => 'Error al eliminar: ' . $e->getMessage()]);
         }
+    }
+    
+    /**
+     * Facebook Page (Placeholder).
+     */
+    public function facebookIndex()
+    {
+        return view('dashboard.facebook');
     }
 }
