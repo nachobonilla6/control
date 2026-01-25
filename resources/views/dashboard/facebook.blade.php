@@ -115,7 +115,7 @@
                 @endphp
                 <div class="group bg-slate-900 border border-slate-800 rounded-[2.5rem] overflow-hidden transition-all duration-500 hover:border-indigo-500/30 hover:shadow-2xl flex flex-col h-full">
                     <!-- Image Grid Area -->
-                    <div class="relative bg-slate-950 aspect-square overflow-hidden">
+                    <div class="relative bg-slate-950 aspect-video overflow-hidden">
                         @if($imgCount == 1)
                             <img src="{{ asset(array_values($images)[0]) }}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
                         @elseif($imgCount == 2)
