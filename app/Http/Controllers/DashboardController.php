@@ -24,10 +24,24 @@ class DashboardController extends Controller
                 'icon' => '🤖',
                 'route' => 'dashboard.bots',
             ],
-            // You can add more categories here later (e.g. Analytics, Users)
+            [
+                'id' => 'webhooks',
+                'name' => 'Webhooks',
+                'description' => 'Configure and link external automation endpoints.',
+                'icon' => '🔗',
+                'route' => 'dashboard.webhooks',
+            ],
         ];
 
         return view('dashboard.index', compact('categories'));
+    }
+
+    /**
+     * Webhooks Page.
+     */
+    public function webhooksIndex()
+    {
+        return view('dashboard.webhooks');
     }
 
     /**
