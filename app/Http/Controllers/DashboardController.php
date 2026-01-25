@@ -459,6 +459,57 @@ class DashboardController extends Controller
     }
 
     /**
+     * AI Parsing of raw text to client data.
+     */
+    public function clientsParse(Request $request)
+    {
+        $text = $request->input('text');
+        
+        // Simple but smart pattern extraction (Simulating AI)
+        $data = [
+            'name' => '',
+            'email' => '',
+            'phone' => '',
+            'location' => '',
+            'industry' => '',
+        ];
+
+        // Extract Email
+        if (preg_match('/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}/i', $text, $matches)) {
+            $data['email'] = $matches[0];
+        }
+
+        // Extract Phone (simple pattern)
+        if (preg_match('/(\+?[0-9]{1,4}[- ]?)?([0-9]{3,4}[- ]?[0-9]{3,4})/', $text, $matches)) {
+            $data['phone'] = $matches[0];
+        }
+
+        // Attempt to extract Name (usually first line or before email)
+        $lines = explode("\n", $text);
+        foreach ($lines as $line) {
+            $line = trim($line);
+            if (empty($line)) continue;
+            
+            // If it doesn't contain @ and is short, it's likely a name
+            if (strpos($line, '@') === false && strlen($line) < 50 && empty($data['name'])) {
+                $data['name'] = $line;
+            }
+            
+            // Look for "Ubicación" or "Location"
+            if (preg_match('/(?:Location|Ubicación|Ciudad|City):\s*(.*)/i', $line, $matches)) {
+                $data['location'] = trim($matches[1]);
+            }
+
+            // Look for "Industry" or "Sector"
+            if (preg_match('/(?:Industry|Sector|Industria):\s*(.*)/i', $line, $matches)) {
+                $data['industry'] = trim($matches[1]);
+            }
+        }
+
+        return response()->json($data);
+    }
+
+    /**
      * Delete Client.
      */
     public function clientsDestroy($id)

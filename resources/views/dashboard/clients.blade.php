@@ -176,13 +176,27 @@
     <!-- Modal -->
     <div id="clientModal" class="fixed inset-0 z-50 hidden bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4">
         <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-[2.5rem] overflow-hidden shadow-2xl p-10 animate-in fade-in zoom-in duration-300">
-            <div class="flex justify-between items-start mb-8">
+            <div class="flex justify-between items-start mb-6">
                 <div>
                     <h2 id="modalTitle" class="text-2xl font-black text-white italic tracking-tighter mb-1">Nuevo Registro</h2>
                     <p id="modalSubtitle" class="text-[8px] font-bold text-slate-500 tracking-widest leading-none">Alta de entidad comercial</p>
                 </div>
                 <button onclick="document.getElementById('clientModal').classList.add('hidden')" class="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-xl text-slate-600 hover:text-white transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </div>
+
+            <!-- Magic Paste AI Section -->
+            <div id="aiSection" class="mb-10 bg-indigo-600/5 border border-indigo-500/20 rounded-3xl p-6 relative overflow-hidden group">
+                <div class="absolute -right-4 -top-4 w-20 h-20 bg-indigo-500/10 blur-2xl rounded-full"></div>
+                <label class="block text-[9px] font-black text-indigo-400 tracking-[0.2em] mb-4 uppercase flex items-center">
+                    <svg class="w-3 h-3 mr-2 animate-pulse" fill="currentColor" viewBox="0 0 20 20"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM14 11a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1h-1a1 1 0 110-2h1v-1a1 1 0 011-1z"/></svg>
+                    Magic Paste (AI Extractor)
+                </label>
+                <textarea id="magicText" rows="2" placeholder="Pega aquí la firma del correo o info del cliente..." 
+                          class="w-full bg-slate-950/50 border border-slate-800 rounded-2xl px-4 py-3 text-[11px] text-slate-300 focus:outline-none focus:border-indigo-500/50 transition-all resize-none mb-3 placeholder:text-slate-700"></textarea>
+                <button type="button" onclick="parseMagicText()" id="magicBtn" class="w-full py-2.5 bg-indigo-600/20 hover:bg-indigo-600 text-indigo-400 hover:text-white rounded-xl text-[9px] font-black tracking-widest uppercase transition-all flex items-center justify-center">
+                    <span>Auto-Sincro Datos</span>
                 </button>
             </div>
 
@@ -249,6 +263,10 @@
             document.getElementById('form_phone').value = '';
             document.getElementById('form_industry').value = '';
             document.getElementById('form_status').value = 'extracted';
+            document.getElementById('magicText').value = '';
+
+            // Show AI section for new registration
+            document.getElementById('aiSection').classList.remove('hidden');
             
             document.getElementById('clientModal').classList.remove('hidden');
         }
@@ -267,7 +285,57 @@
             document.getElementById('form_industry').value = client.industry || '';
             document.getElementById('form_status').value = client.status || 'extracted';
             
+            // Hide AI section for editing
+            document.getElementById('aiSection').classList.add('hidden');
+            
             document.getElementById('clientModal').classList.remove('hidden');
+        }
+
+        async function parseMagicText() {
+            const text = document.getElementById('magicText').value;
+            if (!text) return;
+
+            const btn = document.getElementById('magicBtn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span>Procesando...</span>';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch('{{ route('dashboard.clients.parse') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({ text })
+                });
+                
+                const data = await response.json();
+                
+                if (data.name) document.getElementById('form_name').value = data.name;
+                if (data.email) document.getElementById('form_email').value = data.email;
+                if (data.phone) document.getElementById('form_phone').value = data.phone;
+                if (data.location) document.getElementById('form_location').value = data.location;
+                if (data.industry) document.getElementById('form_industry').value = data.industry;
+                
+                // Visual feedback
+                document.getElementById('magicText').value = '';
+                btn.innerHTML = '<span>¡Sincronizado!</span>';
+                btn.classList.replace('bg-indigo-600/20', 'bg-emerald-600/20');
+                btn.classList.replace('text-indigo-400', 'text-emerald-400');
+                
+                setTimeout(() => {
+                    btn.innerHTML = '<span>Auto-Sincro Datos</span>';
+                    btn.classList.replace('bg-emerald-600/20', 'bg-indigo-600/20');
+                    btn.classList.replace('text-emerald-400', 'text-indigo-400');
+                    btn.disabled = false;
+                }, 2000);
+
+            } catch (e) {
+                alert('Error al procesar el texto.');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
         }
     </script>
 </body>
