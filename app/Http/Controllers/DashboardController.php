@@ -28,11 +28,15 @@ class DashboardController extends Controller
             ->orderBy('created_at', 'asc')
             ->get();
 
-        // Also fetch threads/history for sidebar (distinct chat_ids)
+        // Fetch threads/history for sidebar (latest message per chat_id)
         $threads = ChatHistory::where('username', Auth::user()->name)
-            ->select('chat_id', 'message')
             ->where('role', 'user')
-            ->groupBy('chat_id')
+            ->whereIn('id', function($query) {
+                $query->selectRaw('MAX(id)')
+                    ->from('josh_dev_chat_history')
+                    ->where('role', 'user')
+                    ->groupBy('chat_id');
+            })
             ->orderBy('id', 'desc')
             ->take(20)
             ->get();
