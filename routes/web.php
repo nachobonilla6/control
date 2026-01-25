@@ -5,6 +5,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/login', function () {
     if (Auth::check()) {
         return redirect()->route('dashboard');
     }
