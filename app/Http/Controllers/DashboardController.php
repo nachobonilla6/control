@@ -713,13 +713,14 @@ class DashboardController extends Controller
      */
     public function facebookIndex()
     {
-        $posts = FacebookPost::orderBy('created_at', 'desc')->get();
+        $posts = FacebookPost::with('account')->orderBy('created_at', 'desc')->get();
+        $accounts = FacebookAccount::all();
         try {
             $webhookUrl = Setting::get('facebook_webhook_url', 'https://n8n.srv1137974.hstgr.cloud/webhook-test/76497ea0-bfd0-46fa-8ea3-6512ff450b55');
         } catch (\Exception $e) {
             $webhookUrl = 'https://n8n.srv1137974.hstgr.cloud/webhook-test/76497ea0-bfd0-46fa-8ea3-6512ff450b55';
         }
-        return view('dashboard.facebook', compact('posts', 'webhookUrl'));
+        return view('dashboard.facebook', compact('posts', 'webhookUrl', 'accounts'));
     }
 
     /**
@@ -734,10 +735,11 @@ class DashboardController extends Controller
             'image3' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
             'post_at' => 'nullable|date',
             'status' => 'nullable|string|in:scheduled,posted,cancelled',
+            'facebook_account_id' => 'nullable|exists:facebook_accounts,id',
         ]);
 
         try {
-            $data = $request->only(['content', 'post_at', 'status']);
+            $data = $request->only(['content', 'post_at', 'status', 'facebook_account_id']);
             
             // Handle image uploads
             $webRoot = is_dir(base_path('public_html')) ? base_path('public_html') : public_path();
@@ -774,6 +776,7 @@ class DashboardController extends Controller
                     'image3' => $post->image3 ? asset($post->image3) : null,
                     'post_at' => $post->post_at ? $post->post_at->toIso8601String() : null,
                     'created_at' => $post->created_at->toIso8601String(),
+                    'page_id' => $post->account ? $post->account->page_id : null, 
                 ]);
             } catch (\Exception $e) {
                 // We don't block the main flow if webhook fails, but we could log it

@@ -13,9 +13,15 @@ class FacebookPost extends Model
         'image3',
         'post_at',
         'status',
+        'facebook_account_id',
     ];
 
     protected $casts = [
         'post_at' => 'datetime',
     ];
+
+    public function account()
+    {
+        return $this->belongsTo(FacebookAccount::class, 'facebook_account_id');
+    }
 }

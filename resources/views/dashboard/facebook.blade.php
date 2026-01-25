@@ -232,6 +232,15 @@
                             <textarea name="content" required rows="6" placeholder="What's happening on the network?" 
                                       class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-medium text-slate-200 resize-none lowercase"></textarea>
                         </div>
+                        <div>
+                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Target Account</label>
+                            <select name="facebook_account_id" class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all appearance-none">
+                                <option value="">Select Account (Optional)</option>
+                                @foreach($accounts as $account)
+                                    <option value="{{ $account->id }}">{{ $account->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                             <div class="relative">
                                 <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Schedule Deployment</label>
                                 <div class="relative">
