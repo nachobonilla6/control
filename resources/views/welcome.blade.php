@@ -126,38 +126,137 @@
 
     <!-- Features -->
     <section id="features" class="relative py-32 px-6 z-10 bg-brand-dark">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-20">
-                <h2 class="text-[10px] font-black text-indigo-500 uppercase tracking-[0.4em] mb-4">¿Por qué NexGen?</h2>
-                <p class="text-4xl font-bold text-white uppercase tracking-tighter italic">Revolución en Mensajería</p>
+        <div class="max-w-7xl mx-auto text-center">
+            <div class="mb-20">
+                <h2 class="text-[10px] font-black text-indigo-500 uppercase tracking-[0.4em] mb-4">Potencia sin límites</h2>
+                <p class="text-4xl font-bold text-white uppercase tracking-tighter italic">Características de Elite</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Card 1 -->
                 <div class="glass p-10 rounded-[2.5rem] hover:border-indigo-500/50 transition-all group">
                     <div class="w-14 h-14 bg-indigo-600/10 rounded-2xl flex items-center justify-center text-indigo-400 mb-8 border border-indigo-500/20 group-hover:scale-110 transition-transform">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </div>
                     <h3 class="text-xl font-bold text-white mb-4 uppercase italic">Chatbots con IA</h3>
-                    <p class="text-slate-500 leading-relaxed text-sm">Nuestros bots no solo responden, entienden el contexto y cierran ventas utilizando tecnología GPT-4.</p>
+                    <p class="text-slate-500 leading-relaxed text-sm">Entrenamiento personalizado con tus manuales de venta para asegurar cierres efectivos 24/7.</p>
                 </div>
 
-                <!-- Card 2 -->
                 <div class="glass p-10 rounded-[2.5rem] hover:border-emerald-500/50 transition-all group">
                     <div class="w-14 h-14 bg-emerald-600/10 rounded-2xl flex items-center justify-center text-emerald-400 mb-8 border border-emerald-500/20 group-hover:scale-110 transition-transform">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-4 uppercase italic">CRM Integrado</h3>
-                    <p class="text-slate-500 leading-relaxed text-sm">Gestiona todos tus leads de WhatsApp en un solo lugar. Organiza por etiquetas, etapas y recordatorios.</p>
+                    <h3 class="text-xl font-bold text-white mb-4 uppercase italic">Dashboard Analítico</h3>
+                    <p class="text-slate-500 leading-relaxed text-sm">Visualiza el rendimiento de tus bots, tasas de conversión y volumen de mensajes en tiempo real.</p>
                 </div>
 
-                <!-- Card 3 -->
                 <div class="glass p-10 rounded-[2.5rem] hover:border-indigo-500/50 transition-all group">
                     <div class="w-14 h-14 bg-indigo-600/10 rounded-2xl flex items-center justify-center text-indigo-400 mb-8 border border-indigo-500/20 group-hover:scale-110 transition-transform">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-4 uppercase italic">Envío Masivo Seguro</h3>
-                    <p class="text-slate-500 leading-relaxed text-sm">Comunícate con miles de clientes en segundos con nuestro sistema anti-bloqueo avanzado.</p>
+                    <h3 class="text-xl font-bold text-white mb-4 uppercase italic">Integración Multi-vía</h3>
+                    <p class="text-slate-500 leading-relaxed text-sm">Conecta tu WhatsApp con CRMs externos, Google Sheets o cualquier sistema vía Webhooks.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solutions -->
+    <section id="solutions" class="relative py-32 px-6 z-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row items-end justify-between mb-20 gap-8">
+                <div class="max-w-xl">
+                    <h2 class="text-[10px] font-black text-emerald-500 uppercase tracking-[0.4em] mb-4">Soluciones Verticales</h2>
+                    <p class="text-5xl font-black text-white leading-none tracking-tighter uppercase italic">Diseñado para <span class="text-indigo-500">crecer</span></p>
+                </div>
+                <p class="text-slate-500 max-w-sm text-sm">Soluciones personalizadas que se adaptan a la complejidad y el volumen de tu operación comercial.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 text-left">
+                <div class="relative overflow-hidden group rounded-[3rem]">
+                    <div class="absolute inset-0 bg-gradient-to-br from-indigo-600 to-indigo-900 opacity-20 group-hover:opacity-40 transition-opacity"></div>
+                    <div class="glass p-12 relative z-10 border-white/5">
+                        <span class="inline-block px-4 py-1 rounded-full bg-indigo-600 text-[10px] font-black uppercase mb-6 shadow-lg shadow-indigo-600/20">E-Commerce</span>
+                        <h3 class="text-3xl font-black text-white mb-4 uppercase leading-none">Ventas <br> Automatizadas</h3>
+                        <p class="text-slate-400 mb-8 leading-relaxed">Carrito de compras integrado en WhatsApp, gestión de pedidos y seguimiento de envíos sin intervención humana.</p>
+                        <ul class="space-y-3 mb-10">
+                            <li class="flex items-center text-xs font-bold text-slate-300 italic"><svg class="w-4 h-4 mr-2 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg> CATÁLOGO EN TIEMPO REAL</li>
+                            <li class="flex items-center text-xs font-bold text-slate-300 italic"><svg class="w-4 h-4 mr-2 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg> PAGOS SEGUROS</li>
+                        </ul>
+                        <a href="https://wa.me/your-number" class="text-white text-xs font-black uppercase tracking-widest border-b-2 border-indigo-500 pb-1 hover:border-white transition-all">Saber más</a>
+                    </div>
+                </div>
+
+                <div class="relative overflow-hidden group rounded-[3rem]">
+                    <div class="absolute inset-0 bg-gradient-to-br from-emerald-600 to-emerald-900 opacity-20 group-hover:opacity-40 transition-opacity"></div>
+                    <div class="glass p-12 relative z-10 border-white/5">
+                        <span class="inline-block px-4 py-1 rounded-full bg-emerald-600 text-[10px] font-black uppercase mb-6 shadow-lg shadow-emerald-600/20">Soporte técnico</span>
+                        <h3 class="text-3xl font-black text-white mb-4 uppercase leading-none">Atención <br> Inteligente</h3>
+                        <p class="text-slate-400 mb-8 leading-relaxed">Resolución de dudas frecuentes, generación de tickets y escalado a humanos solo cuando es estrictamente necesario.</p>
+                        <ul class="space-y-3 mb-10">
+                            <li class="flex items-center text-xs font-bold text-slate-300 italic"><svg class="w-4 h-4 mr-2 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg> MULTI-AGENTE SEGURO</li>
+                            <li class="flex items-center text-xs font-bold text-slate-300 italic"><svg class="w-4 h-4 mr-2 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg> TRADUCCIÓN AUTOMÁTICA</li>
+                        </ul>
+                        <a href="https://wa.me/your-number" class="text-white text-xs font-black uppercase tracking-widest border-b-2 border-emerald-500 pb-1 hover:border-white transition-all">Saber más</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="relative py-32 px-6 z-10 bg-brand-dark overflow-hidden">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-indigo-600/5 blur-[120px] rounded-full pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20 text-balance">
+                <h2 class="text-[10px] font-black text-white bg-indigo-600 inline-block px-3 py-1 rounded-md uppercase tracking-[0.4em] mb-6">Inversión</h2>
+                <p class="text-5xl font-black text-white uppercase italic tracking-tighter">Planes que <br> escalan contigo</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Plan 1 -->
+                <div class="glass p-10 rounded-[3rem] border-white/5 hover:bg-white/[0.05] transition-all flex flex-col items-center group">
+                    <h4 class="text-xs font-black text-slate-500 uppercase tracking-widest mb-8">Starter</h4>
+                    <div class="flex items-baseline space-x-1 mb-8">
+                        <span class="text-xl font-bold text-white tracking-tighter italic">$</span>
+                        <span class="text-6xl font-black text-white italic tracking-tighter">49</span>
+                        <span class="text-xs font-bold text-slate-500 uppercase">/mes</span>
+                    </div>
+                    <ul class="w-full space-y-4 mb-12 text-sm text-slate-400 font-medium border-y border-white/5 py-8">
+                        <li class="flex items-center justify-between"><span>1 Bot Activo</span> <svg class="w-4 h-4 text-indigo-500" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l5-5z"/></svg></li>
+                        <li class="flex items-center justify-between"><span>1,000 Mensajes</span> <svg class="w-4 h-4 text-indigo-500" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l5-5z"/></svg></li>
+                        <li class="flex items-center justify-between opacity-30 italic"><span>Soporte Prioritario</span> <span>X</span></li>
+                    </ul>
+                    <a href="https://wa.me/your-number" class="w-full py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black uppercase text-[10px] tracking-widest hover:bg-white hover:text-brand-dark transition-all text-center">Seleccionar</a>
+                </div>
+
+                <!-- Plan 2 (Popular) -->
+                <div class="glass p-12 rounded-[3.5rem] border-indigo-500/30 scale-105 bg-indigo-600/5 relative flex flex-col items-center group overflow-hidden shadow-2xl">
+                    <div class="absolute top-0 right-0 bg-indigo-600 text-[8px] font-black text-white px-4 py-1.5 rounded-bl-2xl uppercase tracking-widest">Más Popular</div>
+                    <h4 class="text-xs font-black text-indigo-400 uppercase tracking-widest mb-8">Business Pro</h4>
+                    <div class="flex items-baseline space-x-1 mb-8 text-indigo-400">
+                        <span class="text-xl font-bold tracking-tighter italic">$</span>
+                        <span class="text-6xl font-black italic tracking-tighter">149</span>
+                        <span class="text-xs font-bold uppercase">/mes</span>
+                    </div>
+                    <ul class="w-full space-y-4 mb-12 text-sm text-slate-300 font-medium border-y border-indigo-500/20 py-8 italic">
+                        <li class="flex items-center justify-between"><span>5 Bots Activos</span> <svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l5-5z"/></svg></li>
+                        <li class="flex items-center justify-between text-indigo-200"><span>Ilimitado Mensajes</span> <svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l5-5z"/></svg></li>
+                        <li class="flex items-center justify-between"><span>Soporte Prioritario</span> <svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l5-5z"/></svg></li>
+                    </ul>
+                    <a href="https://wa.me/your-number" class="w-full py-5 rounded-3xl bg-indigo-600 text-white font-black uppercase text-[11px] tracking-widest hover:bg-indigo-50 transition-all shadow-xl shadow-indigo-600/30 text-center">Adquirir Pro</a>
+                </div>
+
+                <!-- Plan 3 -->
+                <div class="glass p-10 rounded-[3rem] border-white/5 hover:bg-white/[0.05] transition-all flex flex-col items-center group">
+                    <h4 class="text-xs font-black text-slate-500 uppercase tracking-widest mb-8">Enterprise</h4>
+                    <div class="flex items-baseline space-y-0 mb-8">
+                        <span class="text-4xl font-black text-white italic tracking-tighter">CUSTOM</span>
+                    </div>
+                    <ul class="w-full space-y-4 mb-12 text-sm text-slate-400 font-medium border-y border-white/5 py-8">
+                        <li class="flex items-center justify-between"><span>Bots Personalizados</span> <svg class="w-4 h-4 text-indigo-500" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l5-5z"/></svg></li>
+                        <li class="flex items-center justify-between"><span>Infraestructura Dedicada</span> <svg class="w-4 h-4 text-indigo-500" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l5-5z"/></svg></li>
+                    </ul>
+                    <a href="https://wa.me/your-number" class="w-full py-4 rounded-2xl bg-white text-brand-dark font-black uppercase text-[10px] tracking-widest hover:bg-indigo-50 transition-all text-center">Consultar</a>
                 </div>
             </div>
         </div>
