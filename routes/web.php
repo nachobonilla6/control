@@ -28,9 +28,13 @@ Route::post('/login', function (Request $request) {
 })->name('login.post');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+
+    // Chat message handling
+    Route::post('/chat', [\App\Http\Controllers\DashboardController::class, 'chat'])->name('chat');
+
+    // Fetch latest notifications as JSON for modal
+    Route::get('/notifications', [\App\Http\Controllers\DashboardController::class, 'notifications'])->name('notifications');
 
     Route::post('/logout', function (Request $request) {
         Auth::logout();
