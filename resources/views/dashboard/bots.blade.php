@@ -23,6 +23,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
     </style>
 </head>
 <body class="h-full flex flex-col bg-slate-950 text-slate-200 overflow-hidden">
@@ -30,10 +31,11 @@
     <!-- Navbar -->
     <nav class="h-20 bg-slate-900/50 backdrop-blur-md border-b border-slate-800/50 flex items-center justify-between px-6 sticky top-0 z-30">
         <div class="flex items-center space-x-4">
-            <a href="{{ route('dashboard') }}" class="text-indigo-400 hover:text-indigo-300 transition-colors border border-slate-800 p-2 rounded-xl bg-slate-900">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-            <span class="text-xl font-bold text-white tracking-tighter uppercase">AI Fleet</span>
+            <span class="text-xl font-bold text-indigo-400 font-inter">josh dev</span>
+            <span class="text-slate-700 font-light text-xl italic font-inter">/</span>
+            <span class="text-sm font-medium text-slate-400 tracking-wide uppercase font-inter">Control Panel</span>
+            <span class="text-slate-800 font-light text-xl italic font-inter">/</span>
+            <a href="{{ route('dashboard.bots') }}" class="text-xs font-black text-indigo-500 tracking-[0.2em] hover:text-white transition-colors">AI Fleet</a>
         </div>
         <div class="flex items-center space-x-4">
             <!-- Account Dropdown -->
