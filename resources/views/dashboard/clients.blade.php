@@ -203,7 +203,7 @@
                                             @else
                                                 <span class="flex items-center text-[9px] font-black text-indigo-400 tracking-widest group-hover/status:text-emerald-400 transition-colors">
                                                     <span class="w-1.5 h-1.5 bg-indigo-500 rounded-full mr-2"></span>
-                                                    EXTRACTED
+                                                    QUEUED
                                                 </span>
                                             @endif
                                         </button>
@@ -253,7 +253,7 @@
             <div class="flex justify-between items-start mb-6">
                 <div>
                     <h2 id="modalTitle" class="text-2xl font-black text-white italic tracking-tighter mb-0.5">New Record</h2>
-                    <p id="modalSubtitle" class="text-[8px] font-bold text-slate-500 tracking-widest leading-none">Register business entity • {{ $extractedCount }} EXTRACTED | {{ $sentCount }} SENT</p>
+                    <p id="modalSubtitle" class="text-[8px] font-bold text-slate-500 tracking-widest leading-none">Register business entity • {{ $queuedCount }} QUEUED | {{ $sentCount }} SENT</p>
                 </div>
                 <button onclick="document.getElementById('clientModal').classList.add('hidden')" class="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-xl text-slate-600 hover:text-white transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -315,7 +315,7 @@
                                 <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Operation Status</label>
                                 <div class="relative">
                                     <select name="status" id="form_status" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white appearance-none transition-all cursor-pointer">
-                                        <option value="extracted">EXTRACTED</option>
+                                        <option value="queued">QUEUED</option>
                                         <option value="sent">SENT</option>
                                     </select>
                                     <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
@@ -342,7 +342,7 @@
             form.action = "{{ route('dashboard.clients.store') }}";
             document.getElementById('methodField').innerHTML = '';
             document.getElementById('modalTitle').innerText = 'New Record';
-            document.getElementById('modalSubtitle').innerText = 'Register business entity • {{ $extractedCount }} EXTRACTED | {{ $sentCount }} SENT';
+            document.getElementById('modalSubtitle').innerText = 'Register business entity • {{ $queuedCount }} QUEUED | {{ $sentCount }} SENT';
             
             document.getElementById('form_name').value = '';
             document.getElementById('form_email').value = '';
@@ -364,7 +364,7 @@
             form.action = `/dashboard/clients/${client.id}`;
             document.getElementById('methodField').innerHTML = '<input type="hidden" name="_method" value="PATCH">';
             document.getElementById('modalTitle').innerText = 'Edit Client';
-            document.getElementById('modalSubtitle').innerText = 'Updating: ' + client.name + ' • Status: ' + (client.status || 'extracted').toUpperCase();
+            document.getElementById('modalSubtitle').innerText = 'Updating: ' + client.name + ' • Status: ' + (client.status || 'queued').toUpperCase();
             
             document.getElementById('form_name').value = client.name;
             document.getElementById('form_email').value = client.email;

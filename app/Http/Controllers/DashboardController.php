@@ -411,14 +411,14 @@ class DashboardController extends Controller
     public function clientsIndex()
     {
         $totalClients = Client::count();
-        $extractedCount = Client::where('status', 'extracted')->count();
+        $queuedCount = Client::where('status', 'queued')->count();
         $sentCount = Client::where('status', 'sent')->count();
-        $clients = Client::orderByRaw("FIELD(status, 'extracted', 'sent') ASC")
-            ->orderByRaw("CASE WHEN status = 'extracted' THEN created_at END ASC")
+        $clients = Client::orderByRaw("FIELD(status, 'queued', 'sent') ASC")
+            ->orderByRaw("CASE WHEN status = 'queued' THEN created_at END ASC")
             ->orderByRaw("CASE WHEN status = 'sent' THEN created_at END DESC")
             ->paginate(5);
         
-        return view('dashboard.clients', compact('clients', 'totalClients', 'extractedCount', 'sentCount'));
+        return view('dashboard.clients', compact('clients', 'totalClients', 'queuedCount', 'sentCount'));
     }
 
     /**
@@ -432,7 +432,7 @@ class DashboardController extends Controller
             'location' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:50',
             'industry' => 'nullable|string|max:100',
-            'status' => 'required|string|in:extracted,sent',
+            'status' => 'required|string|in:queued,sent',
         ]);
 
         try {
@@ -454,7 +454,7 @@ class DashboardController extends Controller
             'location' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:50',
             'industry' => 'nullable|string|max:100',
-            'status' => 'required|string|in:extracted,sent',
+            'status' => 'required|string|in:queued,sent',
         ]);
 
         try {
@@ -473,7 +473,7 @@ class DashboardController extends Controller
     {
         try {
             $client = Client::findOrFail($id);
-            $client->status = ($client->status === 'extracted') ? 'sent' : 'extracted';
+            $client->status = ($client->status === 'queued') ? 'sent' : 'queued';
             $client->save();
             return back()->with('success', 'Status switched to ' . strtoupper($client->status));
         } catch (\Exception $e) {
