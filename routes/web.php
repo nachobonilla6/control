@@ -76,6 +76,7 @@ Route::middleware(['auth'])->group(function () {
     // Facebook Accounts
     Route::get('/dashboard/facebook/accounts', [\App\Http\Controllers\DashboardController::class, 'facebookAccountsIndex'])->name('dashboard.facebook.accounts');
     Route::post('/dashboard/facebook/accounts', [\App\Http\Controllers\DashboardController::class, 'facebookAccountsStore'])->name('dashboard.facebook.accounts.store');
+    Route::patch('/dashboard/facebook/accounts/{id}', [\App\Http\Controllers\DashboardController::class, 'facebookAccountsUpdate'])->name('dashboard.facebook.accounts.update');
     Route::delete('/dashboard/facebook/accounts/{id}', [\App\Http\Controllers\DashboardController::class, 'facebookAccountsDestroy'])->name('dashboard.facebook.accounts.destroy');
 
     // API & Actions

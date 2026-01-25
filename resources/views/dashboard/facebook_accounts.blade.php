@@ -110,6 +110,9 @@
                                     </a>
                                 </td>
                                 <td class="px-10 py-6 text-right">
+                                    <button onclick="openEditModal({{ json_encode($account) }})" class="w-10 h-10 inline-flex items-center justify-center bg-indigo-500/10 text-indigo-500 rounded-xl hover:bg-indigo-500 hover:text-white transition-all border border-indigo-500/10 mr-2 group/edit">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    </button>
                                     <form action="{{ route('dashboard.facebook.accounts.destroy', $account->id) }}" method="POST" onsubmit="return confirm('Disconnect this account?')" class="inline-block">
                                         @csrf
                                         @method('DELETE')
@@ -178,7 +181,65 @@
         </div>
     </div>
 
+    <!-- Edit Account Modal -->
+    <div id="editAccountModal" class="fixed inset-0 z-50 hidden bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-lg rounded-[3rem] overflow-hidden shadow-2xl p-10 animate-in fade-in zoom-in duration-300">
+            <div class="flex justify-between items-start mb-8">
+                <div>
+                    <h2 class="text-2xl font-black text-white italic tracking-tighter mb-1 uppercase">Edit Account</h2>
+                    <p class="text-[8px] font-bold text-slate-500 tracking-widest leading-none uppercase">Modify connection parameters</p>
+                </div>
+                <button onclick="document.getElementById('editAccountModal').classList.add('hidden')" class="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-xl text-slate-600 hover:text-white transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </div>
+
+            <form id="editAccountForm" method="POST" class="space-y-6">
+                @csrf
+                @method('PATCH')
+                <input type="hidden" id="edit_id" name="id">
+                
+                <div>
+                    <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Account / Page Name</label>
+                    <input type="text" id="edit_name" name="name" required 
+                           class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all lowercase">
+                </div>
+                <div>
+                    <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Page URL</label>
+                    <input type="url" id="edit_link" name="link" required
+                           class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all lowercase">
+                </div>
+                <div>
+                    <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Page ID</label>
+                    <input type="text" id="edit_page_id" name="page_id" required 
+                           class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all">
+                </div>
+                <div>
+                    <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Access Token</label>
+                    <input type="text" id="edit_access_token" name="access_token" required
+                           class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all">
+                </div>
+
+                <div class="pt-4">
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-black py-5 rounded-2xl shadow-2xl shadow-indigo-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em] uppercase">
+                        Update Connection
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
+        function openEditModal(account) {
+            document.getElementById('edit_name').value = account.name;
+            document.getElementById('edit_link').value = account.link;
+            document.getElementById('edit_page_id').value = account.page_id;
+            document.getElementById('edit_access_token').value = account.access_token || '';
+            document.getElementById('editAccountForm').action = "{{ route('dashboard.facebook.accounts.update', '') }}/" + account.id;
+            
+            document.getElementById('editAccountModal').classList.remove('hidden');
+        }
+
         document.getElementById('accountBtn').addEventListener('click', () => {
             window.location.href = "{{ route('dashboard') }}";
         });

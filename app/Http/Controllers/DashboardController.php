@@ -907,6 +907,27 @@ class DashboardController extends Controller
     }
 
     /**
+     * Update existing Facebook Account.
+     */
+    public function facebookAccountsUpdate(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'link' => 'required|url',
+            'page_id' => 'required|string|max:100',
+            'access_token' => 'required|string',
+        ]);
+
+        try {
+            $account = FacebookAccount::findOrFail($id);
+            $account->update($request->all());
+            return redirect()->route('dashboard.facebook.accounts')->with('success', 'Facebook account updated successfully.');
+        } catch (\Exception $e) {
+            return back()->withInput()->withErrors(['error' => 'Error updating account: ' . $e->getMessage()]);
+        }
+    }
+
+    /**
      * Delete Facebook Account.
      */
     public function facebookAccountsDestroy($id)
