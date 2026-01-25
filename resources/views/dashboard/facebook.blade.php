@@ -177,7 +177,7 @@
                                         </span>
                                     @endif
                                 </div>
-                                <span class="text-[8px] font-bold text-slate-500 uppercase tracking-widest">{{ $post->created_at->diffForHumans() }}</span>
+                                <span class="text-[8px] font-bold text-slate-500 uppercase tracking-widest">{{ $post->created_at->timezone('America/Costa_Rica')->diffForHumans() }}</span>
                             </div>
                             <p class="text-[11px] text-slate-300 leading-relaxed line-clamp-4 font-medium lowercase mb-6">
                                 {{ $post->content }}
