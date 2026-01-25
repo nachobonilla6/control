@@ -57,7 +57,8 @@ class DashboardController extends Controller
     }
 
     /**
-     * Send chat message to n8n and store history in DB.
+     * Send chat message to n8n.
+     * Persistence (saving to DB) is handled by n8n.
      */
     public function chat(Request $request)
     {
@@ -65,47 +66,16 @@ class DashboardController extends Controller
         $chatId = $request->session()->get('current_chat_id');
         $username = Auth::user()->name;
 
-        // 1. Save User Message to DB
-        ChatHistory::create([
-            'chat_id' => $chatId,
-            'username' => $username,
-            'role' => 'user',
-            'message' => $message
-        ]);
-
         try {
-            // 2. Send request to n8n webhook
-            $response = Http::post('https://n8n.srv1137974.hstgr.cloud/webhook-test/2b14440f-2a6b-4898-8cc7-5cb163b1ad2c', [
+            // Send request to n8n webhook - n8n will be responsible for saving to josh_dev_chat_history
+            Http::post('https://n8n.srv1137974.hstgr.cloud/webhook-test/2b14440f-2a6b-4898-8cc7-5cb163b1ad2c', [
                 'chat_id' => $chatId,
                 'message' => $message,
                 'user' => $username,
                 'email' => Auth::user()->email
             ]);
-
-            if ($response->successful()) {
-                $responseData = $response->json();
-                $n8nResponse = $responseData['output'] ?? $responseData['response'] ?? $responseData['message'] ?? 'Message received by n8n.';
-                
-                // 3. Save Assistant Message to DB
-                ChatHistory::create([
-                    'chat_id' => $chatId,
-                    'username' => 'n8n_assistant',
-                    'role' => 'assistant',
-                    'message' => $n8nResponse
-                ]);
-            } else {
-                ChatHistory::create([
-                    'chat_id' => $chatId,
-                    'role' => 'assistant',
-                    'message' => "Error from n8n: " . $response->status()
-                ]);
-            }
         } catch (\Exception $e) {
-            ChatHistory::create([
-                'chat_id' => $chatId,
-                'role' => 'assistant',
-                'message' => "Connection Error: " . $e->getMessage()
-            ]);
+            // Silently fail or log, since n8n handles the logic
         }
 
         return redirect()->route('dashboard');
