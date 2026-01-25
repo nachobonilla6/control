@@ -371,6 +371,45 @@ class DashboardController extends Controller
     }
 
     /**
+     * Show the Chat Interface for Copilot.
+     */
+    public function chatIndex(Request $request, $botId = 'josh-dev')
+    {
+        $currentChatId = $request->session()->get('current_chat_id');
+        
+        if (!$currentChatId) {
+            $currentChatId = (string) Str::uuid();
+            $request->session()->put('current_chat_id', $currentChatId);
+        }
+
+        $chatHistory = ChatHistory::where('chat_id', $currentChatId)->orderBy('created_at', 'asc')->get();
+        
+        // Fetch recent unique chat threads for the sidebar
+        $threads = ChatHistory::where('role', 'user')
+            ->select('chat_id', 'message')
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->unique('chat_id')
+            ->take(10);
+
+        return view('dashboard.chat', [
+            'bot_id' => $botId,
+            'chat_history' => $chatHistory,
+            'threads' => $threads,
+            'current_chat_id' => $currentChatId
+        ]);
+    }
+
+    /**
+     * Reset Chat and start a new session.
+     */
+    public function chatNew(Request $request)
+    {
+        $request->session()->put('current_chat_id', (string) Str::uuid());
+        return redirect()->route('dashboard.chat');
+    }
+
+    /**
      * Chat endpoint redirection.
      */
     public function chat(Request $request)

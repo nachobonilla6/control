@@ -83,15 +83,36 @@
                 <span class="text-xs font-bold uppercase tracking-widest text-indigo-400">{{ str_replace('-', ' ', $bot_id) }}</span>
             </div>
             <div class="flex items-center space-x-4">
+                <a href="{{ route('dashboard.chat') }}" class="flex items-center space-x-2 px-4 py-2 bg-indigo-600/10 hover:bg-indigo-600/20 border border-indigo-500/20 rounded-xl transition-all group">
+                    <svg class="w-4 h-4 text-indigo-400 group-hover:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="text-[10px] font-black text-indigo-400 uppercase tracking-widest">Copilot</span>
+                </a>
                 <button id="notifBtn" class="relative p-2 text-slate-400 hover:text-indigo-400 transition-colors focus:outline-none">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     <span id="notifBadge" class="absolute top-1 right-1 bg-indigo-600 text-[10px] font-bold text-white rounded-full w-4 h-4 flex items-center justify-center border-2 border-slate-950 hidden">0</span>
                 </button>
                 <span class="w-px h-6 bg-slate-800"></span>
-                <form action="{{ route('logout') }}" method="POST" class="inline">
-                    @csrf
-                    <button type="submit" class="text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-white transition-colors">Log Out</button>
-                </form>
+                <div class="relative">
+                    <button id="accountBtn" class="flex items-center justify-center w-8 h-8 bg-slate-800/50 border border-slate-800 rounded-full hover:border-indigo-500/30 transition-all focus:outline-none overflow-hidden group">
+                        @if(Auth::user()->profile_photo_url)
+                            <img src="{{ asset(Auth::user()->profile_photo_url) }}" class="w-full h-full object-cover">
+                        @else
+                            <div class="w-full h-full bg-indigo-600 flex items-center justify-center text-white text-[10px] font-black uppercase">
+                                {{ substr(Auth::user()->name, 0, 1) }}
+                            </div>
+                        @endif
+                    </button>
+                    <!-- Simple dropdown for chat page -->
+                    <div id="accountDropdown" class="absolute right-0 mt-3 w-48 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl opacity-0 invisible transition-all z-50 p-2">
+                        <form action="{{ route('logout') }}" method="POST" class="w-full">
+                            @csrf
+                            <button type="submit" class="w-full flex items-center space-x-3 px-4 py-3 text-xs text-red-500 hover:bg-red-500/10 rounded-xl transition-colors">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                <span class="font-bold uppercase tracking-widest">Logout</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </nav>
 
@@ -246,6 +267,31 @@
 
         close.addEventListener('click', hideModal);
         modal.addEventListener('click', (e) => { if(e.target === modal) hideModal(); });
+
+        const accountBtn = document.getElementById('accountBtn');
+        const accountDropdown = document.getElementById('accountDropdown');
+
+        function closeAllDropdowns() {
+            if (accountDropdown) accountDropdown.classList.add('opacity-0', 'invisible');
+        }
+
+        if (accountBtn) {
+            accountBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isVisible = !accountDropdown.classList.contains('invisible');
+                if (!isVisible) {
+                    accountDropdown.classList.remove('opacity-0', 'invisible');
+                } else {
+                    accountDropdown.classList.add('opacity-0', 'invisible');
+                }
+            });
+        }
+
+        document.addEventListener('click', (e) => {
+            if (accountDropdown && !accountDropdown.contains(e.target)) {
+                closeAllDropdowns();
+            }
+        });
 
         fetchNotifs();
     </script>

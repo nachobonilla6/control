@@ -79,8 +79,10 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/dashboard/facebook/accounts/{id}', [\App\Http\Controllers\DashboardController::class, 'facebookAccountsUpdate'])->name('dashboard.facebook.accounts.update');
     Route::delete('/dashboard/facebook/accounts/{id}', [\App\Http\Controllers\DashboardController::class, 'facebookAccountsDestroy'])->name('dashboard.facebook.accounts.destroy');
 
-    // API & Actions
+    // AI & Chat
+    Route::get('/dashboard/chat/{bot?}', [\App\Http\Controllers\DashboardController::class, 'chatIndex'])->name('dashboard.chat');
     Route::post('/chat', [\App\Http\Controllers\DashboardController::class, 'chat'])->name('chat');
+    Route::post('/chat/new', [\App\Http\Controllers\DashboardController::class, 'chatNew'])->name('chat.new');
     Route::get('/notifications', [\App\Http\Controllers\DashboardController::class, 'notifications'])->name('notifications');
     Route::post('/profile/update', [\App\Http\Controllers\DashboardController::class, 'profileUpdate'])->name('dashboard.profile.update');
 
