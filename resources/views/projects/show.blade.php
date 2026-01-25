@@ -120,8 +120,24 @@
                             </div>
                         </div>
 
+                        @php
+                            $integrations = is_array($project->integrations) ? $project->integrations : json_decode($project->integrations, true);
+                            if (!is_array($integrations)) $integrations = [];
+                        @endphp
+
+                        @if(count($integrations) > 0)
                         <div>
-                            <h3 class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-6">Equipo & Stack</h3>
+                            <h3 class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-6">Integraciones Core</h3>
+                            <div class="flex flex-wrap gap-2">
+                                @foreach($integrations as $item)
+                                    <span class="px-3 py-1.5 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-[9px] font-bold text-indigo-400 uppercase tracking-wider">#{{ $item }}</span>
+                                @endforeach
+                            </div>
+                        </div>
+                        @endif
+
+                        <div>
+                            <h3 class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-6">Stack Estándar</h3>
                             <div class="flex flex-wrap gap-2">
                                 @php
                                     $tags = ['Next.js', 'Tailwind', 'AI Core', 'Cloud Infrastructure', 'Automation'];

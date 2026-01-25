@@ -171,17 +171,21 @@
                             </div>
                             
                             <div class="flex items-center space-x-2.5">
-                                <button 
-                                    class="edit-btn w-10 h-10 flex items-center justify-center bg-indigo-600/10 text-indigo-400 rounded-xl hover:bg-indigo-600 hover:text-white transition-all border border-indigo-500/20 active:scale-95"
-                                    data-id="{{ $project->id }}"
-                                    data-name="{{ $project->name }}"
-                                    data-type="{{ $project->type }}"
-                                    data-video="{{ $project->video_url }}"
-                                    data-description="{{ $project->description }}"
-                                    data-active="{{ $project->active ? '1' : '0' }}"
-                                    onclick="event.stopPropagation(); window.setupEditModal(this)">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                </button>
+                                    @php
+                                        $integStr = is_array($project->integrations) ? implode(', ', $project->integrations) : '';
+                                    @endphp
+                                    <button 
+                                        class="edit-btn w-10 h-10 flex items-center justify-center bg-indigo-600/10 text-indigo-400 rounded-xl hover:bg-indigo-600 hover:text-white transition-all border border-indigo-500/20 active:scale-95"
+                                        data-id="{{ $project->id }}"
+                                        data-name="{{ $project->name }}"
+                                        data-type="{{ $project->type }}"
+                                        data-video="{{ $project->video_url }}"
+                                        data-integrations="{{ $integStr }}"
+                                        data-description="{{ $project->description }}"
+                                        data-active="{{ $project->active ? '1' : '0' }}"
+                                        onclick="event.stopPropagation(); window.setupEditModal(this)">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    </button>
 
                                 <form action="{{ route('dashboard.projects.destroy', $project->id) }}" method="POST" onsubmit="return confirm('Initiate project decommissioning?');">
                                     @csrf
@@ -254,6 +258,12 @@
                     <div>
                         <label class="block text-[9px] font-black text-indigo-400 uppercase tracking-widest mb-2">Video / URL (Optional)</label>
                         <input type="url" name="video_url" id="form_video" placeholder="YouTube link..." 
+                               class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white placeholder:text-slate-800 transition-all">
+                    </div>
+
+                    <div>
+                        <label class="block text-[9px] font-black text-indigo-400 uppercase tracking-widest mb-2">Integraciones (Separadas por coma)</label>
+                        <input type="text" name="integrations" id="form_integrations" placeholder="Zapier, Shopify, Stripe..." 
                                class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white placeholder:text-slate-800 transition-all">
                     </div>
 
@@ -341,9 +351,11 @@
             document.getElementById('form_name').value = '';
             document.getElementById('form_type').value = 'Mobile App';
             document.getElementById('form_video').value = '';
+            document.getElementById('form_integrations').value = '';
             document.getElementById('form_description').value = '';
             document.getElementById('form_active').checked = true;
-            document.getElementById('fileLabel').innerText = 'Select Visual Assets';
+            document.getElementById('fileLabel').innerText = 'Select Photos';
+            document.getElementById('imagePreview').innerHTML = '';
             
             document.getElementById('newProjectModal').classList.remove('hidden');
         }
@@ -353,6 +365,7 @@
             const name = btn.getAttribute('data-name');
             const type = btn.getAttribute('data-type');
             const video = btn.getAttribute('data-video') || '';
+            const integrations = btn.getAttribute('data-integrations') || '';
             const description = btn.getAttribute('data-description');
             const active = btn.getAttribute('data-active') === '1';
 
@@ -368,9 +381,11 @@
             document.getElementById('form_name').value = name;
             document.getElementById('form_type').value = type;
             document.getElementById('form_video').value = video;
+            document.getElementById('form_integrations').value = integrations;
             document.getElementById('form_description').value = description || '';
             document.getElementById('form_active').checked = active;
             document.getElementById('fileLabel').innerText = 'Visual Assets Attached';
+            document.getElementById('imagePreview').innerHTML = '';
             
             document.getElementById('newProjectModal').classList.remove('hidden');
         }

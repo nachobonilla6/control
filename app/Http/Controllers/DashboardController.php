@@ -71,6 +71,7 @@ class DashboardController extends Controller
             'name' => 'required|string|max:255',
             'type' => 'required|string|max:100',
             'video_url' => 'nullable|string|max:255',
+            'integrations' => 'nullable|string',
             'description' => 'nullable|string',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
             'images' => 'nullable|array|max:7',
@@ -98,6 +99,7 @@ class DashboardController extends Controller
                 'name' => $request->name,
                 'type' => $request->type,
                 'video_url' => $request->video_url,
+                'integrations' => $request->integrations ? array_map('trim', explode(',', $request->integrations)) : [],
                 'description' => $request->description,
                 'active' => $request->has('active'),
                 'images' => $imagePaths
@@ -143,6 +145,7 @@ class DashboardController extends Controller
             'name' => 'required|string|max:255',
             'type' => 'required|string|max:100',
             'video_url' => 'nullable|string|max:255',
+            'integrations' => 'nullable|string',
             'description' => 'nullable|string',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
             'images' => 'nullable|array|max:7',
@@ -155,6 +158,7 @@ class DashboardController extends Controller
                 'name' => $request->name,
                 'type' => $request->type,
                 'video_url' => $request->video_url,
+                'integrations' => $request->integrations ? array_map('trim', explode(',', $request->integrations)) : [],
                 'description' => $request->description,
                 'active' => $request->has('active'),
             ];
