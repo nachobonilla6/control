@@ -418,10 +418,7 @@ class DashboardController extends Controller
             ->orderByRaw("CASE WHEN status = 'sent' THEN created_at END DESC")
             ->paginate(5);
         
-        $industries = Client::whereNotNull('industry')->where('industry', '!=', '')->distinct()->pluck('industry');
-        $locations = Client::whereNotNull('location')->where('location', '!=', '')->distinct()->pluck('location');
-        
-        return view('dashboard.clients', compact('clients', 'totalClients', 'extractedCount', 'sentCount', 'industries', 'locations'));
+        return view('dashboard.clients', compact('clients', 'totalClients', 'extractedCount', 'sentCount'));
     }
 
     /**
