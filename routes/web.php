@@ -58,6 +58,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/dashboard/clients/parse', [\App\Http\Controllers\DashboardController::class, 'clientsParse'])->name('dashboard.clients.parse');
     Route::delete('/dashboard/clients/{id}', [\App\Http\Controllers\DashboardController::class, 'clientsDestroy'])->name('dashboard.clients.destroy');
 
+    // Courses
+    Route::get('/dashboard/courses', [\App\Http\Controllers\DashboardController::class, 'coursesIndex'])->name('dashboard.courses');
+    Route::post('/dashboard/courses', [\App\Http\Controllers\DashboardController::class, 'coursesStore'])->name('dashboard.courses.store');
+    Route::patch('/dashboard/courses/{id}', [\App\Http\Controllers\DashboardController::class, 'coursesUpdate'])->name('dashboard.courses.update');
+    Route::delete('/dashboard/courses/{id}', [\App\Http\Controllers\DashboardController::class, 'coursesDestroy'])->name('dashboard.courses.destroy');
+
     // API & Actions
     Route::post('/chat', [\App\Http\Controllers\DashboardController::class, 'chat'])->name('chat');
     Route::get('/notifications', [\App\Http\Controllers\DashboardController::class, 'notifications'])->name('notifications');

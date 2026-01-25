@@ -7,6 +7,7 @@ use App\Models\ChatHistory;
 use App\Models\Webhook;
 use App\Models\Project;
 use App\Models\Client;
+use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -48,6 +49,13 @@ class DashboardController extends Controller
                 'description' => 'Manage your business relationships and contacts.',
                 'icon' => '👥',
                 'route' => 'dashboard.clients',
+            ],
+            [
+                'id' => 'courses',
+                'name' => 'Courses',
+                'description' => 'Track your learning journey and academic goals.',
+                'icon' => '🎓',
+                'route' => 'dashboard.courses',
             ],
         ];
 
@@ -550,6 +558,66 @@ class DashboardController extends Controller
         try {
             Client::findOrFail($id)->delete();
             return redirect()->route('dashboard.clients')->with('success', 'Cliente eliminado del sistema.');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Error al eliminar: ' . $e->getMessage()]);
+        }
+    }
+    /**
+     * Courses Page: List.
+     */
+    public function coursesIndex()
+    {
+        $courses = Course::orderBy('created_at', 'desc')->get();
+        return view('dashboard.courses', compact('courses'));
+    }
+
+    /**
+     * Store new Course.
+     */
+    public function coursesStore(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'link' => 'nullable|url|max:255',
+            'status' => 'required|string|in:pending,done,postponed,archived',
+        ]);
+
+        try {
+            Course::create($request->all());
+            return redirect()->route('dashboard.courses')->with('success', 'Curso registrado exitosamente.');
+        } catch (\Exception $e) {
+            return back()->withInput()->withErrors(['error' => 'Error al guardar: ' . $e->getMessage()]);
+        }
+    }
+
+    /**
+     * Update existing Course.
+     */
+    public function coursesUpdate(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'link' => 'nullable|url|max:255',
+            'status' => 'required|string|in:pending,done,postponed,archived',
+        ]);
+
+        try {
+            $course = Course::findOrFail($id);
+            $course->update($request->all());
+            return redirect()->route('dashboard.courses')->with('success', 'Curso actualizado exitosamente.');
+        } catch (\Exception $e) {
+            return back()->withInput()->withErrors(['error' => 'Error al actualizar: ' . $e->getMessage()]);
+        }
+    }
+
+    /**
+     * Delete Course.
+     */
+    public function coursesDestroy($id)
+    {
+        try {
+            Course::findOrFail($id)->delete();
+            return redirect()->route('dashboard.courses')->with('success', 'Curso eliminado del sistema.');
         } catch (\Exception $e) {
             return back()->withErrors(['error' => 'Error al eliminar: ' . $e->getMessage()]);
         }

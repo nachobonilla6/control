@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-slate-950">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursos - Control Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              indigo: {
+                50: '#eef2ff', 100: '#e0e7ff', 200: '#c7d2fe', 300: '#a5b4fc', 400: '#818cf8',
+                500: '#6366f1', 600: '#4f46e5', 700: '#4338ca', 800: '#3730a3', 900: '#312e81',
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+        body { font-family: 'Outfit', sans-serif; }
+    </style>
+</head>
+<body class="h-full flex flex-col bg-slate-950 text-slate-200 overflow-hidden uppercase">
+
+    <!-- Navbar -->
+    <nav class="h-20 bg-slate-900 border-b border-slate-800 flex items-center justify-between px-8 sticky top-0 z-40">
+        <div class="flex items-center space-x-6">
+            <a href="{{ route('dashboard') }}" class="text-xs font-black text-slate-500 hover:text-white transition-colors tracking-[0.2em]">Dashboard</a>
+            <span class="text-slate-800">/</span>
+            <span class="text-xs font-black text-indigo-400 tracking-[0.2em]">Learning Management</span>
+        </div>
+        <div class="flex items-center space-x-4">
+             <button id="accountBtn" class="w-10 h-10 bg-slate-800 rounded-full border border-slate-700 flex items-center justify-center overflow-hidden hover:border-indigo-500/50 transition-all">
+                @if(Auth::user()->profile_photo_url)
+                    <img src="{{ Auth::user()->profile_photo_url }}" class="w-full h-full object-cover">
+                @else
+                    <span class="text-xs font-black text-white">{{ substr(Auth::user()->name, 0, 1) }}</span>
+                @endif
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-1 overflow-auto p-8 md:p-12">
+        <div class="max-w-7xl mx-auto">
+            
+            @if(session('success'))
+            <div class="mb-8 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-6 py-4 rounded-2xl flex items-center shadow-lg animate-in fade-in slide-in-from-top-4">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span class="text-[10px] font-black tracking-widest">{{ session('success') }}</span>
+            </div>
+            @endif
+
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+                <div>
+                    <h1 class="text-4xl font-black text-white italic tracking-tighter">Gestión de <span class="text-indigo-500">Cursos</span></h1>
+                    <p class="text-[10px] font-bold text-slate-500 tracking-[0.3em] mt-2">Seguimiento de aprendizaje y objetivos</p>
+                </div>
+                
+                <div class="flex items-center space-x-6 bg-slate-900 border border-slate-800 p-2 rounded-2xl">
+                    <div class="px-6 py-2 text-center border-r border-slate-800">
+                        <p class="text-[8px] font-black text-slate-500 uppercase tracking-widest mb-1">Total</p>
+                        <p class="text-xl font-black text-white">{{ count($courses) }}</p>
+                    </div>
+                    <div class="px-6 py-2 text-center border-r border-slate-800">
+                        <p class="text-[8px] font-black text-indigo-500 uppercase tracking-widest mb-1">Pending</p>
+                        <p class="text-xl font-black text-white">{{ $courses->where('status', 'pending')->count() }}</p>
+                    </div>
+                    <div class="px-6 py-2 text-center">
+                        <p class="text-[8px] font-black text-emerald-500 uppercase tracking-widest mb-1">Done</p>
+                        <p class="text-xl font-black text-white">{{ $courses->where('status', 'done')->count() }}</p>
+                    </div>
+                </div>
+
+                <button onclick="openCreateModal()" class="px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-indigo-600/20 active:scale-95 flex items-center">
+                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Nuevo Curso
+                </button>
+            </div>
+
+            <!-- Courses Table -->
+            <div class="bg-slate-900 border border-slate-800 rounded-[2.5rem] overflow-hidden shadow-2xl">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-800 bg-slate-950">
+                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Nombre del Curso</th>
+                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Enlace / URL</th>
+                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Estado</th>
+                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em] text-right">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800/50">
+                            @forelse($courses as $course)
+                            <tr class="hover:bg-white/[0.02] transition-colors group">
+                                <td class="px-8 py-6">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-10 h-10 rounded-xl bg-indigo-600/10 flex items-center justify-center text-indigo-400 font-black text-xs border border-indigo-500/10">
+                                            {{ substr($course->name, 0, 1) }}
+                                        </div>
+                                        <p class="text-sm font-bold text-white leading-none">{{ $course->name }}</p>
+                                    </div>
+                                </td>
+                                <td class="px-8 py-6">
+                                    @if($course->link)
+                                    <a href="{{ $course->link }}" target="_blank" class="text-[9px] font-black text-indigo-400 hover:text-indigo-300 transition-colors tracking-widest break-all">
+                                        OPEN RESOURCE →
+                                    </a>
+                                    @else
+                                    <span class="text-slate-800 italic text-[10px]">Sin link</span>
+                                    @endif
+                                </td>
+                                <td class="px-8 py-6">
+                                    @php
+                                        $statusConfig = [
+                                            'pending' => ['color' => 'text-indigo-400', 'bg' => 'bg-indigo-500'],
+                                            'done' => ['color' => 'text-emerald-400', 'bg' => 'bg-emerald-500'],
+                                            'postponed' => ['color' => 'text-amber-400', 'bg' => 'bg-amber-500'],
+                                            'archived' => ['color' => 'text-slate-500', 'bg' => 'bg-slate-600'],
+                                        ];
+                                        $config = $statusConfig[$course->status] ?? $statusConfig['pending'];
+                                    @endphp
+                                    <span class="flex items-center text-[9px] font-black {{ $config['color'] }} tracking-widest">
+                                        <span class="w-1.5 h-1.5 {{ $config['bg'] }} rounded-full mr-2 {{ $course->status === 'pending' ? 'animate-pulse' : '' }}"></span>
+                                        {{ strtoupper($course->status) }}
+                                    </span>
+                                </td>
+                                <td class="px-8 py-6 text-right">
+                                    <div class="flex items-center justify-end space-x-2">
+                                        <button 
+                                            onclick="openEditModal({{ json_encode($course) }})"
+                                            class="w-9 h-9 flex items-center justify-center bg-indigo-600/10 text-indigo-400 rounded-xl hover:bg-indigo-600 hover:text-white transition-all border border-indigo-500/10">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                        </button>
+                                        <form action="{{ route('dashboard.courses.destroy', $course->id) }}" method="POST" onsubmit="return confirm('¿Eliminar curso del sistema?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="w-9 h-9 flex items-center justify-center bg-red-500/10 text-red-500 rounded-xl hover:bg-red-500 hover:text-white transition-all border border-red-500/10">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="4" class="px-8 py-20 text-center">
+                                    <p class="text-xs font-black text-slate-700 tracking-[0.3em] italic">No discovery modules registered</p>
+                                </td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal -->
+    <div id="courseModal" class="fixed inset-0 z-50 hidden bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-[2.5rem] overflow-hidden shadow-2xl p-10 animate-in fade-in zoom-in duration-300">
+            <div class="flex justify-between items-start mb-8">
+                <div>
+                    <h2 id="modalTitle" class="text-2xl font-black text-white italic tracking-tighter mb-1">Nuevo Curso</h2>
+                    <p id="modalSubtitle" class="text-[8px] font-bold text-slate-500 tracking-widest leading-none">Integración de módulo de aprendizaje</p>
+                </div>
+                <button onclick="document.getElementById('courseModal').classList.add('hidden')" class="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-xl text-slate-600 hover:text-white transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </div>
+
+            <form id="courseForm" action="{{ route('dashboard.courses.store') }}" method="POST" class="space-y-6">
+                @csrf
+                <div id="methodField"></div>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2">Nombre del Curso</label>
+                        <input type="text" name="name" id="form_name" required placeholder="Ej: Mastering Laravel AI" 
+                               class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all uppercase">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2">Enlace / URL del Recurso</label>
+                        <input type="url" name="link" id="form_link" placeholder="https://..." 
+                               class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all lowercase">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2">Estado Escalonado</label>
+                        <select name="status" id="form_status" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white appearance-none transition-all cursor-pointer">
+                            <option value="pending">PENDING</option>
+                            <option value="done">DONE</option>
+                            <option value="postponed">POSTPONED</option>
+                            <option value="archived">ARCHIVED</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-black py-5 rounded-2xl shadow-2xl shadow-indigo-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em]">
+                    Sincronizar Módulo
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openCreateModal() {
+            const form = document.getElementById('courseForm');
+            form.action = "{{ route('dashboard.courses.store') }}";
+            document.getElementById('methodField').innerHTML = '';
+            document.getElementById('modalTitle').innerText = 'Nuevo Curso';
+            document.getElementById('modalSubtitle').innerText = 'Integración de módulo de aprendizaje';
+            
+            document.getElementById('form_name').value = '';
+            document.getElementById('form_link').value = '';
+            document.getElementById('form_status').value = 'pending';
+            
+            document.getElementById('courseModal').classList.remove('hidden');
+        }
+
+        function openEditModal(course) {
+            const form = document.getElementById('courseForm');
+            form.action = `/dashboard/courses/${course.id}`;
+            document.getElementById('methodField').innerHTML = '<input type="hidden" name="_method" value="PATCH">';
+            document.getElementById('modalTitle').innerText = 'Editar Curso';
+            document.getElementById('modalSubtitle').innerText = 'Actualizando: ' + course.name;
+            
+            document.getElementById('form_name').value = course.name;
+            document.getElementById('form_link').value = course.link || '';
+            document.getElementById('form_status').value = course.status || 'pending';
+            
+            document.getElementById('courseModal').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
