@@ -721,15 +721,35 @@ class DashboardController extends Controller
     {
         $request->validate([
             'content' => 'required|string',
-            'image1' => 'nullable|url',
-            'image2' => 'nullable|url',
-            'image3' => 'nullable|url',
+            'image1' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'image2' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'image3' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
             'post_at' => 'nullable|date',
         ]);
 
         try {
-            FacebookPost::create($request->all());
-            return redirect()->route('dashboard.facebook')->with('success', 'Facebook post scheduled successfully.');
+            $data = $request->only(['content', 'post_at']);
+            
+            // Handle image uploads
+            $webRoot = is_dir(base_path('public_html')) ? base_path('public_html') : public_path();
+            $uploadPath = $webRoot . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'facebook';
+            
+            if (!is_dir($uploadPath)) {
+                mkdir($uploadPath, 0755, true);
+            }
+
+            for ($i = 1; $i <= 3; $i++) {
+                $fieldName = 'image' . $i;
+                if ($request->hasFile($fieldName)) {
+                    $image = $request->file($fieldName);
+                    $filename = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+                    $image->move($uploadPath, $filename);
+                    $data[$fieldName] = 'uploads/facebook/' . $filename;
+                }
+            }
+
+            FacebookPost::create($data);
+            return redirect()->route('dashboard.facebook')->with('success', 'Facebook post scheduled successfully with uploads.');
         } catch (\Exception $e) {
             return back()->withInput()->withErrors(['error' => 'Error saving post: ' . $e->getMessage()]);
         }
@@ -741,8 +761,22 @@ class DashboardController extends Controller
     public function facebookDestroy($id)
     {
         try {
-            FacebookPost::findOrFail($id)->delete();
-            return redirect()->route('dashboard.facebook')->with('success', 'Post removed.');
+            $post = FacebookPost::findOrFail($id);
+            
+            // Delete images from disk
+            $webRoot = is_dir(base_path('public_html')) ? base_path('public_html') : public_path();
+            for ($i = 1; $i <= 3; $i++) {
+                $fieldName = 'image' . $i;
+                if ($post->$fieldName) {
+                    $fullPath = $webRoot . DIRECTORY_SEPARATOR . $post->$fieldName;
+                    if (file_exists($fullPath)) {
+                        unlink($fullPath);
+                    }
+                }
+            }
+
+            $post->delete();
+            return redirect()->route('dashboard.facebook')->with('success', 'Post and associated images removed.');
         } catch (\Exception $e) {
             return back()->withErrors(['error' => 'Error deleting post: ' . $e->getMessage()]);
         }

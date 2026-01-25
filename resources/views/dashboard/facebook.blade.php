@@ -95,7 +95,7 @@
                     <!-- Image Carousel Area -->
                     <div class="md:w-1/2 relative bg-slate-950 aspect-square md:aspect-auto">
                         @if($post->image1)
-                            <img src="{{ $post->image1 }}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                            <img src="{{ asset($post->image1) }}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
                         @else
                             <div class="w-full h-full flex items-center justify-center opacity-20">
                                 <span class="text-6xl">📱</span>
@@ -130,9 +130,9 @@
                             
                             <div class="flex items-center justify-between">
                                 <div class="flex -space-x-2">
-                                    @if($post->image1) <img src="{{ $post->image1 }}" class="w-7 h-7 rounded-lg border-2 border-slate-900 object-cover"> @endif
-                                    @if($post->image2) <img src="{{ $post->image2 }}" class="w-7 h-7 rounded-lg border-2 border-slate-900 object-cover"> @endif
-                                    @if($post->image3) <img src="{{ $post->image3 }}" class="w-7 h-7 rounded-lg border-2 border-slate-900 object-cover"> @endif
+                                    @if($post->image1) <img src="{{ asset($post->image1) }}" class="w-7 h-7 rounded-lg border-2 border-slate-900 object-cover"> @endif
+                                    @if($post->image2) <img src="{{ asset($post->image2) }}" class="w-7 h-7 rounded-lg border-2 border-slate-900 object-cover"> @endif
+                                    @if($post->image3) <img src="{{ asset($post->image3) }}" class="w-7 h-7 rounded-lg border-2 border-slate-900 object-cover"> @endif
                                 </div>
                                 <form action="{{ route('dashboard.facebook.destroy', $post->id) }}" method="POST" onsubmit="return confirm('Abort this post deployment?')">
                                     @csrf
@@ -167,7 +167,7 @@
                 </button>
             </div>
 
-            <form action="{{ route('dashboard.facebook.store') }}" method="POST" class="space-y-6">
+            <form action="{{ route('dashboard.facebook.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                 @csrf
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div class="space-y-4">
@@ -185,19 +185,19 @@
                     
                     <div class="space-y-4">
                         <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Media Asset 01 (URL)</label>
-                            <input type="url" name="image1" placeholder="https://image-server.com/photo1.jpg" 
-                                   class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all lowercase">
+                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Media Asset 01</label>
+                            <input type="file" name="image1" accept="image/*"
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-[10px] font-bold text-slate-500 transition-all">
                         </div>
                         <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Media Asset 02 (URL)</label>
-                            <input type="url" name="image2" placeholder="https://image-server.com/photo2.jpg" 
-                                   class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all lowercase">
+                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Media Asset 02</label>
+                            <input type="file" name="image2" accept="image/*"
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-[10px] font-bold text-slate-500 transition-all">
                         </div>
                         <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Media Asset 03 (URL)</label>
-                            <input type="url" name="image3" placeholder="https://image-server.com/photo3.jpg" 
-                                   class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all lowercase">
+                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Media Asset 03</label>
+                            <input type="file" name="image3" accept="image/*"
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-[10px] font-bold text-slate-500 transition-all">
                         </div>
                     </div>
                 </div>
