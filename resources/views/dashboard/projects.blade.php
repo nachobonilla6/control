@@ -206,32 +206,32 @@
     </main>
 
     <!-- Dynamic Project Modal (Create/Edit) -->
-    <div id="newProjectModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-xl flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-slate-800 w-full max-w-lg rounded-[3rem] overflow-hidden shadow-[0_0_80px_rgba(0,0,0,0.5)] p-12 animate-in fade-in zoom-in duration-300">
-            <div class="flex justify-between items-center mb-10">
+    <div id="newProjectModal" class="fixed inset-0 z-50 hidden bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-[2.5rem] overflow-hidden shadow-[0_0_100px_rgba(0,0,0,0.8)] p-8 animate-in fade-in zoom-in duration-300">
+            <div class="flex justify-between items-start mb-6">
                 <div>
-                    <h2 id="modalTitle" class="text-3xl font-black text-white uppercase tracking-tight leading-none mb-2 italic">New Deployment</h2>
-                    <p id="modalSubtitle" class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Registering new development heritage</p>
+                    <h2 id="modalTitle" class="text-2xl font-black text-white uppercase tracking-tight leading-none mb-1 italic">Deploy Asset</h2>
+                    <p id="modalSubtitle" class="text-[8px] font-bold text-slate-500 uppercase tracking-widest">Digital heritage infrastructure</p>
                 </div>
-                <button onclick="document.getElementById('newProjectModal').classList.add('hidden')" class="w-12 h-12 flex items-center justify-center hover:bg-white/5 rounded-2xl text-slate-500 hover:text-white transition-all">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <button onclick="document.getElementById('newProjectModal').classList.add('hidden')" class="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-xl text-slate-500 hover:text-white transition-all transform hover:rotate-90">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </button>
             </div>
             
-            <form id="projectForm" action="{{ route('dashboard.projects.store') }}" method="POST" enctype="multipart/form-data" class="space-y-8">
+            <form id="projectForm" action="{{ route('dashboard.projects.store') }}" method="POST" enctype="multipart/form-data" class="space-y-5">
                 @csrf
                 <div id="methodField"></div>
-                <div class="space-y-6">
-                    <div>
-                        <label class="block text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-3">Project Title</label>
-                        <input type="text" name="name" id="form_name" value="{{ old('name') }}" required placeholder="e.g. Nexus Dashboard" 
-                               class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-6 py-5 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 text-sm font-bold text-white placeholder:text-slate-700">
-                    </div>
-                    
-                    <div class="grid grid-cols-2 gap-6">
+                <div class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="col-span-2">
+                            <label class="block text-[9px] font-black text-indigo-400 uppercase tracking-widest mb-2">Project Title</label>
+                            <input type="text" name="name" id="form_name" value="{{ old('name') }}" required placeholder="e.g. Nexus OS" 
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white placeholder:text-slate-800 transition-all">
+                        </div>
+                        
                         <div>
-                            <label class="block text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-3">Project Type</label>
-                            <select name="type" id="form_type" required class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-6 py-5 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 text-sm font-bold text-white appearance-none">
+                            <label class="block text-[9px] font-black text-indigo-400 uppercase tracking-widest mb-2">Service</label>
+                            <select name="type" id="form_type" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white appearance-none transition-all">
                                 <option value="Mobile App">Mobile App</option>
                                 <option value="Web Platform">Web Platform</option>
                                 <option value="AI Automation">AI Automation</option>
@@ -240,44 +240,46 @@
                         </div>
 
                         <div>
-                            <label class="block text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-3">Initial State</label>
-                            <div class="h-[62px] flex items-center px-6 bg-slate-950 border border-slate-800 rounded-2xl">
+                            <label class="block text-[9px] font-black text-indigo-400 uppercase tracking-widest mb-2">Status</label>
+                            <div class="h-[50px] flex items-center px-4 bg-slate-950 border border-slate-800 rounded-xl">
                                 <label class="relative inline-flex items-center cursor-pointer w-full justify-between">
-                                    <span class="text-[10px] font-black text-slate-500 uppercase">Live System</span>
+                                    <span class="text-[9px] font-black text-slate-600 uppercase">Live</span>
                                     <input type="checkbox" name="active" id="form_active" checked class="sr-only peer">
-                                    <div class="w-10 h-5 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[22px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600"></div>
+                                    <div class="w-8 h-4 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[18px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-emerald-600"></div>
                                 </label>
                             </div>
                         </div>
                     </div>
                     
                     <div>
-                        <label class="block text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-3">Enlace de Proyecto / Video (Opcional)</label>
-                        <input type="url" name="video_url" id="form_video" placeholder="https://www.youtube.com/watch?v=..." 
-                               class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-6 py-5 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 text-sm font-bold text-white placeholder:text-slate-700">
+                        <label class="block text-[9px] font-black text-indigo-400 uppercase tracking-widest mb-2">Video / URL (Optional)</label>
+                        <input type="url" name="video_url" id="form_video" placeholder="YouTube link..." 
+                               class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white placeholder:text-slate-800 transition-all">
                     </div>
 
                     <div>
-                        <label class="block text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-3">Project Narrative</label>
-                        <textarea name="description" id="form_description" rows="3" placeholder="Brief technical summary..." 
-                                  class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-6 py-5 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 text-sm font-bold text-white resize-none placeholder:text-slate-700 leading-relaxed">{{ old('description') }}</textarea>
+                        <label class="block text-[9px] font-black text-indigo-400 uppercase tracking-widest mb-2">Description</label>
+                        <textarea name="description" id="form_description" rows="2" placeholder="Technical summary..." 
+                                  class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white resize-none placeholder:text-slate-800 leading-relaxed transition-all">{{ old('description') }}</textarea>
                     </div>
 
                     <div>
-                        <label class="block text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-3">Visual Media (Max 7)</label>
-                        <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-800 border-dashed rounded-[2rem] cursor-pointer bg-slate-950 hover:bg-slate-900/50 transition-all group/file">
-                            <div class="flex flex-col items-center justify-center">
-                                <svg class="w-8 h-8 mb-2 text-slate-700 group-hover/file:text-indigo-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                <p id="fileLabel" class="text-[10px] font-black text-slate-600 uppercase tracking-widest group-hover/file:text-white transition-colors">Select Visual Assets</p>
+                        <label class="block text-[9px] font-black text-indigo-400 uppercase tracking-widest mb-2">Media Assets</label>
+                        <div id="imagePreview" class="flex flex-wrap gap-2 mb-3"></div>
+                        <label class="flex items-center justify-between w-full p-4 border border-slate-800 border-dashed rounded-xl cursor-pointer bg-slate-950 hover:bg-slate-900 transition-all group/file">
+                            <div class="flex items-center space-x-3">
+                                <svg class="w-5 h-5 text-slate-600 group-hover/file:text-indigo-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                <p id="fileLabel" class="text-[9px] font-black text-slate-600 uppercase tracking-widest group-hover/file:text-white transition-colors">Select Photos</p>
                             </div>
-                            <input type="file" name="images[]" id="fileInput" multiple accept="image/*" class="hidden" onchange="document.getElementById('fileLabel').innerText = this.files.length + ' FILES STAGED'" />
+                            <span class="text-[8px] font-bold text-slate-700 uppercase">Max 7</span>
+                            <input type="file" name="images[]" id="fileInput" multiple accept="image/*" class="hidden" onchange="previewImages(this)" />
                         </label>
-                        <p id="editNotice" class="text-[9px] text-slate-600 mt-2 hidden italic">* Uploading new assets will replace your current infrastructure media.</p>
+                        <p id="editNotice" class="text-[8px] text-slate-600 mt-2 hidden italic uppercase tracking-wider text-center">* Media will be replaced</p>
                     </div>
                 </div>
-            
-                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-black py-6 rounded-3xl shadow-2xl shadow-indigo-600/30 transition-all active:scale-[0.98] text-xs uppercase tracking-[0.3em] flex items-center justify-center space-x-3">
-                    <span id="submitBtnText">Execute Project Load</span>
+                
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-black py-4 rounded-xl shadow-2xl shadow-indigo-600/20 transition-all active:scale-95 text-[10px] uppercase tracking-[0.2em] flex items-center justify-center space-x-2">
+                    <span id="submitBtnText">Initialize Load</span>
                 </button>
             </form>
         </div>
@@ -400,6 +402,29 @@
                     `).join('');
                 }
             } catch (e) {}
+        }
+
+        // Image Preview Logic
+        function previewImages(input) {
+            const container = document.getElementById('imagePreview');
+            const label = document.getElementById('fileLabel');
+            container.innerHTML = '';
+            
+            if (input.files && input.files.length > 0) {
+                label.innerText = `${input.files.length} ASSETS STAGED`;
+                Array.from(input.files).forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const div = document.createElement('div');
+                        div.className = 'w-12 h-12 rounded-lg overflow-hidden border border-white/10 shadow-lg';
+                        div.innerHTML = `<img src="${e.target.result}" class="w-full h-full object-cover">`;
+                        container.appendChild(div);
+                    }
+                    reader.readAsDataURL(file);
+                });
+            } else {
+                label.innerText = 'Select Photos';
+            }
         }
 
         notifBtn.addEventListener('click', (e) => {
