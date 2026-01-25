@@ -115,27 +115,35 @@
                 @endphp
                 <div class="group bg-slate-900 border border-slate-800 rounded-[2.5rem] overflow-hidden transition-all duration-500 hover:border-indigo-500/30 hover:shadow-2xl flex flex-col h-full">
                     <!-- Image Grid Area -->
-                    <div class="relative bg-slate-950 aspect-video overflow-hidden">
-                        @if($imgCount == 1)
-                            <img src="{{ asset(array_values($images)[0]) }}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
-                        @elseif($imgCount == 2)
-                            <div class="grid grid-cols-2 h-full gap-0.5">
-                                <img src="{{ asset(array_values($images)[0]) }}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
-                                <img src="{{ asset(array_values($images)[1]) }}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
-                            </div>
-                        @elseif($imgCount == 3)
-                            <div class="grid grid-cols-2 h-full gap-0.5">
-                                <div class="h-full">
-                                    <img src="{{ asset(array_values($images)[0]) }}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
-                                </div>
-                                <div class="grid grid-rows-2 h-full gap-0.5">
-                                    <img src="{{ asset(array_values($images)[1]) }}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
-                                    <img src="{{ asset(array_values($images)[2]) }}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
-                                </div>
+                    <div class="relative bg-slate-950 aspect-video overflow-hidden" id="carousel-{{ $post->id }}" data-current="0">
+                        @if($imgCount > 0)
+                            <div class="flex h-full transition-transform duration-500 ease-out" id="track-{{ $post->id }}">
+                                @foreach($images as $img)
+                                    <div class="w-full h-full flex-shrink-0">
+                                        <img src="{{ asset($img) }}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                                    </div>
+                                @endforeach
                             </div>
                         @else
                             <div class="w-full h-full flex items-center justify-center opacity-20">
                                 <span class="text-6xl">📱</span>
+                            </div>
+                        @endif
+
+                        @if($imgCount > 1)
+                            <!-- Controls -->
+                            <button onclick="moveSlide(event, '{{ $post->id }}', -1, {{ $imgCount }})" class="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 text-white flex items-center justify-center backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/70 z-10">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <button onclick="moveSlide(event, '{{ $post->id }}', 1, {{ $imgCount }})" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 text-white flex items-center justify-center backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/70 z-10">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+
+                            <!-- Dots -->
+                            <div class="absolute bottom-3 left-0 right-0 flex justify-center space-x-1.5 z-10">
+                                @foreach($images as $idx => $img)
+                                    <div class="w-1.5 h-1.5 rounded-full transition-all {{ $idx == 0 ? 'bg-white scale-125' : 'bg-white/40' }}" id="dot-{{ $post->id }}-{{ $idx }}"></div>
+                                @endforeach
                             </div>
                         @endif
 
@@ -436,7 +444,38 @@
                 document.getElementById('edit_post_at').value = '';
             }
             
+            
             modal.classList.remove('hidden');
+        }
+
+        function moveSlide(event, postId, direction, total) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            const container = document.getElementById('carousel-' + postId);
+            const track = document.getElementById('track-' + postId);
+            let current = parseInt(container.dataset.current || 0);
+            
+            let next = current + direction;
+            if (next < 0) next = total - 1;
+            if (next >= total) next = 0;
+            
+            container.dataset.current = next;
+            track.style.transform = `translateX(-${next * 100}%)`;
+            
+            // Update dots
+            for(let i=0; i<total; i++) {
+                const dot = document.getElementById(`dot-${postId}-${i}`);
+                if (dot) {
+                    if(i === next) {
+                        dot.classList.remove('bg-white/40');
+                        dot.classList.add('bg-white', 'scale-125');
+                    } else {
+                        dot.classList.add('bg-white/40');
+                        dot.classList.remove('bg-white', 'scale-125');
+                    }
+                }
+            }
         }
     </script>
 </body>
