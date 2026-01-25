@@ -30,15 +30,34 @@
     <!-- Navbar -->
     <nav class="h-20 bg-slate-900/50 backdrop-blur-md border-b border-slate-800/50 flex items-center justify-between px-6 sticky top-0 z-30">
         <div class="flex items-center space-x-4">
-            <a href="{{ route('dashboard') }}" class="text-indigo-400 hover:text-indigo-300 transition-colors">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <a href="{{ route('dashboard') }}" class="text-indigo-400 hover:text-indigo-300 transition-colors border border-slate-800 p-2 rounded-xl bg-slate-900">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
-            <span class="text-xl font-bold text-white">AI Bots Management</span>
+            <span class="text-xl font-bold text-white tracking-tighter uppercase">AI Fleet</span>
         </div>
-        <div class="flex items-center space-x-4">
+        <div class="flex items-center space-x-6">
+            <!-- Notifications -->
+            <button id="notifBtn" class="relative p-2 text-slate-400 hover:text-indigo-400 transition-colors focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span id="notifBadge" class="absolute top-1 right-1 bg-indigo-600 text-[10px] font-bold text-white rounded-full w-4 h-4 flex items-center justify-center border-2 border-slate-950 hidden">0</span>
+            </button>
+
+            <!-- User Profile -->
+            <div class="flex items-center space-x-3 cursor-pointer group" onclick="document.getElementById('profileModal').classList.remove('hidden')">
+                @if(Auth::user()->profile_photo_url)
+                    <img src="{{ Auth::user()->profile_photo_url }}" class="w-9 h-9 rounded-lg object-cover border border-slate-800 group-hover:border-indigo-500 transition-colors">
+                @else
+                    <div class="w-9 h-9 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-black group-hover:bg-indigo-500 transition-colors shadow-lg shadow-indigo-600/20 text-xs">
+                        {{ substr(Auth::user()->name, 0, 1) }}
+                    </div>
+                @endif
+            </div>
+
             <form action="{{ route('logout') }}" method="POST" class="inline">
                 @csrf
-                <button type="submit" class="px-4 py-2 text-sm font-medium bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors border border-slate-700">Logout</button>
+                <button type="submit" class="p-2 text-slate-500 hover:text-red-400 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
             </form>
         </div>
     </nav>
@@ -82,5 +101,70 @@
         </div>
     </main>
 
+    <!-- Profile Modal -->
+    <div id="profileModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-3xl overflow-hidden shadow-2xl p-8 animate-in fade-in slide-in-from-bottom-4 duration-300">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold text-white uppercase tracking-tight">Identity Config</h2>
+                <button onclick="document.getElementById('profileModal').classList.add('hidden')" class="text-slate-500 hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </div>
+            <form action="{{ route('dashboard.profile.update') }}" method="POST" class="space-y-4">
+                @csrf
+                <div>
+                    <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Avatar Source URL</label>
+                    <input type="url" name="profile_photo_url" value="{{ Auth::user()->profile_photo_url }}" required placeholder="https://..." 
+                           class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-600/50">
+                </div>
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 py-3 rounded-xl font-bold transition-all shadow-lg active:scale-95">Sync Identity</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Modal -->
+    <div id="notifModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden">
+            <div class="p-6 border-b border-slate-800 flex items-center justify-between">
+                <h2 class="text-lg font-black text-white uppercase tracking-tight">Sync Broadcasts</h2>
+                <button id="closeModal" class="p-2 hover:bg-slate-800 rounded-xl text-slate-500 hover:text-white transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </div>
+            <div id="notifList" class="max-h-[50vh] overflow-y-auto p-4 space-y-3">
+                <!-- Notifications load here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const btn = document.getElementById('notifBtn');
+        const modal = document.getElementById('notifModal');
+        const close = document.getElementById('closeModal');
+        const badge = document.getElementById('notifBadge');
+        const list = document.getElementById('notifList');
+
+        async function fetchNotifs() {
+            try {
+                const res = await fetch('{{ route('notifications') }}');
+                const data = await res.json();
+                if (data.length > 0) {
+                    badge.innerText = data.length;
+                    badge.classList.remove('hidden');
+                    list.innerHTML = data.map(n => `
+                        <div class="p-4 bg-slate-950 border border-slate-800 rounded-2xl">
+                            <h3 class="text-sm font-bold text-slate-200 mb-1 leading-tight">${n.titulo}</h3>
+                            <p class="text-[11px] text-slate-500 leading-relaxed">${n.texto}</p>
+                        </div>
+                    `).join('');
+                }
+            } catch (e) {}
+        }
+
+        btn.addEventListener('click', () => { modal.classList.remove('hidden'); fetchNotifs(); });
+        close.addEventListener('click', () => modal.classList.add('hidden'));
+        window.addEventListener('click', (e) => { if(e.target === modal) modal.classList.add('hidden'); });
+        fetchNotifs();
+    </script>
 </body>
 </html>

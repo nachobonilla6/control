@@ -159,4 +159,21 @@ class DashboardController extends Controller
 
         return back();
     }
+
+    /**
+     * Update User Profile Photo.
+     */
+    public function profileUpdate(Request $request)
+    {
+        $request->validate([
+            'profile_photo_url' => 'required|url'
+        ]);
+
+        $user = Auth::user();
+        /** @var \App\Models\User $user */
+        $user->profile_photo_url = $request->profile_photo_url;
+        $user->save();
+
+        return back()->with('success', 'Profile photo updated.');
+    }
 }

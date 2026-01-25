@@ -41,6 +41,7 @@ Route::middleware(['auth'])->group(function () {
     // API & Actions
     Route::post('/chat', [\App\Http\Controllers\DashboardController::class, 'chat'])->name('chat');
     Route::get('/notifications', [\App\Http\Controllers\DashboardController::class, 'notifications'])->name('notifications');
+    Route::post('/profile/update', [\App\Http\Controllers\DashboardController::class, 'profileUpdate'])->name('dashboard.profile.update');
 
     Route::post('/logout', function (Request $request) {
         Auth::logout();
