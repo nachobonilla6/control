@@ -62,6 +62,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard/courses', [\App\Http\Controllers\DashboardController::class, 'coursesIndex'])->name('dashboard.courses');
     Route::post('/dashboard/courses', [\App\Http\Controllers\DashboardController::class, 'coursesStore'])->name('dashboard.courses.store');
     Route::patch('/dashboard/courses/{id}', [\App\Http\Controllers\DashboardController::class, 'coursesUpdate'])->name('dashboard.courses.update');
+    Route::patch('/dashboard/courses/{id}/toggle-status', [\App\Http\Controllers\DashboardController::class, 'coursesToggleStatus'])->name('dashboard.courses.toggle-status');
     Route::delete('/dashboard/courses/{id}', [\App\Http\Controllers\DashboardController::class, 'coursesDestroy'])->name('dashboard.courses.destroy');
 
     // API & Actions
