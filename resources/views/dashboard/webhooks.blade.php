@@ -36,15 +36,28 @@
             <span class="text-xl font-bold text-white uppercase tracking-tighter">Hook Orchestration</span>
         </div>
         <div class="flex items-center space-x-5">
-            <!-- Notifications -->
-            <button id="notifBtn" class="relative p-2.5 text-slate-400 hover:text-indigo-400 transition-colors focus:outline-none bg-slate-800/50 rounded-xl border border-slate-800">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <span id="notifBadge" class="absolute -top-1 -right-1 bg-indigo-600 text-[10px] font-bold text-white rounded-full w-4 h-4 flex items-center justify-center border-2 border-slate-950 hidden">0</span>
-            </button>
+            <!-- Notifications Dropdown -->
+            <div class="relative">
+                <button id="notifBtn" class="relative p-2.5 text-slate-400 hover:text-indigo-400 transition-colors focus:outline-none bg-slate-800/50 rounded-xl border border-slate-800">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span id="notifBadge" class="absolute -top-1 -right-1 bg-indigo-600 text-[10px] font-bold text-white rounded-full w-4 h-4 flex items-center justify-center border-2 border-slate-950 hidden">0</span>
+                </button>
+
+                <!-- Notifications Dropdown Content -->
+                <div id="notifDropdown" class="absolute right-0 mt-3 w-80 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl opacity-0 invisible transition-all z-50 p-2 overflow-hidden">
+                    <div class="p-4 border-b border-slate-800 flex items-center justify-between">
+                        <h3 class="text-xs font-black text-white uppercase tracking-widest text-indigo-400">Broadcasts</h3>
+                        <span class="text-[9px] font-bold text-slate-600 uppercase">Live Feed</span>
+                    </div>
+                    <div id="notifList" class="max-h-80 overflow-y-auto p-2 space-y-2">
+                        <div class="text-center py-6 text-slate-600 text-[10px] italic uppercase tracking-widest">Scanning...</div>
+                    </div>
+                </div>
+            </div>
 
             <!-- Account Dropdown -->
-            <div class="relative group">
-                <button class="flex items-center space-x-3 p-1.5 pr-4 bg-slate-800/50 border border-slate-800 rounded-2xl hover:border-indigo-500/30 transition-all">
+            <div class="relative">
+                <button id="accountBtn" class="flex items-center space-x-3 p-1.5 pr-4 bg-slate-800/50 border border-slate-800 rounded-2xl hover:border-indigo-500/30 transition-all focus:outline-none">
                     @if(Auth::user()->profile_photo_url)
                         <img src="{{ Auth::user()->profile_photo_url }}" class="w-8 h-8 rounded-xl object-cover">
                     @else
@@ -60,13 +73,13 @@
                 </button>
 
                 <!-- Dropdown Menu -->
-                <div class="absolute right-0 mt-3 w-56 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 p-2">
+                <div id="accountDropdown" class="absolute right-0 mt-3 w-56 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl opacity-0 invisible transition-all z-50 p-2">
                     <div class="px-4 py-3 border-b border-slate-800 mb-2">
                         <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest leading-none mb-1">Signed in as</p>
                         <p class="text-xs font-bold text-white truncate">{{ Auth::user()->email }}</p>
                     </div>
                     
-                    <button onclick="document.getElementById('profileModal').classList.remove('hidden')" class="w-full flex items-center space-x-3 px-4 py-3 text-sm text-slate-300 hover:bg-slate-800 rounded-xl transition-colors">
+                    <button onclick="document.getElementById('profileModal').classList.remove('hidden'); closeAllDropdowns();" class="w-full flex items-center space-x-3 px-4 py-3 text-sm text-slate-300 hover:bg-slate-800 rounded-xl transition-colors">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         <span>Profile Settings</span>
                     </button>
@@ -233,27 +246,19 @@
         </div>
     </div>
 
-    <!-- Notification Modal -->
-    <div id="notifModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-slate-800 w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden">
-            <div class="p-6 border-b border-slate-800 flex items-center justify-between">
-                <h2 class="text-lg font-black text-white uppercase tracking-tight">Sync Broadcasts</h2>
-                <button id="closeModal" class="p-2 hover:bg-slate-800 rounded-xl text-slate-500 hover:text-white transition-colors">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </button>
-            </div>
-            <div id="notifList" class="max-h-[50vh] overflow-y-auto p-4 space-y-3">
-                <!-- Notifications load here -->
-            </div>
-        </div>
-    </div>
 
     <script>
-        const btn = document.getElementById('notifBtn');
-        const modal = document.getElementById('notifModal');
-        const close = document.getElementById('closeModal');
+        const notifBtn = document.getElementById('notifBtn');
+        const notifDropdown = document.getElementById('notifDropdown');
+        const accountBtn = document.getElementById('accountBtn');
+        const accountDropdown = document.getElementById('accountDropdown');
         const badge = document.getElementById('notifBadge');
         const list = document.getElementById('notifList');
+
+        function closeAllDropdowns() {
+            notifDropdown.classList.add('opacity-0', 'invisible');
+            accountDropdown.classList.add('opacity-0', 'invisible');
+        }
 
         async function fetchNotifs() {
             try {
@@ -263,18 +268,41 @@
                     badge.innerText = data.length;
                     badge.classList.remove('hidden');
                     list.innerHTML = data.map(n => `
-                        <div class="p-4 bg-slate-950 border border-slate-800 rounded-2xl">
-                            <h3 class="text-sm font-bold text-slate-200 mb-1 leading-tight">${n.titulo}</h3>
-                            <p class="text-[11px] text-slate-500 leading-relaxed">${n.texto}</p>
+                        <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl hover:border-indigo-500/30 transition-all text-left">
+                            <h3 class="text-[11px] font-bold text-slate-200 mb-1 leading-tight">${n.titulo}</h3>
+                            <p class="text-[10px] text-slate-500 leading-relaxed">${n.texto}</p>
                         </div>
                     `).join('');
+                } else {
+                    list.innerHTML = '<div class="text-center py-10 text-slate-600 text-[10px] uppercase font-bold">Transmission Stable</div>';
                 }
             } catch (e) {}
         }
 
-        btn.addEventListener('click', () => { modal.classList.remove('hidden'); fetchNotifs(); });
-        close.addEventListener('click', () => modal.classList.add('hidden'));
-        window.addEventListener('click', (e) => { if(e.target === modal) modal.classList.add('hidden'); });
+        notifBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isVisible = !notifDropdown.classList.contains('invisible');
+            closeAllDropdowns();
+            if (!isVisible) {
+                notifDropdown.classList.remove('opacity-0', 'invisible');
+                fetchNotifs();
+            }
+        });
+
+        accountBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isVisible = !accountDropdown.classList.contains('invisible');
+            closeAllDropdowns();
+            if (!isVisible) {
+                accountDropdown.classList.remove('opacity-0', 'invisible');
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!notifDropdown.contains(e.target) && !accountDropdown.contains(e.target)) {
+                closeAllDropdowns();
+            }
+        });
         fetchNotifs();
     </script>
 </body>
