@@ -83,7 +83,7 @@
             </div>
 
             <!-- Courses Grid (YouTube Style) -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 @forelse($courses as $course)
                 <div class="group relative flex flex-col bg-slate-900 border border-slate-800 rounded-[2rem] overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:border-indigo-500/30 hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)] active:scale-95">
                     
