@@ -122,9 +122,12 @@
                         <form action="{{ route('dashboard.courses.toggle-status', $course->id) }}" method="POST" class="absolute top-4 right-4 z-20">
                             @csrf
                             @method('PATCH')
-                            <button type="submit" title="Siguiente Estado" class="{{ $config['color'] }} px-3 py-1.5 rounded-none text-[8px] font-black tracking-widest shadow-lg hover:scale-110 transition-transform active:scale-95">
-                                {{ $config['text'] }}
-                            </button>
+                            <select name="status" onchange="this.form.submit()" class="{{ $config['color'] }} text-white border-none px-3 py-1.5 rounded-none text-[8px] font-black tracking-widest shadow-lg cursor-pointer focus:ring-0 focus:outline-none appearance-none hover:brightness-110 transition-all">
+                                <option value="pending" {{ $course->status == 'pending' ? 'selected' : '' }}>PENDING</option>
+                                <option value="postponed" {{ $course->status == 'postponed' ? 'selected' : '' }}>POSTPONED</option>
+                                <option value="done" {{ $course->status == 'done' ? 'selected' : '' }}>DONE</option>
+                                <option value="archived" {{ $course->status == 'archived' ? 'selected' : '' }}>ARCHIVED</option>
+                            </select>
                         </form>
 
                         <!-- Action Overlay (Hover - Top Right) -->

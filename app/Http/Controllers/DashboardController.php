@@ -613,19 +613,26 @@ class DashboardController extends Controller
     /**
      * Quick Toggle Course Status (Cycling).
      */
-    public function coursesToggleStatus($id)
+    public function coursesToggleStatus(Request $request, $id)
     {
         try {
             $course = Course::findOrFail($id);
-            $cycle = [
-                'pending' => 'postponed',
-                'postponed' => 'done',
-                'done' => 'archived',
-                'archived' => 'pending'
-            ];
-            $course->status = $cycle[$course->status] ?? 'pending';
+            
+            if ($request->has('status')) {
+                $request->validate(['status' => 'required|string|in:pending,done,postponed,archived']);
+                $course->status = $request->status;
+            } else {
+                $cycle = [
+                    'pending' => 'postponed',
+                    'postponed' => 'done',
+                    'done' => 'archived',
+                    'archived' => 'pending'
+                ];
+                $course->status = $cycle[$course->status] ?? 'pending';
+            }
+            
             $course->save();
-            return back()->with('success', 'Módulo: ' . strtoupper($course->status));
+            return back()->with('success', 'Estatus: ' . strtoupper($course->status));
         } catch (\Exception $e) {
             return back()->withErrors(['error' => $e->getMessage()]);
         }
