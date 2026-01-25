@@ -30,14 +30,14 @@
 
     <!-- Navbar -->
     <nav class="h-20 bg-slate-900/50 backdrop-blur-md border-b border-slate-800/50 flex items-center justify-between px-6 sticky top-0 z-30">
-        <a href="{{ route('dashboard') }}" class="flex items-center space-x-4 group/brand">
-            <span class="text-xl font-bold text-indigo-400 font-inter group-hover/brand:text-white transition-colors">josh dev</span>
-            <span class="text-slate-700 font-light text-xl italic font-inter">/</span>
-            <span class="text-sm font-medium text-slate-400 tracking-wide uppercase font-inter group-hover/brand:text-indigo-400 transition-colors">Control Panel</span>
-        </a>
         <div class="flex items-center space-x-4">
+            <a href="{{ route('dashboard') }}" class="flex items-center space-x-4 group/brand">
+                <span class="text-xl font-bold text-indigo-400 font-inter group-hover/brand:text-white transition-colors">josh dev</span>
+                <span class="text-slate-700 font-light text-xl italic font-inter">/</span>
+                <span class="text-sm font-medium text-slate-400 tracking-wide uppercase font-inter group-hover/brand:text-indigo-400 transition-colors">Control Panel</span>
+            </a>
             <span class="text-slate-800 font-light text-xl italic font-inter">/</span>
-            <a href="{{ route('dashboard.webhooks') }}" class="text-xs font-black text-indigo-500 tracking-[0.2em] hover:text-white transition-colors">Webhooks</a>
+            <a href="{{ route('dashboard.webhooks') }}" class="text-xs font-black text-indigo-500 tracking-[0.2em] hover:text-white transition-colors uppercase font-inter">Webhooks</a>
         </div>
         <div class="flex items-center space-x-4">
             <!-- Account Dropdown -->
