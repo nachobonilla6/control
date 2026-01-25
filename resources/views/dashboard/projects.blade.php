@@ -34,6 +34,10 @@
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
             <span class="text-xl font-bold text-white uppercase tracking-tighter">Project Gallery</span>
+            <button onclick="document.getElementById('newProjectModal').classList.remove('hidden')" class="ml-6 flex items-center space-x-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-black uppercase tracking-widest transition-all shadow-lg shadow-indigo-600/20 active:scale-95">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>New Project</span>
+            </button>
         </div>
         <div class="flex items-center space-x-5">
             <!-- Notifications Dropdown -->
@@ -102,118 +106,125 @@
             </div>
             @endif
 
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-10">
-                
-                <!-- Create Project Form -->
-                <div class="lg:col-span-1">
-                    <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8 sticky top-0 shadow-2xl">
-                        <h2 class="text-xl font-bold text-white mb-6 uppercase tracking-tight flex items-center">
-                            <span class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-xs mr-3">+</span>
-                            New Project
-                        </h2>
-                        
-                        <form action="{{ route('dashboard.projects.store') }}" method="POST" enctype="multipart/form-data" class="space-y-5">
-                            @csrf
-                            <div>
-                                <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Project Name</label>
-                                <input type="text" name="name" required placeholder="Project Alpha" 
-                                       class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 text-sm text-slate-200">
-                            </div>
-                            
-                            <div>
-                                <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Type</label>
-                                <select name="type" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 text-sm text-slate-200">
-                                    <option value="Mobile App">Mobile App</option>
-                                    <option value="Web Platform">Web Platform</option>
-                                    <option value="AI Automation">AI Automation</option>
-                                    <option value="CRM System">CRM System</option>
-                                </select>
-                            </div>
-                            
-                            <div>
-                                <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Description</label>
-                                <textarea name="description" rows="3" placeholder="Explain the project scope..." 
-                                          class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 text-sm text-slate-200 resize-none"></textarea>
-                            </div>
-
-                            <div>
-                                <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Portfolio Images (Max 7)</label>
-                                <input type="file" name="images[]" multiple accept="image/*" 
-                                       class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-[10px] file:font-black file:uppercase file:bg-indigo-600 file:text-white hover:file:bg-indigo-500 cursor-pointer">
-                            </div>
-                            
-                            <div class="flex items-center space-x-3">
-                                <input type="checkbox" name="active" checked id="active" class="w-4 h-4 rounded bg-slate-950 border-slate-800 text-indigo-600 focus:ring-indigo-500/50">
-                                <label for="active" class="text-xs font-bold text-slate-400 uppercase tracking-widest">Active Project</label>
-                            </div>
-                            
-                            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-4 rounded-xl shadow-lg shadow-indigo-600/20 transition-all active:scale-95">
-                                Deploy Project
-                            </button>
-                        </form>
-                    </div>
-                </div>
-
-                <!-- Projects Grid -->
-                <div class="lg:col-span-3">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        @foreach($projects as $project)
-                        <div class="bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden group hover:border-indigo-500/30 transition-all flex flex-col">
-                            @if($project->images && count($project->images) > 0)
-                            <div class="h-48 relative overflow-hidden bg-slate-950">
-                                <img src="{{ $project->images[0] }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                                <div class="absolute top-4 right-4 bg-slate-950/80 backdrop-blur-md px-2 py-1 rounded-lg border border-white/10 text-[8px] font-black text-white uppercase tracking-widest">
-                                    +{{ count($project->images) }} Photos
-                                </div>
-                            </div>
-                            @else
-                            <div class="h-48 bg-slate-950 flex items-center justify-center text-slate-800 italic text-xs uppercase tracking-widest">
-                                No Visuals Uploaded
-                            </div>
-                            @endif
-
-                            <div class="p-6 flex-1 flex flex-col">
-                                <div class="flex items-center justify-between mb-4">
-                                    <span class="px-3 py-1 rounded-full bg-indigo-600/10 text-indigo-400 text-[9px] font-black uppercase border border-indigo-500/20">
-                                        {{ $project->type }}
-                                    </span>
-                                    <div class="flex items-center space-x-2">
-                                        <div class="w-2 h-2 rounded-full {{ $project->active ? 'bg-emerald-500 animate-pulse' : 'bg-slate-600' }}"></div>
-                                        <span class="text-[8px] font-black uppercase text-slate-500">{{ $project->active ? 'Live' : 'Inactive' }}</span>
-                                    </div>
-                                </div>
-                                <h3 class="text-xl font-bold text-white mb-2">{{ $project->name }}</h3>
-                                <p class="text-sm text-slate-500 line-clamp-3 mb-6">{{ $project->description }}</p>
-                                
-                                <div class="mt-auto flex items-center justify-between pt-6 border-t border-slate-800">
-                                    <div class="flex -space-x-2">
-                                        @foreach(array_slice($project->images ?? [], 0, 3) as $img)
-                                        <img src="{{ $img }}" class="w-8 h-8 rounded-lg border-2 border-slate-900 object-cover">
-                                        @endforeach
-                                    </div>
-                                    
-                                    <form action="{{ route('dashboard.projects.destroy', $project->id) }}" method="POST" onsubmit="return confirm('Archive project?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="p-2 text-slate-600 hover:text-red-500 transition-colors">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                @foreach($projects as $project)
+                <div class="bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden group hover:border-indigo-500/30 transition-all flex flex-col shadow-2xl">
+                    @if($project->images && count($project->images) > 0)
+                    <div class="h-48 relative overflow-hidden bg-slate-950">
+                        <img src="{{ $project->images[0] }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-4 right-4 bg-slate-950/80 backdrop-blur-md px-2 py-1 rounded-lg border border-white/10 text-[8px] font-black text-white uppercase tracking-widest">
+                            +{{ count($project->images) }} Photos
                         </div>
-                        @endforeach
                     </div>
-
-                    @if($projects->isEmpty())
-                    <div class="bg-slate-900/50 border-2 border-dashed border-slate-800 rounded-[3rem] p-24 text-center opacity-30">
-                        <p class="text-xs font-black uppercase tracking-[0.4em] text-slate-500">Waitng for deployment</p>
+                    @else
+                    <div class="h-48 bg-slate-950 flex items-center justify-center text-slate-800 italic text-xs uppercase tracking-widest">
+                        No Visuals Uploaded
                     </div>
                     @endif
+
+                    <div class="p-6 flex-1 flex flex-col">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-full bg-indigo-600/10 text-indigo-400 text-[9px] font-black uppercase border border-indigo-500/20">
+                                {{ $project->type }}
+                            </span>
+                            <div class="flex items-center space-x-2">
+                                <div class="w-2 h-2 rounded-full {{ $project->active ? 'bg-emerald-500 animate-pulse' : 'bg-slate-600' }}"></div>
+                                <span class="text-[8px] font-black uppercase text-slate-500">{{ $project->active ? 'Live' : 'Inactive' }}</span>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">{{ $project->name }}</h3>
+                        <p class="text-sm text-slate-500 line-clamp-2 mb-6">{{ $project->description }}</p>
+                        
+                        <div class="mt-auto flex items-center justify-between pt-6 border-t border-slate-800/50">
+                            <div class="flex -space-x-2">
+                                @foreach(array_slice($project->images ?? [], 0, 3) as $img)
+                                <img src="{{ $img }}" class="w-8 h-8 rounded-lg border-2 border-slate-900 object-cover shadow-lg">
+                                @endforeach
+                            </div>
+                            
+                            <form action="{{ route('dashboard.projects.destroy', $project->id) }}" method="POST" onsubmit="return confirm('Archive project?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="p-2.5 bg-red-500/10 text-red-500 rounded-xl hover:bg-red-500 hover:text-white transition-all border border-red-500/20">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
+                @endforeach
             </div>
+
+            @if($projects->isEmpty())
+            <div class="bg-slate-900/50 border-2 border-dashed border-slate-800 rounded-[3rem] p-24 text-center opacity-30">
+                <p class="text-xs font-black uppercase tracking-[0.4em] text-slate-500">Waitng for deployment</p>
+            </div>
+            @endif
         </div>
     </main>
+
+    <!-- New Project Modal -->
+    <div id="newProjectModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-lg rounded-[2.5rem] overflow-hidden shadow-2xl p-10 animate-in fade-in zoom-in duration-300">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-2xl font-black text-white uppercase tracking-tight">Deploy New Project</h2>
+                <button onclick="document.getElementById('newProjectModal').classList.add('hidden')" class="p-2 hover:bg-slate-800 rounded-xl text-slate-500 hover:text-white transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </div>
+            <form action="{{ route('dashboard.projects.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+                @csrf
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="col-span-2">
+                        <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Project Identity</label>
+                        <input type="text" name="name" required placeholder="e.g. Phoenix Portal" 
+                               class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 text-sm text-slate-200">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Vertical</label>
+                        <select name="type" required class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 text-sm text-slate-200">
+                            <option value="Mobile App">Mobile App</option>
+                            <option value="Web Platform">Web Platform</option>
+                            <option value="AI Automation">AI Automation</option>
+                            <option value="CRM System">CRM System</option>
+                        </select>
+                    </div>
+
+                    <div class="flex items-center mt-6">
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" name="active" checked class="sr-only peer">
+                            <div class="w-11 h-6 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
+                            <span class="ml-3 text-[10px] font-black text-slate-500 uppercase">Live Now</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Narrative</label>
+                    <textarea name="description" rows="3" placeholder="Core features and goals..." 
+                              class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 text-sm text-slate-200 resize-none"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Visual Heritage (Max 7)</label>
+                    <div class="mt-2 flex items-center justify-center w-full">
+                        <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-800 border-dashed rounded-[2rem] cursor-pointer bg-slate-950 hover:bg-slate-900/50 transition-all">
+                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                <svg class="w-8 h-8 mb-3 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                <p class="text-[10px] font-bold text-slate-500 uppercase">Transmit high-res media</p>
+                            </div>
+                            <input type="file" name="images[]" multiple accept="image/*" class="hidden" />
+                        </label>
+                    </div>
+                </div>
+                
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-black py-5 rounded-[1.5rem] shadow-xl shadow-indigo-600/20 transition-all active:scale-95 text-xs uppercase tracking-[0.2em]">
+                    Initialize Deployment
+                </button>
+            </form>
+        </div>
+    </div>
 
     <!-- Profile Modal (Same as other pages) -->
     <div id="profileModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
@@ -246,6 +257,7 @@
         function closeAllDropdowns() {
             notifDropdown.classList.add('opacity-0', 'invisible');
             accountDropdown.classList.add('opacity-0', 'invisible');
+            document.getElementById('newProjectModal').classList.add('hidden');
         }
 
         async function fetchNotifs() {
@@ -271,24 +283,38 @@
         notifBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             const isVisible = !notifDropdown.classList.contains('invisible');
-            closeAllDropdowns();
+            
+            // Close others manually to avoid hiding everything if unnecessary
+            accountDropdown.classList.add('opacity-0', 'invisible');
+            
             if (!isVisible) {
                 notifDropdown.classList.remove('opacity-0', 'invisible');
                 fetchNotifs();
+            } else {
+                notifDropdown.classList.add('opacity-0', 'invisible');
             }
         });
 
         accountBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             const isVisible = !accountDropdown.classList.contains('invisible');
-            closeAllDropdowns();
+            
+            notifDropdown.classList.add('opacity-0', 'invisible');
+            
             if (!isVisible) {
                 accountDropdown.classList.remove('opacity-0', 'invisible');
+            } else {
+                accountDropdown.classList.add('opacity-0', 'invisible');
             }
         });
 
         document.addEventListener('click', (e) => {
-            if (!notifDropdown.contains(e.target) && !accountDropdown.contains(e.target)) {
+            const newProjectModal = document.getElementById('newProjectModal');
+            if (!notifDropdown.contains(e.target) && 
+                !accountDropdown.contains(e.target) && 
+                !newProjectModal.contains(e.target) &&
+                !notifBtn.contains(e.target) &&
+                !accountBtn.contains(e.target)) {
                 closeAllDropdowns();
             }
         });
