@@ -34,24 +34,7 @@ class DashboardController extends Controller
      */
     public function botHistory(Request $request, $botId, $chatId = null)
     {
-        // Use chatId from URL or session or generate a new one
-        if (!$chatId) {
-            $chatId = $request->session()->get('current_chat_id');
-        }
-
-        if (!$chatId) {
-            $chatId = (string) Str::uuid();
-        }
-
-        // Always sync the session with the current chatId
-        $request->session()->put('current_chat_id', $chatId);
-
-        // Fetch history from DB for the specific conversation
-        $history = ChatHistory::where('chat_id', $chatId)
-            ->orderBy('created_at', 'asc')
-            ->get();
-
-        // Fetch all conversations for the sidebar (grouped by chat_id)
+        // 1. Fetch available conversations for this user
         $threads = ChatHistory::where('username', Auth::user()->name)
             ->where('role', 'user')
             ->whereIn('id', function($query) {
@@ -62,6 +45,30 @@ class DashboardController extends Controller
             })
             ->orderBy('id', 'desc')
             ->take(20)
+            ->get();
+
+        // 2. Logic to determine which chat_id to show
+        if (!$chatId) {
+            // Try session first
+            $chatId = $request->session()->get('current_chat_id');
+        }
+
+        // If no chatId in URL or session, pick the last one from history
+        if (!$chatId && $threads->count() > 0) {
+            $chatId = $threads->first()->chat_id;
+        }
+
+        // If still no history, generate a completely new one
+        if (!$chatId) {
+            $chatId = (string) Str::uuid();
+        }
+
+        // Update session to keep consistency
+        $request->session()->put('current_chat_id', $chatId);
+
+        // 3. Fetch ONLY messages for this specific conversation
+        $history = ChatHistory::where('chat_id', $chatId)
+            ->orderBy('created_at', 'asc')
             ->get();
 
         return view('dashboard.chat', [
