@@ -39,6 +39,9 @@ Route::middleware(['auth'])->group(function () {
     // New chat thread
     Route::post('/chat/new', [\App\Http\Controllers\DashboardController::class, 'newChat'])->name('chat.new');
 
+    // Switch chat thread
+    Route::get('/chat/{chatId}', [\App\Http\Controllers\DashboardController::class, 'showChat'])->name('chat.show');
+
     Route::post('/logout', function (Request $request) {
         Auth::logout();
         $request->session()->invalidate();

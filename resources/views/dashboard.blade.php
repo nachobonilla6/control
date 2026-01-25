@@ -46,9 +46,10 @@
             <div class="text-xs font-semibold text-slate-500 px-3 py-2 uppercase tracking-wider">Recent Conversations</div>
             @if(count($threads) > 0)
                 @foreach($threads as $thread)
-                    <div class="px-3 py-2 rounded-lg hover:bg-slate-800 cursor-pointer text-sm truncate text-slate-300">
+                    <a href="{{ route('chat.show', $thread->chat_id) }}" 
+                       class="block px-3 py-2 rounded-lg hover:bg-slate-800 cursor-pointer text-sm truncate {{ session('current_chat_id') == $thread->chat_id ? 'bg-slate-800 text-white font-medium border border-slate-700' : 'text-slate-300' }}">
                         {{ $thread->message }}
-                    </div>
+                    </a>
                 @endforeach
             @else
                 <div class="px-3 py-2 text-sm text-slate-500 italic">No history found</div>

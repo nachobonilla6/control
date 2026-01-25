@@ -119,4 +119,12 @@ class DashboardController extends Controller
         $request->session()->put('current_chat_id', (string) Str::uuid());
         return redirect()->route('dashboard');
     }
+    /**
+     * Switch to a specific chat thread.
+     */
+    public function showChat(Request $request, $chatId)
+    {
+        $request->session()->put('current_chat_id', $chatId);
+        return redirect()->route('dashboard');
+    }
 }
