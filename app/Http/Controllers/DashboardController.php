@@ -16,8 +16,6 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
-        // For now, we'll manually define the 'josh dev' bot.
-        // In the future, this could be dynamic from a 'bots' table.
         $bots = [
             [
                 'id' => 'josh-dev',
@@ -32,23 +30,28 @@ class DashboardController extends Controller
     }
 
     /**
-     * Show the chat interface for a specific bot.
+     * Show the chat interface for a specific bot based on chat_id.
      */
-    public function botHistory(Request $request, $botId)
+    public function botHistory(Request $request, $botId, $chatId = null)
     {
-        // Use a chat_id from session or generate a new one
-        $chatId = $request->session()->get('current_chat_id');
+        // Use chatId from URL or session or generate a new one
         if (!$chatId) {
-            $chatId = Str::uuid();
-            $request->session()->put('current_chat_id', $chatId);
+            $chatId = $request->session()->get('current_chat_id');
         }
+
+        if (!$chatId) {
+            $chatId = (string) Str::uuid();
+        }
+
+        // Always sync the session with the current chatId
+        $request->session()->put('current_chat_id', $chatId);
 
         // Fetch history from DB for the specific conversation
         $history = ChatHistory::where('chat_id', $chatId)
             ->orderBy('created_at', 'asc')
             ->get();
 
-        // Fetch all conversations for the sidebar
+        // Fetch all conversations for the sidebar (grouped by chat_id)
         $threads = ChatHistory::where('username', Auth::user()->name)
             ->where('role', 'user')
             ->whereIn('id', function($query) {
@@ -64,12 +67,13 @@ class DashboardController extends Controller
         return view('dashboard.chat', [
             'chat_history' => $history,
             'threads' => $threads,
-            'bot_id' => $botId
+            'bot_id' => $botId,
+            'current_chat_id' => $chatId
         ]);
     }
 
     /**
-     * Return latest notifications as JSON (for the modal).
+     * Return latest notifications as JSON.
      */
     public function notifications()
     {
@@ -79,7 +83,6 @@ class DashboardController extends Controller
 
     /**
      * Send chat message to n8n.
-     * Persistence (saving to DB) is handled by n8n.
      */
     public function chat(Request $request)
     {
@@ -88,7 +91,6 @@ class DashboardController extends Controller
         $username = Auth::user()->name;
 
         try {
-            // Send request to n8n webhook - n8n will be responsible for saving to josh_dev_chat_history
             Http::post('https://n8n.srv1137974.hstgr.cloud/webhook-test/2b14440f-2a6b-4898-8cc7-5cb163b1ad2c', [
                 'chat_id' => $chatId,
                 'message' => $message,
@@ -96,10 +98,10 @@ class DashboardController extends Controller
                 'email' => Auth::user()->email
             ]);
         } catch (\Exception $e) {
-            // Silently fail or log, since n8n handles the logic
+            // Log error if needed
         }
 
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard.history', ['bot' => $request->input('bot_id', 'josh-dev'), 'chatId' => $chatId]);
     }
 
     /**
@@ -107,15 +109,8 @@ class DashboardController extends Controller
      */
     public function newChat(Request $request)
     {
-        $request->session()->put('current_chat_id', (string) Str::uuid());
-        return redirect()->route('dashboard');
-    }
-    /**
-     * Switch to a specific chat thread.
-     */
-    public function showChat(Request $request, $chatId)
-    {
-        $request->session()->put('current_chat_id', $chatId);
-        return redirect()->route('dashboard');
+        $newChatId = (string) Str::uuid();
+        $request->session()->put('current_chat_id', $newChatId);
+        return redirect()->route('dashboard.history', ['bot' => $request->input('bot_id', 'josh-dev'), 'chatId' => $newChatId]);
     }
 }

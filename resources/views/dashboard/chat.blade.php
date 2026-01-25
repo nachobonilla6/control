@@ -49,8 +49,8 @@
             <div class="text-[10px] font-bold text-slate-500 px-3 py-2 uppercase tracking-[0.2em]">Recent Conversations</div>
             @if(count($threads) > 0)
                 @foreach($threads as $thread)
-                    <a href="{{ route('chat.show', $thread->chat_id) }}" 
-                       class="block px-3 py-3 rounded-xl hover:bg-slate-800/50 cursor-pointer text-sm truncate transition-all {{ session('current_chat_id') == $thread->chat_id ? 'bg-indigo-600/10 text-indigo-400 border border-indigo-500/20 shadow-lg' : 'text-slate-400' }}">
+                    <a href="{{ route('dashboard.history', ['bot' => $bot_id, 'chatId' => $thread->chat_id]) }}" 
+                       class="block px-3 py-3 rounded-xl hover:bg-slate-800/50 cursor-pointer text-sm truncate transition-all {{ $current_chat_id == $thread->chat_id ? 'bg-indigo-600/10 text-indigo-400 border border-indigo-500/20 shadow-lg' : 'text-slate-400' }}">
                         {{ $thread->message }}
                     </a>
                 @endforeach
@@ -136,6 +136,7 @@
             <div class="max-w-3xl mx-auto relative">
                 <form action="{{ route('chat') }}" method="POST" id="chatForm">
                     @csrf
+                    <input type="hidden" name="bot_id" value="{{ $bot_id }}">
                     <div class="relative flex items-center">
                         <input type="text" name="message" id="chatInput" required autocomplete="off" 
                                class="w-full bg-slate-900 border border-slate-800 rounded-2xl px-6 py-5 pr-16 focus:outline-none focus:ring-2 focus:ring-indigo-600/50 focus:border-indigo-600 transition-all shadow-[0_20px_50px_rgba(0,0,0,0.5)] placeholder-slate-600 text-slate-200" 
