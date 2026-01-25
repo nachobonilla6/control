@@ -99,7 +99,7 @@
                     <button onclick="document.getElementById('settingsModal').classList.remove('hidden')" class="w-[58px] h-[58px] flex items-center justify-center bg-slate-900 border border-slate-800 rounded-2xl hover:border-indigo-500/30 transition-all text-slate-400 hover:text-white shadow-2xl active:scale-95 group">
                         <svg class="w-5 h-5 group-hover:rotate-90 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.543-.426-1.543-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                     </button>
-                    <button onclick="document.getElementById('postModal').classList.remove('hidden')" class="h-[58px] px-8 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-indigo-600/20 active:scale-95 flex items-center">
+                    <button onclick="openCreatePostModal()" class="h-[58px] px-8 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-indigo-600/20 active:scale-95 flex items-center">
                         <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         Create Post
                     </button>
@@ -252,14 +252,14 @@
                             <select name="facebook_account_id" class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all appearance-none">
                                 <option value="">Select Account (Optional)</option>
                                 @foreach($accounts as $account)
-                                    <option value="{{ $account->id }}">{{ $account->name }}</option>
+                                    <option value="{{ $account->id }}" {{ $account->id == 1 ? 'selected' : '' }}>{{ $account->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                             <div class="relative">
                                 <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Schedule Deployment</label>
                                 <div class="relative">
-                                    <input type="datetime-local" name="post_at" 
+                                    <input type="datetime-local" name="post_at" id="post_at_input"
                                            class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all appearance-none">
                                     <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-indigo-500/50">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -421,6 +421,16 @@
             accountBtn.addEventListener('click', () => {
                 window.location.href = "{{ route('dashboard') }}";
             });
+        }
+
+        function openCreatePostModal() {
+            // Set current datetime as default
+            const now = new Date();
+            const localDateTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+            document.getElementById('post_at_input').value = localDateTime;
+            
+            // Open modal
+            document.getElementById('postModal').classList.remove('hidden');
         }
 
         function editPost(post) {
