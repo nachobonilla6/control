@@ -1,10 +1,33 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-black">
+<html lang="en" class="h-full bg-slate-950">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Control</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+<script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              indigo: {
+                50: '#eef2ff',
+                100: '#e0e7ff',
+                200: '#c7d2fe',
+                300: '#a5b4fc',
+                400: '#818cf8',
+                500: '#6366f1',
+                600: '#4f46e5',
+                700: '#4338ca',
+                800: '#3730a3',
+                900: '#312e81',
+              },
+            },
+          },
+        },
+      };
+    </script>
     <style>
         @keyframes float {
             0% { transform: translateY(0px); }
@@ -24,7 +47,7 @@
         }
     </style>
 </head>
-<body class="h-full flex flex-col items-center justify-center bg-black text-white relative overflow-hidden">
+<body class="h-full flex flex-col items-center justify-center bg-slate-950 text-white relative overflow-hidden">
 
     <!-- Background Grid -->
     <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
