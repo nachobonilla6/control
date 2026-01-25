@@ -103,33 +103,38 @@
                     @endphp
 
                     <!-- Thumbnail Area -->
-                    <div class="relative aspect-video w-full overflow-hidden bg-slate-950">
+                    <div id="thumb-{{ $course->id }}" class="relative aspect-video w-full overflow-hidden bg-slate-950">
                         @if($ytId)
                             <img src="https://img.youtube.com/vi/{{ $ytId }}/hqdefault.jpg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60 group-hover:opacity-100" />
+                            
+                            <!-- Play Button (Center) -->
+                            <button onclick="playVideo('{{ $course->id }}', '{{ $ytId }}')" class="absolute inset-0 flex items-center justify-center group/play z-10">
+                                <div class="w-16 h-16 bg-indigo-600/80 group-hover/play:bg-indigo-500 rounded-full flex items-center justify-center backdrop-blur-md border border-white/20 transition-all scale-90 group-hover/play:scale-110 shadow-2xl">
+                                    <svg class="w-6 h-6 text-white translate-x-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l10.29-6.86a1 1 0 0 0 0-1.72L9.5 4.28a1 1 0 0 0-1.5.86z"/></svg>
+                                </div>
+                            </button>
                         @else
                             <div class="absolute inset-0 bg-gradient-to-br from-indigo-600/20 via-transparent to-slate-950 opacity-40 group-hover:opacity-60 transition-opacity"></div>
                             <div class="absolute inset-0 flex items-center justify-center">
                                 <span class="text-4xl filter blur-sm group-hover:blur-none transition-all duration-700 opacity-20 group-hover:opacity-40 select-none">🎓</span>
                             </div>
                         @endif
-                        <div class="absolute top-4 right-4 {{ $config['color'] }} px-3 py-1.5 rounded-lg text-[8px] font-black tracking-widest shadow-lg">
+                        <div class="absolute top-4 right-4 {{ $config['color'] }} px-3 py-1.5 rounded-lg text-[8px] font-black tracking-widest shadow-lg z-20">
                             {{ $config['text'] }}
                         </div>
 
-                        <!-- Action Overlay (Hover) -->
-                        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-                             <div class="flex items-center space-x-3">
-                                <button onclick="openEditModal({{ json_encode($course) }})" class="w-12 h-12 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center backdrop-blur-md border border-white/20 transition-all">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <!-- Action Overlay (Hover - Top Right) -->
+                        <div class="absolute top-4 left-4 flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-all duration-300 z-30">
+                            <button onclick="openEditModal({{ json_encode($course) }})" class="w-8 h-8 bg-black/60 hover:bg-indigo-600 text-white rounded-lg flex items-center justify-center backdrop-blur-md border border-white/10 transition-all">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <form action="{{ route('dashboard.courses.destroy', $course->id) }}" method="POST" onsubmit="return confirm('¿Decommission this module?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="w-8 h-8 bg-black/60 hover:bg-red-600 text-white rounded-lg flex items-center justify-center backdrop-blur-md border border-white/10 transition-all">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                 </button>
-                                <form action="{{ route('dashboard.courses.destroy', $course->id) }}" method="POST" onsubmit="return confirm('¿Decommission this module?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="w-12 h-12 bg-red-600/20 hover:bg-red-600 text-red-500 hover:text-white rounded-full flex items-center justify-center backdrop-blur-md border border-red-500/20 transition-all">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                    </button>
-                                </form>
-                             </div>
+                            </form>
                         </div>
                     </div>
 
@@ -240,6 +245,19 @@
             document.getElementById('form_status').value = course.status || 'pending';
             
             document.getElementById('courseModal').classList.remove('hidden');
+        }
+
+        function playVideo(id, ytId) {
+            const container = document.getElementById(`thumb-${id}`);
+            container.innerHTML = `
+                <iframe 
+                    src="https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0&modestbranding=1" 
+                    class="absolute inset-0 w-full h-full"
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+            `;
         }
     </script>
 </body>
