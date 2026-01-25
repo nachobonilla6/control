@@ -35,6 +35,7 @@ Route::middleware(['auth'])->group(function () {
     // Webhooks
     Route::get('/dashboard/webhooks', [\App\Http\Controllers\DashboardController::class, 'webhooksIndex'])->name('dashboard.webhooks');
     Route::post('/dashboard/webhooks', [\App\Http\Controllers\DashboardController::class, 'webhooksStore'])->name('dashboard.webhooks.store');
+    Route::put('/dashboard/webhooks/{id}', [\App\Http\Controllers\DashboardController::class, 'webhooksUpdate'])->name('dashboard.webhooks.update');
     Route::post('/dashboard/webhooks/{id}/trigger', [\App\Http\Controllers\DashboardController::class, 'webhooksTrigger'])->name('dashboard.webhooks.trigger');
     Route::delete('/dashboard/webhooks/{id}', [\App\Http\Controllers\DashboardController::class, 'webhooksDestroy'])->name('dashboard.webhooks.destroy');
 

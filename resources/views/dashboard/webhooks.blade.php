@@ -193,6 +193,11 @@
                                         </button>
                                     </form>
 
+                                    <!-- Edit Webhook -->
+                                    <button onclick="openEditModal({{ json_encode($webhook) }})" title="Edit Pipeline" class="p-2.5 rounded-lg bg-slate-800/50 text-slate-400 border border-slate-700 hover:bg-slate-700 hover:text-white transition-all">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    </button>
+
                                     <!-- Delete Webhook -->
                                     <form action="{{ route('dashboard.webhooks.destroy', $webhook->id) }}" method="POST" onsubmit="return confirm('Disconnect this pipeline?');">
                                         @csrf
@@ -247,6 +252,38 @@
     </div>
 
 
+    <!-- Edit Webhook Modal -->
+    <div id="editWebhookModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-3xl overflow-hidden shadow-2xl p-8 animate-in fade-in slide-in-from-bottom-4 duration-300">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold text-white uppercase tracking-tight">Edit Pipeline</h2>
+                <button onclick="document.getElementById('editWebhookModal').classList.add('hidden')" class="text-slate-500 hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </div>
+            <form id="editWebhookForm" method="POST" class="space-y-4">
+                @csrf
+                @method('PUT')
+                <div>
+                    <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Friendly Name</label>
+                    <input type="text" name="name" id="edit_name" required 
+                           class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-600/50">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Endpoint URL</label>
+                    <input type="url" name="url" id="edit_url" required 
+                           class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-600/50">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Payload (Text to Send)</label>
+                    <textarea name="payload_text" id="edit_payload" rows="4" 
+                              class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-600/50 resize-none"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 py-3 rounded-xl font-bold transition-all shadow-lg active:scale-95">Update Configuration</button>
+            </form>
+        </div>
+    </div>
+
     <script>
         const notifBtn = document.getElementById('notifBtn');
         const notifDropdown = document.getElementById('notifDropdown');
@@ -280,6 +317,21 @@
                     list.innerHTML = '<div class="text-center py-10 text-slate-600 text-[10px] uppercase font-bold">Transmission Stable</div>';
                 }
             } catch (e) {}
+        }
+
+        function openEditModal(webhook) {
+            const modal = document.getElementById('editWebhookModal');
+            const form = document.getElementById('editWebhookForm');
+            
+            // Fill fields
+            document.getElementById('edit_name').value = webhook.name;
+            document.getElementById('edit_url').value = webhook.url;
+            document.getElementById('edit_payload').value = webhook.payload_text || '';
+            
+            // Set action
+            form.action = `/dashboard/webhooks/${webhook.id}`;
+            
+            modal.classList.remove('hidden');
         }
 
         notifBtn.addEventListener('click', (e) => {

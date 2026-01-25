@@ -72,6 +72,23 @@ class DashboardController extends Controller
     }
 
     /**
+     * Update existing Webhook.
+     */
+    public function webhooksUpdate(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'url' => 'required|url',
+            'payload_text' => 'nullable|string',
+        ]);
+
+        $webhook = Webhook::findOrFail($id);
+        $webhook->update($request->only(['name', 'url', 'payload_text']));
+
+        return redirect()->route('dashboard.webhooks')->with('success', 'Webhook updated successfully.');
+    }
+
+    /**
      * Trigger/Activate Webhook.
      */
     public function webhooksTrigger(Request $request, $id)
