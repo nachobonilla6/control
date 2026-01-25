@@ -749,44 +749,53 @@ class DashboardController extends Controller
                 mkdir($uploadPath, 0755, true);
             }
 
+            $imageUrls = [];
             for ($i = 1; $i <= 3; $i++) {
                 $fieldName = 'image' . $i;
                 if ($request->hasFile($fieldName)) {
                     $image = $request->file($fieldName);
                     $filename = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
                     $image->move($uploadPath, $filename);
-                    $data[$fieldName] = 'uploads/facebook/' . $filename;
+                    $relativePath = 'uploads/facebook/' . $filename;
+                    $data[$fieldName] = $relativePath;
+                    $imageUrls[$fieldName] = url($relativePath);
+                } else {
+                    $imageUrls[$fieldName] = null;
                 }
             }
 
-            $post = FacebookPost::create($data);
-            $post->refresh()->load('account');
+            // Get account info if provided
+            $account = null;
+            if ($request->facebook_account_id) {
+                $account = FacebookAccount::find($request->facebook_account_id);
+            }
 
-            // Send to n8n Webhook
+            // Send to n8n Webhook (N8N will create the post in DB)
             try {
-                try {
-                    $webhookUrl = Setting::get('facebook_webhook_url', 'https://n8n.srv1137974.hstgr.cloud/webhook-test/76497ea0-bfd0-46fa-8ea3-6512ff450b55');
-                } catch (\Exception $e) {
-                    $webhookUrl = 'https://n8n.srv1137974.hstgr.cloud/webhook-test/76497ea0-bfd0-46fa-8ea3-6512ff450b55';
-                }
-                Http::post($webhookUrl, [
-                    'id' => $post->id,
-                    'content' => $post->content,
-                    'image1' => $post->image1 ? asset($post->image1) : null,
-                    'image2' => $post->image2 ? asset($post->image2) : null,
-                    'image3' => $post->image3 ? asset($post->image3) : null,
-                    'post_at' => $post->post_at ? $post->post_at->toIso8601String() : null,
-                    'created_at' => $post->created_at->toIso8601String(),
-                    'page_id' => $post->account ? $post->account->page_id : null, 
-                    'access_token' => $post->account ? $post->account->access_token : null, 
-                ]);
+                $webhookUrl = Setting::get('facebook_webhook_url', 'https://n8n.srv1137974.hstgr.cloud/webhook-test/76497ea0-bfd0-46fa-8ea3-6512ff450b55');
             } catch (\Exception $e) {
-                // We don't block the main flow if webhook fails, but we could log it
+                $webhookUrl = 'https://n8n.srv1137974.hstgr.cloud/webhook-test/76497ea0-bfd0-46fa-8ea3-6512ff450b55';
             }
+            
+            $response = Http::post($webhookUrl, [
+                'content' => $data['content'],
+                'image1' => $imageUrls['image1'],
+                'image2' => $imageUrls['image2'],
+                'image3' => $imageUrls['image3'],
+                'post_at' => $data['post_at'] ?? null,
+                'status' => $data['status'] ?? 'scheduled',
+                'facebook_account_id' => $data['facebook_account_id'] ?? null,
+                'page_id' => $account ? $account->page_id : null,
+                'access_token' => $account ? $account->access_token : null,
+            ]);
 
-            return redirect()->route('dashboard.facebook')->with('success', 'Facebook post scheduled successfully and sent to pipeline.');
+            if ($response->successful()) {
+                return redirect()->route('dashboard.facebook')->with('success', 'Post sent to pipeline successfully. N8N will handle the posting.');
+            } else {
+                return back()->withInput()->withErrors(['error' => 'Failed to send to webhook: ' . $response->status()]);
+            }
         } catch (\Exception $e) {
-            return back()->withInput()->withErrors(['error' => 'Error saving post: ' . $e->getMessage()]);
+            return back()->withInput()->withErrors(['error' => 'Error processing post: ' . $e->getMessage()]);
         }
     }
 
