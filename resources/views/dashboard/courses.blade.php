@@ -122,18 +122,12 @@
                         <form action="{{ route('dashboard.courses.toggle-status', $course->id) }}" method="POST" class="absolute top-4 right-4 z-20">
                             @csrf
                             @method('PATCH')
-                            <div class="relative group/sel">
-                                <select name="status" onchange="this.form.submit()" 
-                                        class="pl-4 pr-10 py-2.5 bg-slate-950/90 backdrop-blur-xl border-l-4 {{ str_replace('bg-', 'border-', $config['color']) }} text-white text-[9px] font-black tracking-[0.2em] shadow-2xl cursor-pointer focus:ring-1 focus:ring-white/10 focus:outline-none appearance-none transition-all hover:bg-slate-900">
-                                    <option value="pending" {{ $course->status == 'pending' ? 'selected' : '' }} class="bg-slate-950 uppercase">Pending</option>
-                                    <option value="postponed" {{ $course->status == 'postponed' ? 'selected' : '' }} class="bg-slate-950 uppercase">Postponed</option>
-                                    <option value="done" {{ $course->status == 'done' ? 'selected' : '' }} class="bg-slate-950 uppercase">Done</option>
-                                    <option value="archived" {{ $course->status == 'archived' ? 'selected' : '' }} class="bg-slate-950 uppercase">Archived</option>
-                                </select>
-                                <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-white/30 group-hover/sel:text-white transition-colors">
-                                    <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="4" stroke-linecap="square" stroke-linejoin="square"/></svg>
-                                </div>
-                            </div>
+                            <select name="status" onchange="this.form.submit()" class="{{ $config['color'] }} text-white border-none px-3 py-1.5 rounded-none text-[8px] font-black tracking-widest shadow-lg cursor-pointer focus:ring-0 focus:outline-none appearance-none hover:brightness-110 transition-all">
+                                <option value="pending" {{ $course->status == 'pending' ? 'selected' : '' }}>PENDING</option>
+                                <option value="postponed" {{ $course->status == 'postponed' ? 'selected' : '' }}>POSTPONED</option>
+                                <option value="done" {{ $course->status == 'done' ? 'selected' : '' }}>DONE</option>
+                                <option value="archived" {{ $course->status == 'archived' ? 'selected' : '' }}>ARCHIVED</option>
+                            </select>
                         </form>
 
                         <!-- Action Overlay (Hover - Top Right) -->
