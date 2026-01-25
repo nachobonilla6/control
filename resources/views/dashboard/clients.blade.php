@@ -134,7 +134,7 @@
                         <p class="text-xl font-black text-white">{{ $totalClients }}</p>
                     </div>
                     <div class="px-6 py-2 text-center border-r border-slate-800">
-                        <p class="text-[8px] font-black text-indigo-500 uppercase tracking-widest mb-1">Queued</p>
+                        <p class="text-[8px] font-black text-amber-500 uppercase tracking-widest mb-1">Queued</p>
                         <p class="text-xl font-black text-white">{{ $queuedCount }}</p>
                     </div>
                     <div class="px-6 py-2 text-center">
@@ -196,13 +196,13 @@
                                         @method('PATCH')
                                         <button type="submit" title="Click to switch status" class="group/status">
                                             @if($client->status === 'sent')
-                                                <span class="flex items-center text-[9px] font-black text-emerald-400 tracking-widest group-hover/status:text-indigo-400 transition-colors">
+                                                <span class="flex items-center text-[9px] font-black text-emerald-400 tracking-widest group-hover/status:text-amber-400 transition-colors">
                                                     <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-2 animate-pulse"></span>
                                                     SENT
                                                 </span>
                                             @else
-                                                <span class="flex items-center text-[9px] font-black text-indigo-400 tracking-widest group-hover/status:text-emerald-400 transition-colors">
-                                                    <span class="w-1.5 h-1.5 bg-indigo-500 rounded-full mr-2"></span>
+                                                <span class="flex items-center text-[9px] font-black text-amber-400 tracking-widest group-hover/status:text-emerald-400 transition-colors">
+                                                    <span class="w-1.5 h-1.5 bg-amber-500 rounded-full mr-2"></span>
                                                     QUEUED
                                                 </span>
                                             @endif
