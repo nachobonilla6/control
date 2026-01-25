@@ -97,59 +97,89 @@
                 </button>
             </div>
 
-            <!-- Posts Grid (2 per row) -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                @forelse($posts as $post)
-                <div class="group bg-slate-900 border border-slate-800 rounded-[2.5rem] overflow-hidden transition-all duration-500 hover:border-indigo-500/30 hover:shadow-2xl flex flex-col md:flex-row h-full">
-                    <!-- Image Carousel Area -->
-                    <div class="md:w-1/2 relative bg-slate-950 aspect-square md:aspect-auto">
-                        @if($post->image1)
-                            <img src="{{ asset($post->image1) }}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+            <!-- Posts Grid (3 per row) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                @php
+                    $images = array_filter([$post->image1, $post->image2, $post->image3]);
+                    $imgCount = count($images);
+                @endphp
+                <div class="group bg-slate-900 border border-slate-800 rounded-[2.5rem] overflow-hidden transition-all duration-500 hover:border-indigo-500/30 hover:shadow-2xl flex flex-col h-full">
+                    <!-- Image Grid Area -->
+                    <div class="relative bg-slate-950 aspect-square overflow-hidden">
+                        @if($imgCount == 1)
+                            <img src="{{ asset(array_values($images)[0]) }}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                        @elseif($imgCount == 2)
+                            <div class="grid grid-cols-2 h-full gap-0.5">
+                                <img src="{{ asset(array_values($images)[0]) }}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                                <img src="{{ asset(array_values($images)[1]) }}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                            </div>
+                        @elseif($imgCount == 3)
+                            <div class="grid grid-cols-2 h-full gap-0.5">
+                                <div class="h-full">
+                                    <img src="{{ asset(array_values($images)[0]) }}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                                </div>
+                                <div class="grid grid-rows-2 h-full gap-0.5">
+                                    <img src="{{ asset(array_values($images)[1]) }}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                                    <img src="{{ asset(array_values($images)[2]) }}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                                </div>
+                            </div>
                         @else
                             <div class="w-full h-full flex items-center justify-center opacity-20">
                                 <span class="text-6xl">📱</span>
                             </div>
                         @endif
-                        <div class="absolute top-4 left-4 flex space-x-1">
-                            @if($post->image1) <div class="w-1.5 h-1.5 rounded-full bg-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.5)]"></div> @endif
-                            @if($post->image2) <div class="w-1.5 h-1.5 rounded-full bg-indigo-500/50"></div> @endif
-                            @if($post->image3) <div class="w-1.5 h-1.5 rounded-full bg-indigo-500/50"></div> @endif
+
+                        <!-- Status Overlay -->
+                        <div class="absolute top-4 right-4">
+                            @php
+                                $statusColor = match($post->status) {
+                                    'posted' => 'bg-emerald-500',
+                                    'sent' => 'bg-emerald-500',
+                                    'cancelled' => 'bg-red-500',
+                                    default => 'bg-indigo-500',
+                                };
+                            @endphp
+                            <span class="text-[7px] font-black {{ $statusColor }} text-white px-3 py-1 rounded-full uppercase tracking-[0.2em] shadow-lg">
+                                {{ $post->status ?? 'scheduled' }}
+                            </span>
                         </div>
                     </div>
 
                     <!-- Content Area -->
-                    <div class="md:w-1/2 p-8 flex flex-col justify-between">
-                        <div>
+                    <div class="p-8 flex flex-col flex-1">
+                        <div class="flex-1">
                             <div class="flex items-center justify-between mb-4">
                                 <span class="text-[8px] font-black text-indigo-400 tracking-widest uppercase bg-indigo-600/10 px-3 py-1 rounded-full border border-indigo-500/10">Facebook Post</span>
                                 <span class="text-[8px] font-bold text-slate-500 uppercase tracking-widest">{{ $post->created_at->diffForHumans() }}</span>
                             </div>
-                            <p class="text-xs text-slate-300 leading-relaxed line-clamp-6 font-medium lowercase">
+                            <p class="text-[11px] text-slate-300 leading-relaxed line-clamp-4 font-medium lowercase mb-6">
                                 {{ $post->content }}
                             </p>
                         </div>
 
                         <div class="pt-6 border-t border-white/5 space-y-4">
-                            @if($post->post_at)
-                            <div class="flex items-center space-x-2">
-                                <svg class="w-3.5 h-3.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                <span class="text-[9px] font-black text-emerald-500 tracking-widest uppercase">Scheduled: {{ $post->post_at->format('M d, H:i') }}</span>
-                            </div>
-                            @endif
-                            
-                            <div class="flex items-center justify-between">
-                                <div class="flex -space-x-2">
-                                    @if($post->image1) <img src="{{ asset($post->image1) }}" class="w-7 h-7 rounded-lg border-2 border-slate-900 object-cover"> @endif
-                                    @if($post->image2) <img src="{{ asset($post->image2) }}" class="w-7 h-7 rounded-lg border-2 border-slate-900 object-cover"> @endif
-                                    @if($post->image3) <img src="{{ asset($post->image3) }}" class="w-7 h-7 rounded-lg border-2 border-slate-900 object-cover"> @endif
+                            <div class="flex flex-col space-y-2">
+                                @if($post->post_at)
+                                <div class="flex items-center space-x-2">
+                                    <svg class="w-3.5 h-3.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    <span class="text-[9px] font-black text-emerald-500 tracking-widest uppercase">
+                                        {{ $post->post_at->format('M d, Y @ H:i') }}
+                                    </span>
                                 </div>
-                                <form action="{{ route('dashboard.facebook.destroy', $post->id) }}" method="POST" onsubmit="return confirm('Abort this post deployment?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="w-10 h-10 flex items-center justify-center bg-red-500/10 text-red-500 rounded-xl hover:bg-red-500 hover:text-white transition-all border border-red-500/10">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                    </button>
-                                </form>
+                                @endif
+                                
+                                <div class="flex items-center justify-between">
+                                    <div class="text-[8px] font-bold text-slate-500 uppercase tracking-widest">
+                                        Status: <span class="text-indigo-400">{{ $post->status ?? 'pending' }}</span>
+                                    </div>
+                                    <form action="{{ route('dashboard.facebook.destroy', $post->id) }}" method="POST" onsubmit="return confirm('Abort this post deployment?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="w-8 h-8 flex items-center justify-center bg-red-500/10 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition-all border border-red-500/10">
+                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -185,16 +215,24 @@
                             <textarea name="content" required rows="6" placeholder="What's happening on the network?" 
                                       class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-medium text-slate-200 resize-none lowercase"></textarea>
                         </div>
-                        <div class="relative">
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Schedule Deployment</label>
                             <div class="relative">
-                                <input type="datetime-local" name="post_at" 
-                                       class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all appearance-none">
-                                <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-indigo-500/50">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Schedule Deployment</label>
+                                <div class="relative">
+                                    <input type="datetime-local" name="post_at" 
+                                           class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all appearance-none">
+                                    <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-indigo-500/50">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                            <div>
+                                <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Initial Status</label>
+                                <select name="status" class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all appearance-none">
+                                    <option value="scheduled">Scheduled</option>
+                                    <option value="posted">Posted</option>
+                                    <option value="cancelled">Cancelled</option>
+                                </select>
+                            </div>
                     </div>
                     
                     <div class="space-y-4">

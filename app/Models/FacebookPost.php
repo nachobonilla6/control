@@ -12,6 +12,7 @@ class FacebookPost extends Model
         'image2',
         'image3',
         'post_at',
+        'status',
     ];
 
     protected $casts = [

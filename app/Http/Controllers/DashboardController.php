@@ -726,10 +726,11 @@ class DashboardController extends Controller
             'image2' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
             'image3' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
             'post_at' => 'nullable|date',
+            'status' => 'nullable|string|in:scheduled,posted,cancelled',
         ]);
 
         try {
-            $data = $request->only(['content', 'post_at']);
+            $data = $request->only(['content', 'post_at', 'status']);
             
             // Handle image uploads
             $webRoot = is_dir(base_path('public_html')) ? base_path('public_html') : public_path();
