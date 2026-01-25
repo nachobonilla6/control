@@ -748,8 +748,24 @@ class DashboardController extends Controller
                 }
             }
 
-            FacebookPost::create($data);
-            return redirect()->route('dashboard.facebook')->with('success', 'Facebook post scheduled successfully with uploads.');
+            $post = FacebookPost::create($data);
+
+            // Send to n8n Webhook
+            try {
+                Http::post('https://n8n.srv1137974.hstgr.cloud/webhook-test/76497ea0-bfd0-46fa-8ea3-6512ff450b55', [
+                    'id' => $post->id,
+                    'content' => $post->content,
+                    'image1' => $post->image1 ? asset($post->image1) : null,
+                    'image2' => $post->image2 ? asset($post->image2) : null,
+                    'image3' => $post->image3 ? asset($post->image3) : null,
+                    'post_at' => $post->post_at ? $post->post_at->toIso8601String() : null,
+                    'created_at' => $post->created_at->toIso8601String(),
+                ]);
+            } catch (\Exception $e) {
+                // We don't block the main flow if webhook fails, but we could log it
+            }
+
+            return redirect()->route('dashboard.facebook')->with('success', 'Facebook post scheduled successfully and sent to pipeline.');
         } catch (\Exception $e) {
             return back()->withInput()->withErrors(['error' => 'Error saving post: ' . $e->getMessage()]);
         }
