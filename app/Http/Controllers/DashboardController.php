@@ -437,9 +437,9 @@ class DashboardController extends Controller
 
         try {
             Client::create($request->all());
-            return redirect()->route('dashboard.clients')->with('success', 'Cliente registrado exitosamente.');
+            return redirect()->route('dashboard.clients')->with('success', 'Client successfully registered.');
         } catch (\Exception $e) {
-            return back()->withInput()->withErrors(['error' => 'Error al guardar: ' . $e->getMessage()]);
+            return back()->withInput()->withErrors(['error' => 'Registration error: ' . $e->getMessage()]);
         }
     }
 
@@ -460,9 +460,9 @@ class DashboardController extends Controller
         try {
             $client = Client::findOrFail($id);
             $client->update($request->all());
-            return redirect()->route('dashboard.clients')->with('success', 'Cliente actualizado exitosamente.');
+            return redirect()->route('dashboard.clients')->with('success', 'Client successfully updated.');
         } catch (\Exception $e) {
-            return back()->withInput()->withErrors(['error' => 'Error al actualizar: ' . $e->getMessage()]);
+            return back()->withInput()->withErrors(['error' => 'Update error: ' . $e->getMessage()]);
         }
     }
 
@@ -475,7 +475,7 @@ class DashboardController extends Controller
             $client = Client::findOrFail($id);
             $client->status = ($client->status === 'extracted') ? 'sent' : 'extracted';
             $client->save();
-            return back()->with('success', 'Status actualizado a ' . strtoupper($client->status));
+            return back()->with('success', 'Status switched to ' . strtoupper($client->status));
         } catch (\Exception $e) {
             return back()->withErrors(['error' => $e->getMessage()]);
         }

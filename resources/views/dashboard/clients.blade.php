@@ -112,7 +112,7 @@
             <div class="mb-8 bg-red-500/10 border border-red-500/20 text-red-400 px-6 py-4 rounded-2xl shadow-lg animate-in fade-in slide-in-from-top-4">
                 <div class="flex items-center mb-2">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span class="text-[10px] font-black tracking-widest uppercase">Atención: Errores detectados</span>
+                    <span class="text-[10px] font-black tracking-widest uppercase">Attention: Errors detected</span>
                 </div>
                 <ul class="list-disc list-inside space-y-1">
                     @foreach($errors->all() as $error)
@@ -194,7 +194,7 @@
                                     <form action="{{ route('dashboard.clients.toggle-status', $client->id) }}" method="POST">
                                         @csrf
                                         @method('PATCH')
-                                        <button type="submit" title="Haga clic para cambiar status" class="group/status">
+                                        <button type="submit" title="Click to switch status" class="group/status">
                                             @if($client->status === 'sent')
                                                 <span class="flex items-center text-[9px] font-black text-emerald-400 tracking-widest group-hover/status:text-indigo-400 transition-colors">
                                                     <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-2 animate-pulse"></span>
@@ -253,7 +253,7 @@
             <div class="flex justify-between items-start mb-6">
                 <div>
                     <h2 id="modalTitle" class="text-2xl font-black text-white italic tracking-tighter mb-0.5">New Record</h2>
-                    <p id="modalSubtitle" class="text-[8px] font-bold text-slate-500 tracking-widest leading-none">Register business entity</p>
+                    <p id="modalSubtitle" class="text-[8px] font-bold text-slate-500 tracking-widest leading-none">Register business entity • {{ $extractedCount }} EXTRACTED | {{ $sentCount }} SENT</p>
                 </div>
                 <button onclick="document.getElementById('clientModal').classList.add('hidden')" class="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-xl text-slate-600 hover:text-white transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -342,7 +342,7 @@
             form.action = "{{ route('dashboard.clients.store') }}";
             document.getElementById('methodField').innerHTML = '';
             document.getElementById('modalTitle').innerText = 'New Record';
-            document.getElementById('modalSubtitle').innerText = 'Register business entity';
+            document.getElementById('modalSubtitle').innerText = 'Register business entity • {{ $extractedCount }} EXTRACTED | {{ $sentCount }} SENT';
             
             document.getElementById('form_name').value = '';
             document.getElementById('form_email').value = '';
@@ -364,7 +364,7 @@
             form.action = `/dashboard/clients/${client.id}`;
             document.getElementById('methodField').innerHTML = '<input type="hidden" name="_method" value="PATCH">';
             document.getElementById('modalTitle').innerText = 'Edit Client';
-            document.getElementById('modalSubtitle').innerText = 'Updating: ' + client.name;
+            document.getElementById('modalSubtitle').innerText = 'Updating: ' + client.name + ' • Status: ' + (client.status || 'extracted').toUpperCase();
             
             document.getElementById('form_name').value = client.name;
             document.getElementById('form_email').value = client.email;
