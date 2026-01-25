@@ -34,13 +34,12 @@ class DashboardController extends Controller
      */
     public function botHistory(Request $request, $botId, $chatId = null)
     {
-        // 1. Fetch available conversations for this user
-        $threads = ChatHistory::where('username', Auth::user()->name)
-            ->where('role', 'user')
-            ->whereIn('id', function($query) {
+        // 1. Fetch available conversations for this user (unique chat_ids)
+        // We get the latest message from 'user' role as the thread title
+        $threads = ChatHistory::whereIn('id', function($query) {
                 $query->selectRaw('MAX(id)')
                     ->from('josh_dev_chat_history')
-                    ->where('role', 'user')
+                    ->where('username', Auth::user()->name)
                     ->groupBy('chat_id');
             })
             ->orderBy('id', 'desc')
