@@ -187,10 +187,11 @@
                     <div class="p-6 flex-1 flex flex-col justify-between">
                         <div>
                             <h3 class="text-sm font-black text-white leading-tight mb-2 line-clamp-2 tracking-tight overflow-hidden italic">
+                                {{ $course->name }}
                             </h3>
                             @if($course->link)
                             <a href="{{ $course->link }}" target="_blank" class="inline-flex items-center text-[8px] font-black text-indigo-400 hover:text-indigo-300 transition-colors tracking-[0.2em] mb-4">
-                                START LEARNING →
+                                LINK →
                             </a>
                             @else
                             <p class="text-[8px] font-bold text-slate-700 tracking-[0.2em] mb-4 italic">NO LINK ATTACHED</p>
