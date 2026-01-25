@@ -159,7 +159,14 @@
                     <div class="p-8 flex flex-col flex-1">
                         <div class="flex-1">
                             <div class="flex items-center justify-between mb-4">
-                                <span class="text-[8px] font-black text-indigo-400 tracking-widest uppercase bg-indigo-600/10 px-3 py-1 rounded-full border border-indigo-500/10">Facebook Post</span>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[8px] font-black text-indigo-400 tracking-widest uppercase bg-indigo-600/10 px-3 py-1 rounded-full border border-indigo-500/10">Facebook Post</span>
+                                    @if($post->account)
+                                        <span class="text-[8px] font-bold text-slate-400 uppercase tracking-widest border border-slate-700/50 px-2 py-0.5 rounded-full">
+                                            {{ $post->account->name }}
+                                        </span>
+                                    @endif
+                                </div>
                                 <span class="text-[8px] font-bold text-slate-500 uppercase tracking-widest">{{ $post->created_at->diffForHumans() }}</span>
                             </div>
                             <p class="text-[11px] text-slate-300 leading-relaxed line-clamp-4 font-medium lowercase mb-6">
