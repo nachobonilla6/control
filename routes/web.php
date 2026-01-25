@@ -46,6 +46,7 @@ Route::middleware(['auth'])->group(function () {
     // Projects
     Route::get('/dashboard/projects', [\App\Http\Controllers\DashboardController::class, 'projectsIndex'])->name('dashboard.projects');
     Route::post('/dashboard/projects', [\App\Http\Controllers\DashboardController::class, 'projectsStore'])->name('dashboard.projects.store');
+    Route::patch('/dashboard/projects/{id}', [\App\Http\Controllers\DashboardController::class, 'projectsUpdate'])->name('dashboard.projects.update');
     Route::delete('/dashboard/projects/{id}', [\App\Http\Controllers\DashboardController::class, 'projectsDestroy'])->name('dashboard.projects.destroy');
 
     // API & Actions

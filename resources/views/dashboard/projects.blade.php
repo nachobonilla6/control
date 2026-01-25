@@ -180,13 +180,19 @@
                                 @endforeach
                             </div>
                             
-                            <form action="{{ route('dashboard.projects.destroy', $project->id) }}" method="POST" onsubmit="return confirm('Archive project?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="p-2.5 bg-red-500/10 text-red-500 rounded-xl hover:bg-red-500 hover:text-white transition-all border border-red-500/20">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            <div class="flex items-center space-x-2">
+                                <button onclick="openEditModal({{ json_encode($project) }})" class="p-2.5 bg-indigo-500/10 text-indigo-500 rounded-xl hover:bg-indigo-500 hover:text-white transition-all border border-indigo-500/20">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                 </button>
-                            </form>
+
+                                <form action="{{ route('dashboard.projects.destroy', $project->id) }}" method="POST" onsubmit="return confirm('Archive project?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="p-2.5 bg-red-500/10 text-red-500 rounded-xl hover:bg-red-500 hover:text-white transition-all border border-red-500/20">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -201,63 +207,73 @@
         </div>
     </main>
 
-    <!-- New Project Modal -->
-    <div id="newProjectModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-slate-800 w-full max-w-lg rounded-[2.5rem] overflow-hidden shadow-2xl p-10 animate-in fade-in zoom-in duration-300">
-            <div class="flex justify-between items-center mb-8">
-                <h2 class="text-2xl font-black text-white uppercase tracking-tight">Deploy New Project</h2>
-                <button onclick="document.getElementById('newProjectModal').classList.add('hidden')" class="p-2 hover:bg-slate-800 rounded-xl text-slate-500 hover:text-white transition-colors">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <!-- Dynamic Project Modal (Create/Edit) -->
+    <div id="newProjectModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-xl flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-lg rounded-[3rem] overflow-hidden shadow-[0_0_80px_rgba(0,0,0,0.5)] p-12 animate-in fade-in zoom-in duration-300">
+            <div class="flex justify-between items-center mb-10">
+                <div>
+                    <h2 id="modalTitle" class="text-3xl font-black text-white uppercase tracking-tight leading-none mb-2 italic">New Deployment</h2>
+                    <p id="modalSubtitle" class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Registering new development heritage</p>
+                </div>
+                <button onclick="document.getElementById('newProjectModal').classList.add('hidden')" class="w-12 h-12 flex items-center justify-center hover:bg-white/5 rounded-2xl text-slate-500 hover:text-white transition-all">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </button>
             </div>
-            <form action="{{ route('dashboard.projects.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+            
+            <form id="projectForm" action="{{ route('dashboard.projects.store') }}" method="POST" enctype="multipart/form-data" class="space-y-8">
                 @csrf
-                <div class="grid grid-cols-2 gap-6">
-                    <div class="col-span-2">
-                        <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Project Identity</label>
-                        <input type="text" name="name" required placeholder="e.g. Phoenix Portal" 
-                               class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 text-sm text-slate-200">
+                <div id="methodField"></div>
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-3">Project Title</label>
+                        <input type="text" name="name" id="form_name" value="{{ old('name') }}" required placeholder="e.g. Nexus Dashboard" 
+                               class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-6 py-5 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 text-sm font-bold text-white placeholder:text-slate-700">
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-3">Project Type</label>
+                            <select name="type" id="form_type" required class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-6 py-5 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 text-sm font-bold text-white appearance-none">
+                                <option value="Mobile App">Mobile App</option>
+                                <option value="Web Platform">Web Platform</option>
+                                <option value="AI Automation">AI Automation</option>
+                                <option value="CRM System">CRM System</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-3">Initial State</label>
+                            <div class="h-[62px] flex items-center px-6 bg-slate-950 border border-slate-800 rounded-2xl">
+                                <label class="relative inline-flex items-center cursor-pointer w-full justify-between">
+                                    <span class="text-[10px] font-black text-slate-500 uppercase">Live System</span>
+                                    <input type="checkbox" name="active" id="form_active" checked class="sr-only peer">
+                                    <div class="w-10 h-5 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[22px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600"></div>
+                                </label>
+                            </div>
+                        </div>
                     </div>
                     
                     <div>
-                        <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Vertical</label>
-                        <select name="type" required class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 text-sm text-slate-200">
-                            <option value="Mobile App">Mobile App</option>
-                            <option value="Web Platform">Web Platform</option>
-                            <option value="AI Automation">AI Automation</option>
-                            <option value="CRM System">CRM System</option>
-                        </select>
+                        <label class="block text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-3">Project Narrative</label>
+                        <textarea name="description" id="form_description" rows="3" placeholder="Brief technical summary..." 
+                                  class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-6 py-5 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 text-sm font-bold text-white resize-none placeholder:text-slate-700 leading-relaxed">{{ old('description') }}</textarea>
                     </div>
 
-                    <div class="flex items-center mt-6">
-                        <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" name="active" checked class="sr-only peer">
-                            <div class="w-11 h-6 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
-                            <span class="ml-3 text-[10px] font-black text-slate-500 uppercase">Live Now</span>
+                    <div>
+                        <label class="block text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-3">Visual Media (Max 7)</label>
+                        <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-800 border-dashed rounded-[2rem] cursor-pointer bg-slate-950 hover:bg-slate-900/50 transition-all group/file">
+                            <div class="flex flex-col items-center justify-center">
+                                <svg class="w-8 h-8 mb-2 text-slate-700 group-hover/file:text-indigo-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                <p id="fileLabel" class="text-[10px] font-black text-slate-600 uppercase tracking-widest group-hover/file:text-white transition-colors">Select Visual Assets</p>
+                            </div>
+                            <input type="file" name="images[]" id="fileInput" multiple accept="image/*" class="hidden" onchange="document.getElementById('fileLabel').innerText = this.files.length + ' FILES STAGED'" />
                         </label>
+                        <p id="editNotice" class="text-[9px] text-slate-600 mt-2 hidden italic">* Uploading new assets will replace your current infrastructure media.</p>
                     </div>
-                </div>
-                
-                <div>
-                    <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Narrative</label>
-                    <textarea name="description" rows="3" placeholder="Core features and goals..." 
-                              class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 text-sm text-slate-200 resize-none"></textarea>
-                </div>
-
-                <div>
-                    <label class="block text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-3">Visual Media (Max 7)</label>
-                    <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-800 border-dashed rounded-[2rem] cursor-pointer bg-slate-950 hover:bg-slate-900/50 transition-all group/file">
-                        <div class="flex flex-col items-center justify-center">
-                            <svg class="w-8 h-8 mb-2 text-slate-700 group-hover/file:text-indigo-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                            <p id="fileLabel" class="text-[10px] font-black text-slate-600 uppercase tracking-widest group-hover/file:text-white transition-colors">Select Visual Assets</p>
-                        </div>
-                        <input type="file" name="images[]" id="fileInput" multiple accept="image/*" class="hidden" onchange="document.getElementById('fileLabel').innerText = this.files.length + ' FILES STAGED'" />
-                    </label>
                 </div>
             
                 <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-black py-6 rounded-3xl shadow-2xl shadow-indigo-600/30 transition-all active:scale-[0.98] text-xs uppercase tracking-[0.3em] flex items-center justify-center space-x-3">
-                    <svg class="w-4 h-4 animate-spin hidden" id="deploySpinner" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                    <span>Execute Project Load</span>
+                    <span id="submitBtnText">Execute Project Load</span>
                 </button>
             </form>
         </div>
@@ -303,6 +319,54 @@
             notifDropdown.classList.add('opacity-0', 'invisible');
             accountDropdown.classList.add('opacity-0', 'invisible');
             document.getElementById('newProjectModal').classList.add('hidden');
+        }
+
+        // Logic for Create/Edit Modal
+        function openCreateModal() {
+            const form = document.getElementById('projectForm');
+            form.action = "{{ route('dashboard.projects.store') }}";
+            document.getElementById('methodField').innerHTML = '';
+            document.getElementById('modalTitle').innerText = 'New Deployment';
+            document.getElementById('modalSubtitle').innerText = 'Registering new development heritage';
+            document.getElementById('submitBtnText').innerText = 'Execute Project Load';
+            document.getElementById('editNotice').classList.add('hidden');
+            
+            // Clear fields
+            document.getElementById('form_name').value = '';
+            document.getElementById('form_type').value = 'Mobile App';
+            document.getElementById('form_description').value = '';
+            document.getElementById('form_active').checked = true;
+            document.getElementById('fileLabel').innerText = 'Select Visual Assets';
+            
+            document.getElementById('newProjectModal').classList.remove('hidden');
+        }
+
+        function openEditModal(project) {
+            const form = document.getElementById('projectForm');
+            form.action = `/dashboard/projects/${project.id}`;
+            document.getElementById('methodField').innerHTML = '@method("PATCH")';
+            document.getElementById('modalTitle').innerText = 'Modificar Entidad';
+            document.getElementById('modalSubtitle').innerText = 'Actualizando arquitectura del proyecto: ' + project.name;
+            document.getElementById('submitBtnText').innerText = 'Sincronizar Cambios';
+            document.getElementById('editNotice').classList.remove('hidden');
+            
+            // Populate fields
+            document.getElementById('form_name').value = project.name;
+            document.getElementById('form_type').value = project.type;
+            document.getElementById('form_description').value = project.description || '';
+            document.getElementById('form_active').checked = !!project.active;
+            document.getElementById('fileLabel').innerText = 'Visual Assets Attached';
+            
+            document.getElementById('newProjectModal').classList.remove('hidden');
+        }
+
+        // Connect the openModalBtn to openCreateModal
+        const openBtn = document.getElementById('openModalBtn');
+        if (openBtn) {
+            openBtn.onclick = (e) => {
+                e.stopPropagation();
+                openCreateModal();
+            };
         }
 
         async function fetchNotifs() {

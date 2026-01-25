@@ -119,6 +119,54 @@ class DashboardController extends Controller
     }
 
     /**
+     * Update existing Project.
+     */
+    public function projectsUpdate(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'type' => 'required|string|max:100',
+            'description' => 'nullable|string',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'images' => 'nullable|array|max:7',
+        ]);
+
+        try {
+            $project = Project::findOrFail($id);
+            
+            $data = [
+                'name' => $request->name,
+                'type' => $request->type,
+                'description' => $request->description,
+                'active' => $request->has('active'),
+            ];
+
+            if ($request->hasFile('images')) {
+                // Delete old images
+                if ($project->images) {
+                    foreach ($project->images as $url) {
+                        $path = str_replace('/storage/', '', $url);
+                        Storage::disk('public')->delete($path);
+                    }
+                }
+
+                $imagePaths = [];
+                foreach ($request->file('images') as $image) {
+                    $path = $image->store('projects', 'public');
+                    $imagePaths[] = Storage::url($path);
+                }
+                $data['images'] = $imagePaths;
+            }
+
+            $project->update($data);
+
+            return redirect()->route('dashboard.projects')->with('success', 'Project updated successfully.');
+        } catch (\Exception $e) {
+            return back()->withInput()->withErrors(['error' => 'Update error: ' . $e->getMessage()]);
+        }
+    }
+
+    /**
      * Webhooks Page: List and Create.
      */
     public function webhooksIndex()
