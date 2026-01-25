@@ -10,6 +10,7 @@ use App\Models\Client;
 use App\Models\Course;
 use App\Models\FacebookPost;
 use App\Models\Setting;
+use App\Models\FacebookAccount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -870,5 +871,46 @@ class DashboardController extends Controller
         Setting::set('facebook_webhook_url', $request->facebook_webhook_url);
 
         return back()->with('success', 'Facebook settings updated successfully.');
+    }
+
+    /**
+     * Facebook Accounts – List all accounts.
+     */
+    public function facebookAccountsIndex()
+    {
+        $accounts = FacebookAccount::orderBy('created_at', 'desc')->get();
+        return view('dashboard.facebook_accounts', compact('accounts'));
+    }
+
+    /**
+     * Store new Facebook Account.
+     */
+    public function facebookAccountsStore(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'link' => 'required|url',
+            'page_id' => 'required|string|max:100',
+        ]);
+
+        try {
+            FacebookAccount::create($request->all());
+            return redirect()->route('dashboard.facebook.accounts')->with('success', 'Facebook account registered successfully.');
+        } catch (\Exception $e) {
+            return back()->withInput()->withErrors(['error' => 'Error saving account: ' . $e->getMessage()]);
+        }
+    }
+
+    /**
+     * Delete Facebook Account.
+     */
+    public function facebookAccountsDestroy($id)
+    {
+        try {
+            FacebookAccount::findOrFail($id)->delete();
+            return redirect()->route('dashboard.facebook.accounts')->with('success', 'Account removed.');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Error deleting account: ' . $e->getMessage()]);
+        }
     }
 }
