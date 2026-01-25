@@ -107,13 +107,17 @@
                     <div class="w-3 h-3 rounded-full bg-green-500/50"></div>
                     <div class="flex-1 bg-white/5 rounded-lg h-6 mx-4"></div>
                 </div>
-                <div class="bg-indigo-900/10 rounded-[1.5rem] h-[400px] overflow-hidden flex items-center justify-center">
-                    <div class="text-center">
-                        <div class="w-20 h-20 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <svg class="w-10 h-10 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <div class="bg-indigo-900/10 rounded-[1.5rem] h-[500px] overflow-hidden relative group">
+                    <img src="https://miro.medium.com/v2/resize:fit:1400/1*MtZ0n0nFFWmebZTncI2sqA.jpeg" 
+                         class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" 
+                         alt="WhatsApp Automation System">
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-dark via-transparent to-transparent opacity-60"></div>
+                    <div class="absolute bottom-10 left-10 text-left">
+                        <div class="inline-flex items-center space-x-2 bg-indigo-600/20 backdrop-blur-md px-3 py-1 rounded-full border border-indigo-500/30 mb-4">
+                            <div class="w-2 h-2 bg-indigo-400 rounded-full animate-pulse"></div>
+                            <span class="text-[10px] font-black uppercase tracking-widest text-indigo-400">Live Infrastructure</span>
                         </div>
-                        <h3 class="text-2xl font-black text-white mb-2">Smart CRM Dashboard</h3>
-                        <p class="text-slate-500 text-sm">Gestionando 3,452 conversaciones en tiempo real...</p>
+                        <h3 class="text-3xl font-black text-white leading-none uppercase italic">Neural Link <br> Established</h3>
                     </div>
                 </div>
             </div>
