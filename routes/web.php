@@ -31,7 +31,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard/bots', [\App\Http\Controllers\DashboardController::class, 'botsIndex'])->name('dashboard.bots');
     Route::get('/dashboard/history/{bot}', [\App\Http\Controllers\DashboardController::class, 'botHistory'])->name('dashboard.history');
+    
+    // Webhooks
     Route::get('/dashboard/webhooks', [\App\Http\Controllers\DashboardController::class, 'webhooksIndex'])->name('dashboard.webhooks');
+    Route::post('/dashboard/webhooks', [\App\Http\Controllers\DashboardController::class, 'webhooksStore'])->name('dashboard.webhooks.store');
+    Route::delete('/dashboard/webhooks/{id}', [\App\Http\Controllers\DashboardController::class, 'webhooksDestroy'])->name('dashboard.webhooks.destroy');
 
     // API & Actions
     Route::post('/chat', [\App\Http\Controllers\DashboardController::class, 'chat'])->name('chat');

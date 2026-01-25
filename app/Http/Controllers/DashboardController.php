@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Notificacion;
 use App\Models\ChatHistory;
+use App\Models\Webhook;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -37,11 +38,37 @@ class DashboardController extends Controller
     }
 
     /**
-     * Webhooks Page.
+     * Webhooks Page: List and Create.
      */
     public function webhooksIndex()
     {
-        return view('dashboard.webhooks');
+        $webhooks = Webhook::orderBy('created_at', 'desc')->get();
+        return view('dashboard.webhooks', compact('webhooks'));
+    }
+
+    /**
+     * Store new Webhook.
+     */
+    public function webhooksStore(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'url' => 'required|url',
+            'payload_text' => 'nullable|string',
+        ]);
+
+        Webhook::create($request->only(['name', 'url', 'payload_text']));
+
+        return redirect()->route('dashboard.webhooks')->with('success', 'Webhook registered successfully.');
+    }
+
+    /**
+     * Delete Webhook.
+     */
+    public function webhooksDestroy($id)
+    {
+        Webhook::findOrFail($id)->delete();
+        return redirect()->route('dashboard.webhooks')->with('success', 'Webhook deleted.');
     }
 
     /**
@@ -57,7 +84,6 @@ class DashboardController extends Controller
                 'icon' => 'JD',
                 'count' => ChatHistory::count(),
             ],
-            // New bots will appear here
         ];
 
         return view('dashboard.bots', compact('bots'));
@@ -68,7 +94,6 @@ class DashboardController extends Controller
      */
     public function botHistory(Request $request, $botId)
     {
-        // Fetch history for the table view
         $history = ChatHistory::orderBy('id', 'desc')->paginate(11);
 
         return view('dashboard.table', [
@@ -87,7 +112,7 @@ class DashboardController extends Controller
     }
 
     /**
-     * Keep chat method if needed by n8n or other interactions.
+     * Chat endpoint redirection.
      */
     public function chat(Request $request)
     {
