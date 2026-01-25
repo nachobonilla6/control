@@ -49,17 +49,57 @@
             <a href="{{ route('dashboard.facebook') }}" class="text-xs font-black text-indigo-500 tracking-[0.2em] hover:text-white transition-colors uppercase font-inter">Facebook</a>
         </div>
         <div class="flex items-center space-x-4">
-            <!-- Account Dropdown -->
-            <div class="relative">
                 <button id="accountBtn" class="flex items-center justify-center w-10 h-10 bg-slate-800/50 border border-slate-800 rounded-full hover:border-indigo-500/30 transition-all focus:outline-none overflow-hidden group">
                     @if(Auth::user()->profile_photo_url)
-                        <img src="{{ Auth::user()->profile_photo_url }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+                        <img src="{{ asset(Auth::user()->profile_photo_url) }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
                     @else
                         <div class="w-full h-full bg-indigo-600 flex items-center justify-center text-white text-xs font-black">
                             {{ substr(Auth::user()->name, 0, 1) }}
                         </div>
                     @endif
                 </button>
+
+                <!-- Dropdown Menu -->
+                <div id="accountDropdown" class="absolute right-0 mt-3 w-56 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl opacity-0 invisible transition-all z-50 p-2">
+                    <div class="px-4 py-3 border-b border-slate-800 mb-2">
+                        <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest leading-none mb-1">Signed in as</p>
+                        <p class="text-xs font-bold text-white truncate lowercase">{{ Auth::user()->email }}</p>
+                    </div>
+                    
+                    <button onclick="document.getElementById('profileModal').classList.remove('hidden'); closeAllDropdowns();" class="w-full flex items-center space-x-3 px-4 py-3 text-sm text-slate-300 hover:bg-slate-800 rounded-xl transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <span>Profile Settings</span>
+                    </button>
+
+                    <div class="my-2 border-t border-slate-800"></div>
+
+                    <form action="{{ route('logout') }}" method="POST" class="w-full">
+                        @csrf
+                        <button type="submit" class="w-full flex items-center space-x-3 px-4 py-3 text-sm text-red-500 hover:bg-red-500/10 rounded-xl transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            <span class="font-bold">Logout System</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Notifications Dropdown -->
+            <div class="relative">
+                <button id="notifBtn" class="relative p-2.5 text-slate-400 hover:text-indigo-400 transition-colors focus:outline-none bg-slate-800/50 rounded-full border border-slate-800">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span id="notifBadge" class="absolute top-0 right-0 bg-indigo-600 text-[10px] font-bold text-white rounded-full w-4 h-4 flex items-center justify-center border-2 border-slate-950 hidden">0</span>
+                </button>
+
+                <!-- Notifications Dropdown Content -->
+                <div id="notifDropdown" class="absolute right-0 mt-3 w-80 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl opacity-0 invisible transition-all z-50 p-2 overflow-hidden">
+                    <div class="p-4 border-b border-slate-800 flex items-center justify-between">
+                        <h3 class="text-xs font-black text-white uppercase tracking-widest text-indigo-400">Broadcasts</h3>
+                        <span class="text-[9px] font-bold text-slate-600 uppercase">Live Feed</span>
+                    </div>
+                    <div id="notifList" class="max-h-80 overflow-y-auto p-2 space-y-2">
+                        <div class="text-center py-6 text-slate-600 text-[10px] italic uppercase tracking-widest lowercase">Scanning...</div>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
@@ -427,13 +467,101 @@
         </div>
     </div>
 
+    <!-- Profile Modal -->
+    <div id="profileModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-3xl overflow-hidden shadow-2xl p-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold text-white uppercase tracking-tight">User Profile</h2>
+                <button onclick="document.getElementById('profileModal').classList.add('hidden')" class="text-slate-500 hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </div>
+            <form action="{{ route('dashboard.profile.update') }}" method="POST" class="space-y-4">
+                @csrf
+                <div class="flex flex-col items-center mb-4">
+                    <div class="w-24 h-24 rounded-full border-2 border-indigo-500/20 overflow-hidden bg-slate-950 mb-4 shadow-2xl">
+                        <img id="profile_preview" src="{{ Auth::user()->profile_photo_url ?: 'https://ui-avatars.com/api/?name='.urlencode(Auth::user()->name).'&background=4f46e5&color=fff' }}" class="w-full h-full object-cover">
+                    </div>
+                    <p class="text-[8px] font-bold text-slate-600 uppercase tracking-widest">Active Identity Asset</p>
+                </div>
+                <div>
+                    <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 px-1">Profile Photo URL</label>
+                    <input type="url" name="profile_photo_url" id="profile_url_input" value="{{ Auth::user()->profile_photo_url }}" required placeholder="https://..." 
+                           oninput="document.getElementById('profile_preview').src = this.value || 'https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=4f46e5&color=fff'"
+                           class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-600/50">
+                </div>
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 py-3 rounded-xl font-bold transition-all shadow-lg shadow-indigo-600/20 active:scale-95 text-xs uppercase tracking-widest">Update Profile Asset</button>
+            </form>
+        </div>
+    </div>
+
     <script>
+        const notifBtn = document.getElementById('notifBtn');
+        const notifDropdown = document.getElementById('notifDropdown');
         const accountBtn = document.getElementById('accountBtn');
-        if (accountBtn) {
-            accountBtn.addEventListener('click', () => {
-                window.location.href = "{{ route('dashboard') }}";
+        const accountDropdown = document.getElementById('accountDropdown');
+        const badge = document.getElementById('notifBadge');
+        const list = document.getElementById('notifList');
+
+        function closeAllDropdowns() {
+            if (notifDropdown) notifDropdown.classList.add('opacity-0', 'invisible');
+            if (accountDropdown) accountDropdown.classList.add('opacity-0', 'invisible');
+        }
+
+        async function fetchNotifs() {
+            try {
+                const res = await fetch('{{ route('notifications') }}');
+                const data = await res.json();
+                if (data.length > 0) {
+                    badge.innerText = data.length;
+                    badge.classList.remove('hidden');
+                    list.innerHTML = data.map(n => `
+                        <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl hover:border-indigo-500/30 transition-all text-left">
+                            <div class="flex justify-between items-start mb-1">
+                                <h3 class="text-[11px] font-bold text-slate-200 leading-tight normal-case">${n.titulo}</h3>
+                                <span class="text-[9px] font-medium text-slate-600 whitespace-nowrap ml-2">${n.fecha_format}</span>
+                            </div>
+                            <p class="text-[10px] text-slate-500 leading-relaxed normal-case">${n.texto}</p>
+                        </div>
+                    `).join('');
+                } else {
+                    list.innerHTML = '<div class="text-center py-10 text-slate-600 text-[10px] uppercase font-bold">Clear Records</div>';
+                }
+            } catch (e) {}
+        }
+
+        if (notifBtn) {
+            notifBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isVisible = !notifDropdown.classList.contains('invisible');
+                closeAllDropdowns();
+                if (!isVisible) {
+                    notifDropdown.classList.remove('opacity-0', 'invisible');
+                    fetchNotifs();
+                }
             });
         }
+
+        if (accountBtn) {
+            accountBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isVisible = !accountDropdown.classList.contains('invisible');
+                closeAllDropdowns();
+                if (!isVisible) {
+                    accountDropdown.classList.remove('opacity-0', 'invisible');
+                }
+            });
+        }
+
+        document.addEventListener('click', (e) => {
+            if (notifDropdown && accountDropdown) {
+                if (!notifDropdown.contains(e.target) && !accountDropdown.contains(e.target)) {
+                    closeAllDropdowns();
+                }
+            }
+        });
+
+        fetchNotifs();
 
         function openCreatePostModal() {
             // Set current datetime as default

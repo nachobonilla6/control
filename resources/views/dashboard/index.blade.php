@@ -39,7 +39,7 @@
             <div class="relative">
                 <button id="accountBtn" class="flex items-center justify-center w-10 h-10 bg-slate-800/50 border border-slate-800 rounded-full hover:border-indigo-500/30 transition-all focus:outline-none overflow-hidden group">
                     @if(Auth::user()->profile_photo_url)
-                        <img src="{{ Auth::user()->profile_photo_url }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+                    <img src="{{ asset(Auth::user()->profile_photo_url) }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
                     @else
                         <div class="w-full h-full bg-indigo-600 flex items-center justify-center text-white text-xs font-black">
                             {{ substr(Auth::user()->name, 0, 1) }}
@@ -133,12 +133,19 @@
             </div>
             <form action="{{ route('dashboard.profile.update') }}" method="POST" class="space-y-4">
                 @csrf
+                <div class="flex flex-col items-center mb-4">
+                    <div class="w-24 h-24 rounded-full border-2 border-indigo-500/20 overflow-hidden bg-slate-950 mb-4 shadow-2xl">
+                        <img id="profile_preview" src="{{ Auth::user()->profile_photo_url ?: 'https://ui-avatars.com/api/?name='.urlencode(Auth::user()->name).'&background=4f46e5&color=fff' }}" class="w-full h-full object-cover">
+                    </div>
+                    <p class="text-[8px] font-bold text-slate-600 uppercase tracking-widest">Active Identity Asset</p>
+                </div>
                 <div>
                     <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Profile Photo URL</label>
-                    <input type="url" name="profile_photo_url" value="{{ Auth::user()->profile_photo_url }}" required placeholder="https://..." 
+                    <input type="url" name="profile_photo_url" id="profile_url_input" value="{{ Auth::user()->profile_photo_url }}" required placeholder="https://..." 
+                           oninput="document.getElementById('profile_preview').src = this.value || 'https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=4f46e5&color=fff'"
                            class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-600/50">
                 </div>
-                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 py-3 rounded-xl font-bold transition-all shadow-lg shadow-indigo-600/20 active:scale-95">Update Picture</button>
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 py-3 rounded-xl font-bold transition-all shadow-lg shadow-indigo-600/20 active:scale-95 text-xs uppercase tracking-widest">Update Picture</button>
             </form>
         </div>
     </div>
