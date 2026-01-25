@@ -321,6 +321,16 @@
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                 </div>
                             </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Target Account</label>
+                            <select name="facebook_account_id" id="edit_facebook_account_id" class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all appearance-none">
+                                <option value="">Select Account (Optional)</option>
+                                @foreach($accounts as $account)
+                                    <option value="{{ $account->id }}">{{ $account->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div>
                             <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Deployment Status</label>
@@ -408,6 +418,7 @@
             // Fill fields
             document.getElementById('edit_content').value = post.content;
             document.getElementById('edit_status').value = post.status || 'scheduled';
+            document.getElementById('edit_facebook_account_id').value = post.facebook_account_id || '';
             
             if (post.post_at) {
                 // Format date for datetime-local input (YYYY-MM-DDTHH:mm)
