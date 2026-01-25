@@ -154,11 +154,13 @@
                                     'posted' => 'bg-emerald-500',
                                     'sent' => 'bg-emerald-500',
                                     'cancelled' => 'bg-red-500',
+                                    'queued' => 'bg-yellow-500',
+                                    'scheduled' => 'bg-yellow-500',
                                     default => 'bg-indigo-500',
                                 };
                             @endphp
                             <span class="text-[7px] font-black {{ $statusColor }} text-white px-3 py-1 rounded-full uppercase tracking-[0.2em] shadow-lg">
-                                {{ $post->status ?? 'scheduled' }}
+                                {{ in_array($post->status, ['scheduled', 'queued']) ? 'QUEUED' : ($post->status ?? 'QUEUED') }}
                             </span>
                         </div>
                     </div>
@@ -188,15 +190,12 @@
                                 <div class="flex items-center space-x-2">
                                     <svg class="w-3.5 h-3.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                     <span class="text-[9px] font-black text-emerald-500 tracking-widest uppercase">
-                                        {{ $post->post_at->format('M d, Y @ H:i') }}
+                                        {{ $post->post_at->timezone('America/Costa_Rica')->format('M d, Y @ H:i') }}
                                     </span>
                                 </div>
                                 @endif
                                 
-                                <div class="flex items-center justify-between">
-                                    <div class="text-[8px] font-bold text-slate-500 uppercase tracking-widest">
-                                        Status: <span class="text-indigo-400">{{ $post->status ?? 'pending' }}</span>
-                                    </div>
+                                <div class="flex items-center justify-end">
                                 <div class="flex items-center space-x-2">
                                     @if($post->status !== 'posted' && $post->status !== 'sent')
                                         <button onclick="editPost({{ json_encode($post) }})" class="w-8 h-8 flex items-center justify-center bg-indigo-500/10 text-indigo-500 rounded-lg hover:bg-indigo-500 hover:text-white transition-all border border-indigo-500/10">
