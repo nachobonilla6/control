@@ -16,34 +16,11 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
-        // Use a chat_id from session or generate a new one
-        $chatId = $request->session()->get('current_chat_id');
-        if (!$chatId) {
-            $chatId = Str::uuid();
-            $request->session()->put('current_chat_id', $chatId);
-        }
-
-        // Fetch history from DB
-        $history = ChatHistory::where('chat_id', $chatId)
-            ->orderBy('created_at', 'asc')
-            ->get();
-
-        // Fetch threads/history for sidebar (latest message per chat_id)
-        $threads = ChatHistory::where('username', Auth::user()->name)
-            ->where('role', 'user')
-            ->whereIn('id', function($query) {
-                $query->selectRaw('MAX(id)')
-                    ->from('josh_dev_chat_history')
-                    ->where('role', 'user')
-                    ->groupBy('chat_id');
-            })
-            ->orderBy('id', 'desc')
-            ->take(20)
-            ->get();
+        // Fetch all history from DB for the table view
+        $history = ChatHistory::orderBy('created_at', 'desc')->get();
 
         return view('dashboard', [
-            'chat_history' => $history,
-            'threads' => $threads
+            'chat_history' => $history
         ]);
     }
 
