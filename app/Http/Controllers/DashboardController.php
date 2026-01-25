@@ -32,15 +32,38 @@ class DashboardController extends Controller
     }
 
     /**
-     * Show the detailed table for a specific bot.
+     * Show the chat interface for a specific bot.
      */
     public function botHistory(Request $request, $botId)
     {
-        // We filter by username if needed, here we just show the table as requested.
-        $history = ChatHistory::orderBy('id', 'desc')->paginate(11);
+        // Use a chat_id from session or generate a new one
+        $chatId = $request->session()->get('current_chat_id');
+        if (!$chatId) {
+            $chatId = Str::uuid();
+            $request->session()->put('current_chat_id', $chatId);
+        }
 
-        return view('dashboard.table', [
+        // Fetch history from DB for the specific conversation
+        $history = ChatHistory::where('chat_id', $chatId)
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        // Fetch all conversations for the sidebar
+        $threads = ChatHistory::where('username', Auth::user()->name)
+            ->where('role', 'user')
+            ->whereIn('id', function($query) {
+                $query->selectRaw('MAX(id)')
+                    ->from('josh_dev_chat_history')
+                    ->where('role', 'user')
+                    ->groupBy('chat_id');
+            })
+            ->orderBy('id', 'desc')
+            ->take(20)
+            ->get();
+
+        return view('dashboard.chat', [
             'chat_history' => $history,
+            'threads' => $threads,
             'bot_id' => $botId
         ]);
     }
