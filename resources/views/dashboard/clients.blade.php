@@ -108,6 +108,20 @@
             </div>
             @endif
 
+            @if($errors->any())
+            <div class="mb-8 bg-red-500/10 border border-red-500/20 text-red-400 px-6 py-4 rounded-2xl shadow-lg animate-in fade-in slide-in-from-top-4">
+                <div class="flex items-center mb-2">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="text-[10px] font-black tracking-widest uppercase">Atención: Errores detectados</span>
+                </div>
+                <ul class="list-disc list-inside space-y-1">
+                    @foreach($errors->all() as $error)
+                        <li class="text-[9px] font-bold tracking-wider">{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
                 <div>
                     <h1 class="text-4xl font-black text-white italic tracking-tighter">Gestión de <span class="text-indigo-500">Clientes</span></h1>
