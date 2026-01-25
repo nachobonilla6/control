@@ -78,10 +78,14 @@ class DashboardController extends Controller
         try {
             $imagePaths = [];
             if ($request->hasFile('images')) {
-                $uploadPath = public_path('uploads/projects');
+                // Detect web root (Hostinger often uses public_html)
+                $webRoot = is_dir(base_path('public_html')) ? base_path('public_html') : public_path();
+                $uploadPath = $webRoot . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'projects';
+                
                 if (!is_dir($uploadPath)) {
                     mkdir($uploadPath, 0755, true);
                 }
+                
                 foreach ($request->file('images') as $image) {
                     $filename = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
                     $image->move($uploadPath, $filename);
@@ -110,12 +114,13 @@ class DashboardController extends Controller
     {
         $project = Project::findOrFail($id);
         
-        // Delete images from public folder
+        // Delete images from folder
         if ($project->images) {
             $imgs = is_array($project->images) ? $project->images : json_decode($project->images, true);
             if (is_array($imgs)) {
+                $webRoot = is_dir(base_path('public_html')) ? base_path('public_html') : public_path();
                 foreach ($imgs as $path) {
-                    $fullPath = public_path($path);
+                    $fullPath = $webRoot . DIRECTORY_SEPARATOR . $path;
                     if (file_exists($fullPath)) {
                         unlink($fullPath);
                     }
@@ -155,8 +160,9 @@ class DashboardController extends Controller
                 if ($project->images) {
                     $oldImgs = is_array($project->images) ? $project->images : json_decode($project->images, true);
                     if (is_array($oldImgs)) {
+                        $webRoot = is_dir(base_path('public_html')) ? base_path('public_html') : public_path();
                         foreach ($oldImgs as $path) {
-                            $fullPath = public_path($path);
+                            $fullPath = $webRoot . DIRECTORY_SEPARATOR . $path;
                             if (file_exists($fullPath)) {
                                 unlink($fullPath);
                             }
@@ -164,16 +170,21 @@ class DashboardController extends Controller
                     }
                 }
 
-                $imagePaths = [];
-                $uploadPath = public_path('uploads/projects');
+            if ($request->hasFile('images')) {
+                // Detect web root (Hostinger often uses public_html)
+                $webRoot = is_dir(base_path('public_html')) ? base_path('public_html') : public_path();
+                $uploadPath = $webRoot . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'projects';
+                
                 if (!is_dir($uploadPath)) {
                     mkdir($uploadPath, 0755, true);
                 }
+                
                 foreach ($request->file('images') as $image) {
                     $filename = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
                     $image->move($uploadPath, $filename);
                     $imagePaths[] = 'uploads/projects/' . $filename;
                 }
+            }
                 $data['images'] = $imagePaths;
             }
 
