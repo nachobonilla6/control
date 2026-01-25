@@ -23,6 +23,22 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; }
+        /* Pagination overrides for dark mode */
+        nav[role="navigation"] svg { width: 1.25rem; height: 1.25rem; }
+        nav[role="navigation"] span, nav[role="navigation"] a {
+            background-color: transparent !important;
+            border-color: #334155 !important;
+            color: #94a3b8 !important;
+        }
+        nav[role="navigation"] a:hover {
+            color: #818cf8 !important;
+            background-color: #1e293b !important;
+        }
+        nav[role="navigation"] .bg-white {
+            background-color: #4f46e5 !important;
+            color: white !important;
+            border-color: #4f46e5 !important;
+        }
     </style>
 </head>
 <body class="h-full flex flex-col bg-slate-950 text-slate-200 overflow-hidden">
@@ -48,7 +64,7 @@
             <div class="flex items-center justify-between mb-8">
                 <h1 class="text-3xl font-bold text-white">josh_dev_chat_history</h1>
                 <div class="bg-indigo-500/10 border border-indigo-500/20 px-4 py-2 rounded-lg">
-                    <span class="text-indigo-400 text-sm font-mono">{{ count($chat_history) }} records found</span>
+                    <span class="text-indigo-400 text-sm font-mono">Total: {{ $chat_history->total() }} | Page {{ $chat_history->currentPage() }} of {{ $chat_history->lastPage() }}</span>
                 </div>
             </div>
 
@@ -104,6 +120,25 @@
                         </tbody>
                     </table>
                 </div>
+                
+                <!-- Pagination Footer -->
+                @if($chat_history->hasPages())
+                <div class="bg-slate-800/30 px-6 py-4 border-t border-slate-800 flex items-center justify-between">
+                    <div class="flex-1 flex justify-between sm:hidden">
+                        {{ $chat_history->links('pagination::simple-tailwind') }}
+                    </div>
+                    <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                        <div>
+                            <p class="text-sm text-slate-500">
+                                Showing <span class="font-medium text-slate-300">{{ $chat_history->firstItem() }}</span> to <span class="font-medium text-slate-300">{{ $chat_history->lastItem() }}</span> of <span class="font-medium text-slate-300">{{ $chat_history->total() }}</span> results
+                            </p>
+                        </div>
+                        <div class="pagination-custom">
+                            {{ $chat_history->links() }}
+                        </div>
+                    </div>
+                </div>
+                @endif
             </div>
             
             <p class="mt-6 text-center text-xs text-slate-600 uppercase tracking-widest font-semibold">

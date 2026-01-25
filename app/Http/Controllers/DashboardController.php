@@ -16,8 +16,8 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
-        // Fetch all history from DB for the table view
-        $history = ChatHistory::orderBy('created_at', 'desc')->get();
+        // Fetch history from DB for the table view with pagination
+        $history = ChatHistory::orderBy('id', 'desc')->paginate(11);
 
         return view('dashboard', [
             'chat_history' => $history
