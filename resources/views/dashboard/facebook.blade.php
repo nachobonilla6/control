@@ -99,6 +99,7 @@
 
             <!-- Posts Grid (3 per row) -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                @forelse($posts as $post)
                 @php
                     $images = array_filter([$post->image1, $post->image2, $post->image3]);
                     $imgCount = count($images);
