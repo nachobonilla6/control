@@ -87,23 +87,31 @@
                 @forelse($courses as $course)
                 <div class="group relative flex flex-col bg-slate-900 border border-slate-800 rounded-[2rem] overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:border-indigo-500/30 hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)] active:scale-95">
                     
+                    @php
+                        $ytId = '';
+                        if ($course->link && preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $course->link, $match)) {
+                            $ytId = $match[1];
+                        }
+
+                        $statusConfig = [
+                            'pending' => ['color' => 'bg-indigo-600', 'text' => 'PENDING'],
+                            'done' => ['color' => 'bg-emerald-600', 'text' => 'DONE'],
+                            'postponed' => ['color' => 'bg-amber-600', 'text' => 'POSTPONED'],
+                            'archived' => ['color' => 'bg-slate-700', 'text' => 'ARCHIVED'],
+                        ];
+                        $config = $statusConfig[$course->status] ?? $statusConfig['pending'];
+                    @endphp
+
                     <!-- Thumbnail Area -->
                     <div class="relative aspect-video w-full overflow-hidden bg-slate-950">
-                        <div class="absolute inset-0 bg-gradient-to-br from-indigo-600/20 via-transparent to-slate-950 opacity-40 group-hover:opacity-60 transition-opacity"></div>
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <span class="text-4xl filter blur-sm group-hover:blur-none transition-all duration-700 opacity-20 group-hover:opacity-40 select-none">🎓</span>
-                        </div>
-                        
-                        <!-- Status Badge Overlay -->
-                        @php
-                            $statusConfig = [
-                                'pending' => ['color' => 'bg-indigo-600', 'text' => 'PENDING'],
-                                'done' => ['color' => 'bg-emerald-600', 'text' => 'DONE'],
-                                'postponed' => ['color' => 'bg-amber-600', 'text' => 'POSTPONED'],
-                                'archived' => ['color' => 'bg-slate-700', 'text' => 'ARCHIVED'],
-                            ];
-                            $config = $statusConfig[$course->status] ?? $statusConfig['pending'];
-                        @endphp
+                        @if($ytId)
+                            <img src="https://img.youtube.com/vi/{{ $ytId }}/hqdefault.jpg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60 group-hover:opacity-100" />
+                        @else
+                            <div class="absolute inset-0 bg-gradient-to-br from-indigo-600/20 via-transparent to-slate-950 opacity-40 group-hover:opacity-60 transition-opacity"></div>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <span class="text-4xl filter blur-sm group-hover:blur-none transition-all duration-700 opacity-20 group-hover:opacity-40 select-none">🎓</span>
+                            </div>
+                        @endif
                         <div class="absolute top-4 right-4 {{ $config['color'] }} px-3 py-1.5 rounded-lg text-[8px] font-black tracking-widest shadow-lg">
                             {{ $config['text'] }}
                         </div>
