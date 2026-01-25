@@ -160,49 +160,63 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 @foreach($projects as $project)
-                <div class="bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden group hover:border-indigo-500/30 transition-all flex flex-col shadow-2xl">
-                    @if($project->images && count($project->images) > 0)
-                    <div class="h-48 relative overflow-hidden bg-slate-950">
-                        <img src="{{ asset($project->images[0]) }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <div class="absolute top-4 right-4 bg-slate-950/80 backdrop-blur-md px-2 py-1 rounded-lg border border-white/10 text-[8px] font-black text-white uppercase tracking-widest">
-                            +{{ count($project->images) }} Photos
+                @php
+                    $imgs = is_array($project->images) ? $project->images : json_decode($project->images, true);
+                    if (!is_array($imgs)) $imgs = [];
+                @endphp
+                <div class="bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden group hover:border-indigo-500/30 transition-all flex flex-col shadow-2xl relative">
+                    @if(count($imgs) > 0)
+                    <div class="h-56 relative overflow-hidden bg-slate-950">
+                        <img src="{{ asset($imgs[0]) }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute top-4 right-4 bg-slate-950/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 text-[9px] font-black text-white uppercase tracking-widest flex items-center shadow-2xl">
+                            <svg class="w-3 h-3 mr-1.5 text-indigo-400" fill="currentColor" viewBox="0 0 20 20"><path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"/></svg>
+                            {{ count($imgs) }} Visuals
                         </div>
                     </div>
                     @else
-                    <div class="h-48 bg-slate-950 flex items-center justify-center text-slate-800 italic text-xs uppercase tracking-widest">
-                        No Visuals Uploaded
+                    <div class="h-56 bg-slate-950 flex flex-col items-center justify-center text-slate-800 space-y-2 border-b border-slate-800">
+                        <svg class="w-8 h-8 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <span class="italic text-[9px] uppercase tracking-[0.2em]">Awaiting Media</span>
                     </div>
                     @endif
 
-                    <div class="p-6 flex-1 flex flex-col">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="px-3 py-1 rounded-full bg-indigo-600/10 text-indigo-400 text-[9px] font-black uppercase border border-indigo-500/20">
+                    <div class="p-8 flex-1 flex flex-col">
+                        <div class="flex items-center justify-between mb-5">
+                            <span class="px-4 py-1.5 rounded-full bg-indigo-600/10 text-indigo-400 text-[9px] font-black uppercase border border-indigo-500/10">
                                 {{ $project->type }}
                             </span>
-                            <div class="flex items-center space-x-2">
-                                <div class="w-2 h-2 rounded-full {{ $project->active ? 'bg-emerald-500 animate-pulse' : 'bg-slate-600' }}"></div>
-                                <span class="text-[8px] font-black uppercase text-slate-500">{{ $project->active ? 'Live' : 'Inactive' }}</span>
+                            <div class="flex items-center space-x-2.5">
+                                <div class="w-2 h-2 rounded-full {{ $project->active ? 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.3)] animate-pulse' : 'bg-slate-700' }}"></div>
+                                <span class="text-[9px] font-black uppercase text-slate-500 tracking-wider">{{ $project->active ? 'Live' : 'Off' }}</span>
                             </div>
                         </div>
-                        <h3 class="text-xl font-bold text-white mb-2">{{ $project->name }}</h3>
-                        <p class="text-sm text-slate-500 line-clamp-2 mb-6">{{ $project->description }}</p>
                         
-                        <div class="mt-auto flex items-center justify-between pt-6 border-t border-slate-800/50">
-                            <div class="flex -space-x-2">
-                                @foreach(array_slice($project->images ?? [], 0, 3) as $img)
-                                <img src="{{ asset($img) }}" class="w-8 h-8 rounded-lg border-2 border-slate-900 object-cover shadow-lg">
+                        <h3 class="text-xl font-bold text-white mb-3 group-hover:text-indigo-400 transition-colors">{{ $project->name }}</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed line-clamp-3 mb-8 font-medium italic opacity-80">"{{ $project->description ?: 'No narrative provided for this infrastructure.' }}"</p>
+                        
+                        <div class="mt-auto flex items-center justify-between pt-6 border-t border-white/5">
+                            <div class="flex -space-x-2.5">
+                                @foreach(array_slice($imgs, 1, 4) as $subImg)
+                                <img src="{{ asset($subImg) }}" class="w-9 h-9 rounded-xl border-2 border-slate-900 object-cover shadow-2xl hover:scale-110 transition-transform cursor-pointer">
                                 @endforeach
                             </div>
                             
-                            <div class="flex items-center space-x-2">
-                                <button onclick="event.stopPropagation(); openEditModal({{ json_encode($project) }})" class="p-2.5 bg-indigo-500/10 text-indigo-500 rounded-xl hover:bg-indigo-500 hover:text-white transition-all border border-indigo-500/20">
+                            <div class="flex items-center space-x-2.5">
+                                <button 
+                                    class="edit-btn w-10 h-10 flex items-center justify-center bg-indigo-600/10 text-indigo-400 rounded-xl hover:bg-indigo-600 hover:text-white transition-all border border-indigo-500/20 active:scale-95"
+                                    data-id="{{ $project->id }}"
+                                    data-name="{{ $project->name }}"
+                                    data-type="{{ $project->type }}"
+                                    data-description="{{ $project->description }}"
+                                    data-active="{{ $project->active ? '1' : '0' }}"
+                                    onclick="event.stopPropagation(); window.setupEditModal(this)">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                 </button>
 
-                                <form action="{{ route('dashboard.projects.destroy', $project->id) }}" method="POST" onsubmit="return confirm('Archive project?');">
+                                <form action="{{ route('dashboard.projects.destroy', $project->id) }}" method="POST" onsubmit="return confirm('Initiate project decommissioning?');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="p-2.5 bg-red-500/10 text-red-500 rounded-xl hover:bg-red-500 hover:text-white transition-all border border-red-500/20">
+                                    <button type="submit" class="w-10 h-10 flex items-center justify-center bg-red-500/10 text-red-500 rounded-xl hover:bg-red-500 hover:text-white transition-all border border-red-500/20 active:scale-95">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                     </button>
                                 </form>
@@ -355,20 +369,26 @@
             document.getElementById('newProjectModal').classList.remove('hidden');
         }
 
-        function openEditModal(project) {
+        window.setupEditModal = function(btn) {
+            const id = btn.getAttribute('data-id');
+            const name = btn.getAttribute('data-name');
+            const type = btn.getAttribute('data-type');
+            const description = btn.getAttribute('data-description');
+            const active = btn.getAttribute('data-active') === '1';
+
             const form = document.getElementById('projectForm');
-            form.action = `/dashboard/projects/${project.id}`;
-            document.getElementById('methodField').innerHTML = '@method("PATCH")';
+            form.action = `/dashboard/projects/${id}`;
+            document.getElementById('methodField').innerHTML = '<input type="hidden" name="_method" value="PATCH">';
             document.getElementById('modalTitle').innerText = 'Modificar Entidad';
-            document.getElementById('modalSubtitle').innerText = 'Actualizando arquitectura del proyecto: ' + project.name;
+            document.getElementById('modalSubtitle').innerText = 'Actualizando arquitectura del proyecto: ' + name;
             document.getElementById('submitBtnText').innerText = 'Sincronizar Cambios';
             document.getElementById('editNotice').classList.remove('hidden');
             
             // Populate fields
-            document.getElementById('form_name').value = project.name;
-            document.getElementById('form_type').value = project.type;
-            document.getElementById('form_description').value = project.description || '';
-            document.getElementById('form_active').checked = !!project.active;
+            document.getElementById('form_name').value = name;
+            document.getElementById('form_type').value = type;
+            document.getElementById('form_description').value = description || '';
+            document.getElementById('form_active').checked = active;
             document.getElementById('fileLabel').innerText = 'Visual Assets Attached';
             
             document.getElementById('newProjectModal').classList.remove('hidden');
