@@ -34,10 +34,6 @@
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
             <span class="text-xl font-bold text-white uppercase tracking-tighter">Project Gallery</span>
-            <button id="openModalBtn" onclick="event.stopPropagation(); document.getElementById('newProjectModal').classList.remove('hidden')" class="ml-6 flex items-center space-x-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-black uppercase tracking-widest transition-all shadow-lg shadow-indigo-600/20 active:scale-95">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <span>New Project</span>
-            </button>
         </div>
         <div class="flex items-center space-x-4">
             <!-- Account Dropdown -->
@@ -136,6 +132,17 @@
                 </ul>
             </div>
             @endif
+
+            <div class="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-6">
+                <div>
+                    <h1 class="text-3xl font-black text-white uppercase tracking-tighter italic">Infraestructura de <span class="text-indigo-500">Proyectos</span></h1>
+                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em] mt-1">Gestión de activos digitales y despliegues</p>
+                </div>
+                <button id="openModalBtn" onclick="event.stopPropagation(); document.getElementById('newProjectModal').classList.remove('hidden')" class="flex items-center space-x-3 px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl text-xs font-black uppercase tracking-[0.2em] transition-all shadow-2xl shadow-indigo-600/20 active:scale-95 group">
+                    <svg class="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span>Nuevo Despliegue</span>
+                </button>
+            </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 @foreach($projects as $project)
