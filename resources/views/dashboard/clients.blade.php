@@ -235,10 +235,10 @@
 
     <!-- Modal -->
     <div id="clientModal" class="fixed inset-0 z-50 hidden bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-[2.5rem] overflow-hidden shadow-2xl p-10 animate-in fade-in zoom-in duration-300">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-7xl rounded-[2.5rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
             <div class="flex justify-between items-start mb-6">
                 <div>
-                    <h2 id="modalTitle" class="text-2xl font-black text-white italic tracking-tighter mb-1">Nuevo Registro</h2>
+                    <h2 id="modalTitle" class="text-2xl font-black text-white italic tracking-tighter mb-0.5">Nuevo Registro</h2>
                     <p id="modalSubtitle" class="text-[8px] font-bold text-slate-500 tracking-widest leading-none">Alta de entidad comercial</p>
                 </div>
                 <button onclick="document.getElementById('clientModal').classList.add('hidden')" class="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-xl text-slate-600 hover:text-white transition-all">
@@ -246,66 +246,79 @@
                 </button>
             </div>
 
-            <!-- Magic Paste AI Section -->
-            <div id="aiSection" class="mb-10 bg-indigo-600/5 border border-indigo-500/20 rounded-3xl p-6 relative overflow-hidden group">
-                <div class="absolute -right-4 -top-4 w-20 h-20 bg-indigo-500/10 blur-2xl rounded-full"></div>
-                <label class="block text-[9px] font-black text-indigo-400 tracking-[0.2em] mb-4 uppercase flex items-center">
-                    <svg class="w-3 h-3 mr-2 animate-pulse" fill="currentColor" viewBox="0 0 20 20"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM14 11a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1h-1a1 1 0 110-2h1v-1a1 1 0 011-1z"/></svg>
-                    Magic Paste (AI Extractor)
-                </label>
-                <textarea id="magicText" rows="2" placeholder="Pega aquí la firma del correo o info del cliente..." 
-                          class="w-full bg-slate-950/50 border border-slate-800 rounded-2xl px-4 py-3 text-[11px] text-slate-300 focus:outline-none focus:border-indigo-500/50 transition-all resize-none mb-3 placeholder:text-slate-700"></textarea>
-                <button type="button" onclick="parseMagicText()" id="magicBtn" class="w-full py-2.5 bg-indigo-600/20 hover:bg-indigo-600 text-indigo-400 hover:text-white rounded-xl text-[9px] font-black tracking-widest uppercase transition-all flex items-center justify-center">
-                    <span>Auto-Sincro Datos</span>
-                </button>
-            </div>
-
-            <form id="clientForm" action="{{ route('dashboard.clients.store') }}" method="POST" class="space-y-6">
-                @csrf
-                <div id="methodField"></div>
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2">Nombre Completo / Empresa</label>
-                        <input type="text" name="name" id="form_name" required placeholder="Ej: Tech Solutions S.A." 
-                               class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all uppercase">
-                    </div>
-                    <div>
-                        <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2">Email de Contacto</label>
-                        <input type="email" name="email" id="form_email" required placeholder="client@example.com" 
-                               class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all lowercase">
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2">Ubicación</label>
-                            <input type="text" name="location" id="form_location" placeholder="Ciudad, País" 
-                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all uppercase">
-                        </div>
-                        <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2">Teléfono</label>
-                            <input type="text" name="phone" id="form_phone" placeholder="+00 0000-0000" 
-                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all">
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2">Industria / Sector</label>
-                            <input type="text" name="industry" id="form_industry" placeholder="Ej: Automotriz" 
-                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all uppercase">
-                        </div>
-                        <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2">Status Operativo</label>
-                            <select name="status" id="form_status" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white appearance-none transition-all cursor-pointer">
-                                <option value="extracted">EXTRACTED</option>
-                                <option value="sent">SENT</option>
-                            </select>
-                        </div>
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Magic Paste AI Section -->
+                <div id="aiSection" class="lg:col-span-3 bg-indigo-600/5 border border-indigo-500/20 rounded-3xl p-5 relative overflow-hidden group h-full">
+                    <div class="absolute -right-4 -top-4 w-20 h-20 bg-indigo-500/10 blur-2xl rounded-full"></div>
+                    <label class="block text-[9px] font-black text-indigo-400 tracking-[0.2em] mb-4 uppercase flex items-center">
+                        <svg class="w-3 h-3 mr-2 animate-pulse" fill="currentColor" viewBox="0 0 20 20"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM14 11a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1h-1a1 1 0 110-2h1v-1a1 1 0 011-1z"/></svg>
+                        Magic Paste (AI Extractor)
+                    </label>
+                    <textarea id="magicText" rows="4" placeholder="Pega aquí la firma del correo o info del cliente..." 
+                              class="w-full bg-slate-950/50 border border-slate-800 rounded-2xl px-4 py-3 text-[11px] text-slate-300 focus:outline-none focus:border-indigo-500/50 transition-all resize-none mb-4 placeholder:text-slate-700 h-32"></textarea>
+                    <button type="button" onclick="parseMagicText()" id="magicBtn" class="w-full py-3 bg-indigo-600/20 hover:bg-indigo-600 text-indigo-400 hover:text-white rounded-xl text-[9px] font-black tracking-widest uppercase transition-all flex items-center justify-center">
+                        <span>Auto-Sincro Datos</span>
+                    </button>
+                    <div class="mt-6">
+                        <p class="text-[8px] font-bold text-slate-600 uppercase tracking-[0.2em] leading-relaxed">
+                            Procesa automáticamente nombres, correos y teléfonos usando algoritmos de reconocimiento de patrones.
+                        </p>
                     </div>
                 </div>
 
-                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-black py-5 rounded-2xl shadow-2xl shadow-indigo-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em]">
-                    Procesar Registro
-                </button>
-            </form>
+                <!-- Form Section -->
+                <div id="formContainer" class="lg:col-span-9">
+                    <form id="clientForm" action="{{ route('dashboard.clients.store') }}" method="POST" class="space-y-4">
+                        @csrf
+                        <div id="methodField"></div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Nombre Completo / Empresa</label>
+                                <input type="text" name="name" id="form_name" required placeholder="Ej: Tech Solutions S.A." 
+                                       class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all uppercase">
+                            </div>
+                            <div>
+                                <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Email de Contacto</label>
+                                <input type="email" name="email" id="form_email" required placeholder="client@example.com" 
+                                       class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all lowercase">
+                            </div>
+                            <div>
+                                <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Ubicación</label>
+                                <input type="text" name="location" id="form_location" placeholder="Ciudad, País" 
+                                       class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all uppercase">
+                            </div>
+                            <div>
+                                <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Teléfono</label>
+                                <input type="text" name="phone" id="form_phone" placeholder="+00 0000-0000" 
+                                       class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Industria / Sector</label>
+                                <input type="text" name="industry" id="form_industry" placeholder="Ej: Automotriz" 
+                                       class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all uppercase">
+                            </div>
+                            <div>
+                                <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Status Operativo</label>
+                                <div class="relative">
+                                    <select name="status" id="form_status" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white appearance-none transition-all cursor-pointer">
+                                        <option value="extracted">EXTRACTED</option>
+                                        <option value="sent">SENT</option>
+                                    </select>
+                                    <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-4 pt-0">
+                            <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-black py-4 rounded-2xl shadow-2xl shadow-indigo-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em]">
+                                Procesar Registro
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -327,6 +340,7 @@
 
             // Show AI section for new registration
             document.getElementById('aiSection').classList.remove('hidden');
+            document.getElementById('formContainer').classList.replace('lg:col-span-full', 'lg:col-span-9');
             
             document.getElementById('clientModal').classList.remove('hidden');
         }
@@ -345,8 +359,9 @@
             document.getElementById('form_industry').value = client.industry || '';
             document.getElementById('form_status').value = client.status || 'extracted';
             
-            // Hide AI section for editing
+            // Hide AI section for editing and make form full width
             document.getElementById('aiSection').classList.add('hidden');
+            document.getElementById('formContainer').classList.replace('lg:col-span-9', 'lg:col-span-full');
             
             document.getElementById('clientModal').classList.remove('hidden');
         }
