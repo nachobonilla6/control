@@ -465,7 +465,6 @@ class DashboardController extends Controller
     {
         $text = $request->input('text');
         
-        // Simple but smart pattern extraction (Simulating AI)
         $data = [
             'name' => '',
             'email' => '',
@@ -474,36 +473,70 @@ class DashboardController extends Controller
             'industry' => '',
         ];
 
-        // Extract Email
+        // 1. Extract Email
         if (preg_match('/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}/i', $text, $matches)) {
             $data['email'] = $matches[0];
         }
 
-        // Extract Phone (simple pattern)
-        if (preg_match('/(\+?[0-9]{1,4}[- ]?)?([0-9]{3,4}[- ]?[0-9]{3,4})/', $text, $matches)) {
+        // 2. Extract Phone
+        if (preg_match('/(?:\+|00)?([0-9]{1,4})[- .]?([0-9]{3,4}[- .]?[0-9]{3,4}[- .]?[0-9]{0,4})/', $text, $matches)) {
             $data['phone'] = $matches[0];
+            $countryCode = $matches[1];
+
+            // 3. Location from Phone (Country Codes)
+            $countries = [
+                '506' => 'Costa Rica', '1' => 'USA/Canada', '52' => 'México', '34' => 'España',
+                '57' => 'Colombia', '54' => 'Argentina', '56' => 'Chile', '507' => 'Panamá',
+                '502' => 'Guatemala', '503' => 'El Salvador', '504' => 'Honduras', '505' => 'Nicaragua',
+            ];
+            if (empty($data['location']) && isset($countries[$countryCode])) {
+                $data['location'] = $countries[$countryCode];
+            }
         }
 
-        // Attempt to extract Name (usually first line or before email)
+        // 4. Industry from Context (Keyword Search)
+        $industries = [
+            'Real Estate' => ['bienes raices', 'house', 'apartment', 'realty', 'inmobiliaria', 'propiedad'],
+            'Tech' => ['software', 'ai', 'desarrollo', 'web', 'tecnologia', 'it', 'digital'],
+            'Automotive' => ['car', 'motor', 'auto', 'taller', 'repuestos', 'vehiculo'],
+            'E-commerce' => ['tienda', 'shop', 'venta', 'retail', 'comercio'],
+            'Health' => ['medico', 'salud', 'clinica', 'doctor', 'hospital'],
+        ];
+
+        $lowerText = strtolower($text);
+        foreach ($industries as $name => $keywords) {
+            foreach ($keywords as $kw) {
+                if (str_contains($lowerText, $kw)) {
+                    $data['industry'] = $name;
+                    break 2;
+                }
+            }
+        }
+
+        // 5. Lines Processing (Explicit mapping)
         $lines = explode("\n", $text);
         foreach ($lines as $line) {
             $line = trim($line);
             if (empty($line)) continue;
             
-            // If it doesn't contain @ and is short, it's likely a name
-            if (strpos($line, '@') === false && strlen($line) < 50 && empty($data['name'])) {
+            if (strpos($line, '@') === false && strlen($line) < 40 && empty($data['name'])) {
                 $data['name'] = $line;
             }
             
-            // Look for "Ubicación" or "Location"
-            if (preg_match('/(?:Location|Ubicación|Ciudad|City):\s*(.*)/i', $line, $matches)) {
+            if (preg_match('/(?:Location|Ubicación|Ciudad|City|Pais|Country):\s*(.*)/i', $line, $matches)) {
                 $data['location'] = trim($matches[1]);
             }
-
-            // Look for "Industry" or "Sector"
             if (preg_match('/(?:Industry|Sector|Industria):\s*(.*)/i', $line, $matches)) {
                 $data['industry'] = trim($matches[1]);
             }
+        }
+
+        // 6. Name from Email (Fallback)
+        if (empty($data['name']) && !empty($data['email'])) {
+            $parts = explode('@', $data['email']);
+            $namePart = $parts[0];
+            $namePart = str_replace(['.', '_', '-'], ' ', $namePart);
+            $data['name'] = ucwords($namePart);
         }
 
         return response()->json($data);
