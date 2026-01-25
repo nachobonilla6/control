@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Notificacion;
 use App\Models\ChatHistory;
 use App\Models\Webhook;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class DashboardController extends Controller
@@ -32,9 +34,76 @@ class DashboardController extends Controller
                 'icon' => '🔗',
                 'route' => 'dashboard.webhooks',
             ],
+            [
+                'id' => 'projects',
+                'name' => 'Projects',
+                'description' => 'Showcase and manage your latest development works.',
+                'icon' => '📂',
+                'route' => 'dashboard.projects',
+            ],
         ];
 
         return view('dashboard.index', compact('categories'));
+    }
+
+    /**
+     * Projects Page: List and Create.
+     */
+    public function projectsIndex()
+    {
+        $projects = Project::orderBy('created_at', 'desc')->get();
+        return view('dashboard.projects', compact('projects'));
+    }
+
+    /**
+     * Store new Project.
+     */
+    public function projectsStore(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'type' => 'required|string|max:100',
+            'description' => 'nullable|string',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'images' => 'nullable|array|max:7',
+        ]);
+
+        $imagePaths = [];
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('projects', 'public');
+                $imagePaths[] = Storage::url($path);
+            }
+        }
+
+        Project::create([
+            'name' => $request->name,
+            'type' => $request->type,
+            'description' => $request->description,
+            'active' => $request->has('active'),
+            'images' => $imagePaths
+        ]);
+
+        return redirect()->route('dashboard.projects')->with('success', 'Project registered successfully.');
+    }
+
+    /**
+     * Delete Project.
+     */
+    public function projectsDestroy($id)
+    {
+        $project = Project::findOrFail($id);
+        
+        // Delete images from storage
+        if ($project->images) {
+            foreach ($project->images as $url) {
+                $path = str_replace('/storage/', '', $url);
+                Storage::disk('public')->delete($path);
+            }
+        }
+
+        $project->delete();
+        return redirect()->route('dashboard.projects')->with('success', 'Project removed.');
     }
 
     /**

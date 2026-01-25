@@ -43,6 +43,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/dashboard/webhooks/{id}/trigger', [\App\Http\Controllers\DashboardController::class, 'webhooksTrigger'])->name('dashboard.webhooks.trigger');
     Route::delete('/dashboard/webhooks/{id}', [\App\Http\Controllers\DashboardController::class, 'webhooksDestroy'])->name('dashboard.webhooks.destroy');
 
+    // Projects
+    Route::get('/dashboard/projects', [\App\Http\Controllers\DashboardController::class, 'projectsIndex'])->name('dashboard.projects');
+    Route::post('/dashboard/projects', [\App\Http\Controllers\DashboardController::class, 'projectsStore'])->name('dashboard.projects.store');
+    Route::delete('/dashboard/projects/{id}', [\App\Http\Controllers\DashboardController::class, 'projectsDestroy'])->name('dashboard.projects.destroy');
+
     // API & Actions
     Route::post('/chat', [\App\Http\Controllers\DashboardController::class, 'chat'])->name('chat');
     Route::get('/notifications', [\App\Http\Controllers\DashboardController::class, 'notifications'])->name('notifications');
