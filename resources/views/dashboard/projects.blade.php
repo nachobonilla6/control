@@ -34,7 +34,7 @@
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
             <span class="text-xl font-bold text-white uppercase tracking-tighter">Project Gallery</span>
-            <button onclick="document.getElementById('newProjectModal').classList.remove('hidden')" class="ml-6 flex items-center space-x-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-black uppercase tracking-widest transition-all shadow-lg shadow-indigo-600/20 active:scale-95">
+            <button id="openModalBtn" onclick="event.stopPropagation(); document.getElementById('newProjectModal').classList.remove('hidden')" class="ml-6 flex items-center space-x-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-black uppercase tracking-widest transition-all shadow-lg shadow-indigo-600/20 active:scale-95">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 <span>New Project</span>
             </button>
@@ -349,11 +349,13 @@
 
         document.addEventListener('click', (e) => {
             const newProjectModal = document.getElementById('newProjectModal');
+            const openModalBtn = document.getElementById('openModalBtn');
             if (!notifDropdown.contains(e.target) && 
                 !accountDropdown.contains(e.target) && 
                 !newProjectModal.contains(e.target) &&
                 !notifBtn.contains(e.target) &&
-                !accountBtn.contains(e.target)) {
+                !accountBtn.contains(e.target) &&
+                (!openModalBtn || !openModalBtn.contains(e.target))) {
                 closeAllDropdowns();
             }
         });
