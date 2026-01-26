@@ -639,6 +639,55 @@ class DashboardController extends Controller
             return back()->withErrors(['error' => 'Error al eliminar: ' . $e->getMessage()]);
         }
     }
+
+    /**
+     * Extract clients by language, country, city, and industry.
+     */
+    public function clientsExtract(Request $request)
+    {
+        $request->validate([
+            'language' => 'required|string|in:english,spanish,french,portuguese',
+            'country' => 'required|string',
+            'city' => 'required|string',
+            'industry' => 'nullable|string|max:100',
+        ]);
+
+        try {
+            // This is where you would call your n8n webhook or external API
+            // to extract clients based on the criteria
+            
+            $language = $request->input('language');
+            $country = $request->input('country');
+            $city = $request->input('city');
+            $industry = $request->input('industry');
+
+            // Send extraction request to n8n webhook
+            $response = Http::post('https://n8n.srv1137974.hstgr.cloud/webhook/4a7d5a5b-20fd-4a4f-ba69-08ebcb0c715a', [
+                'action' => 'extract_clients',
+                'language' => $language,
+                'country' => $country,
+                'city' => $city,
+                'industry' => $industry,
+                'user_id' => Auth::id(),
+                'user_email' => Auth::user()->email,
+            ]);
+
+            $result = json_decode($response->body(), true);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Extraction initiated successfully',
+                'data' => $result
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Extraction error: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
     /**
      * Templates Page: List and Create.
      */
