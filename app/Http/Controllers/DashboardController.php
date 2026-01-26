@@ -656,7 +656,7 @@ class DashboardController extends Controller
         $prompt = $request->input('prompt');
         
         try {
-            $response = Http::post('https://n8n.srv1137974.hstgr.cloud/webhook/4a7d5a5b-20fd-4a4f-ba69-08ebcb0c715a', [
+            $response = Http::post('https://n8n.srv1137974.hstgr.cloud/webhook-test/4a7d5a5b-20fd-4a4f-ba69-08ebcb0c715a', [
                 'chat_id' => 'template-gen-' . Auth::id(),
                 'message' => $prompt,
                 'user' => Auth::user()->name,
