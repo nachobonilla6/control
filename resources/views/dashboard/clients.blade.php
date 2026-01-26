@@ -205,20 +205,25 @@
                                     @endif
                                 </td>
                                 <td class="px-8 py-6">
-                                    @if(isset($client->alpha) && $client->alpha === 1)
-                                        <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-red-950/30 border border-red-500/50 rounded-lg text-[9px] font-black text-red-400 tracking-wider uppercase">
-                                            <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
-                                            Alpha
+                                    @if(!$client->email)
+                                        <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-800/50 border border-slate-600/50 rounded-lg text-[9px] font-black text-slate-400 tracking-wider uppercase">
+                                            <span class="w-2 h-2 bg-slate-500 rounded-full"></span>
+                                            No Email
                                         </span>
                                     @elseif($client->status === 'sent')
                                         <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-950/30 border border-emerald-500/50 rounded-lg text-[9px] font-black text-emerald-400 tracking-wider uppercase">
                                             <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
                                             Sent
                                         </span>
-                                    @else
+                                    @elseif($client->status === 'queued')
                                         <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-amber-950/30 border border-amber-500/50 rounded-lg text-[9px] font-black text-amber-400 tracking-wider uppercase">
                                             <span class="w-2 h-2 bg-amber-500 rounded-full"></span>
                                             Queued
+                                        </span>
+                                    @else
+                                        <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-800/50 border border-slate-600/50 rounded-lg text-[9px] font-black text-slate-400 tracking-wider uppercase">
+                                            <span class="w-2 h-2 bg-slate-500 rounded-full"></span>
+                                            Unknown
                                         </span>
                                     @endif
                                 </td>
