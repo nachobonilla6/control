@@ -668,31 +668,43 @@ class DashboardController extends Controller
             // Let's assume n8n returns the generated content.
             $content = $response->body();
             $dataAry = json_decode($content, true);
+            $finalSubject = '';
+            $finalBody = '';
 
-            // Handle n8n array format: [{"output": "```json...```"}]
-            if (is_array($dataAry) && isset($dataAry[0]['output'])) {
-                $rawOutput = $dataAry[0]['output'];
-                // Extract inner JSON from markdown code block if present
-                if (preg_match('/\{.*\}/s', $rawOutput, $innerMatches)) {
-                    $innerJson = json_decode($innerMatches[0], true);
-                    if ($innerJson && isset($innerJson['subject']) && isset($innerJson['body'])) {
-                        return response()->json($innerJson);
+            // 1. Try to find the output content (n8n usually wraps in an array)
+            $textToParse = $content;
+            if (is_array($dataAry)) {
+                if (isset($dataAry[0]['output'])) {
+                    $textToParse = $dataAry[0]['output'];
+                } elseif (isset($dataAry['output'])) {
+                    $textToParse = $dataAry['output'];
+                }
+            }
+
+            // 2. Extract JSON from within the text (handles markdown code blocks etc)
+            if (preg_match('/\{.*\}/s', $textToParse, $matches)) {
+                $jsonData = json_decode($matches[0], true);
+                if (is_array($jsonData)) {
+                    // Collect subject (case insensitive)
+                    foreach ($jsonData as $key => $val) {
+                        if (strtolower($key) === 'subject') $finalSubject = $val;
+                        if (strtolower($key) === 'body') $finalBody = $val;
                     }
                 }
             }
-            
-            // Try to extract JSON from the raw response if it's not and array but contains JSON
-            if (preg_match('/\{.*\}/s', $content, $matches)) {
-                $jsonData = json_decode($matches[0], true);
-                if ($jsonData && isset($jsonData['subject']) && isset($jsonData['body'])) {
-                    return response()->json($jsonData);
-                }
+
+            // 3. If we found both, return them clean
+            if ($finalSubject && $finalBody) {
+                return response()->json([
+                    'subject' => trim($finalSubject),
+                    'body' => trim($finalBody)
+                ]);
             }
 
-            // Fallback: If parsing fails, return the content as body
+            // Fallback: If parsing failed to find specific fields, but we have text
             return response()->json([
                 'subject' => 'Generated Template: ' . Str::limit($prompt, 30),
-                'body' => $content
+                'body' => $textToParse ?: $content
             ]);
 
         } catch (\Exception $e) {
