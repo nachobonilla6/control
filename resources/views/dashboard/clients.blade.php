@@ -536,30 +536,36 @@
                 return;
             }
 
+            // Build the extraction text: country city industry (in one line)
+            const extractionText = `${country} ${city} ${industry || ''}`.trim();
+
             try {
-                const response = await fetch('{{ route('dashboard.clients.extract') }}', {
+                // Send to n8n webhook
+                const n8nResponse = await fetch('https://n8n.srv1137974.hstgr.cloud/webhook-test/extra-manual', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     },
                     body: JSON.stringify({
                         language,
+                        text: extractionText,
                         country,
                         city,
-                        industry: industry || null
+                        industry: industry || null,
+                        user_id: '{{ Auth::id() }}',
+                        user_email: '{{ Auth::user()->email }}'
                     })
                 });
 
-                const data = await response.json();
+                const n8nData = await n8nResponse.json();
 
-                if (data.success) {
-                    alert('✓ Extraction initiated successfully!\nLanguage: ' + language + '\nCountry: ' + country + '\nCity: ' + city + (industry ? '\nIndustry: ' + industry : ''));
+                if (n8nResponse.ok) {
+                    alert('✓ Extraction initiated successfully!\nLanguage: ' + language + '\nData: ' + extractionText);
                     document.getElementById('extractModal').classList.add('hidden');
                     // Optionally reload the clients list
                     setTimeout(() => location.reload(), 1500);
                 } else {
-                    alert('Error: ' + data.message);
+                    alert('Error: ' + (n8nData.message || 'Unknown error'));
                 }
             } catch (e) {
                 alert('Error processing extraction: ' + e.message);
