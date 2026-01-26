@@ -145,13 +145,9 @@
                         <p class="text-[8px] font-black text-amber-500 uppercase tracking-widest mb-1">Queued</p>
                         <p class="text-xl font-black text-white">{{ $queuedCount }}</p>
                     </div>
-                    <div class="px-6 py-2 text-center border-r border-slate-800">
+                    <div class="px-6 py-2 text-center">
                         <p class="text-[8px] font-black text-emerald-500 uppercase tracking-widest mb-1">Sent</p>
                         <p class="text-xl font-black text-white">{{ $sentCount }}</p>
-                    </div>
-                    <div class="px-6 py-2 text-center">
-                        <p class="text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1">No Email</p>
-                        <p class="text-xl font-black text-white">{{ $noEmailCount }}</p>
                     </div>
                 </div>
 
