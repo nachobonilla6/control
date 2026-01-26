@@ -495,10 +495,13 @@ class DashboardController extends Controller
             'phone' => 'nullable|string|max:50',
             'industry' => 'nullable|string|max:100',
             'status' => 'required|string|in:queued,sent',
+            'alpha' => 'nullable|boolean',
         ]);
 
         try {
-            Client::create($request->all());
+            $data = $request->all();
+            $data['alpha'] = $request->has('alpha') ? 1 : 0;
+            Client::create($data);
             return redirect()->route('dashboard.clients')->with('success', 'Client successfully registered.');
         } catch (\Exception $e) {
             return back()->withInput()->withErrors(['error' => 'Registration error: ' . $e->getMessage()]);
@@ -517,11 +520,14 @@ class DashboardController extends Controller
             'phone' => 'nullable|string|max:50',
             'industry' => 'nullable|string|max:100',
             'status' => 'required|string|in:queued,sent',
+            'alpha' => 'nullable|boolean',
         ]);
 
         try {
             $client = Client::findOrFail($id);
-            $client->update($request->all());
+            $data = $request->all();
+            $data['alpha'] = $request->has('alpha') ? 1 : 0;
+            $client->update($data);
             return redirect()->route('dashboard.clients')->with('success', 'Client successfully updated.');
         } catch (\Exception $e) {
             return back()->withInput()->withErrors(['error' => 'Update error: ' . $e->getMessage()]);
