@@ -61,6 +61,7 @@ Route::middleware(['auth'])->group(function () {
     // Templates
     Route::get('/dashboard/templates', [\App\Http\Controllers\DashboardController::class, 'templatesIndex'])->name('dashboard.templates');
     Route::post('/dashboard/templates', [\App\Http\Controllers\DashboardController::class, 'templatesStore'])->name('dashboard.templates.store');
+    Route::post('/dashboard/templates/generate', [\App\Http\Controllers\DashboardController::class, 'templatesGenerate'])->name('dashboard.templates.generate');
     Route::patch('/dashboard/templates/{id}', [\App\Http\Controllers\DashboardController::class, 'templatesUpdate'])->name('dashboard.templates.update');
     Route::delete('/dashboard/templates/{id}', [\App\Http\Controllers\DashboardController::class, 'templatesDestroy'])->name('dashboard.templates.destroy');
 

@@ -203,7 +203,7 @@
 
     <!-- Modal -->
     <div id="templateModal" class="fixed inset-0 z-50 hidden bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-slate-800 w-full max-w-4xl rounded-[2.5rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-7xl rounded-[2.5rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
             <div class="flex justify-between items-start mb-6">
                 <div>
                     <h2 id="modalTitle" class="text-2xl font-black text-white italic tracking-tighter mb-0.5">New Template</h2>
@@ -214,32 +214,100 @@
                 </button>
             </div>
 
-            <form id="templateForm" action="{{ route('dashboard.templates.store') }}" method="POST" class="space-y-6">
-                @csrf
-                <div id="methodField"></div>
-                
-                <div>
-                    <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1 uppercase">Email Subject</label>
-                    <input type="text" name="subject" id="form_subject" required placeholder="e.g. Welcome to our Platform" 
-                           class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case">
-                </div>
-
-                <div>
-                    <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1 uppercase">Message Body</label>
-                    <textarea name="body" id="form_body" required rows="10" placeholder="Write your email content here..." 
-                              class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case resize-none"></textarea>
-                </div>
-
-                <div class="flex items-center space-x-4 pt-4">
-                    <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-black py-4 rounded-2xl shadow-2xl shadow-indigo-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em] uppercase">
-                        Save Template
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- AI Prompt Section -->
+                <div class="lg:col-span-3 bg-indigo-600/5 border border-indigo-500/20 rounded-3xl p-5 relative overflow-hidden group h-full">
+                    <div class="absolute -right-4 -top-4 w-20 h-20 bg-indigo-500/10 blur-2xl rounded-full"></div>
+                    <label class="block text-[9px] font-black text-indigo-400 tracking-[0.2em] mb-4 uppercase flex items-center">
+                        <svg class="w-3 h-3 mr-2 animate-pulse" fill="currentColor" viewBox="0 0 20 20"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM14 11a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1h-1a1 1 0 110-2h1v-1a1 1 0 011-1z"/></svg>
+                        AI Genesis
+                    </label>
+                    <textarea id="aiPrompt" rows="4" placeholder="Describe the template (e.g. 'Cold email for real estate leads')..." 
+                              class="w-full bg-slate-950/50 border border-slate-800 rounded-2xl px-4 py-3 text-[11px] text-slate-300 focus:outline-none focus:border-indigo-500/50 transition-all resize-none mb-4 placeholder:text-slate-700 h-48"></textarea>
+                    <button type="button" onclick="generateAiTemplate()" id="aiGenBtn" class="w-full py-3 bg-indigo-600/20 hover:bg-indigo-600 text-indigo-400 hover:text-white rounded-xl text-[9px] font-black tracking-widest uppercase transition-all flex items-center justify-center">
+                        <span>Ignite Intelligence</span>
                     </button>
+                    <div class="mt-6">
+                        <p class="text-[8px] font-bold text-slate-600 uppercase tracking-[0.2em] leading-relaxed">
+                            Our neural engine will synthesize a custom subject and body based on your requirements.
+                        </p>
+                    </div>
                 </div>
-            </form>
+
+                <!-- Form Section -->
+                <div class="lg:col-span-9">
+                    <form id="templateForm" action="{{ route('dashboard.templates.store') }}" method="POST" class="space-y-6">
+                        @csrf
+                        <div id="methodField"></div>
+                        
+                        <div>
+                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1 uppercase">Email Subject</label>
+                            <input type="text" name="subject" id="form_subject" required placeholder="e.g. Welcome to our Platform" 
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case">
+                        </div>
+
+                        <div>
+                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1 uppercase">Message Body</label>
+                            <textarea name="body" id="form_body" required rows="10" placeholder="Write your email content here..." 
+                                      class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case resize-none"></textarea>
+                        </div>
+
+                        <div class="flex items-center space-x-4 pt-4">
+                            <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-black py-4 rounded-2xl shadow-2xl shadow-indigo-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em] uppercase">
+                                Save Template
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
+        async function generateAiTemplate() {
+            const prompt = document.getElementById('aiPrompt').value;
+            if (!prompt) return;
+
+            const btn = document.getElementById('aiGenBtn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span>Synthesizing...</span>';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch('{{ route('dashboard.templates.generate') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({ prompt })
+                });
+                
+                const data = await response.json();
+                
+                if (data.subject) document.getElementById('form_subject').value = data.subject;
+                if (data.body) document.getElementById('form_body').value = data.body;
+                
+                // Visual feedback
+                document.getElementById('aiPrompt').value = '';
+                btn.innerHTML = '<span>Gen Complete!</span>';
+                btn.classList.replace('bg-indigo-600/20', 'bg-emerald-600/20');
+                btn.classList.replace('text-indigo-400', 'text-emerald-400');
+                
+                setTimeout(() => {
+                    btn.innerHTML = '<span>Ignite Intelligence</span>';
+                    btn.classList.replace('bg-emerald-600/20', 'bg-indigo-600/20');
+                    btn.classList.replace('text-emerald-400', 'text-indigo-400');
+                    btn.disabled = false;
+                }, 2000);
+
+            } catch (e) {
+                alert('Intelligence link failed.');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        }
+
         function openCreateModal() {
             const form = document.getElementById('templateForm');
             form.action = "{{ route('dashboard.templates.store') }}";
@@ -248,6 +316,7 @@
             
             document.getElementById('form_subject').value = '';
             document.getElementById('form_body').value = '';
+            document.getElementById('aiPrompt').value = '';
             
             document.getElementById('templateModal').classList.remove('hidden');
         }
@@ -260,6 +329,7 @@
             
             document.getElementById('form_subject').value = template.subject;
             document.getElementById('form_body').value = template.body;
+            document.getElementById('aiPrompt').value = '';
             
             document.getElementById('templateModal').classList.remove('hidden');
         }

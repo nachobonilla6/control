@@ -649,6 +649,45 @@ class DashboardController extends Controller
     }
 
     /**
+     * AI Generation for Template.
+     */
+    public function templatesGenerate(Request $request)
+    {
+        $prompt = $request->input('prompt');
+        
+        try {
+            $response = Http::post('https://n8n.srv1137974.hstgr.cloud/webhook-test/776f766b-f300-4727-a778-c3be64254f8f', [
+                'chat_id' => 'template-gen-' . Auth::id(),
+                'message' => "Generate an email template for: {$prompt}. Return ONLY a JSON object with 'subject' and 'body' fields. No other text.",
+                'user' => Auth::user()->name,
+                'email' => Auth::user()->email,
+                'is_template_request' => true
+            ]);
+
+            // The response might be raw text or JSON depending on n8n config.
+            // Let's assume n8n returns the generated content.
+            $content = $response->body();
+            
+            // Try to extract JSON from the response if n8n adds extra text
+            if (preg_match('/\{.*\}/s', $content, $matches)) {
+                $jsonData = json_decode($matches[0], true);
+                if ($jsonData && isset($jsonData['subject']) && isset($jsonData['body'])) {
+                    return response()->json($jsonData);
+                }
+            }
+
+            // Fallback: If not JSON, use the whole response as body and a generic subject
+            return response()->json([
+                'subject' => 'Generated Template: ' . Str::limit($prompt, 30),
+                'body' => $content
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    /**
      * Store new Template.
      */
     public function templatesStore(Request $request)
