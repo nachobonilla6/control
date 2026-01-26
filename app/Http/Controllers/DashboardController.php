@@ -1,3 +1,11 @@
+    public function clientsAll()
+    {
+        $clients = Client::orderBy('created_at', 'desc')->paginate(10);
+        $totalClients = Client::count();
+        $queuedCount = Client::where('status', 'queued')->count();
+        $sentCount = Client::where('status', 'sent')->count();
+        return view('dashboard.clients_all', compact('clients', 'totalClients', 'queuedCount', 'sentCount'));
+    }
 <?php
 
 namespace App\Http\Controllers;

@@ -58,6 +58,7 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/dashboard/clients/{id}/toggle-status', [\App\Http\Controllers\DashboardController::class, 'clientsToggleStatus'])->name('dashboard.clients.toggle-status');
     Route::post('/dashboard/clients/parse', [\App\Http\Controllers\DashboardController::class, 'clientsParse'])->name('dashboard.clients.parse');
     Route::delete('/dashboard/clients/{id}', [\App\Http\Controllers\DashboardController::class, 'clientsDestroy'])->name('dashboard.clients.destroy');
+    Route::get('/dashboard/clients/all', [\App\Http\Controllers\DashboardController::class, 'clientsAll'])->name('dashboard.clients.all');
 
     // Templates
     Route::get('/dashboard/templates', [\App\Http\Controllers\DashboardController::class, 'templatesIndex'])->name('dashboard.templates');
