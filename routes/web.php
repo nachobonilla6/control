@@ -58,6 +58,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/dashboard/clients/parse', [\App\Http\Controllers\DashboardController::class, 'clientsParse'])->name('dashboard.clients.parse');
     Route::delete('/dashboard/clients/{id}', [\App\Http\Controllers\DashboardController::class, 'clientsDestroy'])->name('dashboard.clients.destroy');
 
+    // Templates
+    Route::get('/dashboard/templates', [\App\Http\Controllers\DashboardController::class, 'templatesIndex'])->name('dashboard.templates');
+    Route::post('/dashboard/templates', [\App\Http\Controllers\DashboardController::class, 'templatesStore'])->name('dashboard.templates.store');
+    Route::patch('/dashboard/templates/{id}', [\App\Http\Controllers\DashboardController::class, 'templatesUpdate'])->name('dashboard.templates.update');
+    Route::delete('/dashboard/templates/{id}', [\App\Http\Controllers\DashboardController::class, 'templatesDestroy'])->name('dashboard.templates.destroy');
+
     // Courses
     Route::get('/dashboard/courses', [\App\Http\Controllers\DashboardController::class, 'coursesIndex'])->name('dashboard.courses');
     Route::post('/dashboard/courses', [\App\Http\Controllers\DashboardController::class, 'coursesStore'])->name('dashboard.courses.store');

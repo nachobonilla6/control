@@ -11,6 +11,7 @@ use App\Models\Course;
 use App\Models\FacebookPost;
 use App\Models\Setting;
 use App\Models\FacebookAccount;
+use App\Models\Template;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -638,6 +639,65 @@ class DashboardController extends Controller
             return back()->withErrors(['error' => 'Error al eliminar: ' . $e->getMessage()]);
         }
     }
+    /**
+     * Templates Page: List and Create.
+     */
+    public function templatesIndex()
+    {
+        $templates = Template::orderBy('created_at', 'desc')->get();
+        return view('dashboard.templates', compact('templates'));
+    }
+
+    /**
+     * Store new Template.
+     */
+    public function templatesStore(Request $request)
+    {
+        $request->validate([
+            'subject' => 'required|string|max:255',
+            'body' => 'required|string',
+        ]);
+
+        try {
+            Template::create($request->all());
+            return redirect()->route('dashboard.templates')->with('success', 'Template successfully registered.');
+        } catch (\Exception $e) {
+            return back()->withInput()->withErrors(['error' => 'Registration error: ' . $e->getMessage()]);
+        }
+    }
+
+    /**
+     * Update existing Template.
+     */
+    public function templatesUpdate(Request $request, $id)
+    {
+        $request->validate([
+            'subject' => 'required|string|max:255',
+            'body' => 'required|string',
+        ]);
+
+        try {
+            $template = Template::findOrFail($id);
+            $template->update($request->all());
+            return redirect()->route('dashboard.templates')->with('success', 'Template successfully updated.');
+        } catch (\Exception $e) {
+            return back()->withInput()->withErrors(['error' => 'Update error: ' . $e->getMessage()]);
+        }
+    }
+
+    /**
+     * Delete Template.
+     */
+    public function templatesDestroy($id)
+    {
+        try {
+            Template::findOrFail($id)->delete();
+            return redirect()->route('dashboard.templates')->with('success', 'Template removed.');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Error al eliminar: ' . $e->getMessage()]);
+        }
+    }
+
     /**
      * Courses Page: List.
      */
