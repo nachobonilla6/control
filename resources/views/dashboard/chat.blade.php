@@ -26,6 +26,9 @@
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        #chatContainer { scroll-behavior: smooth; }
+        .animate-in { animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body class="h-full flex bg-slate-950 text-slate-200 overflow-hidden">
@@ -117,19 +120,19 @@
         </nav>
 
         <!-- Chat Area -->
-        <div id="chatContainer" class="flex-1 overflow-y-auto p-4 md:p-10 space-y-10 flex flex-col items-center">
-            @if(count($chat_history) == 0)
-                <div class="flex-1 flex flex-col items-center justify-center space-y-6 opacity-30">
-                    <div class="w-20 h-20 rounded-3xl bg-indigo-600/10 flex items-center justify-center text-indigo-400 border border-indigo-500/20 rotate-12 transition-transform hover:rotate-0 duration-500">
-                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" stroke-width="1.5"/></svg>
+        <div id="chatContainer" class="flex-1 overflow-y-auto p-4 md:p-10 space-y-10">
+            <div id="messagesWrapper" class="w-full max-w-4xl mx-auto space-y-12 pb-20">
+                @if(count($chat_history) == 0)
+                    <div id="emptyState" class="flex flex-col items-center justify-center space-y-6 opacity-30 mt-20">
+                        <div class="w-20 h-20 rounded-3xl bg-indigo-600/10 flex items-center justify-center text-indigo-400 border border-indigo-500/20 rotate-12 transition-transform hover:rotate-0 duration-500">
+                            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" stroke-width="1.5"/></svg>
+                        </div>
+                        <div class="text-center">
+                            <h2 class="text-2xl font-black text-slate-400 uppercase tracking-tighter italic">How can I help you?</h2>
+                            <p class="text-xs text-slate-600 uppercase tracking-widest mt-2">New thread initialized</p>
+                        </div>
                     </div>
-                    <div class="text-center">
-                        <h2 class="text-2xl font-black text-slate-400 uppercase tracking-tighter italic">How can I help you?</h2>
-                        <p class="text-xs text-slate-600 uppercase tracking-widest mt-2">New thread initialized</p>
-                    </div>
-                </div>
-            @else
-                <div class="w-full max-w-4xl space-y-12 pb-20">
+                @else
                     @foreach($chat_history as $msg)
                         <div class="flex items-start space-x-6 {{ $msg->role == 'user' ? 'justify-end' : '' }}">
                             @if($msg->role != 'user')
@@ -148,8 +151,8 @@
                             @endif
                         </div>
                     @endforeach
-                </div>
-            @endif
+                @endif
+            </div>
         </div>
 
         <!-- Input Area -->
@@ -217,12 +220,94 @@
         const sendBtn = document.getElementById('sendBtn');
         const chatInput = document.getElementById('chatInput');
 
+        const messagesWrapper = document.getElementById('messagesWrapper');
+
+        const appendMessage = (role, message) => {
+            const emptyState = document.getElementById('emptyState');
+            if (emptyState) emptyState.remove();
+
+            const isUser = role === 'user';
+            const html = `
+                <div class="flex items-start space-x-6 ${isUser ? 'justify-end' : ''} animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    ${!isUser ? '<div class="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white text-[11px] font-black flex-shrink-0 shadow-lg shadow-indigo-600/30">JD</div>' : ''}
+                    <div class="relative group max-w-[80%]">
+                        <div class="px-5 py-3 rounded-2xl transition-all ${isUser ? 'bg-indigo-600/10 border border-indigo-500/30 text-slate-100 shadow-xl shadow-indigo-900/10' : 'bg-transparent text-slate-300'}">
+                            <p class="leading-relaxed text-sm whitespace-pre-wrap">${message}</p>
+                        </div>
+                        <span class="absolute -bottom-6 ${isUser ? 'right-2' : 'left-2'} text-[9px] text-slate-600 font-bold uppercase tracking-tighter opacity-100">
+                            Just now
+                        </span>
+                    </div>
+                    ${isUser ? '<div class="w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-indigo-400 text-[11px] font-black flex-shrink-0 shadow-xl">U</div>' : ''}
+                </div>
+            `;
+            messagesWrapper.insertAdjacentHTML('beforeend', html);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        };
+
+        const showTyping = () => {
+            const html = `
+                <div id="typingIndicator" class="flex items-start space-x-6 animate-in fade-in duration-300">
+                    <div class="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white text-[11px] font-black flex-shrink-0 shadow-lg shadow-indigo-600/30">JD</div>
+                    <div class="px-5 py-3 bg-transparent text-slate-500 italic text-sm">
+                        <div class="flex space-x-1 mt-2">
+                            <div class="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-bounce" style="animation-delay: 0s"></div>
+                            <div class="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                            <div class="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-bounce" style="animation-delay: 0.4s"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            messagesWrapper.insertAdjacentHTML('beforeend', html);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        };
+
+        const removeTyping = () => {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) indicator.remove();
+        };
+
         // Scroll to bottom
         chatContainer.scrollTop = chatContainer.scrollHeight;
 
-        chatForm.addEventListener('submit', () => {
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const message = chatInput.value.trim();
+            if (!message) return;
+
+            // Optimistic UI
+            appendMessage('user', message);
+            chatInput.value = '';
             sendBtn.disabled = true;
-            chatInput.placeholder = "Processing command...";
+
+            showTyping();
+
+            try {
+                const response = await fetch('{{ route('chat') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({ message: message })
+                });
+
+                const data = await response.json();
+                removeTyping();
+
+                if (data.success) {
+                    appendMessage('assistant', data.content);
+                } else {
+                    appendMessage('system', 'Error: ' + (data.error || 'Identity Link Interrupted'));
+                }
+            } catch (error) {
+                removeTyping();
+                appendMessage('system', 'Connectivity Failure: Unable to reach n8n node.');
+            } finally {
+                sendBtn.disabled = false;
+                chatInput.focus();
+            }
         });
 
         async function fetchNotifs() {
