@@ -205,23 +205,24 @@
                                     @endif
                                 </td>
                                 <td class="px-8 py-6">
-                                    <form action="{{ route('dashboard.clients.toggle-status', $client->id) }}" method="POST">
-                                        @csrf
-                                        @method('PATCH')
-                                        <button type="submit" title="Click to switch status" class="group/status">
-                                            @if($client->status === 'sent')
-                                                <span class="flex items-center text-[9px] font-black text-emerald-400 tracking-widest group-hover/status:text-amber-400 transition-colors">
-                                                    <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-2 animate-pulse"></span>
-                                                    SENT
-                                                </span>
-                                            @else
-                                                <span class="flex items-center text-[9px] font-black text-amber-400 tracking-widest group-hover/status:text-emerald-400 transition-colors">
-                                                    <span class="w-1.5 h-1.5 bg-amber-500 rounded-full mr-2"></span>
-                                                    QUEUED
-                                                </span>
-                                            @endif
-                                        </button>
-                                    </form>
+                                    <div class="flex items-center gap-2">
+                                        @if($client->alpha)
+                                            <span class="px-3 py-1.5 bg-red-500/20 border border-red-500/30 rounded-lg text-[9px] font-black text-red-400 tracking-widest">
+                                                <span class="w-1.5 h-1.5 bg-red-500 rounded-full mr-2 inline-block"></span>
+                                                ALPHA
+                                            </span>
+                                        @elseif($client->status === 'sent')
+                                            <span class="px-3 py-1.5 bg-emerald-500/20 border border-emerald-500/30 rounded-lg text-[9px] font-black text-emerald-400 tracking-widest">
+                                                <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-2 inline-block animate-pulse"></span>
+                                                SENT
+                                            </span>
+                                        @else
+                                            <span class="px-3 py-1.5 bg-amber-500/20 border border-amber-500/30 rounded-lg text-[9px] font-black text-amber-400 tracking-widest">
+                                                <span class="w-1.5 h-1.5 bg-amber-500 rounded-full mr-2 inline-block"></span>
+                                                QUEUED
+                                            </span>
+                                        @endif
+                                    </div>
                                 </td>
                                 <td class="px-8 py-6 text-right">
                                     <div class="flex items-center justify-end space-x-2">
