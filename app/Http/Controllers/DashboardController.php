@@ -667,8 +667,21 @@ class DashboardController extends Controller
             // The response might be raw text or JSON depending on n8n config.
             // Let's assume n8n returns the generated content.
             $content = $response->body();
+            $dataAry = json_decode($content, true);
+
+            // Handle n8n array format: [{"output": "```json...```"}]
+            if (is_array($dataAry) && isset($dataAry[0]['output'])) {
+                $rawOutput = $dataAry[0]['output'];
+                // Extract inner JSON from markdown code block if present
+                if (preg_match('/\{.*\}/s', $rawOutput, $innerMatches)) {
+                    $innerJson = json_decode($innerMatches[0], true);
+                    if ($innerJson && isset($innerJson['subject']) && isset($innerJson['body'])) {
+                        return response()->json($innerJson);
+                    }
+                }
+            }
             
-            // Try to extract JSON from the response if n8n adds extra text
+            // Try to extract JSON from the raw response if it's not and array but contains JSON
             if (preg_match('/\{.*\}/s', $content, $matches)) {
                 $jsonData = json_decode($matches[0], true);
                 if ($jsonData && isset($jsonData['subject']) && isset($jsonData['body'])) {
@@ -676,7 +689,7 @@ class DashboardController extends Controller
                 }
             }
 
-            // Fallback: If not JSON, use the whole response as body and a generic subject
+            // Fallback: If parsing fails, return the content as body
             return response()->json([
                 'subject' => 'Generated Template: ' . Str::limit($prompt, 30),
                 'body' => $content
