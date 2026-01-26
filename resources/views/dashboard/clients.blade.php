@@ -205,7 +205,7 @@
                                     @endif
                                 </td>
                                 <td class="px-8 py-6">
-                                    @if($client->alpha)
+                                    @if(isset($client->alpha) && $client->alpha === 1)
                                         <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-red-950/30 border border-red-500/50 rounded-lg text-[9px] font-black text-red-400 tracking-wider uppercase">
                                             <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
                                             Alpha
