@@ -470,17 +470,27 @@ class DashboardController extends Controller
     /**
      * Clients Page: List.
      */
-    public function clientsIndex()
+    public function clientsIndex(Request $request)
     {
+        $filter = $request->query('filter');
+        
         $totalClients = Client::count();
         $queuedCount = Client::where('status', 'queued')->count();
         $sentCount = Client::where('status', 'sent')->count();
-        $clients = Client::orderByRaw("FIELD(status, 'queued', 'sent') ASC")
+        $noEmailCount = Client::whereNull('email')->orWhere('email', '')->count();
+        
+        $query = Client::query();
+        
+        if ($filter === 'no_email') {
+            $query->whereNull('email')->orWhere('email', '');
+        }
+        
+        $clients = $query->orderByRaw("FIELD(status, 'queued', 'sent') ASC")
             ->orderByRaw("CASE WHEN status = 'queued' THEN created_at END ASC")
             ->orderByRaw("CASE WHEN status = 'sent' THEN created_at END DESC")
             ->paginate(5);
         
-        return view('dashboard.clients', compact('clients', 'totalClients', 'queuedCount', 'sentCount'));
+        return view('dashboard.clients', compact('clients', 'totalClients', 'queuedCount', 'sentCount', 'noEmailCount', 'filter'));
     }
 
     /**
