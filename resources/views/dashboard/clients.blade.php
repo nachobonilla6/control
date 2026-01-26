@@ -536,8 +536,17 @@
                 return;
             }
 
-            // Build the extraction text: country city industry (in one line)
-            const extractionText = `${country} ${city} ${industry || ''}`.trim();
+            // Language code mapping
+            const languageCode = {
+                'english': 'eng',
+                'spanish': 'spa',
+                'french': 'fra',
+                'portuguese': 'por'
+            };
+
+            // Build the extraction text: lang_code country city industry (in one line)
+            const langCode = languageCode[language] || language;
+            const extractionText = `${langCode} ${country} ${city} ${industry || ''}`.trim();
 
             try {
                 // Send to n8n webhook
