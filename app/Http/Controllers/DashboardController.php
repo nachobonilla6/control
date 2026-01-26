@@ -480,16 +480,15 @@ class DashboardController extends Controller
         $noEmailCount = Client::whereNull('email')->orWhere('email', '')->count();
         
         $query = Client::query();
-        
         if ($filter === 'no_email') {
             $query->whereNull('email')->orWhere('email', '');
+        } else {
+            $query->whereIn('status', ['queued', 'sent']);
         }
-        
         $clients = $query->orderByRaw("FIELD(status, 'queued', 'sent') ASC")
             ->orderByRaw("CASE WHEN status = 'queued' THEN created_at END ASC")
             ->orderByRaw("CASE WHEN status = 'sent' THEN created_at END DESC")
             ->paginate(5);
-        
         return view('dashboard.clients', compact('clients', 'totalClients', 'queuedCount', 'sentCount', 'noEmailCount', 'filter'));
     }
 
