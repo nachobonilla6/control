@@ -49,7 +49,7 @@
             <div class="text-[10px] font-bold text-slate-500 px-3 py-2 uppercase tracking-[0.2em]">Recent Conversations</div>
             @if(count($threads) > 0)
                 @foreach($threads as $thread)
-                    <a href="{{ route('dashboard.history', ['bot' => $bot_id, 'chatId' => $thread->chat_id]) }}" 
+                    <a href="{{ route('dashboard.chat', ['bot' => $bot_id, 'chatId' => $thread->chat_id]) }}" 
                        class="block px-3 py-3 rounded-xl hover:bg-slate-800/50 cursor-pointer text-sm truncate transition-all {{ $current_chat_id == $thread->chat_id ? 'bg-indigo-600/10 text-indigo-400 border border-indigo-500/20 shadow-lg' : 'text-slate-400' }}">
                         {{ $thread->message }}
                     </a>

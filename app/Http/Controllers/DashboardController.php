@@ -373,8 +373,12 @@ class DashboardController extends Controller
     /**
      * Show the Chat Interface for Copilot.
      */
-    public function chatIndex(Request $request, $botId = 'josh-dev')
+    public function chatIndex(Request $request, $botId = 'josh-dev', $chatId = null)
     {
+        if ($chatId) {
+            $request->session()->put('current_chat_id', $chatId);
+        }
+
         $currentChatId = $request->session()->get('current_chat_id');
         
         if (!$currentChatId) {
@@ -384,13 +388,18 @@ class DashboardController extends Controller
 
         $chatHistory = ChatHistory::where('chat_id', $currentChatId)->orderBy('created_at', 'asc')->get();
         
-        // Fetch recent unique chat threads for the sidebar
+        // Fetch unique threads using the schema info (role='user' usually starts the thread)
         $threads = ChatHistory::where('role', 'user')
-            ->select('chat_id', 'message')
+            ->select('chat_id', 'message', 'created_at')
+            ->whereIn('id', function($query) {
+                $query->selectRaw('MIN(id)')
+                    ->from('josh_dev_chat_history')
+                    ->where('role', 'user')
+                    ->groupBy('chat_id');
+            })
             ->orderBy('created_at', 'desc')
-            ->get()
-            ->unique('chat_id')
-            ->take(10);
+            ->take(15)
+            ->get();
 
         return view('dashboard.chat', [
             'bot_id' => $botId,

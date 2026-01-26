@@ -80,7 +80,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/dashboard/facebook/accounts/{id}', [\App\Http\Controllers\DashboardController::class, 'facebookAccountsDestroy'])->name('dashboard.facebook.accounts.destroy');
 
     // AI & Chat
-    Route::get('/dashboard/chat/{bot?}', [\App\Http\Controllers\DashboardController::class, 'chatIndex'])->name('dashboard.chat');
+    Route::get('/dashboard/chat/{bot?}/{chatId?}', [\App\Http\Controllers\DashboardController::class, 'chatIndex'])->name('dashboard.chat');
     Route::post('/chat', [\App\Http\Controllers\DashboardController::class, 'chat'])->name('chat');
     Route::post('/chat/new', [\App\Http\Controllers\DashboardController::class, 'chatNew'])->name('chat.new');
     Route::get('/notifications', [\App\Http\Controllers\DashboardController::class, 'notifications'])->name('notifications');
