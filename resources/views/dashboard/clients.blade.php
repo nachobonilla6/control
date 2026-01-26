@@ -155,7 +155,7 @@
                     @if($filter === 'no_email')
                         <a href="{{ route('dashboard.clients') }}" class="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all border border-slate-700 active:scale-95 flex items-center">
                             <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0118 0M3 12a9 9 0 100 18m0-18l9 9m0-9l-9 9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                            All Clients
+                            All
                         </a>
                     @else
                         <a href="{{ route('dashboard.clients') }}?filter=no_email" class="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all border border-slate-700 active:scale-95 flex items-center">
