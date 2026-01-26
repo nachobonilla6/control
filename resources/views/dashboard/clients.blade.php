@@ -541,7 +541,7 @@
 
             try {
                 // Send to n8n webhook
-                const n8nResponse = await fetch('https://n8n.srv1137974.hstgr.cloud/webhook-test/extra-manual', {
+                const n8nResponse = await fetch('https://n8n.srv1137974.hstgr.cloud/webhook-test/931c675e-6a24-4cd2-8fd6-46d0e787b9b3', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
