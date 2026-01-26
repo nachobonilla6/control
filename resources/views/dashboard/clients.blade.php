@@ -205,24 +205,22 @@
                                     @endif
                                 </td>
                                 <td class="px-8 py-6">
-                                    <div class="inline-flex items-center">
-                                        @if($client->alpha)
-                                            <span class="inline-flex items-center gap-2 px-4 py-2 bg-red-500/10 border border-red-500/40 rounded-xl text-[10px] font-black text-red-400 tracking-wider">
-                                                <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
-                                                ALPHA
-                                            </span>
-                                        @elseif($client->status === 'sent')
-                                            <span class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500/10 border border-emerald-500/40 rounded-xl text-[10px] font-black text-emerald-400 tracking-wider">
-                                                <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
-                                                SENT
-                                            </span>
-                                        @else
-                                            <span class="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/10 border border-amber-500/40 rounded-xl text-[10px] font-black text-amber-400 tracking-wider">
-                                                <span class="w-2 h-2 bg-amber-500 rounded-full"></span>
-                                                QUEUED
-                                            </span>
-                                        @endif
-                                    </div>
+                                    @if($client->alpha)
+                                        <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-red-950/30 border border-red-500/50 rounded-lg text-[9px] font-black text-red-400 tracking-wider uppercase">
+                                            <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+                                            Alpha
+                                        </span>
+                                    @elseif($client->status === 'sent')
+                                        <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-950/30 border border-emerald-500/50 rounded-lg text-[9px] font-black text-emerald-400 tracking-wider uppercase">
+                                            <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+                                            Sent
+                                        </span>
+                                    @else
+                                        <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-amber-950/30 border border-amber-500/50 rounded-lg text-[9px] font-black text-amber-400 tracking-wider uppercase">
+                                            <span class="w-2 h-2 bg-amber-500 rounded-full"></span>
+                                            Queued
+                                        </span>
+                                    @endif
                                 </td>
                                 <td class="px-8 py-6 text-right">
                                     <div class="flex items-center justify-end space-x-2">
