@@ -427,7 +427,7 @@ class DashboardController extends Controller
         $chatId = $request->session()->get('current_chat_id', (string) Str::uuid());
         
         try {
-            $response = Http::post('https://n8n.srv1137974.hstgr.cloud/webhook-test/776f766b-f300-4727-a778-c3be64254f8f', [
+            $response = Http::post('https://n8n.srv1137974.hstgr.cloud/webhook/776f766b-f300-4727-a778-c3be64254f8f', [
                 'chat_id' => $chatId,
                 'message' => $message,
                 'user' => Auth::user()->name,
