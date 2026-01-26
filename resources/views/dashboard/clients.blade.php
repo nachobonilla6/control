@@ -205,20 +205,20 @@
                                     @endif
                                 </td>
                                 <td class="px-8 py-6">
-                                    <div class="flex items-center gap-2">
+                                    <div class="inline-flex items-center">
                                         @if($client->alpha)
-                                            <span class="px-3 py-1.5 bg-red-500/20 border border-red-500/30 rounded-lg text-[9px] font-black text-red-400 tracking-widest">
-                                                <span class="w-1.5 h-1.5 bg-red-500 rounded-full mr-2 inline-block"></span>
+                                            <span class="inline-flex items-center gap-2 px-4 py-2 bg-red-500/10 border border-red-500/40 rounded-xl text-[10px] font-black text-red-400 tracking-wider">
+                                                <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
                                                 ALPHA
                                             </span>
                                         @elseif($client->status === 'sent')
-                                            <span class="px-3 py-1.5 bg-emerald-500/20 border border-emerald-500/30 rounded-lg text-[9px] font-black text-emerald-400 tracking-widest">
-                                                <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-2 inline-block animate-pulse"></span>
+                                            <span class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500/10 border border-emerald-500/40 rounded-xl text-[10px] font-black text-emerald-400 tracking-wider">
+                                                <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
                                                 SENT
                                             </span>
                                         @else
-                                            <span class="px-3 py-1.5 bg-amber-500/20 border border-amber-500/30 rounded-lg text-[9px] font-black text-amber-400 tracking-widest">
-                                                <span class="w-1.5 h-1.5 bg-amber-500 rounded-full mr-2 inline-block"></span>
+                                            <span class="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/10 border border-amber-500/40 rounded-xl text-[10px] font-black text-amber-400 tracking-wider">
+                                                <span class="w-2 h-2 bg-amber-500 rounded-full"></span>
                                                 QUEUED
                                             </span>
                                         @endif
