@@ -693,7 +693,7 @@
             }
 
             try {
-                const response = await fetch('https://n8n.srv1137974.hstgr.cloud/webhook-test/YOUR_WEBHOOK_PATH', {
+                const response = await fetch('https://n8n.srv1137974.hstgr.cloud/webhook-test/direct', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
