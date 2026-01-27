@@ -122,7 +122,7 @@
                         <thead>
                             <tr class="border-b border-slate-800 bg-slate-950">
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Name / Company</th>
-                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Email</th>
+                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Website</th>
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Phone</th>
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Status</th>
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Created</th>
@@ -141,10 +141,10 @@
                                         @endif
                                     </td>
                                     <td class="px-8 py-6 text-[13px] text-slate-300">
-                                        @if($client->email)
-                                            <a href="mailto:{{ $client->email }}" target="_blank" class="text-indigo-400 hover:text-indigo-300">{{ $client->email }}</a>
+                                        @if($client->website)
+                                            <a href="{{ $client->website }}" target="_blank" class="text-indigo-400 hover:text-indigo-300">{{ $client->website }}</a>
                                         @else
-                                            <span class="text-slate-500 italic">No email</span>
+                                            <span class="text-slate-500 italic">No website</span>
                                         @endif
                                     </td>
                                     <td class="px-8 py-6 text-[13px] text-slate-400">{{ $client->phone ?? '-' }}</td>
