@@ -165,7 +165,27 @@
                                     @endif
                                 </td>
                                 <td class="px-8 py-6">
-                                    <p class="text-xs font-bold text-slate-400">{{ $client->status ?: 'No Status' }}</p>
+                                    @if($client->status === 'sent')
+                                        <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-950/30 border border-emerald-500/50 rounded-lg text-[9px] font-black text-emerald-400 tracking-wider uppercase">
+                                            <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+                                            Sent
+                                        </span>
+                                    @elseif($client->status === 'extracted')
+                                        <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-yellow-950/30 border border-yellow-500/50 rounded-lg text-[9px] font-black text-yellow-400 tracking-wider uppercase">
+                                            <span class="w-2 h-2 bg-yellow-500 rounded-full"></span>
+                                            Extracted
+                                        </span>
+                                    @elseif($client->status === 'queued')
+                                        <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-950/30 border border-blue-500/50 rounded-lg text-[9px] font-black text-blue-400 tracking-wider uppercase">
+                                            <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
+                                            Queued
+                                        </span>
+                                    @else
+                                        <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-800/50 border border-slate-600/50 rounded-lg text-[9px] font-black text-slate-400 tracking-wider uppercase">
+                                            <span class="w-2 h-2 bg-slate-500 rounded-full"></span>
+                                            {{ $client->status ?: 'No Status' }}
+                                        </span>
+                                    @endif
                                 </td>
                                 <td class="px-8 py-6 text-right">
                                     <div class="flex items-center justify-end space-x-2">
