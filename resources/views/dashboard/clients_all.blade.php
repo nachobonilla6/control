@@ -155,9 +155,9 @@
                                 </td>
                                 <td class="px-8 py-6">
                                     @if($client->industry)
-                                    <span class="px-3 py-1 bg-slate-950 border border-white/5 rounded-lg text-[9px] font-black text-slate-500">{{ $client->industry }}</span>
+                                    <span class="inline-flex items-center px-3 py-1.5 bg-indigo-950/30 border border-indigo-500/50 rounded-lg text-[9px] font-black text-indigo-400 tracking-wider uppercase">{{ $client->industry }}</span>
                                     @else
-                                    <span class="text-slate-800 italic text-[10px]">No tag</span>
+                                    <span class="text-slate-600 italic text-[10px]">No tag</span>
                                     @endif
                                 </td>
                                 <td class="px-8 py-6">
