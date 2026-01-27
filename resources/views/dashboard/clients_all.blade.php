@@ -544,8 +544,6 @@
             document.getElementById('emailModal').classList.remove('hidden');
         }
     </script>
-
-    <!-- Email Modal -->
     <div id="emailModal" class="fixed inset-0 z-50 hidden bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4">
         <div class="bg-slate-900 border border-slate-800 w-full max-w-2xl rounded-[2.5rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
             <div class="flex justify-between items-start mb-6">
@@ -583,6 +581,16 @@
             </form>
         </div>
     </div>
+
+    <script>
+        function openEmailModal(client) {
+            document.getElementById('emailClientName').textContent = client.name;
+            document.getElementById('emailClientEmail').textContent = client.email || 'No email';
+            document.getElementById('emailForm').reset();
+            document.getElementById('emailForm').action = '/dashboard/clients/' + client.id + '/send-email';
+            document.getElementById('emailModal').classList.remove('hidden');
+        }
+    </script>
 
 </body>
 </html>
