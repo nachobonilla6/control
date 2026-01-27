@@ -123,54 +123,93 @@
                             <tr class="border-b border-slate-800 bg-slate-950">
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Name / Company</th>
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Website</th>
-                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Phone</th>
+                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Contact</th>
+                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Location</th>
+                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Industry</th>
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Status</th>
-                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Created</th>
-                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Actions</th>
+                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em] text-right">Actions</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="divide-y divide-slate-800/50">
                             @forelse($clients as $client)
-                                <tr class="border-b border-slate-800 hover:bg-slate-800/30 transition-colors">
-                                    <td class="px-8 py-6">
-                                        <div class="text-[13px] text-white font-bold">{{ $client->name }}</div>
-                                        @if($client->website)
-                                            <div class="text-[11px] text-slate-400 mt-1">
-                                                <a href="{{ $client->website }}" target="_blank" class="text-indigo-400 hover:text-indigo-300">{{ $client->website }}</a>
-                                            </div>
-                                        @endif
-                                    </td>
-                                    <td class="px-8 py-6 text-[13px] text-slate-300 max-w-xs break-words">
-                                        @if($client->website)
-                                            <a href="{{ $client->website }}" target="_blank" class="text-indigo-400 hover:text-indigo-300 break-all">{{ $client->website }}</a>
-                                        @else
-                                            <span class="text-slate-500 italic">No website</span>
-                                        @endif
-                                    </td>
-                                    <td class="px-8 py-6 text-[13px] text-slate-400">{{ $client->phone ?? '-' }}</td>
-                                    <td class="px-8 py-6">
-                                        <span class="text-[13px] font-bold text-slate-300">{{ $client->status ?? 'No Status' }}</span>
-                                    </td>
-                                    <td class="px-8 py-6 text-[13px] text-slate-400">{{ $client->created_at->format('Y-m-d H:i') }}</td>
-                                    <td class="px-8 py-6 flex items-center space-x-3">
-                                        <button onclick="openEditModal({{ json_encode($client) }})" class="p-2 text-slate-400 hover:text-indigo-400 transition-colors" title="Edit">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            <tr class="hover:bg-white/[0.02] transition-colors group">
+                                <td class="px-8 py-6">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-10 h-10 rounded-xl bg-indigo-600/10 flex items-center justify-center text-indigo-400 font-black text-xs border border-indigo-500/10">
+                                            {{ substr($client->name, 0, 1) }}
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-bold text-white leading-none mb-1">{{ $client->name }}</p>
+                                            <p class="text-[9px] font-medium text-slate-500 lowercase">{{ $client->email }}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-8 py-6">
+                                    @if($client->website)
+                                        <a href="{{ $client->website }}" target="_blank" class="text-xs font-bold text-indigo-400 hover:text-indigo-300 break-all">{{ $client->website }}</a>
+                                    @else
+                                        <p class="text-xs font-bold text-slate-600">---</p>
+                                    @endif
+                                </td>
+                                <td class="px-8 py-6">
+                                    <p class="text-xs font-bold text-slate-400">{{ $client->phone ?: '---' }}</p>
+                                </td>
+                                <td class="px-8 py-6">
+                                    <p class="text-xs font-bold text-slate-400">{{ $client->location ?: '---' }}</p>
+                                </td>
+                                <td class="px-8 py-6">
+                                    @if($client->industry)
+                                    <span class="px-3 py-1 bg-slate-950 border border-white/5 rounded-lg text-[9px] font-black text-slate-500">{{ $client->industry }}</span>
+                                    @else
+                                    <span class="text-slate-800 italic text-[10px]">No tag</span>
+                                    @endif
+                                </td>
+                                <td class="px-8 py-6">
+                                    @if(!$client->email)
+                                        <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-800/50 border border-slate-600/50 rounded-lg text-[9px] font-black text-slate-400 tracking-wider uppercase">
+                                            <span class="w-2 h-2 bg-slate-500 rounded-full"></span>
+                                            No Email
+                                        </span>
+                                    @elseif($client->status === 'sent')
+                                        <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-950/30 border border-emerald-500/50 rounded-lg text-[9px] font-black text-emerald-400 tracking-wider uppercase">
+                                            <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+                                            Sent
+                                        </span>
+                                    @elseif($client->status === 'queued')
+                                        <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-amber-950/30 border border-amber-500/50 rounded-lg text-[9px] font-black text-amber-400 tracking-wider uppercase">
+                                            <span class="w-2 h-2 bg-amber-500 rounded-full"></span>
+                                            Queued
+                                        </span>
+                                    @else
+                                        <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-800/50 border border-slate-600/50 rounded-lg text-[9px] font-black text-slate-400 tracking-wider uppercase">
+                                            <span class="w-2 h-2 bg-slate-500 rounded-full"></span>
+                                            Unknown
+                                        </span>
+                                    @endif
+                                </td>
+                                <td class="px-8 py-6 text-right">
+                                    <div class="flex items-center justify-end space-x-2">
+                                        <button 
+                                            onclick="openEditModal({{ json_encode($client) }})"
+                                            class="w-9 h-9 flex items-center justify-center bg-indigo-600/10 text-indigo-400 rounded-xl hover:bg-indigo-600 hover:text-white transition-all border border-indigo-500/10">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                         </button>
-                                        <button onclick="if(confirm('Delete client from system?')) { document.getElementById('deleteForm{{ $client->id }}').submit(); }" class="p-2 text-slate-400 hover:text-red-500 transition-colors" title="Delete">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                        </button>
-                                        <form id="deleteForm{{ $client->id }}" action="{{ route('dashboard.clients.destroy', $client->id) }}" method="POST" style="display:none;">
+                                        <form action="{{ route('dashboard.clients.destroy', $client->id) }}" method="POST" onsubmit="return confirm('Delete client from system?')">
                                             @csrf
                                             @method('DELETE')
+                                            <button type="submit" class="w-9 h-9 flex items-center justify-center bg-red-500/10 text-red-500 rounded-xl hover:bg-red-500 hover:text-white transition-all border border-red-500/10">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                            </button>
                                         </form>
-                                    </td>
-                                </tr>
+                                    </div>
+                                </td>
+                            </tr>
                             @empty
-                                <tr>
-                                    <td colspan="6" class="px-8 py-12 text-center text-slate-500">
-                                        <p class="text-sm font-medium">No clients found</p>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td colspan="7" class="px-8 py-20 text-center">
+                                    <p class="text-xs font-black text-slate-700 tracking-[0.3em] italic">No active client records found</p>
+                                </td>
+                            </tr>
                             @endforelse
                         </tbody>
                     </table>
