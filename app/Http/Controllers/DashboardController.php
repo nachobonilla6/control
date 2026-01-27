@@ -474,6 +474,7 @@ class DashboardController extends Controller
     public function clientsIndex(Request $request)
     {
         $filter = $request->query('filter');
+        $search = $request->input('search', '');
         
         $totalClients = Client::count();
         $queuedCount = Client::where('status', 'queued')->count();
@@ -486,11 +487,22 @@ class DashboardController extends Controller
         } else {
             $query->whereIn('status', ['queued', 'sent']);
         }
+        
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                  ->orWhere('email', 'like', '%' . $search . '%')
+                  ->orWhere('website', 'like', '%' . $search . '%')
+                  ->orWhere('phone', 'like', '%' . $search . '%')
+                  ->orWhere('industry', 'like', '%' . $search . '%');
+            });
+        }
+        
         $clients = $query->orderByRaw("FIELD(status, 'queued', 'sent') ASC")
             ->orderByRaw("CASE WHEN status = 'queued' THEN created_at END ASC")
             ->orderByRaw("CASE WHEN status = 'sent' THEN created_at END DESC")
             ->paginate(5);
-        return view('dashboard.clients', compact('clients', 'totalClients', 'queuedCount', 'sentCount', 'noEmailCount', 'filter'));
+        return view('dashboard.clients', compact('clients', 'totalClients', 'queuedCount', 'sentCount', 'noEmailCount', 'filter', 'search'));
     }
 
     /**
