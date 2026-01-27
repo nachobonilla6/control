@@ -146,7 +146,7 @@
                                 </td>
                                 <td class="px-8 py-6">
                                     @if($client->website)
-                                        <a href="{{ $client->website }}" target="_blank" class="text-xs font-bold text-indigo-400 hover:text-indigo-300 break-all">{{ $client->website }}</a>
+                                        <a href="{{ $client->website }}" target="_blank" class="text-xs font-bold text-indigo-400 hover:text-indigo-300 break-all" title="{{ $client->website }}">{{ Str::limit($client->website, 45, '...') }}</a>
                                     @else
                                         <p class="text-xs font-bold text-slate-600">---</p>
                                     @endif
