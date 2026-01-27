@@ -119,6 +119,25 @@
                 </div>
             </div>
 
+            <!-- Search Bar -->
+            <div class="mb-6">
+                <form method="GET" action="{{ route('dashboard.clients.all') }}" class="flex gap-2">
+                    <div class="flex-1 relative">
+                        <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Search by name, email, website, phone, or industry..." 
+                               class="w-full bg-slate-900 border border-slate-800 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all placeholder:text-slate-600">
+                        <svg class="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <button type="submit" class="px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-indigo-600/20 active:scale-95">
+                        Search
+                    </button>
+                    @if($search)
+                    <a href="{{ route('dashboard.clients.all') }}" class="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all border border-slate-700 active:scale-95">
+                        Clear
+                    </a>
+                    @endif
+                </form>
+            </div>
+
             <!-- Clients Table -->
             <div class="bg-slate-900 border border-slate-800 rounded-[2.5rem] overflow-hidden shadow-2xl">
                 <div class="overflow-x-auto">

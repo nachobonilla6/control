@@ -496,13 +496,28 @@ class DashboardController extends Controller
     /**
      * Show all Clients without filters.
      */
-    public function clientsAll()
+    public function clientsAll(Request $request)
     {
-        $clients = Client::orderByRaw("FIELD(status, 'extracted', 'queued', 'sent') ASC, created_at DESC")->paginate(5);
+        $search = $request->input('search', '');
+        
+        $query = Client::orderByRaw("FIELD(status, 'extracted', 'queued', 'sent') ASC, created_at DESC");
+        
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                  ->orWhere('email', 'like', '%' . $search . '%')
+                  ->orWhere('website', 'like', '%' . $search . '%')
+                  ->orWhere('phone', 'like', '%' . $search . '%')
+                  ->orWhere('industry', 'like', '%' . $search . '%');
+            });
+        }
+        
+        $clients = $query->paginate(5);
         $totalClients = Client::count();
         $queuedCount = Client::where('status', 'queued')->count();
         $sentCount = Client::where('status', 'sent')->count();
-        return view('dashboard.clients_all', compact('clients', 'totalClients', 'queuedCount', 'sentCount'));
+        
+        return view('dashboard.clients_all', compact('clients', 'totalClients', 'queuedCount', 'sentCount', 'search'));
     }
 
     /**
