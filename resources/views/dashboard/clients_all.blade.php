@@ -166,11 +166,17 @@
                                 <td class="px-8 py-6 text-right">
                                     <div class="flex items-center justify-end space-x-2">
                                         <button 
+                                            onclick="openEmailModal({{ json_encode($client) }})"
+                                            class="w-9 h-9 flex items-center justify-center bg-emerald-600/10 text-emerald-400 rounded-xl hover:bg-emerald-600 hover:text-white transition-all border border-emerald-500/10"
+                                            title="Send Email">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                        </button>
+                                        <button 
                                             onclick="openEditModal({{ json_encode($client) }})"
                                             class="w-9 h-9 flex items-center justify-center bg-indigo-600/10 text-indigo-400 rounded-xl hover:bg-indigo-600 hover:text-white transition-all border border-indigo-500/10">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                         </button>
-                                        <form action="{{ route('dashboard.clients.destroy', $client->id) }}" method="POST" onsubmit="return confirm('Delete client from system?')">
+                                        <form action="{{ route('dashboard.clients.destroy', $client->id) }}" method="POST" onsubmit="return confirm('Delete client from system?')">>
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="w-9 h-9 flex items-center justify-center bg-red-500/10 text-red-500 rounded-xl hover:bg-red-500 hover:text-white transition-all border border-red-500/10">
@@ -528,6 +534,55 @@
                 alert('Error processing extraction: ' + e.message);
             }
         }
+
+        // Email Modal
+        function openEmailModal(client) {
+            document.getElementById('emailClientName').textContent = client.name;
+            document.getElementById('emailClientEmail').textContent = client.email || 'No email';
+            document.getElementById('emailForm').reset();
+            document.getElementById('emailForm').action = '/dashboard/clients/' + client.id + '/send-email';
+            document.getElementById('emailModal').classList.remove('hidden');
+        }
+    </script>
+
+    <!-- Email Modal -->
+    <div id="emailModal" class="fixed inset-0 z-50 hidden bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-2xl rounded-[2.5rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
+            <div class="flex justify-between items-start mb-6">
+                <div>
+                    <h2 class="text-2xl font-black text-white italic tracking-tighter mb-0.5">Send Email</h2>
+                    <p class="text-[8px] font-bold text-slate-500 tracking-widest leading-none">To: <span id="emailClientName" class="text-indigo-400"></span></p>
+                </div>
+                <button onclick="document.getElementById('emailModal').classList.add('hidden')" class="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-xl text-slate-600 hover:text-white transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </div>
+
+            <form id="emailForm" method="POST" class="space-y-4">
+                @csrf
+                <div>
+                    <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Subject</label>
+                    <input type="text" name="subject" id="email_subject" required placeholder="Email subject" 
+                           class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all">
+                </div>
+
+                <div>
+                    <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Message</label>
+                    <textarea name="message" id="email_message" required placeholder="Email message" rows="6"
+                              class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all resize-none"></textarea>
+                </div>
+
+                <div class="flex items-center space-x-4 pt-4">
+                    <button type="submit" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-black py-4 rounded-2xl shadow-2xl shadow-emerald-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em]">
+                        Send Email
+                    </button>
+                    <button type="button" onclick="document.getElementById('emailModal').classList.add('hidden')" class="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
     </script>
                 </div>
             </div>
