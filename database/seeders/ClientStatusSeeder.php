@@ -14,6 +14,7 @@ class ClientStatusSeeder extends Seeder
     {
         $statuses = [
             ['name' => 'extracted', 'label' => 'EXTRACTED', 'color' => 'yellow'],
+            ['name' => 'created', 'label' => 'CREATED', 'color' => 'cyan'],
             ['name' => 'queued', 'label' => 'QUEUED', 'color' => 'blue'],
             ['name' => 'sent', 'label' => 'SENT', 'color' => 'green'],
             ['name' => 'contacted', 'label' => 'CONTACTED', 'color' => 'indigo'],
