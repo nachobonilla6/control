@@ -126,6 +126,7 @@
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Phone</th>
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Status</th>
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Created</th>
+                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -134,28 +135,32 @@
                                     <td class="px-8 py-6 text-[13px] text-white font-bold">{{ $client->name }}</td>
                                     <td class="px-8 py-6 text-[13px] text-slate-300">
                                         @if($client->email)
-                                            <a href="mailto:{{ $client->email }}" class="text-indigo-400 hover:text-indigo-300">{{ $client->email }}</a>
+                                            <a href="mailto:{{ $client->email }}" target="_blank" class="text-indigo-400 hover:text-indigo-300">{{ $client->email }}</a>
                                         @else
                                             <span class="text-slate-500 italic">No email</span>
                                         @endif
                                     </td>
                                     <td class="px-8 py-6 text-[13px] text-slate-400">{{ $client->phone ?? '-' }}</td>
                                     <td class="px-8 py-6">
-                                        @if(!$client->email)
-                                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-slate-700 text-slate-300">No Email</span>
-                                        @elseif($client->status === 'sent')
-                                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-600 text-white">Sent</span>
-                                        @elseif($client->status === 'queued')
-                                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-500 text-white">Queued</span>
-                                        @else
-                                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-slate-700 text-slate-300">Unknown</span>
-                                        @endif
+                                        <span class="text-[13px] font-bold text-slate-300">{{ $client->status ?? 'No Status' }}</span>
                                     </td>
                                     <td class="px-8 py-6 text-[13px] text-slate-400">{{ $client->created_at->format('Y-m-d H:i') }}</td>
+                                    <td class="px-8 py-6 flex items-center space-x-3">
+                                        <a href="{{ route('dashboard.clients.edit', $client->id) }}" class="p-2 text-slate-400 hover:text-indigo-400 transition-colors" title="Edit">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                        </a>
+                                        <button onclick="if(confirm('¿Eliminar este cliente?')) { document.getElementById('deleteForm{{ $client->id }}').submit(); }" class="p-2 text-slate-400 hover:text-red-500 transition-colors" title="Delete">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                        </button>
+                                        <form id="deleteForm{{ $client->id }}" action="{{ route('dashboard.clients.destroy', $client->id) }}" method="POST" style="display:none;">
+                                            @csrf
+                                            @method('DELETE')
+                                        </form>
+                                    </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="px-8 py-12 text-center text-slate-500">
+                                    <td colspan="6" class="px-8 py-12 text-center text-slate-500">
                                         <p class="text-sm font-medium">No clients found</p>
                                     </td>
                                 </tr>
