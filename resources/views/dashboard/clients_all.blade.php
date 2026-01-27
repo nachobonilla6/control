@@ -166,7 +166,7 @@
                                 <td class="px-8 py-6 text-right">
                                     <div class="flex items-center justify-end space-x-2">
                                         <button type="button"
-                                            onclick="openEmailModal({{ json_encode($client) }})"
+                                            onclick="openEmailModal({{ $client->id }}, '{{ addslashes($client->name) }}', '{{ $client->email }}')"
                                             class="w-9 h-9 flex items-center justify-center bg-emerald-600/10 text-emerald-400 rounded-xl hover:bg-emerald-600 hover:text-white transition-all border border-emerald-500/10"
                                             title="Send Email">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -574,11 +574,11 @@
     </div>
 
     <script>
-        function openEmailModal(client) {
-            document.getElementById('emailClientName').textContent = client.name;
-            document.getElementById('emailClientEmail').textContent = client.email || 'No email';
+        function openEmailModal(clientId, clientName, clientEmail) {
+            document.getElementById('emailClientName').textContent = clientName;
+            document.getElementById('emailClientEmail').textContent = clientEmail || 'No email';
             document.getElementById('emailForm').reset();
-            document.getElementById('emailForm').action = '/dashboard/clients/' + client.id + '/send-email';
+            document.getElementById('emailForm').action = '/dashboard/clients/' + clientId + '/send-email';
             document.getElementById('emailModal').classList.remove('hidden');
         }
     </script>
