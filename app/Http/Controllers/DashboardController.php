@@ -498,7 +498,7 @@ class DashboardController extends Controller
      */
     public function clientsAll()
     {
-        $clients = Client::orderBy('status', 'desc')->orderBy('created_at', 'desc')->paginate(5);
+        $clients = Client::orderByRaw("FIELD(status, 'extracted', 'queued', 'sent') ASC, created_at DESC")->paginate(5);
         $totalClients = Client::count();
         $queuedCount = Client::where('status', 'queued')->count();
         $sentCount = Client::where('status', 'sent')->count();
