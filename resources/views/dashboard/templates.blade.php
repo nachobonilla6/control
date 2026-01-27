@@ -147,6 +147,7 @@
                     <table class="w-full text-left border-collapse">
                         <thead>
                             <tr class="border-b border-slate-800 bg-slate-950">
+                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Name</th>
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Subject</th>
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Body Preview</th>
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em] text-right">Actions</th>
@@ -155,6 +156,9 @@
                         <tbody class="divide-y divide-slate-800/50">
                             @forelse($templates as $template)
                             <tr class="hover:bg-white/[0.02] transition-colors group">
+                                <td class="px-8 py-6">
+                                    <p class="text-sm font-bold text-white leading-none normal-case">{{ $template->name ?? 'N/A' }}</p>
+                                </td>
                                 <td class="px-8 py-6">
                                     <div class="flex items-center space-x-4">
                                         <div class="w-10 h-10 rounded-xl bg-indigo-600/10 flex items-center justify-center text-indigo-400 font-black text-xs border border-indigo-500/10">
@@ -241,6 +245,12 @@
                         <div id="methodField"></div>
                         
                         <div>
+                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1 uppercase">Template Name</label>
+                            <input type="text" name="name" id="form_name" required placeholder="e.g. Welcome Email" 
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case">
+                        </div>
+
+                        <div>
                             <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1 uppercase">Email Subject</label>
                             <input type="text" name="subject" id="form_subject" required placeholder="e.g. Welcome to our Platform" 
                                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case">
@@ -314,6 +324,7 @@
             document.getElementById('methodField').innerHTML = '';
             document.getElementById('modalTitle').innerText = 'New Template';
             
+            document.getElementById('form_name').value = '';
             document.getElementById('form_subject').value = '';
             document.getElementById('form_body').value = '';
             document.getElementById('aiPrompt').value = '';
@@ -327,6 +338,7 @@
             document.getElementById('methodField').innerHTML = '<input type="hidden" name="_method" value="PATCH">';
             document.getElementById('modalTitle').innerText = 'Edit Template';
             
+            document.getElementById('form_name').value = template.name || '';
             document.getElementById('form_subject').value = template.subject;
             document.getElementById('form_body').value = template.body;
             document.getElementById('aiPrompt').value = '';
