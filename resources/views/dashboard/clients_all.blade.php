@@ -132,7 +132,14 @@
                         <tbody>
                             @forelse($clients as $client)
                                 <tr class="border-b border-slate-800 hover:bg-slate-800/30 transition-colors">
-                                    <td class="px-8 py-6 text-[13px] text-white font-bold">{{ $client->name }}</td>
+                                    <td class="px-8 py-6">
+                                        <div class="text-[13px] text-white font-bold">{{ $client->name }}</div>
+                                        @if($client->website)
+                                            <div class="text-[11px] text-slate-400 mt-1">
+                                                <a href="{{ $client->website }}" target="_blank" class="text-indigo-400 hover:text-indigo-300">{{ $client->website }}</a>
+                                            </div>
+                                        @endif
+                                    </td>
                                     <td class="px-8 py-6 text-[13px] text-slate-300">
                                         @if($client->email)
                                             <a href="mailto:{{ $client->email }}" target="_blank" class="text-indigo-400 hover:text-indigo-300">{{ $client->email }}</a>
@@ -202,6 +209,11 @@
                         <div>
                             <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Contact Email</label>
                             <input type="email" name="email" id="form_email" required placeholder="client@example.com" 
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Website</label>
+                            <input type="url" name="website" id="form_website" placeholder="https://example.com" 
                                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case">
                         </div>
                         <div>
@@ -362,6 +374,7 @@
             
             document.getElementById('form_name').value = client.name;
             document.getElementById('form_email').value = client.email;
+            document.getElementById('form_website').value = client.website || '';
             document.getElementById('form_location').value = client.location || '';
             document.getElementById('form_phone').value = client.phone || '';
             document.getElementById('form_industry').value = client.industry || '';
