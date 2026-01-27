@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Template extends Model
 {
-    protected $fillable = ['subject', 'body'];
+    protected $fillable = ['name', 'subject', 'body'];
 }
