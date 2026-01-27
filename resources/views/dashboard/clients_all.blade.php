@@ -733,6 +733,7 @@
                 if (response.ok) {
                     alert('✓ Email sent successfully!\nTo: ' + clientEmail);
                     document.getElementById('emailModal').classList.add('hidden');
+                    location.reload();
                 } else {
                     alert('Error: ' + (data.message || 'Unknown error'));
                 }
