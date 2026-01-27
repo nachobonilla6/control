@@ -535,12 +535,14 @@
             }
         }
     </script>
+
+    <!-- Email Modal -->
     <div id="emailModal" class="fixed inset-0 z-50 hidden bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-slate-800 w-full max-w-2xl rounded-[2.5rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-4xl rounded-[2.5rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
             <div class="flex justify-between items-start mb-6">
                 <div>
-                    <h2 class="text-2xl font-black text-white italic tracking-tighter mb-0.5">Send Email</h2>
-                    <p class="text-[8px] font-bold text-slate-500 tracking-widest leading-none">To: <span id="emailClientName" class="text-indigo-400"></span></p>
+                    <h2 id="emailModalTitle" class="text-2xl font-black text-white italic tracking-tighter mb-0.5">Send Email</h2>
+                    <p id="emailModalSubtitle" class="text-[8px] font-bold text-slate-500 tracking-widest leading-none">Send email to client via webhook</p>
                 </div>
                 <button onclick="document.getElementById('emailModal').classList.add('hidden')" class="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-xl text-slate-600 hover:text-white transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -549,15 +551,22 @@
 
             <form id="emailForm" method="POST" class="space-y-4">
                 @csrf
-                <div>
-                    <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Subject</label>
-                    <input type="text" name="subject" id="email_subject" required placeholder="Email subject" 
-                           class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Recipient Email</label>
+                        <input type="email" id="emailTo" readonly 
+                               class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Subject</label>
+                        <input type="text" name="subject" id="email_subject" required placeholder="Email subject" 
+                               class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all">
+                    </div>
                 </div>
 
                 <div>
                     <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Message</label>
-                    <textarea name="message" id="email_message" required placeholder="Email message" rows="6"
+                    <textarea name="message" id="email_message" required placeholder="Email message" rows="8"
                               class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all resize-none"></textarea>
                 </div>
 
@@ -575,11 +584,55 @@
 
     <script>
         function openEmailModal(clientId, clientName, clientEmail) {
-            document.getElementById('emailClientName').textContent = clientName;
-            document.getElementById('emailClientEmail').textContent = clientEmail || 'No email';
+            document.getElementById('emailModalTitle').textContent = 'Send Email to ' + clientName;
+            document.getElementById('emailModalSubtitle').textContent = 'Client: ' + clientName;
+            document.getElementById('emailTo').value = clientEmail;
             document.getElementById('emailForm').reset();
-            document.getElementById('emailForm').action = '/dashboard/clients/' + clientId + '/send-email';
+            document.getElementById('email_subject').value = '';
+            document.getElementById('email_message').value = '';
+            document.getElementById('emailForm').onsubmit = async function(e) {
+                e.preventDefault();
+                await sendEmailViaWebhook(clientId, clientEmail);
+            };
             document.getElementById('emailModal').classList.remove('hidden');
+        }
+
+        async function sendEmailViaWebhook(clientId, clientEmail) {
+            const subject = document.getElementById('email_subject').value;
+            const message = document.getElementById('email_message').value;
+
+            if (!subject || !message) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            try {
+                const response = await fetch('https://n8n.srv1137974.hstgr.cloud/webhook-test/YOUR_WEBHOOK_PATH', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        client_id: clientId,
+                        email: clientEmail,
+                        subject: subject,
+                        message: message,
+                        user_id: '{{ Auth::id() }}',
+                        user_email: '{{ Auth::user()->email }}'
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert('✓ Email sent successfully!\nTo: ' + clientEmail);
+                    document.getElementById('emailModal').classList.add('hidden');
+                } else {
+                    alert('Error: ' + (data.message || 'Unknown error'));
+                }
+            } catch (e) {
+                alert('Error sending email: ' + e.message);
+            }
         }
     </script>
 
