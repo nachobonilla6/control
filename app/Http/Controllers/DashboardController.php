@@ -510,13 +510,17 @@ class DashboardController extends Controller
      */
     public function clientsStore(Request $request)
     {
+        // Get all valid status names from database
+        $validStatuses = ClientStatus::pluck('name')->toArray();
+        
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:clients,email',
+            'website' => 'nullable|url|max:255',
             'location' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:50',
             'industry' => 'nullable|string|max:100',
-            'status' => 'required|string|in:queued,sent',
+            'status' => 'required|string|in:' . implode(',', $validStatuses),
             'alpha' => 'nullable|boolean',
         ]);
 
@@ -524,7 +528,7 @@ class DashboardController extends Controller
             $data = $request->all();
             $data['alpha'] = $request->has('alpha') ? 1 : 0;
             Client::create($data);
-            return redirect()->route('dashboard.clients')->with('success', 'Client successfully registered.');
+            return redirect()->route('dashboard.clients.all')->with('success', 'Client successfully registered.');
         } catch (\Exception $e) {
             return back()->withInput()->withErrors(['error' => 'Registration error: ' . $e->getMessage()]);
         }
@@ -535,13 +539,17 @@ class DashboardController extends Controller
      */
     public function clientsUpdate(Request $request, $id)
     {
+        // Get all valid status names from database
+        $validStatuses = ClientStatus::pluck('name')->toArray();
+        
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:clients,email,' . $id,
+            'website' => 'nullable|url|max:255',
             'location' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:50',
             'industry' => 'nullable|string|max:100',
-            'status' => 'required|string|in:queued,sent',
+            'status' => 'required|string|in:' . implode(',', $validStatuses),
             'alpha' => 'nullable|boolean',
         ]);
 
@@ -550,7 +558,7 @@ class DashboardController extends Controller
             $data = $request->all();
             $data['alpha'] = $request->has('alpha') ? 1 : 0;
             $client->update($data);
-            return redirect()->route('dashboard.clients')->with('success', 'Client successfully updated.');
+            return redirect()->route('dashboard.clients.all')->with('success', 'Client successfully updated.');
         } catch (\Exception $e) {
             return back()->withInput()->withErrors(['error' => 'Update error: ' . $e->getMessage()]);
         }
