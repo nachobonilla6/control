@@ -12,6 +12,7 @@ use App\Models\FacebookPost;
 use App\Models\Setting;
 use App\Models\FacebookAccount;
 use App\Models\Template;
+use App\Models\ClientStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -1243,5 +1244,14 @@ class DashboardController extends Controller
     {
         $templates = \App\Models\Template::all(['id', 'name', 'subject', 'body'])->toArray();
         return response()->json($templates);
+    }
+
+    /**
+     * Get all client statuses
+     */
+    public function clientsStatuses()
+    {
+        $statuses = ClientStatus::all(['id', 'name', 'label', 'color'])->toArray();
+        return response()->json($statuses);
     }
 }
