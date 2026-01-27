@@ -123,7 +123,6 @@
                             <tr class="border-b border-slate-800 bg-slate-950">
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Name / Company</th>
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Website</th>
-                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Contact</th>
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Location</th>
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Industry</th>
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Status</th>
@@ -150,9 +149,6 @@
                                     @else
                                         <p class="text-xs font-bold text-slate-600">---</p>
                                     @endif
-                                </td>
-                                <td class="px-8 py-6">
-                                    <p class="text-xs font-bold text-slate-400">{{ $client->phone ?: '---' }}</p>
                                 </td>
                                 <td class="px-8 py-6">
                                     <p class="text-xs font-bold text-slate-400">{{ $client->location ?: '---' }}</p>
@@ -206,7 +202,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="7" class="px-8 py-20 text-center">
+                                <td colspan="6" class="px-8 py-20 text-center">
                                     <p class="text-xs font-black text-slate-700 tracking-[0.3em] italic">No active client records found</p>
                                 </td>
                             </tr>
