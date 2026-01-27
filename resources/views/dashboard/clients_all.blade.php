@@ -558,10 +558,27 @@
                                class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all">
                     </div>
                     <div>
-                        <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Subject</label>
-                        <input type="text" name="subject" id="email_subject" required placeholder="Email subject" 
-                               class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all">
+                        <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Template</label>
+                        <div class="relative">
+                            <select id="email_template" onchange="loadTemplate()" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white appearance-none transition-all cursor-pointer">
+                                <option value="">-- Select Template --</option>
+                                <option value="greeting">Greeting</option>
+                                <option value="proposal">Business Proposal</option>
+                                <option value="followup">Follow Up</option>
+                                <option value="offer">Special Offer</option>
+                                <option value="custom">Custom</option>
+                            </select>
+                            <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </div>
+                        </div>
                     </div>
+                </div>
+
+                <div>
+                    <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Subject</label>
+                    <input type="text" name="subject" id="email_subject" required placeholder="Email subject" 
+                           class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all">
                 </div>
 
                 <div>
@@ -583,11 +600,40 @@
     </div>
 
     <script>
+        const emailTemplates = {
+            greeting: {
+                subject: 'Hello from Josh Dev',
+                message: 'Hello,\n\nI hope this email finds you well. I wanted to reach out and introduce myself.\n\nBest regards,\nJosh Dev'
+            },
+            proposal: {
+                subject: 'Business Proposal',
+                message: 'Hello,\n\nI would like to present a business proposal that could benefit your organization.\n\nI look forward to discussing this opportunity with you.\n\nBest regards,\nJosh Dev'
+            },
+            followup: {
+                subject: 'Following Up',
+                message: 'Hello,\n\nI wanted to follow up on our previous conversation.\n\nPlease let me know if you have any questions or would like to discuss further.\n\nBest regards,\nJosh Dev'
+            },
+            offer: {
+                subject: 'Special Offer for You',
+                message: 'Hello,\n\nWe have a special offer that might interest you.\n\nThis limited-time offer is tailored specifically for your business.\n\nBest regards,\nJosh Dev'
+            }
+        };
+
+        function loadTemplate() {
+            const templateId = document.getElementById('email_template').value;
+            
+            if (templateId && emailTemplates[templateId]) {
+                const template = emailTemplates[templateId];
+                document.getElementById('email_subject').value = template.subject;
+                document.getElementById('email_message').value = template.message;
+            }
+        }
+
         function openEmailModal(clientId, clientName, clientEmail) {
             document.getElementById('emailModalTitle').textContent = 'Send Email to ' + clientName;
             document.getElementById('emailModalSubtitle').textContent = 'Client: ' + clientName;
             document.getElementById('emailTo').value = clientEmail;
-            document.getElementById('emailForm').reset();
+            document.getElementById('email_template').value = '';
             document.getElementById('email_subject').value = '';
             document.getElementById('email_message').value = '';
             document.getElementById('emailForm').onsubmit = async function(e) {
