@@ -310,12 +310,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="flex items-end">
-                            <label class="flex items-center gap-3 px-4 py-3 bg-red-500/10 border border-red-500/30 rounded-xl cursor-pointer hover:bg-red-500/20 transition-all">
-                                <input type="checkbox" name="alpha" id="form_alpha" value="1" class="w-4 h-4 rounded accent-red-500">
-                                <span class="text-[9px] font-black text-red-400 tracking-widest uppercase">Mark as Alpha</span>
-                            </label>
-                        </div>
                     </div>
 
                     <div class="flex items-center space-x-4 pt-0">
@@ -446,7 +440,6 @@
             document.getElementById('form_phone').value = '';
             document.getElementById('form_industry').value = '';
             document.getElementById('form_status').value = '';
-            document.getElementById('form_alpha').checked = false;
             
             document.getElementById('clientModal').classList.remove('hidden');
         }
@@ -465,7 +458,6 @@
             document.getElementById('form_phone').value = client.phone || '';
             document.getElementById('form_industry').value = client.industry || '';
             document.getElementById('form_status').value = client.status || 'queued';
-            document.getElementById('form_alpha').checked = client.alpha == 1 ? true : false;
             
             document.getElementById('clientModal').classList.remove('hidden');
         }
