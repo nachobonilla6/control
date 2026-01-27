@@ -112,6 +112,10 @@
                         <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         Templates
                     </a>
+                    <button onclick="openCreateModal()" class="px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-indigo-600/20 active:scale-95 flex items-center">
+                        <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        New Record
+                    </button>
                     <button onclick="openExtractModal()" class="px-8 py-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-emerald-600/20 active:scale-95 flex items-center">
                         <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         Extract
@@ -428,6 +432,25 @@
     </div>
 
     <script>
+        function openCreateModal() {
+            const form = document.getElementById('clientForm');
+            form.action = "{{ route('dashboard.clients.store') }}";
+            document.getElementById('methodField').innerHTML = '';
+            document.getElementById('modalTitle').innerText = 'New Client';
+            document.getElementById('modalSubtitle').innerText = 'Add a new client to the database';
+            
+            document.getElementById('form_name').value = '';
+            document.getElementById('form_email').value = '';
+            document.getElementById('form_website').value = '';
+            document.getElementById('form_location').value = '';
+            document.getElementById('form_phone').value = '';
+            document.getElementById('form_industry').value = '';
+            document.getElementById('form_status').value = '';
+            document.getElementById('form_alpha').checked = false;
+            
+            document.getElementById('clientModal').classList.remove('hidden');
+        }
+
         function openEditModal(client) {
             const form = document.getElementById('clientForm');
             form.action = `/dashboard/clients/${client.id}`;

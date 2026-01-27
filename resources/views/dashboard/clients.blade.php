@@ -358,8 +358,7 @@
                                 <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Operation Status</label>
                                 <div class="relative">
                                     <select name="status" id="form_status" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white appearance-none transition-all cursor-pointer">
-                                        <option value="queued">QUEUED</option>
-                                        <option value="sent">SENT</option>
+                                        <option value="">-- Select Status --</option>
                                     </select>
                                     <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -398,7 +397,7 @@
             document.getElementById('form_location').value = '';
             document.getElementById('form_phone').value = '';
             document.getElementById('form_industry').value = '';
-            document.getElementById('form_status').value = 'queued';
+            document.getElementById('form_status').value = '';
             document.getElementById('form_alpha').checked = false;
             document.getElementById('magicText').value = '';
 
@@ -536,6 +535,35 @@
             if (!notifDropdown.contains(e.target) && !accountDropdown.contains(e.target)) {
                 closeAllDropdowns();
             }
+        });
+
+        // Load statuses from database
+        let clientStatuses = [];
+        async function loadStatuses() {
+            try {
+                const response = await fetch('{{ route("dashboard.clients.statuses") }}');
+                const data = await response.json();
+                clientStatuses = data;
+                populateStatusSelect();
+            } catch (e) {
+                console.error('Error loading statuses:', e);
+            }
+        }
+
+        function populateStatusSelect() {
+            const select = document.getElementById('form_status');
+            select.innerHTML = '<option value="">-- Select Status --</option>';
+            clientStatuses.forEach(status => {
+                const option = document.createElement('option');
+                option.value = status.name;
+                option.textContent = status.label;
+                select.appendChild(option);
+            });
+        }
+
+        // Load statuses when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            loadStatuses();
         });
 
         fetchNotifs();
