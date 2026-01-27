@@ -140,9 +140,9 @@
                                             </div>
                                         @endif
                                     </td>
-                                    <td class="px-8 py-6 text-[13px] text-slate-300">
+                                    <td class="px-8 py-6 text-[13px] text-slate-300 max-w-xs break-words">
                                         @if($client->website)
-                                            <a href="{{ $client->website }}" target="_blank" class="text-indigo-400 hover:text-indigo-300">{{ $client->website }}</a>
+                                            <a href="{{ $client->website }}" target="_blank" class="text-indigo-400 hover:text-indigo-300 break-all">{{ $client->website }}</a>
                                         @else
                                             <span class="text-slate-500 italic">No website</span>
                                         @endif
