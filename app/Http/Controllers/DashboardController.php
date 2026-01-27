@@ -1235,4 +1235,13 @@ class DashboardController extends Controller
             return back()->withErrors(['error' => 'Error deleting account: ' . $e->getMessage()]);
         }
     }
+
+    /**
+     * Get all templates for email selector
+     */
+    public function clientsTemplates()
+    {
+        $templates = \App\Models\Template::all(['id', 'name', 'subject', 'body'])->toArray();
+        return response()->json($templates);
+    }
 }

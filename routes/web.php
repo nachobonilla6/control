@@ -59,6 +59,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/dashboard/clients/parse', [\App\Http\Controllers\DashboardController::class, 'clientsParse'])->name('dashboard.clients.parse');
     Route::delete('/dashboard/clients/{id}', [\App\Http\Controllers\DashboardController::class, 'clientsDestroy'])->name('dashboard.clients.destroy');
     Route::get('/dashboard/clients/all', [\App\Http\Controllers\DashboardController::class, 'clientsAll'])->name('dashboard.clients.all');
+    Route::get('/dashboard/clients/templates', [\App\Http\Controllers\DashboardController::class, 'clientsTemplates'])->name('dashboard.clients.templates');
 
     // Templates
     Route::get('/dashboard/templates', [\App\Http\Controllers\DashboardController::class, 'templatesIndex'])->name('dashboard.templates');
