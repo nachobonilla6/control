@@ -146,10 +146,10 @@
                                     </td>
                                     <td class="px-8 py-6 text-[13px] text-slate-400">{{ $client->created_at->format('Y-m-d H:i') }}</td>
                                     <td class="px-8 py-6 flex items-center space-x-3">
-                                        <a href="{{ route('dashboard.clients.edit', $client->id) }}" class="p-2 text-slate-400 hover:text-indigo-400 transition-colors" title="Edit">
+                                        <button onclick="openEditModal({{ json_encode($client) }})" class="p-2 text-slate-400 hover:text-indigo-400 transition-colors" title="Edit">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                        </a>
-                                        <button onclick="if(confirm('¿Eliminar este cliente?')) { document.getElementById('deleteForm{{ $client->id }}').submit(); }" class="p-2 text-slate-400 hover:text-red-500 transition-colors" title="Delete">
+                                        </button>
+                                        <button onclick="if(confirm('Delete client from system?')) { document.getElementById('deleteForm{{ $client->id }}').submit(); }" class="p-2 text-slate-400 hover:text-red-500 transition-colors" title="Delete">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                         </button>
                                         <form id="deleteForm{{ $client->id }}" action="{{ route('dashboard.clients.destroy', $client->id) }}" method="POST" style="display:none;">
@@ -172,6 +172,82 @@
                     {{ $clients->links() }}
                 </div>
                 <!-- Extract button moved to top next to Back -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Client Edit Modal -->
+    <div id="clientModal" class="fixed inset-0 z-50 hidden bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-4xl rounded-[2.5rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
+            <div class="flex justify-between items-start mb-6">
+                <div>
+                    <h2 id="modalTitle" class="text-2xl font-black text-white italic tracking-tighter mb-0.5">Edit Client</h2>
+                    <p id="modalSubtitle" class="text-[8px] font-bold text-slate-500 tracking-widest leading-none">Update client information</p>
+                </div>
+                <button onclick="document.getElementById('clientModal').classList.add('hidden')" class="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-xl text-slate-600 hover:text-white transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </div>
+
+            <div id="formContainer" class="lg:col-span-full">
+                <form id="clientForm" action="/dashboard/clients" method="POST" class="space-y-4">
+                    @csrf
+                    <div id="methodField"></div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Full Name / Company</label>
+                            <input type="text" name="name" id="form_name" required placeholder="e.g. Tech Solutions S.A." 
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Contact Email</label>
+                            <input type="email" name="email" id="form_email" required placeholder="client@example.com" 
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Location</label>
+                            <input type="text" name="location" id="form_location" placeholder="City, Country" 
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Phone</label>
+                            <input type="text" name="phone" id="form_phone" placeholder="+00 0000-0000" 
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Industry / Sector</label>
+                            <input type="text" name="industry" id="form_industry" placeholder="e.g. Automotive" 
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Operation Status</label>
+                            <div class="relative">
+                                <select name="status" id="form_status" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white appearance-none transition-all cursor-pointer">
+                                    <option value="queued">QUEUED</option>
+                                    <option value="sent">SENT</option>
+                                </select>
+                                <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-end">
+                            <label class="flex items-center gap-3 px-4 py-3 bg-red-500/10 border border-red-500/30 rounded-xl cursor-pointer hover:bg-red-500/20 transition-all">
+                                <input type="checkbox" name="alpha" id="form_alpha" value="1" class="w-4 h-4 rounded accent-red-500">
+                                <span class="text-[9px] font-black text-red-400 tracking-widest uppercase">Mark as Alpha</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center space-x-4 pt-0">
+                        <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-black py-4 rounded-2xl shadow-2xl shadow-indigo-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em]">
+                            Update Record
+                        </button>
+                        <button type="button" onclick="document.getElementById('clientModal').classList.add('hidden')" class="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -277,6 +353,24 @@
     </div>
 
     <script>
+        function openEditModal(client) {
+            const form = document.getElementById('clientForm');
+            form.action = `/dashboard/clients/${client.id}`;
+            document.getElementById('methodField').innerHTML = '<input type="hidden" name="_method" value="PATCH">';
+            document.getElementById('modalTitle').innerText = 'Edit Client';
+            document.getElementById('modalSubtitle').innerText = 'Updating: ' + client.name + ' • Status: ' + (client.status || 'queued').toUpperCase();
+            
+            document.getElementById('form_name').value = client.name;
+            document.getElementById('form_email').value = client.email;
+            document.getElementById('form_location').value = client.location || '';
+            document.getElementById('form_phone').value = client.phone || '';
+            document.getElementById('form_industry').value = client.industry || '';
+            document.getElementById('form_status').value = client.status || 'queued';
+            document.getElementById('form_alpha').checked = client.alpha == 1 ? true : false;
+            
+            document.getElementById('clientModal').classList.remove('hidden');
+        }
+
         // Country data by language
         const countryData = {
             english: {
