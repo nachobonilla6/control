@@ -583,10 +583,6 @@
             </form>
         </div>
     </div>
-    </script>
-                </div>
-            </div>
-        </div>
-    </div>
+
 </body>
 </html>
