@@ -165,7 +165,7 @@
                                 </td>
                                 <td class="px-8 py-6 text-right">
                                     <div class="flex items-center justify-end space-x-2">
-                                        <button 
+                                        <button type="button"
                                             onclick="openEmailModal({{ json_encode($client) }})"
                                             class="w-9 h-9 flex items-center justify-center bg-emerald-600/10 text-emerald-400 rounded-xl hover:bg-emerald-600 hover:text-white transition-all border border-emerald-500/10"
                                             title="Send Email">
