@@ -199,7 +199,6 @@
                         <thead>
                             <tr class="border-b border-slate-800 bg-slate-950">
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Name / Company</th>
-                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Contact</th>
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Location</th>
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Industry</th>
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Status</th>
@@ -219,9 +218,6 @@
                                             <p class="text-[9px] font-medium text-slate-500 lowercase">{{ $client->email }}</p>
                                         </div>
                                     </div>
-                                </td>
-                                <td class="px-8 py-6">
-                                    <p class="text-xs font-bold text-slate-400">{{ $client->phone ?: '---' }}</p>
                                 </td>
                                 <td class="px-8 py-6">
                                     <p class="text-xs font-bold text-slate-400">{{ $client->location ?: '---' }}</p>
