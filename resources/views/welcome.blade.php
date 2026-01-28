@@ -212,60 +212,36 @@
                 <p class="text-5xl font-black text-white uppercase italic tracking-tighter">Proyectos <br> Destacados</p>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 @forelse($projects ?? [] as $project)
                 @php
                     $imgs = is_array($project->images) ? $project->images : json_decode($project->images, true);
                     if (!is_array($imgs)) $imgs = [];
                     $firstImg = count($imgs) > 0 ? $imgs[0] : null;
                 @endphp
-                    @if($loop->first)
-                    <!-- First project - Large featured -->
-                    <a href="{{ route('projects.show', $project->id) }}" class="lg:col-span-2 lg:row-span-2 group relative glass rounded-[2.5rem] overflow-hidden hover:border-indigo-500/50 transition-all hover:scale-[1.02]">
-                        @if($firstImg)
-                        <img src="{{ asset($firstImg) }}" alt="{{ $project->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
-                        @else
-                        <div class="w-full h-full bg-gradient-to-br from-indigo-600 to-indigo-900 flex items-center justify-center">
-                            <svg class="w-20 h-20 text-indigo-400 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        </div>
-                        @endif
-                        <div class="absolute inset-0 bg-gradient-to-t from-brand-dark via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                            <h3 class="text-2xl font-black text-white mb-2 line-clamp-2">{{ $project->name }}</h3>
-                            <p class="text-sm font-medium text-slate-300 line-clamp-3">{{ $project->description ?? 'Proyecto destacado' }}</p>
+                    <!-- Project Card -->
+                    <div class="group">
+                        <a href="{{ route('projects.show', $project->id) }}" class="block relative glass rounded-[2.5rem] overflow-hidden hover:border-indigo-500/50 transition-all hover:scale-[1.02] mb-4">
+                            @if($firstImg)
+                            <img src="{{ asset($firstImg) }}" alt="{{ $project->name }}" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300">
+                            @else
+                            <div class="w-full h-64 bg-gradient-to-br from-indigo-600 to-indigo-900 flex items-center justify-center">
+                                <svg class="w-20 h-20 text-indigo-400 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </div>
+                            @endif
+                        </a>
+                        <div class="px-2">
+                            <h3 class="text-lg font-black text-white mb-2 group-hover:text-indigo-400 transition-colors">{{ $project->name }}</h3>
+                            <p class="text-sm font-medium text-slate-300 line-clamp-2 mb-3">{{ $project->description ?? 'Proyecto destacado' }}</p>
                             @if($project->integrations)
-                            <div class="flex flex-wrap gap-2 mt-4">
+                            <div class="flex flex-wrap gap-2">
                                 @foreach($project->integrations as $integration)
                                 <span class="px-2 py-1 bg-indigo-600/30 text-[9px] font-bold text-indigo-300 rounded">{{ $integration }}</span>
                                 @endforeach
                             </div>
                             @endif
                         </div>
-                    </a>
-                    @else
-                    <!-- Other projects - Small grid -->
-                    <a href="{{ route('projects.show', $project->id) }}" class="group relative glass rounded-[2.5rem] overflow-hidden hover:border-indigo-500/50 transition-all hover:scale-[1.02]">
-                        @if($firstImg)
-                        <img src="{{ asset($firstImg) }}" alt="{{ $project->name }}" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300">
-                        @else
-                        <div class="w-full h-48 bg-gradient-to-br from-indigo-600 to-indigo-900 flex items-center justify-center">
-                            <svg class="w-16 h-16 text-indigo-400 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        </div>
-                        @endif
-                        <div class="absolute inset-0 bg-gradient-to-t from-brand-dark via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-5 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                            <h3 class="text-lg font-black text-white mb-1 line-clamp-2">{{ $project->name }}</h3>
-                            <p class="text-xs font-medium text-slate-300 line-clamp-1">{{ $project->description ?? 'Proyecto' }}</p>
-                            @if($project->integrations)
-                            <div class="flex flex-wrap gap-1 mt-2">
-                                @foreach($project->integrations as $integration)
-                                <span class="px-1.5 py-0.5 bg-indigo-600/30 text-[8px] font-bold text-indigo-300 rounded">{{ $integration }}</span>
-                                @endforeach
-                            </div>
-                            @endif
-                        </div>
-                    </a>
-                    @endif
+                    </div>
                 @empty
                 <div class="col-span-full text-center py-12">
                     <p class="text-slate-500 text-sm">No hay proyectos disponibles en este momento.</p>
