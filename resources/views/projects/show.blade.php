@@ -39,7 +39,7 @@
     <!-- Premium Nav -->
     <nav class="fixed top-0 inset-x-0 z-50 px-6 py-6 transition-all duration-500" id="mainNav">
         <div class="max-w-7xl mx-auto flex items-center justify-between pointer-events-none">
-            <a href="{{ route('dashboard.projects') }}" class="pointer-events-auto group flex items-center space-x-4 bg-white/5 hover:bg-white/10 px-5 py-2.5 rounded-full border border-white/10 backdrop-blur-md transition-all">
+            <a href="/" class="pointer-events-auto group flex items-center space-x-4 bg-white/5 hover:bg-white/10 px-5 py-2.5 rounded-full border border-white/10 backdrop-blur-md transition-all">
                 <svg class="w-4 h-4 text-indigo-400 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 <span class="text-[10px] font-black uppercase tracking-widest text-white">Volver</span>
             </a>

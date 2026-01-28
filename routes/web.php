@@ -9,6 +9,8 @@ Route::get('/', function () {
     return view('welcome', compact('projects'));
 });
 
+Route::get('/projects/{id}', [\App\Http\Controllers\DashboardController::class, 'projectsShow'])->name('projects.show');
+
 Route::get('/login', function () {
     if (Auth::check()) {
         return redirect()->route('dashboard');
@@ -49,7 +51,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/dashboard/projects', [\App\Http\Controllers\DashboardController::class, 'projectsStore'])->name('dashboard.projects.store');
     Route::patch('/dashboard/projects/{id}', [\App\Http\Controllers\DashboardController::class, 'projectsUpdate'])->name('dashboard.projects.update');
     Route::delete('/dashboard/projects/{id}', [\App\Http\Controllers\DashboardController::class, 'projectsDestroy'])->name('dashboard.projects.destroy');
-    Route::get('/projects/{id}', [\App\Http\Controllers\DashboardController::class, 'projectsShow'])->name('projects.show');
     
     // Clients
     Route::get('/dashboard/clients', [\App\Http\Controllers\DashboardController::class, 'clientsIndex'])->name('dashboard.clients');
