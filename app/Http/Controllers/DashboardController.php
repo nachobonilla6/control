@@ -714,7 +714,7 @@ class DashboardController extends Controller
     {
         try {
             Client::findOrFail($id)->delete();
-            return redirect()->route('dashboard.clients.all')->with('success', 'Cliente eliminado del sistema.');
+            return back()->with('success', 'Cliente eliminado del sistema.');
         } catch (\Exception $e) {
             return back()->withErrors(['error' => 'Error al eliminar: ' . $e->getMessage()]);
         }
