@@ -564,7 +564,7 @@ class DashboardController extends Controller
             $data = $request->all();
             $data['alpha'] = $request->has('alpha') ? 1 : 0;
             Client::create($data);
-            return redirect()->route('dashboard.clients.all')->with('success', 'Client successfully registered.');
+            return back()->with('success', 'Client successfully registered.');
         } catch (\Exception $e) {
             return back()->withInput()->withErrors(['error' => 'Registration error: ' . $e->getMessage()]);
         }
