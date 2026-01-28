@@ -106,7 +106,11 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @foreach($categories as $category)
+                @if(isset($category['isExternal']) && $category['isExternal'])
+                <a href="{{ $category['url'] }}" target="_blank" rel="noopener noreferrer" class="group relative bg-slate-900 border border-slate-800 rounded-3xl p-8 transition-all duration-300 hover:scale-[1.03] hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/10 active:scale-100">
+                @else
                 <a href="{{ route($category['route']) }}" class="group relative bg-slate-900 border border-slate-800 rounded-3xl p-8 transition-all duration-300 hover:scale-[1.03] hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/10 active:scale-100">
+                @endif
                     <div class="absolute -right-10 -top-10 w-40 h-40 bg-indigo-600/5 blur-[60px] group-hover:bg-indigo-600/15 transition-all"></div>
                     
                     <div class="w-16 h-16 rounded-2xl bg-indigo-500/10 flex items-center justify-center text-3xl mb-6 border border-indigo-500/20">
@@ -117,7 +121,7 @@
                     <p class="text-slate-400 leading-relaxed mb-6">{{ $category['description'] }}</p>
 
                     <div class="flex items-center text-indigo-400 font-bold text-xs uppercase tracking-widest">
-                        Configure
+                        {{ isset($category['isExternal']) && $category['isExternal'] ? 'Open' : 'Configure' }}
                         <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </div>
                 </a>

@@ -56,11 +56,12 @@ class DashboardController extends Controller
                 'route' => 'dashboard.clients',
             ],
             [
-                'id' => 'courses',
-                'name' => 'Courses',
-                'description' => 'Track your learning journey and academic goals.',
-                'icon' => '🎓',
-                'route' => 'dashboard.courses',
+                'id' => 'emails',
+                'name' => 'Emails',
+                'description' => 'Access your Zoho Mail inbox and manage emails.',
+                'icon' => '📧',
+                'url' => 'https://mail.zoho.com/zm/#mail/folder/inbox',
+                'isExternal' => true,
             ],
             [
                 'id' => 'facebook',
