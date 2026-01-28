@@ -256,55 +256,98 @@
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-indigo-600/5 blur-[120px] rounded-full pointer-events-none"></div>
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-20 text-balance">
-                <h2 class="text-[10px] font-black text-white bg-indigo-600 inline-block px-3 py-1 rounded-md uppercase tracking-[0.4em] mb-6">Inversión</h2>
+                <h2 class="text-[10px] font-black text-white bg-indigo-600 inline-block px-3 py-1 rounded-md uppercase tracking-[0.4em] mb-6">🤖 Planes de Automatización con IA</h2>
                 <p class="text-5xl font-black text-white uppercase italic tracking-tighter">Planes que <br> escalan contigo</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Plan 1 -->
-                <div class="glass p-10 rounded-[3rem] border-white/5 hover:bg-white/[0.05] transition-all flex flex-col items-center group">
-                    <h4 class="text-xs font-black text-slate-500 uppercase tracking-widest mb-8">Starter</h4>
-                    <div class="flex items-baseline space-x-1 mb-8">
-                        <span class="text-xl font-bold text-white tracking-tighter italic">$</span>
-                        <span class="text-6xl font-black text-white italic tracking-tighter">49</span>
-                        <span class="text-xs font-bold text-slate-500 uppercase">/mes</span>
+                <!-- Plan 1: Starter -->
+                <div class="glass p-10 rounded-[3rem] border-white/5 hover:bg-white/[0.05] transition-all flex flex-col group">
+                    <h4 class="text-xl font-black text-white mb-2 uppercase tracking-wider">Starter</h4>
+                    <p class="text-sm text-slate-400 mb-6">Para negocios pequeños.</p>
+                    
+                    <div class="mb-8 pb-8 border-b border-white/10">
+                        <div class="flex items-baseline space-x-1 mb-2">
+                            <span class="text-xs font-bold text-slate-500">Setup:</span>
+                            <span class="text-2xl font-black text-indigo-400">$200</span>
+                        </div>
+                        <div class="flex items-baseline space-x-1">
+                            <span class="text-xs font-bold text-slate-500">Mensual:</span>
+                            <span class="text-2xl font-black text-indigo-400">$79</span>
+                        </div>
                     </div>
-                    <ul class="w-full space-y-4 mb-12 text-sm text-slate-400 font-medium border-y border-white/5 py-8">
-                        <li class="flex items-center justify-between"><span>1 Bot Activo</span> <svg class="w-4 h-4 text-indigo-500" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l5-5z"/></svg></li>
-                        <li class="flex items-center justify-between"><span>1,000 Mensajes</span> <svg class="w-4 h-4 text-indigo-500" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l5-5z"/></svg></li>
-                        <li class="flex items-center justify-between opacity-30 italic"><span>Soporte Prioritario</span> <span>X</span></li>
+
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Incluye:</p>
+                    <ul class="space-y-3 mb-10 flex-1 text-sm text-slate-300">
+                        <li class="flex items-start"><span class="text-indigo-400 mr-3 font-bold">•</span> <span>Agente IA en WhatsApp</span></li>
+                        <li class="flex items-start"><span class="text-indigo-400 mr-3 font-bold">•</span> <span>Automatizaciones básicas</span></li>
+                        <li class="flex items-start"><span class="text-indigo-400 mr-3 font-bold">•</span> <span>Respuestas automáticas + FAQ</span></li>
+                        <li class="flex items-start"><span class="text-indigo-400 mr-3 font-bold">•</span> <span>Captura simple de leads</span></li>
+                        <li class="flex items-start"><span class="text-indigo-400 mr-3 font-bold">•</span> <span>Almacenamiento en base de datos</span></li>
+                        <li class="flex items-start"><span class="text-indigo-400 mr-3 font-bold">•</span> <span>Hasta 1,000 mensajes</span></li>
+                        <li class="flex items-start"><span class="text-indigo-400 mr-3 font-bold">•</span> <span>Soporte estándar</span></li>
                     </ul>
-                    <a href="https://wa.me/your-number" class="w-full py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black uppercase text-[10px] tracking-widest hover:bg-white hover:text-brand-dark transition-all text-center">Seleccionar</a>
+                    <a href="https://wa.me/your-number" class="w-full py-3 rounded-2xl bg-indigo-600/20 hover:bg-indigo-600 text-indigo-400 hover:text-white font-black uppercase text-[10px] tracking-widest transition-all text-center">Seleccionar Plan</a>
                 </div>
 
-                <!-- Plan 2 (Popular) -->
-                <div class="glass p-12 rounded-[3.5rem] border-indigo-500/30 scale-105 bg-indigo-600/5 relative flex flex-col items-center group overflow-hidden shadow-2xl">
-                    <div class="absolute top-0 right-0 bg-indigo-600 text-[8px] font-black text-white px-4 py-1.5 rounded-bl-2xl uppercase tracking-widest">Más Popular</div>
-                    <h4 class="text-xs font-black text-indigo-400 uppercase tracking-widest mb-8">Business Pro</h4>
-                    <div class="flex items-baseline space-x-1 mb-8 text-indigo-400">
-                        <span class="text-xl font-bold tracking-tighter italic">$</span>
-                        <span class="text-6xl font-black italic tracking-tighter">149</span>
-                        <span class="text-xs font-bold uppercase">/mes</span>
+                <!-- Plan 2: Business (Popular) -->
+                <div class="glass p-12 rounded-[3.5rem] border-indigo-500/30 scale-105 bg-indigo-600/5 relative flex flex-col group overflow-hidden shadow-2xl">
+                    <div class="absolute top-0 right-0 bg-indigo-600 text-[8px] font-black text-white px-4 py-1.5 rounded-bl-2xl uppercase tracking-widest">⭐ Más Popular</div>
+                    <h4 class="text-xl font-black text-indigo-300 mb-2 uppercase tracking-wider">Business</h4>
+                    <p class="text-sm text-slate-300 mb-6">Para empresas activas.</p>
+                    
+                    <div class="mb-8 pb-8 border-b border-indigo-500/20">
+                        <div class="flex items-baseline space-x-1 mb-2">
+                            <span class="text-xs font-bold text-slate-400">Setup:</span>
+                            <span class="text-2xl font-black text-indigo-300">$350</span>
+                        </div>
+                        <div class="flex items-baseline space-x-1">
+                            <span class="text-xs font-bold text-slate-400">Mensual:</span>
+                            <span class="text-2xl font-black text-indigo-300">$129</span>
+                        </div>
                     </div>
-                    <ul class="w-full space-y-4 mb-12 text-sm text-slate-300 font-medium border-y border-indigo-500/20 py-8 italic">
-                        <li class="flex items-center justify-between"><span>5 Bots Activos</span> <svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l5-5z"/></svg></li>
-                        <li class="flex items-center justify-between text-indigo-200"><span>Ilimitado Mensajes</span> <svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l5-5z"/></svg></li>
-                        <li class="flex items-center justify-between"><span>Soporte Prioritario</span> <svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l5-5z"/></svg></li>
+
+                    <p class="text-xs font-bold text-indigo-300 uppercase tracking-widest mb-4">Incluye:</p>
+                    <ul class="space-y-3 mb-10 flex-1 text-sm text-slate-200">
+                        <li class="flex items-start"><span class="text-emerald-400 mr-3 font-bold">•</span> <span>Automatizaciones avanzadas</span></li>
+                        <li class="flex items-start"><span class="text-emerald-400 mr-3 font-bold">•</span> <span>Extracción y enriquecimiento de leads</span></li>
+                        <li class="flex items-start"><span class="text-emerald-400 mr-3 font-bold">•</span> <span>Integración con base de datos</span></li>
+                        <li class="flex items-start"><span class="text-emerald-400 mr-3 font-bold">•</span> <span>Agendado automático de citas</span></li>
+                        <li class="flex items-start"><span class="text-emerald-400 mr-3 font-bold">•</span> <span>Webhooks + Facebook</span></li>
+                        <li class="flex items-start"><span class="text-emerald-400 mr-3 font-bold">•</span> <span>Mensajes ilimitados</span></li>
+                        <li class="flex items-start"><span class="text-emerald-400 mr-3 font-bold">•</span> <span>Soporte prioritario</span></li>
                     </ul>
-                    <a href="https://wa.me/your-number" class="w-full py-5 rounded-3xl bg-indigo-600 text-white font-black uppercase text-[11px] tracking-widest hover:bg-indigo-50 transition-all shadow-xl shadow-indigo-600/30 text-center">Adquirir Pro</a>
+                    <a href="https://wa.me/your-number" class="w-full py-4 rounded-3xl bg-indigo-600 hover:bg-indigo-500 text-white font-black uppercase text-[11px] tracking-widest transition-all shadow-xl shadow-indigo-600/30 text-center">Adquirir Business</a>
                 </div>
 
-                <!-- Plan 3 -->
-                <div class="glass p-10 rounded-[3rem] border-white/5 hover:bg-white/[0.05] transition-all flex flex-col items-center group">
-                    <h4 class="text-xs font-black text-slate-500 uppercase tracking-widest mb-8">Enterprise</h4>
-                    <div class="flex items-baseline space-y-0 mb-8">
-                        <span class="text-4xl font-black text-white italic tracking-tighter">CUSTOM</span>
+                <!-- Plan 3: Pro Automation -->
+                <div class="glass p-10 rounded-[3rem] border-white/5 hover:bg-white/[0.05] transition-all flex flex-col group">
+                    <h4 class="text-xl font-black text-white mb-2 uppercase tracking-wider">Pro Automation</h4>
+                    <p class="text-sm text-slate-400 mb-6">Para operación seria.</p>
+                    
+                    <div class="mb-8 pb-8 border-b border-white/10">
+                        <div class="flex items-baseline space-x-1 mb-2">
+                            <span class="text-xs font-bold text-slate-500">Setup:</span>
+                            <span class="text-2xl font-black text-indigo-400">$600</span>
+                        </div>
+                        <div class="flex items-baseline space-x-1">
+                            <span class="text-xs font-bold text-slate-500">Mensual:</span>
+                            <span class="text-2xl font-black text-indigo-400">$199</span>
+                        </div>
                     </div>
-                    <ul class="w-full space-y-4 mb-12 text-sm text-slate-400 font-medium border-y border-white/5 py-8">
-                        <li class="flex items-center justify-between"><span>Bots Personalizados</span> <svg class="w-4 h-4 text-indigo-500" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l5-5z"/></svg></li>
-                        <li class="flex items-center justify-between"><span>Infraestructura Dedicada</span> <svg class="w-4 h-4 text-indigo-500" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l5-5z"/></svg></li>
+
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Incluye:</p>
+                    <ul class="space-y-3 mb-10 flex-1 text-sm text-slate-300">
+                        <li class="flex items-start"><span class="text-indigo-400 mr-3 font-bold">•</span> <span>Múltiples agentes IA</span></li>
+                        <li class="flex items-start"><span class="text-indigo-400 mr-3 font-bold">•</span> <span>Automatización completa del negocio</span></li>
+                        <li class="flex items-start"><span class="text-indigo-400 mr-3 font-bold">•</span> <span>Pipelines tipo CRM</span></li>
+                        <li class="flex items-start"><span class="text-indigo-400 mr-3 font-bold">•</span> <span>Secuencias Email + WhatsApp</span></li>
+                        <li class="flex items-start"><span class="text-indigo-400 mr-3 font-bold">•</span> <span>Google Calendar</span></li>
+                        <li class="flex items-start"><span class="text-indigo-400 mr-3 font-bold">•</span> <span>Publicación automática en Facebook</span></li>
+                        <li class="flex items-start"><span class="text-indigo-400 mr-3 font-bold">•</span> <span>Lógica personalizada</span></li>
+                        <li class="flex items-start"><span class="text-indigo-400 mr-3 font-bold">•</span> <span>Flujos dedicados</span></li>
                     </ul>
-                    <a href="https://wa.me/your-number" class="w-full py-4 rounded-2xl bg-white text-brand-dark font-black uppercase text-[10px] tracking-widest hover:bg-indigo-50 transition-all text-center">Consultar</a>
+                    <a href="https://wa.me/your-number" class="w-full py-3 rounded-2xl bg-white text-brand-dark font-black uppercase text-[10px] tracking-widest hover:bg-slate-100 transition-all text-center">Contactar Ventas</a>
                 </div>
             </div>
         </div>
