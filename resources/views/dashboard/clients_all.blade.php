@@ -213,7 +213,7 @@
                                 <td class="px-8 py-6 text-right">
                                     <div class="flex items-center justify-end space-x-2">
                                         <button type="button"
-                                            onclick="openEmailModal({{ $client->id }}, '{{ addslashes($client->name) }}', '{{ $client->email }}')"
+                                            onclick="openEmailModal({{ $client->id }}, '{{ addslashes($client->name) }}', '{{ $client->email }}', '{{ $client->email2 }}')"
                                             class="w-9 h-9 flex items-center justify-center bg-emerald-600/10 text-emerald-400 rounded-xl hover:bg-emerald-600 hover:text-white transition-all border border-emerald-500/10"
                                             title="Send Email">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -673,8 +673,14 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Recipient Email</label>
-                        <input type="email" id="emailTo" readonly 
-                               class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all">
+                        <div class="relative">
+                            <select id="emailTo" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white appearance-none transition-all cursor-pointer">
+                                <option value="">-- Select Email --</option>
+                            </select>
+                            <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </div>
+                        </div>
                     </div>
                     <div>
                         <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Template</label>
@@ -785,16 +791,42 @@
             loadStatuses();
         });
 
-        function openEmailModal(clientId, clientName, clientEmail) {
+        function openEmailModal(clientId, clientName, clientEmail, clientEmail2) {
             document.getElementById('emailModalTitle').textContent = 'Send Email to ' + clientName;
             document.getElementById('emailModalSubtitle').textContent = 'Client: ' + clientName;
-            document.getElementById('emailTo').value = clientEmail;
+            
+            // Populate email dropdown
+            const emailSelect = document.getElementById('emailTo');
+            emailSelect.innerHTML = '<option value="">-- Select Email --</option>';
+            
+            // Add primary email
+            if (clientEmail) {
+                const option1 = document.createElement('option');
+                option1.value = clientEmail;
+                option1.textContent = clientEmail + ' (Primary)';
+                emailSelect.appendChild(option1);
+            }
+            
+            // Add secondary email if it exists
+            if (clientEmail2) {
+                const option2 = document.createElement('option');
+                option2.value = clientEmail2;
+                option2.textContent = clientEmail2 + ' (Secondary)';
+                emailSelect.appendChild(option2);
+            }
+            
+            // Set primary email as default
+            if (clientEmail) {
+                emailSelect.value = clientEmail;
+            }
+            
             document.getElementById('email_template').value = '';
             document.getElementById('email_subject').value = '';
             document.getElementById('email_message').value = '';
             document.getElementById('emailForm').onsubmit = async function(e) {
                 e.preventDefault();
-                await sendEmailViaWebhook(clientId, clientEmail);
+                const selectedEmail = document.getElementById('emailTo').value;
+                await sendEmailViaWebhook(clientId, selectedEmail);
             };
             document.getElementById('emailModal').classList.remove('hidden');
         }
