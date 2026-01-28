@@ -304,21 +304,21 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                <!-- Magic Paste AI Section -->
-                <div id="aiSection" class="lg:col-span-3 bg-indigo-600/5 border border-indigo-500/20 rounded-3xl p-5 relative overflow-hidden group h-full">
-                    <div class="absolute -right-4 -top-4 w-20 h-20 bg-indigo-500/10 blur-2xl rounded-full"></div>
-                    <label class="block text-[9px] font-black text-indigo-400 tracking-[0.2em] mb-4 uppercase flex items-center">
-                        <svg class="w-3 h-3 mr-2 animate-pulse" fill="currentColor" viewBox="0 0 20 20"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM14 11a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1h-1a1 1 0 110-2h1v-1a1 1 0 011-1z"/></svg>
-                        Magic Paste (AI Extractor)
+                <!-- Quick Queue Section -->
+                <div id="aiSection" class="lg:col-span-3 bg-blue-600/5 border border-blue-500/20 rounded-3xl p-5 relative overflow-hidden group h-full">
+                    <div class="absolute -right-4 -top-4 w-20 h-20 bg-blue-500/10 blur-2xl rounded-full"></div>
+                    <label class="block text-[9px] font-black text-blue-400 tracking-[0.2em] mb-4 uppercase flex items-center">
+                        <svg class="w-3 h-3 mr-2 animate-pulse" fill="currentColor" viewBox="0 0 24 24"><path d="M5 5h14v2H5V5zm0 6h14v2H5v-2zm0 6h14v2H5v-2z" fill="currentColor"/></svg>
+                        Queue Quick Add
                     </label>
-                    <textarea id="magicText" rows="4" placeholder="Paste email signature or client info here..." 
-                              class="w-full bg-slate-950/50 border border-slate-800 rounded-2xl px-4 py-3 text-[11px] text-slate-300 focus:outline-none focus:border-indigo-500/50 transition-all resize-none mb-4 placeholder:text-slate-700 h-32"></textarea>
-                    <button type="button" onclick="parseMagicText()" id="magicBtn" class="w-full py-3 bg-indigo-600/20 hover:bg-indigo-600 text-indigo-400 hover:text-white rounded-xl text-[9px] font-black tracking-widest uppercase transition-all flex items-center justify-center">
-                        <span>Auto-Sync Data</span>
+                    <textarea id="magicText" rows="4" placeholder="Paste multiple clients info here..." 
+                              class="w-full bg-slate-950/50 border border-slate-800 rounded-2xl px-4 py-3 text-[11px] text-slate-300 focus:outline-none focus:border-blue-500/50 transition-all resize-none mb-4 placeholder:text-slate-700 h-32"></textarea>
+                    <button type="button" onclick="parseMagicText()" id="magicBtn" class="w-full py-3 bg-blue-600/20 hover:bg-blue-600 text-blue-400 hover:text-white rounded-xl text-[9px] font-black tracking-widest uppercase transition-all flex items-center justify-center">
+                        <span>Queue Clients</span>
                     </button>
                     <div class="mt-6">
                         <p class="text-[8px] font-bold text-slate-600 uppercase tracking-[0.2em] leading-relaxed">
-                            Automatically process names, emails, and phones using pattern recognition algorithms.
+                            Quickly add multiple clients to the queue for email processing.
                         </p>
                     </div>
                 </div>
