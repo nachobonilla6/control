@@ -237,7 +237,7 @@
                 <h3 class="heading-font text-3xl font-bold text-white mb-6 uppercase tracking-tighter italic">¿Interesado en esta tecnología?</h3>
                 <p class="text-slate-500 text-sm mb-12 font-medium">Este proyecto está disponible para auditoría técnica o demostración funcional bajo demanda.</p>
                 <div class="flex flex-col md:flex-row items-center justify-center gap-6">
-                    <a href="{{ route('dashboard.projects') }}" class="w-full md:w-auto px-10 py-5 bg-indigo-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] hover:bg-indigo-500 transition-all shadow-2xl active:scale-95">
+                    <a href="javascript:history.back()" class="w-full md:w-auto px-10 py-5 bg-indigo-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] hover:bg-indigo-500 transition-all shadow-2xl active:scale-95">
                         Volver al Sistema
                     </a>
                     <button onclick="window.print()" class="w-full md:w-auto px-10 py-5 bg-white/5 text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] border border-white/10 hover:bg-white/10 transition-all">
