@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 Route::get('/', function () {
-    return view('welcome');
+    $projects = \App\Models\Project::orderBy('created_at', 'desc')->limit(6)->get();
+    return view('welcome', compact('projects'));
 });
 
 Route::get('/login', function () {
