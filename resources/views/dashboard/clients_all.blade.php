@@ -104,10 +104,10 @@
                     <p class="text-[10px] font-bold text-slate-500 tracking-[0.3em] mt-2">Complete client database</p>
                 </div>
                 <div class="flex gap-4">
-                    <button onclick="queueAllClients()" class="px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all border border-blue-500/20 active:scale-95 flex items-center shadow-2xl shadow-blue-600/20">
+                    <a href="{{ route('dashboard.clients') }}" class="px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all border border-blue-500/20 active:scale-95 flex items-center shadow-2xl shadow-blue-600/20">
                         <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 5v14m7-7H5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         Queue
-                    </button>
+                    </a>
                     <a href="{{ route('dashboard.templates') }}" class="px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-indigo-600/20 active:scale-95 flex items-center">
                         <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         Templates
@@ -562,30 +562,6 @@
             document.getElementById('extract_city').value = '';
             document.getElementById('extract_industry').value = '';
             document.getElementById('extractModal').classList.remove('hidden');
-        }
-
-        async function queueAllClients() {
-            if (!confirm('Queue all visible clients? This will set their status to "queued"')) {
-                return;
-            }
-
-            try {
-                const response = await fetch('{{ route("dashboard.clients.all") }}', {
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to fetch clients');
-                }
-
-                alert('All visible clients have been queued for processing!');
-                location.reload();
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Error queuing clients: ' + error.message);
-            }
         }
 
         document.getElementById('extract_language').addEventListener('change', function() {
