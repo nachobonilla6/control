@@ -89,10 +89,10 @@
                 <a href="https://wa.me/your-number" class="w-full sm:w-auto bg-gradient-to-r from-indigo-600 to-indigo-700 text-white px-10 py-5 rounded-2xl font-black text-lg shadow-[0_0_30px_rgba(79,70,229,0.3)] hover:shadow-[0_0_50px_rgba(79,70,229,0.5)] transition-all hover:-translate-y-1">
                     ASESORÍA GRATUITA
                 </a>
-                <button class="w-full sm:w-auto glass text-white px-10 py-5 rounded-2xl font-bold flex items-center justify-center space-x-3 hover:bg-white/5 transition-all">
+                <a href="https://www.youtube.com/watch?v=5T4LWdYPJhw&t=1s" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto glass text-white px-10 py-5 rounded-2xl font-bold flex items-center justify-center space-x-3 hover:bg-white/5 transition-all">
                     <svg class="w-6 h-6 text-indigo-400" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 4-8 4z"/></svg>
                     <span>Ver Demo en Vivo</span>
-                </button>
+                </a>
             </div>
         </div>
 
