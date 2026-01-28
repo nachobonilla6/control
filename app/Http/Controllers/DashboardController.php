@@ -53,7 +53,7 @@ class DashboardController extends Controller
                 'name' => 'Clients',
                 'description' => 'Manage your business relationships and contacts.',
                 'icon' => '👥',
-                'route' => 'dashboard.clients',
+                'route' => 'dashboard.clients.all',
             ],
             [
                 'id' => 'emails',
