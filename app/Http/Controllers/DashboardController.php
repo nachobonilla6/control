@@ -543,11 +543,19 @@ class DashboardController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:clients,email',
+            'email2' => 'nullable|email|max:255',
             'website' => 'nullable|url|max:255',
             'location' => 'nullable|string|max:255',
+            'address' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:50',
+            'language' => 'nullable|string|max:50',
             'industry' => 'nullable|string|max:100',
+            'contact_name' => 'nullable|string|max:255',
             'status' => 'required|string|in:' . implode(',', $validStatuses),
+            'facebook' => 'nullable|url|max:255',
+            'instagram' => 'nullable|url|max:255',
+            'opening_hours' => 'nullable|string|max:255',
+            'notes' => 'nullable|string',
             'alpha' => 'nullable|boolean',
         ]);
 
@@ -572,11 +580,19 @@ class DashboardController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:clients,email,' . $id,
+            'email2' => 'nullable|email|max:255',
             'website' => 'nullable|url|max:255',
             'location' => 'nullable|string|max:255',
+            'address' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:50',
+            'language' => 'nullable|string|max:50',
             'industry' => 'nullable|string|max:100',
+            'contact_name' => 'nullable|string|max:255',
             'status' => 'required|string|in:' . implode(',', $validStatuses),
+            'facebook' => 'nullable|url|max:255',
+            'instagram' => 'nullable|url|max:255',
+            'opening_hours' => 'nullable|string|max:255',
+            'notes' => 'nullable|string',
             'alpha' => 'nullable|boolean',
         ]);
 

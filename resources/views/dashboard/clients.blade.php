@@ -340,8 +340,23 @@
                                        class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case">
                             </div>
                             <div>
+                                <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Secondary Email</label>
+                                <input type="email" name="email2" id="form_email2" placeholder="alternative@example.com" 
+                                       class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case">
+                            </div>
+                            <div>
                                 <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Location</label>
                                 <input type="text" name="location" id="form_location" placeholder="City, Country" 
+                                       class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case">
+                            </div>
+                            <div>
+                                <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Address</label>
+                                <input type="text" name="address" id="form_address" placeholder="Street address" 
+                                       class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case">
+                            </div>
+                            <div>
+                                <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Website</label>
+                                <input type="url" name="website" id="form_website" placeholder="https://example.com" 
                                        class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case">
                             </div>
                             <div>
@@ -355,6 +370,16 @@
                                        class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case">
                             </div>
                             <div>
+                                <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Language</label>
+                                <input type="text" name="language" id="form_language" placeholder="e.g. Spanish, English" 
+                                       class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case">
+                            </div>
+                            <div>
+                                <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Contact Name</label>
+                                <input type="text" name="contact_name" id="form_contact_name" placeholder="Person to contact" 
+                                       class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case">
+                            </div>
+                            <div>
                                 <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Operation Status</label>
                                 <div class="relative">
                                     <select name="status" id="form_status" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white appearance-none transition-all cursor-pointer">
@@ -365,6 +390,32 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+
+                        <!-- Second Row: Social Media & Additional Info -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Facebook</label>
+                                <input type="url" name="facebook" id="form_facebook" placeholder="Facebook profile URL" 
+                                       class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case">
+                            </div>
+                            <div>
+                                <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Instagram</label>
+                                <input type="url" name="instagram" id="form_instagram" placeholder="Instagram profile URL" 
+                                       class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case">
+                            </div>
+                            <div>
+                                <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Opening Hours</label>
+                                <input type="text" name="opening_hours" id="form_opening_hours" placeholder="e.g. 9AM-5PM" 
+                                       class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all">
+                            </div>
+                        </div>
+
+                        <!-- Notes -->
+                        <div>
+                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Notes</label>
+                            <textarea name="notes" id="form_notes" rows="3" placeholder="Add any additional notes about the client..."
+                                      class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-[11px] text-slate-300 focus:outline-none focus:border-indigo-500/50 transition-all resize-none placeholder:text-slate-700"></textarea>
                         </div>
 
                         <div class="flex items-center space-x-4 pt-0">
@@ -388,10 +439,19 @@
             
             document.getElementById('form_name').value = '';
             document.getElementById('form_email').value = '';
+            document.getElementById('form_email2').value = '';
             document.getElementById('form_location').value = '';
+            document.getElementById('form_address').value = '';
+            document.getElementById('form_website').value = '';
             document.getElementById('form_phone').value = '';
             document.getElementById('form_industry').value = '';
+            document.getElementById('form_language').value = '';
+            document.getElementById('form_contact_name').value = '';
             document.getElementById('form_status').value = '';
+            document.getElementById('form_facebook').value = '';
+            document.getElementById('form_instagram').value = '';
+            document.getElementById('form_opening_hours').value = '';
+            document.getElementById('form_notes').value = '';
             document.getElementById('magicText').value = '';
 
             // Show AI section for new registration
@@ -410,10 +470,19 @@
             
             document.getElementById('form_name').value = client.name;
             document.getElementById('form_email').value = client.email;
+            document.getElementById('form_email2').value = client.email2 || '';
             document.getElementById('form_location').value = client.location || '';
+            document.getElementById('form_address').value = client.address || '';
+            document.getElementById('form_website').value = client.website || '';
             document.getElementById('form_phone').value = client.phone || '';
             document.getElementById('form_industry').value = client.industry || '';
+            document.getElementById('form_language').value = client.language || '';
+            document.getElementById('form_contact_name').value = client.contact_name || '';
             document.getElementById('form_status').value = client.status || 'queued';
+            document.getElementById('form_facebook').value = client.facebook || '';
+            document.getElementById('form_instagram').value = client.instagram || '';
+            document.getElementById('form_opening_hours').value = client.opening_hours || '';
+            document.getElementById('form_notes').value = client.notes || '';
             
             // Hide AI section for editing and make form full width
             document.getElementById('aiSection').classList.add('hidden');
