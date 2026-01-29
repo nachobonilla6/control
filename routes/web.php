@@ -64,6 +64,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard/clients/templates', [\App\Http\Controllers\DashboardController::class, 'clientsTemplates'])->name('dashboard.clients.templates');
     Route::get('/dashboard/clients/statuses', [\App\Http\Controllers\DashboardController::class, 'clientsStatuses'])->name('dashboard.clients.statuses');
     Route::get('/dashboard/clients/server-time', [\App\Http\Controllers\DashboardController::class, 'clientsServerTime'])->name('dashboard.clients.server-time');
+    Route::post('/dashboard/clients/import-csv', [\App\Http\Controllers\DashboardController::class, 'importCSV'])->name('dashboard.clients.import-csv');
 
     // Templates
     Route::get('/dashboard/templates', [\App\Http\Controllers\DashboardController::class, 'templatesIndex'])->name('dashboard.templates');

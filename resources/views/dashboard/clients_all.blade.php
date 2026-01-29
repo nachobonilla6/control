@@ -120,6 +120,10 @@
                         <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         Extract
                     </button>
+                    <button onclick="openUploadCSVModal()" class="px-8 py-4 bg-purple-600 hover:bg-purple-500 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-purple-600/20 active:scale-95 flex items-center">
+                        <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 16v-4m0 0V8m0 4H8m4 0h4M4 20h16a2 2 0 002-2V6a2 2 0 00-2-2H4a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Upload CSV
+                    </button>
                 </div>
             </div>
 
@@ -821,6 +825,48 @@
         </div>
     </div>
 
+    <!-- Upload CSV Modal -->
+    <div id="uploadCSVModal" class="fixed inset-0 z-50 hidden bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-2xl rounded-[2.5rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
+            <div class="flex justify-between items-start mb-6">
+                <div>
+                    <h2 class="text-2xl font-black text-white italic tracking-tighter mb-0.5">Upload Clients CSV</h2>
+                    <p class="text-[8px] font-bold text-slate-500 tracking-widest leading-none">Import clients from a CSV file</p>
+                </div>
+                <button onclick="document.getElementById('uploadCSVModal').classList.add('hidden')" class="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-xl text-slate-600 hover:text-white transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </div>
+
+            <form id="uploadCSVForm" class="space-y-4">
+                @csrf
+                <div>
+                    <label class="block text-[9px] font-black text-purple-400 tracking-widest mb-3 px-1">Select CSV File</label>
+                    <div class="relative">
+                        <input type="file" id="csvFile" name="csv_file" accept=".csv" required 
+                               class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-purple-500/30 text-xs font-bold text-white transition-all file:mr-3 file:py-2 file:px-4 file:bg-purple-600 file:text-white file:border-0 file:rounded-lg file:font-bold file:cursor-pointer hover:file:bg-purple-500">
+                    </div>
+                    <p class="text-[8px] text-slate-500 mt-2 px-1">Expected columns: name, email, website, location, phone, industry, email2, address, language, contact_name, facebook, instagram, opening_hours, notes, status</p>
+                </div>
+
+                <div class="bg-slate-950/50 border border-slate-800 rounded-xl p-4">
+                    <p class="text-[9px] font-bold text-slate-400 leading-relaxed">
+                        <span class="text-purple-400">Note:</span> The CSV file should have headers matching the client field names. At minimum, include <span class="text-indigo-400">name</span> and <span class="text-indigo-400">email</span>. Optional fields can be left empty.
+                    </p>
+                </div>
+
+                <div class="flex items-center space-x-4 pt-4">
+                    <button type="submit" class="flex-1 bg-purple-600 hover:bg-purple-500 text-white font-black py-4 rounded-2xl shadow-2xl shadow-purple-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em]">
+                        Upload CSV
+                    </button>
+                    <button type="button" onclick="document.getElementById('uploadCSVModal').classList.add('hidden')" class="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
         // Load templates from database
         async function loadTemplates() {
@@ -1096,6 +1142,54 @@
                 alert('Error sending email: ' + e.message + '\n\nPlease check the browser console for more details.');
             }
         }
+
+        function openUploadCSVModal() {
+            document.getElementById('uploadCSVModal').classList.remove('hidden');
+            document.getElementById('uploadCSVForm').reset();
+        }
+
+        document.getElementById('uploadCSVForm')?.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const fileInput = document.getElementById('csvFile');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert('Please select a CSV file');
+                return;
+            }
+            
+            if (!file.name.endsWith('.csv')) {
+                alert('Please select a valid CSV file');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('csv_file', file);
+            
+            try {
+                const response = await fetch('{{ route("dashboard.clients.import-csv") }}', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
+                    },
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    alert(`✓ CSV imported successfully!\nImported: ${data.imported} clients\nSkipped: ${data.skipped} rows`);
+                    document.getElementById('uploadCSVModal').classList.add('hidden');
+                    setTimeout(() => location.reload(), 1000);
+                } else {
+                    alert('Error: ' + (data.message || 'Failed to import CSV'));
+                }
+            } catch (e) {
+                console.error('CSV upload error:', e);
+                alert('Error uploading CSV: ' + e.message);
+            }
+        });
     </script>
 
 </body>

@@ -1316,4 +1316,118 @@ class DashboardController extends Controller
         $formatted = $now->format('Y-m-d\TH:i');
         return response()->json(['datetime' => $formatted]);
     }
+
+    /**
+     * Import clients from CSV file
+     */
+    public function importCSV(Request $request)
+    {
+        try {
+            $request->validate([
+                'csv_file' => 'required|file|mimes:csv,txt|max:5120' // 5MB max
+            ]);
+
+            $file = $request->file('csv_file');
+            $path = $file->getRealPath();
+            
+            $imported = 0;
+            $skipped = 0;
+            $errors = [];
+
+            // Open and read CSV file
+            if (($handle = fopen($path, 'r')) !== false) {
+                $headers = fgetcsv($handle); // Read header row
+                
+                if (!$headers) {
+                    fclose($handle);
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'CSV file is empty or invalid'
+                    ], 400);
+                }
+
+                // Create header mapping (case-insensitive)
+                $headerMap = [];
+                foreach ($headers as $index => $header) {
+                    $headerMap[strtolower(trim($header))] = $index;
+                }
+
+                // Required fields
+                $requiredFields = ['name', 'email'];
+                foreach ($requiredFields as $field) {
+                    if (!isset($headerMap[$field])) {
+                        fclose($handle);
+                        return response()->json([
+                            'success' => false,
+                            'message' => "CSV must contain '{$field}' column"
+                        ], 400);
+                    }
+                }
+
+                // Process each row
+                $rowNum = 2; // Start from row 2 (after header)
+                while (($row = fgetcsv($handle)) !== false) {
+                    try {
+                        // Extract values from row based on header mapping
+                        $name = $row[$headerMap['name']] ?? null;
+                        $email = $row[$headerMap['email']] ?? null;
+
+                        // Skip empty rows
+                        if (empty($name) || empty($email)) {
+                            $skipped++;
+                            $rowNum++;
+                            continue;
+                        }
+
+                        // Prepare client data
+                        $clientData = [
+                            'name' => trim($name),
+                            'email' => trim($email),
+                            'website' => isset($headerMap['website']) ? trim($row[$headerMap['website']] ?? '') : '',
+                            'location' => isset($headerMap['location']) ? trim($row[$headerMap['location']] ?? '') : '',
+                            'phone' => isset($headerMap['phone']) ? trim($row[$headerMap['phone']] ?? '') : '',
+                            'industry' => isset($headerMap['industry']) ? trim($row[$headerMap['industry']] ?? '') : '',
+                            'email2' => isset($headerMap['email2']) ? trim($row[$headerMap['email2']] ?? '') : '',
+                            'address' => isset($headerMap['address']) ? trim($row[$headerMap['address']] ?? '') : '',
+                            'language' => isset($headerMap['language']) ? trim($row[$headerMap['language']] ?? '') : '',
+                            'contact_name' => isset($headerMap['contact_name']) ? trim($row[$headerMap['contact_name']] ?? '') : '',
+                            'facebook' => isset($headerMap['facebook']) ? trim($row[$headerMap['facebook']] ?? '') : '',
+                            'instagram' => isset($headerMap['instagram']) ? trim($row[$headerMap['instagram']] ?? '') : '',
+                            'opening_hours' => isset($headerMap['opening_hours']) ? trim($row[$headerMap['opening_hours']] ?? '') : '',
+                            'notes' => isset($headerMap['notes']) ? trim($row[$headerMap['notes']] ?? '') : '',
+                            'status' => isset($headerMap['status']) ? trim($row[$headerMap['status']] ?? 'extracted') : 'extracted'
+                        ];
+
+                        // Create or update client
+                        Client::updateOrCreate(
+                            ['email' => $clientData['email']],
+                            $clientData
+                        );
+
+                        $imported++;
+                    } catch (\Exception $e) {
+                        $errors[] = "Row {$rowNum}: " . $e->getMessage();
+                        $skipped++;
+                    }
+                    $rowNum++;
+                }
+
+                fclose($handle);
+            }
+
+            return response()->json([
+                'success' => true,
+                'imported' => $imported,
+                'skipped' => $skipped,
+                'errors' => $errors,
+                'message' => "Imported {$imported} clients successfully"
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error processing CSV: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 }
