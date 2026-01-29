@@ -855,8 +855,6 @@
             });
         }
 
-        }
-
         function loadTemplate() {
             const templateId = document.getElementById('email_template').value;
             
@@ -960,20 +958,6 @@
                     },
                     body: JSON.stringify(payload)
                 });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    alert('✓ Email sent successfully!\nTo: ' + clientEmail);
-                    document.getElementById('emailModal').classList.add('hidden');
-                    location.reload();
-                } else {
-                    alert('Error: ' + (data.message || 'Unknown error'));
-                }
-            } catch (e) {
-                alert('Error sending email: ' + e.message);
-            }
-        }
 
                 const data = await response.json();
 
