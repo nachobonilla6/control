@@ -502,7 +502,7 @@ class DashboardController extends Controller
         $clients = $query->orderByRaw("FIELD(status, 'queued', 'sent') ASC")
             ->orderByRaw("CASE WHEN status = 'queued' THEN created_at END ASC")
             ->orderByRaw("CASE WHEN status = 'sent' THEN created_at END DESC")
-            ->paginate(5);
+            ->paginate(20);
         return view('dashboard.clients', compact('clients', 'totalClients', 'queuedCount', 'sentCount', 'noEmailCount', 'filter', 'search'));
     }
 
@@ -525,7 +525,7 @@ class DashboardController extends Controller
             });
         }
         
-        $clients = $query->paginate(5);
+        $clients = $query->paginate(20);
         $totalClients = Client::count();
         $queuedCount = Client::where('status', 'queued')->count();
         $sentCount = Client::where('status', 'sent')->count();
