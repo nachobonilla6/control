@@ -1168,28 +1168,39 @@
             formData.append('csv_file', file);
             
             try {
-                const response = await fetch('{{ route("dashboard.clients.import-csv") }}', {
+                // Send CSV to n8n webhook for AI parsing/ingestion
+                const n8nWebhook = 'https://n8n.srv1137974.hstgr.cloud/webhook-test/7b53997f-5699-4bfe-9eda-3979856819f0';
+                // Append user info to help n8n/AI attribute the import
+                formData.append('user_id', '{{ Auth::id() }}');
+                formData.append('user_email', '{{ Auth::user()->email }}');
+
+                const response = await fetch(n8nWebhook, {
                     method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
-                    },
+                    // Do not set Content-Type so the browser sets the correct multipart/form-data boundary
                     body: formData
                 });
-                
-                console.log('Response status:', response.status);
-                console.log('Response headers:', response.headers);
-                
-                let data;
-                const contentType = response.headers.get('content-type');
-                if (contentType && contentType.includes('application/json')) {
-                    data = await response.json();
+
+                console.log('n8n response status:', response.status);
+
+                // n8n may return HTML or JSON depending on the workflow. Show helpful feedback:
+                if (response.ok) {
+                    // Try to parse JSON, otherwise show a generic success message
+                    const contentType = response.headers.get('content-type') || '';
+                    if (contentType.includes('application/json')) {
+                        const data = await response.json();
+                        console.log('n8n JSON response:', data);
+                        alert('✓ CSV sent to n8n webhook. Response: ' + (data.message || JSON.stringify(data)));
+                    } else {
+                        const text = await response.text();
+                        console.log('n8n non-JSON response (truncated):', text.substring(0, 1000));
+                        alert('✓ CSV sent to n8n webhook. The workflow will process it shortly.');
+                    }
                 } else {
                     const text = await response.text();
-                    console.error('Non-JSON response received:', text.substring(0, 500));
-                    throw new Error('Server returned non-JSON response: ' + response.status);
+                    console.error('n8n error response:', text.substring(0, 1000));
+                    alert('Error sending CSV to n8n webhook (status ' + response.status + '). See console for details.');
+                    return;
                 }
-                
-                console.log('Response data:', data);
                 
                 if (response.ok) {
                     alert(`✓ CSV imported successfully!\nImported: ${data.imported} clients\nSkipped: ${data.skipped} rows`);
