@@ -202,6 +202,7 @@
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Location</th>
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Industry</th>
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Status</th>
+                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Last Email</th>
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em] text-right">Actions</th>
                             </tr>
                         </thead>
@@ -250,6 +251,16 @@
                                             <span class="w-2 h-2 bg-slate-500 rounded-full"></span>
                                             Unknown
                                         </span>
+                                    @endif
+                                </td>
+                                <td class="px-8 py-6">
+                                    @if($client->last_email_sent_at)
+                                        <div class="text-[9px] text-slate-400">
+                                            <p class="font-bold text-slate-300">{{ $client->last_email_sent_at->format('d/m/Y') }}</p>
+                                            <p class="text-slate-500">{{ $client->last_email_sent_at->format('H:i:s') }}</p>
+                                        </div>
+                                    @else
+                                        <span class="text-[9px] text-slate-600 italic">No email sent</span>
                                     @endif
                                 </td>
                                 <td class="px-8 py-6 text-right">

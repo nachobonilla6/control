@@ -1006,7 +1006,7 @@
                 if (response.ok) {
                     alert('✓ Email sent successfully!\nTo: ' + clientEmail);
                     
-                    // Update client status to 'queued'
+                    // Update client status to 'queued' and save last_email_sent_at
                     try {
                         const updateResponse = await fetch(`/dashboard/clients/${clientId}`, {
                             method: 'PATCH',
@@ -1014,11 +1014,14 @@
                                 'Content-Type': 'application/json',
                                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                             },
-                            body: JSON.stringify({ status: 'queued' })
+                            body: JSON.stringify({ 
+                                status: 'queued',
+                                last_email_sent_at: datetime ? new Date(datetime).toISOString().slice(0, 19).replace('T', ' ') : new Date().toISOString().slice(0, 19).replace('T', ' ')
+                            })
                         });
                         
                         if (updateResponse.ok) {
-                            console.log('Status updated to queued');
+                            console.log('Status updated to queued and last_email_sent_at saved');
                         }
                     } catch (e) {
                         console.error('Error updating status:', e);

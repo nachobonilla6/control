@@ -22,6 +22,7 @@ class Client extends Model
         'facebook',
         'instagram',
         'opening_hours',
-        'notes'
+        'notes',
+        'last_email_sent_at'
     ];
 }
