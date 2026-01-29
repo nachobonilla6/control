@@ -504,6 +504,8 @@
         // Define populateStatusSelect early so it's available to modals
         function populateStatusSelect() {
             const select = document.getElementById('form_status');
+            const currentValue = select.value; // Preserve current value
+            
             // Keep the default option
             select.innerHTML = '<option value="">-- Select Status --</option>';
             
@@ -529,6 +531,11 @@
                     option.textContent = status.label;
                     select.appendChild(option);
                 });
+            }
+            
+            // Restore previous value if it was set
+            if (currentValue) {
+                select.value = currentValue;
             }
         }
 
