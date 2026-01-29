@@ -782,8 +782,18 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Date & Time</label>
-                        <input type="datetime-local" id="email_datetime" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all">
+                        <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-3 px-1">Schedule Date & Time</label>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[8px] font-bold text-slate-500 tracking-widest mb-2 px-1">Date</label>
+                                <input type="date" id="email_date" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-[8px] font-bold text-slate-500 tracking-widest mb-2 px-1">Time</label>
+                                <input type="time" id="email_time" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all">
+                            </div>
+                        </div>
+                        <input type="hidden" id="email_datetime">
                     </div>
                 </div>
 
@@ -919,7 +929,11 @@
                 try {
                     const response = await fetch('{{ route("dashboard.clients.server-time") }}');
                     const data = await response.json();
-                    document.getElementById('email_datetime').value = data.datetime;
+                    const datetimeValue = data.datetime; // Format: YYYY-MM-DDTHH:mm
+                    const [date, time] = datetimeValue.split('T');
+                    document.getElementById('email_date').value = date;
+                    document.getElementById('email_time').value = time;
+                    updateDatetimeHidden();
                 } catch (e) {
                     // Fallback to local time if server call fails
                     const now = new Date();
@@ -928,9 +942,25 @@
                     const day = String(now.getDate()).padStart(2, '0');
                     const hours = String(now.getHours()).padStart(2, '0');
                     const minutes = String(now.getMinutes()).padStart(2, '0');
-                    document.getElementById('email_datetime').value = `${year}-${month}-${day}T${hours}:${minutes}`;
+                    document.getElementById('email_date').value = `${year}-${month}-${day}`;
+                    document.getElementById('email_time').value = `${hours}:${minutes}`;
+                    updateDatetimeHidden();
                 }
             }
+            
+            // Combine date and time into hidden datetime field
+            function updateDatetimeHidden() {
+                const date = document.getElementById('email_date').value;
+                const time = document.getElementById('email_time').value;
+                if (date && time) {
+                    document.getElementById('email_datetime').value = `${date}T${time}`;
+                }
+            }
+            
+            // Update hidden field when date or time changes
+            document.getElementById('email_date')?.addEventListener('change', updateDatetimeHidden);
+            document.getElementById('email_time')?.addEventListener('change', updateDatetimeHidden);
+            
             setDefaultDateTime();
             
             document.getElementById('emailForm').onsubmit = async function(e) {
