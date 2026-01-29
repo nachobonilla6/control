@@ -219,6 +219,16 @@
                                             <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
                                             Queued
                                         </span>
+                                    @elseif($client->status === 'created')
+                                        <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-950/30 border border-cyan-500/50 rounded-lg text-[9px] font-black text-cyan-400 tracking-wider uppercase">
+                                            <span class="w-2 h-2 bg-cyan-500 rounded-full"></span>
+                                            Created
+                                        </span>
+                                    @elseif($client->status === 'cancelled')
+                                        <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-red-950/30 border border-red-500/50 rounded-lg text-[9px] font-black text-red-400 tracking-wider uppercase">
+                                            <span class="w-2 h-2 bg-red-500 rounded-full"></span>
+                                            Cancelled
+                                        </span>
                                     @else
                                         <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-800/50 border border-slate-600/50 rounded-lg text-[9px] font-black text-slate-400 tracking-wider uppercase">
                                             <span class="w-2 h-2 bg-slate-500 rounded-full"></span>
@@ -766,15 +776,11 @@
                 console.error('Error loading statuses:', e);
                 // Fallback statuses if fetch fails
                 clientStatuses = [
-                    {name: 'extracted', label: 'EXTRACTED'},
                     {name: 'created', label: 'CREATED'},
+                    {name: 'extracted', label: 'EXTRACTED'},
                     {name: 'queued', label: 'QUEUED'},
                     {name: 'sent', label: 'SENT'},
-                    {name: 'contacted', label: 'CONTACTED'},
-                    {name: 'interested', label: 'INTERESTED'},
-                    {name: 'negotiating', label: 'NEGOTIATING'},
-                    {name: 'converted', label: 'CONVERTED'},
-                    {name: 'rejected', label: 'REJECTED'}
+                    {name: 'cancelled', label: 'CANCELLED'}
                 ];
                 populateStatusSelect();
             }

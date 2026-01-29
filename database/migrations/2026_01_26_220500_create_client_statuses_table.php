@@ -22,15 +22,11 @@ return new class extends Migration
 
         // Insert statuses that actually exist in the system
         DB::table('client_statuses')->insert([
-            ['name' => 'extracted', 'label' => 'EXTRACTED', 'color' => 'yellow', 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'created', 'label' => 'CREATED', 'color' => 'cyan', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'extracted', 'label' => 'EXTRACTED', 'color' => 'yellow', 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'queued', 'label' => 'QUEUED', 'color' => 'blue', 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'sent', 'label' => 'SENT', 'color' => 'green', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'contacted', 'label' => 'CONTACTED', 'color' => 'indigo', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'interested', 'label' => 'INTERESTED', 'color' => 'purple', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'negotiating', 'label' => 'NEGOTIATING', 'color' => 'violet', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'converted', 'label' => 'CONVERTED', 'color' => 'emerald', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'rejected', 'label' => 'REJECTED', 'color' => 'red', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'cancelled', 'label' => 'CANCELLED', 'color' => 'red', 'created_at' => now(), 'updated_at' => now()],
         ]);
     }
 
