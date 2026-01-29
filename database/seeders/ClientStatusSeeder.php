@@ -20,7 +20,6 @@ class ClientStatusSeeder extends Seeder
             ['name' => 'interested', 'label' => 'INTERESTED', 'color' => 'purple'],
             ['name' => 'negotiating', 'label' => 'NEGOTIATING', 'color' => 'violet'],
             ['name' => 'converted', 'label' => 'CONVERTED', 'color' => 'emerald'],
-            ['name' => 'rejected', 'label' => 'REJECTED', 'color' => 'red'],
         ];
 
         foreach ($statuses as $status) {

@@ -25,7 +25,6 @@ return new class extends Migration
             ['name' => 'extracted', 'label' => 'EXTRACTED', 'color' => 'yellow', 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'queued', 'label' => 'QUEUED', 'color' => 'blue', 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'sent', 'label' => 'SENT', 'color' => 'green', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'cancelled', 'label' => 'CANCELLED', 'color' => 'red', 'created_at' => now(), 'updated_at' => now()],
         ]);
     }
 

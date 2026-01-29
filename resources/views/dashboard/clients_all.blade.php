@@ -521,8 +521,7 @@
                 const fallbackStatuses = [
                     {name: 'extracted', label: 'EXTRACTED'},
                     {name: 'queued', label: 'QUEUED'},
-                    {name: 'sent', label: 'SENT'},
-                    {name: 'cancelled', label: 'CANCELLED'}
+                    {name: 'sent', label: 'SENT'}
                 ];
                 fallbackStatuses.forEach(status => {
                     const option = document.createElement('option');
