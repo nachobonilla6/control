@@ -25,4 +25,8 @@ class Client extends Model
         'notes',
         'last_email_sent_at'
     ];
+
+    protected $casts = [
+        'last_email_sent_at' => 'datetime',
+    ];
 }
