@@ -447,6 +447,8 @@
             document.getElementById('form_industry').value = '';
             document.getElementById('form_language').value = '';
             document.getElementById('form_contact_name').value = '';
+            // Populate statuses before setting value
+            populateStatusSelect();
             document.getElementById('form_status').value = 'created';
             document.getElementById('form_facebook').value = '';
             document.getElementById('form_instagram').value = '';
@@ -478,6 +480,8 @@
             document.getElementById('form_industry').value = client.industry || '';
             document.getElementById('form_language').value = client.language || '';
             document.getElementById('form_contact_name').value = client.contact_name || '';
+            // Populate statuses before setting value
+            populateStatusSelect();
             document.getElementById('form_status').value = client.status || 'created';
             document.getElementById('form_facebook').value = client.facebook || '';
             document.getElementById('form_instagram').value = client.instagram || '';
@@ -614,12 +618,30 @@
         function populateStatusSelect() {
             const select = document.getElementById('form_status');
             select.innerHTML = '<option value="">-- Select Status --</option>';
-            clientStatuses.forEach(status => {
-                const option = document.createElement('option');
-                option.value = status.name;
-                option.textContent = status.label;
-                select.appendChild(option);
-            });
+            
+            if (clientStatuses && clientStatuses.length > 0) {
+                clientStatuses.forEach(status => {
+                    const option = document.createElement('option');
+                    option.value = status.name;
+                    option.textContent = status.label;
+                    select.appendChild(option);
+                });
+            } else {
+                // Fallback if statuses not loaded
+                const fallbackStatuses = [
+                    {name: 'created', label: 'CREATED'},
+                    {name: 'extracted', label: 'EXTRACTED'},
+                    {name: 'queued', label: 'QUEUED'},
+                    {name: 'sent', label: 'SENT'},
+                    {name: 'cancelled', label: 'CANCELLED'}
+                ];
+                fallbackStatuses.forEach(status => {
+                    const option = document.createElement('option');
+                    option.value = status.name;
+                    option.textContent = status.label;
+                    select.appendChild(option);
+                });
+            }
         }
 
         // Load statuses when page loads
