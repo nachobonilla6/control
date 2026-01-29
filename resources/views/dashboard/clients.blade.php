@@ -447,7 +447,7 @@
             document.getElementById('form_industry').value = '';
             document.getElementById('form_language').value = '';
             document.getElementById('form_contact_name').value = '';
-            document.getElementById('form_status').value = '';
+            document.getElementById('form_status').value = 'created';
             document.getElementById('form_facebook').value = '';
             document.getElementById('form_instagram').value = '';
             document.getElementById('form_opening_hours').value = '';
@@ -478,7 +478,7 @@
             document.getElementById('form_industry').value = client.industry || '';
             document.getElementById('form_language').value = client.language || '';
             document.getElementById('form_contact_name').value = client.contact_name || '';
-            document.getElementById('form_status').value = client.status || 'queued';
+            document.getElementById('form_status').value = client.status || 'created';
             document.getElementById('form_facebook').value = client.facebook || '';
             document.getElementById('form_instagram').value = client.instagram || '';
             document.getElementById('form_opening_hours').value = client.opening_hours || '';

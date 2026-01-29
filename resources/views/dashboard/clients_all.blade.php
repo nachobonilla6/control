@@ -511,7 +511,7 @@
             document.getElementById('form_location').value = '';
             document.getElementById('form_phone').value = '';
             document.getElementById('form_industry').value = '';
-            document.getElementById('form_status').value = '';
+            document.getElementById('form_status').value = 'created';
             document.getElementById('form_email2').value = '';
             document.getElementById('form_address').value = '';
             document.getElementById('form_language').value = '';
@@ -537,7 +537,7 @@
             document.getElementById('form_location').value = client.location || '';
             document.getElementById('form_phone').value = client.phone || '';
             document.getElementById('form_industry').value = client.industry || '';
-            document.getElementById('form_status').value = client.status || 'queued';
+            document.getElementById('form_status').value = client.status || 'created';
             document.getElementById('form_email2').value = client.email2 || '';
             document.getElementById('form_address').value = client.address || '';
             document.getElementById('form_language').value = client.language || '';
