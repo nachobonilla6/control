@@ -449,7 +449,6 @@
             } else {
                 // Fallback if statuses not loaded
                 const fallbackStatuses = [
-                    {name: 'created', label: 'CREATED'},
                     {name: 'extracted', label: 'EXTRACTED'},
                     {name: 'queued', label: 'QUEUED'},
                     {name: 'sent', label: 'SENT'},
@@ -497,7 +496,7 @@
                 if (!clientStatuses || clientStatuses.length === 0) {
                     populateStatusSelect();
                 }
-                document.getElementById('form_status').value = 'created';
+                document.getElementById('form_status').value = 'extracted';
 
                 // Show AI section for new registration
                 document.getElementById('aiSection').classList.remove('hidden');
