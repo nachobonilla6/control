@@ -780,6 +780,13 @@
                     </div>
                 </div>
 
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Date & Time</label>
+                        <input type="datetime-local" id="email_datetime" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all">
+                    </div>
+                </div>
+
                 <div>
                     <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Subject</label>
                     <input type="text" name="subject" id="email_subject" required placeholder="Email subject" 
@@ -905,18 +912,29 @@
             document.getElementById('email_template').value = '';
             document.getElementById('email_subject').value = '';
             document.getElementById('email_message').value = '';
+            
+            // Set current date and time as default
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('email_datetime').value = `${year}-${month}-${day}T${hours}:${minutes}`;
+            
             document.getElementById('emailForm').onsubmit = async function(e) {
                 e.preventDefault();
                 const selectedEmail = document.getElementById('emailTo').value;
                 const templateId = document.getElementById('email_template').value;
                 const subject = document.getElementById('email_subject').value;
                 const message = document.getElementById('email_message').value;
-                await sendEmailViaWebhook(clientId, clientName, selectedEmail, templateId, subject, message);
+                const datetime = document.getElementById('email_datetime').value;
+                await sendEmailViaWebhook(clientId, clientName, selectedEmail, templateId, subject, message, datetime);
             };
             document.getElementById('emailModal').classList.remove('hidden');
         }
 
-        async function sendEmailViaWebhook(clientId, clientName, clientEmail, templateId, subject, message) {
+        async function sendEmailViaWebhook(clientId, clientName, clientEmail, templateId, subject, message, datetime) {
             if (!subject || !message) {
                 alert('Please fill in all fields');
                 return;
@@ -957,13 +975,14 @@
                     template: templateId,
                     subject: subject,
                     message: message,
+                    scheduled_datetime: datetime ? new Date(datetime).toISOString().slice(0, 19).replace('T', ' ') : '',
                     user_id: '{{ Auth::id() }}',
                     user_email: '{{ Auth::user()->email }}'
                 };
 
                 console.log('Sending payload:', payload);
 
-                const response = await fetch('https://n8n.srv1137974.hstgr.cloud/webhook/direct', {
+                const response = await fetch('https://n8n.srv1137974.hstgr.cloud/webhook-test/direct', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
