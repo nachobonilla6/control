@@ -515,7 +515,7 @@
                 form.action = `/dashboard/clients/${client.id}`;
                 document.getElementById('methodField').innerHTML = '<input type="hidden" name="_method" value="PATCH">';
                 document.getElementById('modalTitle').innerText = 'Edit Client';
-                document.getElementById('modalSubtitle').innerText = 'Updating: ' + client.name + ' • Status: ' + (client.status || 'created').toUpperCase();
+                document.getElementById('modalSubtitle').innerText = 'Updating: ' + client.name + ' • Status: ' + (client.status || 'extracted').toUpperCase();
                 
                 document.getElementById('form_name').value = client.name;
                 document.getElementById('form_email').value = client.email;
@@ -536,7 +536,7 @@
                 if (!clientStatuses || clientStatuses.length === 0) {
                     populateStatusSelect();
                 }
-                document.getElementById('form_status').value = client.status || 'created';
+                document.getElementById('form_status').value = client.status || 'extracted';
                 
                 // Hide AI section for editing and make form full width
                 document.getElementById('aiSection').classList.add('hidden');
