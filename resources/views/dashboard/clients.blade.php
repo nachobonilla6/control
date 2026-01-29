@@ -430,6 +430,8 @@
     </div>
 
     <script>
+        let clientStatuses = [];
+
         function openCreateModal() {
             const form = document.getElementById('clientForm');
             form.action = "{{ route('dashboard.clients.store') }}";
@@ -603,7 +605,6 @@
         });
 
         // Load statuses from database
-        let clientStatuses = [];
         async function loadStatuses() {
             try {
                 const response = await fetch('{{ route("dashboard.clients.statuses") }}');

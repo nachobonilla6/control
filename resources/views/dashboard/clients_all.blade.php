@@ -498,6 +498,9 @@
     </div>
 
     <script>
+        let clientStatuses = [];
+        let emailTemplates = [];
+
         function openCreateModal() {
             const form = document.getElementById('clientForm');
             form.action = "{{ route('dashboard.clients.store') }}";
@@ -750,9 +753,6 @@
     </div>
 
     <script>
-        let emailTemplates = [];
-        let clientStatuses = [];
-
         // Load templates from database
         async function loadTemplates() {
             try {
