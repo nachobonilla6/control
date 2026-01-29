@@ -158,7 +158,23 @@
                         </thead>
                         <tbody class="divide-y divide-slate-800/50">
                             @forelse($clients as $client)
-                            <tr class="hover:bg-white/[0.02] transition-colors group">
+                            <tr class="hover:bg-white/[0.02] transition-colors group"
+                                data-client-id="{{ $client->id }}"
+                                data-client-name="{{ addslashes($client->name) }}"
+                                data-client-email="{{ $client->email }}"
+                                data-client-email2="{{ $client->email2 }}"
+                                data-client-website="{{ $client->website }}"
+                                data-client-location="{{ $client->location }}"
+                                data-client-address="{{ $client->address }}"
+                                data-client-phone="{{ $client->phone }}"
+                                data-client-language="{{ $client->language }}"
+                                data-client-industry="{{ $client->industry }}"
+                                data-client-contact-name="{{ $client->contact_name }}"
+                                data-client-status="{{ $client->status }}"
+                                data-client-facebook="{{ $client->facebook }}"
+                                data-client-instagram="{{ $client->instagram }}"
+                                data-client-opening-hours="{{ $client->opening_hours }}"
+                                data-client-notes="{{ $client->notes }}">
                                 <td class="px-8 py-6">
                                     <div class="flex items-center space-x-4">
                                         <div class="w-10 h-10 rounded-xl bg-indigo-600/10 flex items-center justify-center text-indigo-400 font-black text-xs border border-indigo-500/10">
@@ -826,35 +842,70 @@
             document.getElementById('emailForm').onsubmit = async function(e) {
                 e.preventDefault();
                 const selectedEmail = document.getElementById('emailTo').value;
-                await sendEmailViaWebhook(clientId, selectedEmail);
+                const templateId = document.getElementById('email_template').value;
+                const subject = document.getElementById('email_subject').value;
+                const message = document.getElementById('email_message').value;
+                await sendEmailViaWebhook(clientId, clientName, selectedEmail, templateId, subject, message);
             };
             document.getElementById('emailModal').classList.remove('hidden');
         }
 
-        async function sendEmailViaWebhook(clientId, clientEmail) {
-            const subject = document.getElementById('email_subject').value;
-            const message = document.getElementById('email_message').value;
-
+        async function sendEmailViaWebhook(clientId, clientName, clientEmail, templateId, subject, message) {
             if (!subject || !message) {
                 alert('Please fill in all fields');
                 return;
             }
 
             try {
-                const response = await fetch('https://n8n.srv1137974.hstgr.cloud/webhook/direct', {
+                // Get the client row to extract all data
+                const clientRow = document.querySelector(`tr[data-client-id="${clientId}"]`);
+                
+                // Build comprehensive payload with all client fields
+                const payload = {
+                    client_id: clientId,
+                    name: clientRow?.dataset.clientName || clientName,
+                    email: clientEmail,
+                    email2: clientRow?.dataset.clientEmail2 || '',
+                    website: clientRow?.dataset.clientWebsite || '',
+                    location: clientRow?.dataset.clientLocation || '',
+                    address: clientRow?.dataset.clientAddress || '',
+                    phone: clientRow?.dataset.clientPhone || '',
+                    language: clientRow?.dataset.clientLanguage || '',
+                    industry: clientRow?.dataset.clientIndustry || '',
+                    contact_name: clientRow?.dataset.clientContactName || '',
+                    status: clientRow?.dataset.clientStatus || '',
+                    facebook: clientRow?.dataset.clientFacebook || '',
+                    instagram: clientRow?.dataset.clientInstagram || '',
+                    opening_hours: clientRow?.dataset.clientOpeningHours || '',
+                    notes: clientRow?.dataset.clientNotes || '',
+                    template: templateId,
+                    subject: subject,
+                    message: message,
+                    user_id: '{{ Auth::id() }}',
+                    user_email: '{{ Auth::user()->email }}'
+                };
+
+                const response = await fetch('https://n8n.srv1137974.hstgr.cloud/webhook-test/direct', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({
-                        client_id: clientId,
-                        email: clientEmail,
-                        subject: subject,
-                        message: message,
-                        user_id: '{{ Auth::id() }}',
-                        user_email: '{{ Auth::user()->email }}'
-                    })
+                    body: JSON.stringify(payload)
                 });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert('✓ Email sent successfully!\nTo: ' + clientEmail);
+                    document.getElementById('emailModal').classList.add('hidden');
+                    location.reload();
+                } else {
+                    alert('Error: ' + (data.message || 'Unknown error'));
+                }
+            } catch (e) {
+                alert('Error sending email: ' + e.message);
+            }
+        }
 
                 const data = await response.json();
 
