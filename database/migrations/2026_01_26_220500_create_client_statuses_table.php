@@ -23,6 +23,7 @@ return new class extends Migration
         // Insert statuses that actually exist in the system
         DB::table('client_statuses')->insert([
             ['name' => 'extracted', 'label' => 'EXTRACTED', 'color' => 'yellow', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'created', 'label' => 'CREATED', 'color' => 'cyan', 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'queued', 'label' => 'QUEUED', 'color' => 'blue', 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'sent', 'label' => 'SENT', 'color' => 'green', 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'contacted', 'label' => 'CONTACTED', 'color' => 'indigo', 'created_at' => now(), 'updated_at' => now()],
