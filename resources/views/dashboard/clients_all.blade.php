@@ -1176,7 +1176,20 @@
                     body: formData
                 });
                 
-                const data = await response.json();
+                console.log('Response status:', response.status);
+                console.log('Response headers:', response.headers);
+                
+                let data;
+                const contentType = response.headers.get('content-type');
+                if (contentType && contentType.includes('application/json')) {
+                    data = await response.json();
+                } else {
+                    const text = await response.text();
+                    console.error('Non-JSON response received:', text.substring(0, 500));
+                    throw new Error('Server returned non-JSON response: ' + response.status);
+                }
+                
+                console.log('Response data:', data);
                 
                 if (response.ok) {
                     alert(`✓ CSV imported successfully!\nImported: ${data.imported} clients\nSkipped: ${data.skipped} rows`);

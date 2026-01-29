@@ -1323,19 +1323,41 @@ class DashboardController extends Controller
     public function importCSV(Request $request)
     {
         try {
-            $request->validate([
-                'csv_file' => 'required|file|mimes:csv,txt|max:5120' // 5MB max
+            // Validate request
+            $validated = $request->validate([
+                'csv_file' => 'required|file|mimes:csv,txt|max:5120'
             ]);
 
             $file = $request->file('csv_file');
+            if (!$file) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No file provided'
+                ], 400);
+            }
+
             $path = $file->getRealPath();
+            if (!file_exists($path)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'File not found'
+                ], 400);
+            }
             
             $imported = 0;
             $skipped = 0;
             $errors = [];
 
             // Open and read CSV file
-            if (($handle = fopen($path, 'r')) !== false) {
+            $handle = fopen($path, 'r');
+            if ($handle === false) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Could not open CSV file'
+                ], 400);
+            }
+
+            try {
                 $headers = fgetcsv($handle); // Read header row
                 
                 if (!$headers) {
@@ -1398,6 +1420,14 @@ class DashboardController extends Controller
                             'status' => isset($headerMap['status']) ? trim($row[$headerMap['status']] ?? 'extracted') : 'extracted'
                         ];
 
+                        // Validate email format
+                        if (!filter_var($clientData['email'], FILTER_VALIDATE_EMAIL)) {
+                            $errors[] = "Row {$rowNum}: Invalid email format ({$clientData['email']})";
+                            $skipped++;
+                            $rowNum++;
+                            continue;
+                        }
+
                         // Create or update client
                         Client::updateOrCreate(
                             ['email' => $clientData['email']],
@@ -1406,6 +1436,7 @@ class DashboardController extends Controller
 
                         $imported++;
                     } catch (\Exception $e) {
+                        \Log::error('CSV import row error:', ['row' => $rowNum, 'error' => $e->getMessage()]);
                         $errors[] = "Row {$rowNum}: " . $e->getMessage();
                         $skipped++;
                     }
@@ -1413,6 +1444,13 @@ class DashboardController extends Controller
                 }
 
                 fclose($handle);
+            } catch (\Exception $e) {
+                fclose($handle);
+                \Log::error('CSV import processing error:', ['error' => $e->getMessage()]);
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error processing CSV: ' . $e->getMessage()
+                ], 500);
             }
 
             return response()->json([
@@ -1423,11 +1461,19 @@ class DashboardController extends Controller
                 'message' => "Imported {$imported} clients successfully"
             ]);
 
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            \Log::error('CSV upload validation error:', ['errors' => $e->errors()]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation error: ' . implode(', ', array_map(fn($e) => implode(', ', $e), $e->errors()))
+            ], 422);
         } catch (\Exception $e) {
+            \Log::error('CSV import error:', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
             return response()->json([
                 'success' => false,
                 'message' => 'Error processing CSV: ' . $e->getMessage()
             ], 500);
         }
     }
+
 }
