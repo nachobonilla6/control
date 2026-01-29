@@ -922,9 +922,19 @@
                 return;
             }
 
+            if (!clientEmail) {
+                alert('Please select a valid email address');
+                return;
+            }
+
             try {
                 // Get the client row to extract all data
                 const clientRow = document.querySelector(`tr[data-client-id="${clientId}"]`);
+                
+                if (!clientRow) {
+                    alert('Error: Could not find client data');
+                    return;
+                }
                 
                 // Build comprehensive payload with all client fields
                 const payload = {
@@ -951,6 +961,8 @@
                     user_email: '{{ Auth::user()->email }}'
                 };
 
+                console.log('Sending payload:', payload);
+
                 const response = await fetch('https://n8n.srv1137974.hstgr.cloud/webhook/direct', {
                     method: 'POST',
                     headers: {
@@ -959,17 +971,26 @@
                     body: JSON.stringify(payload)
                 });
 
-                const data = await response.json();
+                console.log('Response status:', response.status);
 
                 if (response.ok) {
                     alert('✓ Email sent successfully!\nTo: ' + clientEmail);
                     document.getElementById('emailModal').classList.add('hidden');
                     location.reload();
                 } else {
-                    alert('Error: ' + (data.message || 'Unknown error'));
+                    // Try to get error message from response
+                    let errorMsg = 'Unknown error (HTTP ' + response.status + ')';
+                    try {
+                        const data = await response.json();
+                        errorMsg = data.message || errorMsg;
+                    } catch (e) {
+                        // Response was not JSON
+                    }
+                    alert('Error: ' + errorMsg);
                 }
             } catch (e) {
-                alert('Error sending email: ' + e.message);
+                console.error('Error details:', e);
+                alert('Error sending email: ' + e.message + '\n\nPlease check the browser console for more details.');
             }
         }
     </script>
