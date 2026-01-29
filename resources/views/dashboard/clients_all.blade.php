@@ -1013,6 +1013,22 @@
                     
                     // Update client status to 'queued' and save last_email_sent_at
                     try {
+                        // Convert datetime-local format (YYYY-MM-DDTHH:mm) to database format (YYYY-MM-DD HH:mm:ss)
+                        let emailDateTime = '';
+                        if (datetime) {
+                            const parts = datetime.split('T');
+                            emailDateTime = parts[0] + ' ' + parts[1] + ':00';
+                        } else {
+                            const now = new Date();
+                            const year = now.getFullYear();
+                            const month = String(now.getMonth() + 1).padStart(2, '0');
+                            const day = String(now.getDate()).padStart(2, '0');
+                            const hours = String(now.getHours()).padStart(2, '0');
+                            const minutes = String(now.getMinutes()).padStart(2, '0');
+                            const seconds = String(now.getSeconds()).padStart(2, '0');
+                            emailDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+                        }
+                        
                         const updateResponse = await fetch(`/dashboard/clients/${clientId}`, {
                             method: 'PATCH',
                             headers: {
@@ -1021,7 +1037,7 @@
                             },
                             body: JSON.stringify({ 
                                 status: 'queued',
-                                last_email_sent_at: datetime ? new Date(datetime).toISOString().slice(0, 19).replace('T', ' ') : new Date().toISOString().slice(0, 19).replace('T', ' ')
+                                last_email_sent_at: emailDateTime
                             })
                         });
                         
