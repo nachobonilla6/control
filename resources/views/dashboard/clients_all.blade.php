@@ -783,7 +783,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Date & Time</label>
-                        <input type="datetime-local" id="email_datetime" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all">
+                        <input type="datetime-local" id="email_datetime" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all">
                     </div>
                 </div>
 
@@ -948,6 +948,11 @@
         async function sendEmailViaWebhook(clientId, clientName, clientEmail, templateId, subject, message, datetime) {
             if (!subject || !message) {
                 alert('Please fill in all fields');
+                return;
+            }
+
+            if (!datetime) {
+                alert('Please select a date and time for the email');
                 return;
             }
 
