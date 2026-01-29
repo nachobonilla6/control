@@ -994,6 +994,25 @@
 
                 if (response.ok) {
                     alert('✓ Email sent successfully!\nTo: ' + clientEmail);
+                    
+                    // Update client status to 'queued'
+                    try {
+                        const updateResponse = await fetch(`/dashboard/clients/${clientId}`, {
+                            method: 'PATCH',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                            },
+                            body: JSON.stringify({ status: 'queued' })
+                        });
+                        
+                        if (updateResponse.ok) {
+                            console.log('Status updated to queued');
+                        }
+                    } catch (e) {
+                        console.error('Error updating status:', e);
+                    }
+                    
                     document.getElementById('emailModal').classList.add('hidden');
                     location.reload();
                 } else {
