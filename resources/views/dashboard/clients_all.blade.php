@@ -913,14 +913,25 @@
             document.getElementById('email_subject').value = '';
             document.getElementById('email_message').value = '';
             
-            // Set current date and time as default
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const day = String(now.getDate()).padStart(2, '0');
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            document.getElementById('email_datetime').value = `${year}-${month}-${day}T${hours}:${minutes}`;
+            // Set current date and time as default (using server time to match application timezone)
+            // Get server time to ensure correct timezone
+            async function setDefaultDateTime() {
+                try {
+                    const response = await fetch('{{ route("dashboard.clients.server-time") }}');
+                    const data = await response.json();
+                    document.getElementById('email_datetime').value = data.datetime;
+                } catch (e) {
+                    // Fallback to local time if server call fails
+                    const now = new Date();
+                    const year = now.getFullYear();
+                    const month = String(now.getMonth() + 1).padStart(2, '0');
+                    const day = String(now.getDate()).padStart(2, '0');
+                    const hours = String(now.getHours()).padStart(2, '0');
+                    const minutes = String(now.getMinutes()).padStart(2, '0');
+                    document.getElementById('email_datetime').value = `${year}-${month}-${day}T${hours}:${minutes}`;
+                }
+            }
+            setDefaultDateTime();
             
             document.getElementById('emailForm').onsubmit = async function(e) {
                 e.preventDefault();

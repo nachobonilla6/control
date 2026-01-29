@@ -1306,4 +1306,14 @@ class DashboardController extends Controller
         $statuses = ClientStatus::all(['id', 'name', 'label', 'color'])->toArray();
         return response()->json($statuses);
     }
+
+    /**
+     * Get server current time
+     */
+    public function clientsServerTime()
+    {
+        $now = \Carbon\Carbon::now();
+        $formatted = $now->format('Y-m-d\TH:i');
+        return response()->json(['datetime' => $formatted]);
+    }
 }
