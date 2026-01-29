@@ -502,59 +502,81 @@
         let emailTemplates = [];
 
         function openCreateModal() {
-            const form = document.getElementById('clientForm');
-            form.action = "{{ route('dashboard.clients.store') }}";
-            document.getElementById('methodField').innerHTML = '';
-            document.getElementById('modalTitle').innerText = 'New Client';
-            document.getElementById('modalSubtitle').innerText = 'Add a new client to the database';
-            
-            document.getElementById('form_name').value = '';
-            document.getElementById('form_email').value = '';
-            document.getElementById('form_website').value = '';
-            document.getElementById('form_location').value = '';
-            document.getElementById('form_phone').value = '';
-            document.getElementById('form_industry').value = '';
-            // Populate statuses before setting value
-            populateStatusSelect();
-            document.getElementById('form_status').value = 'created';
-            document.getElementById('form_email2').value = '';
-            document.getElementById('form_address').value = '';
-            document.getElementById('form_language').value = '';
-            document.getElementById('form_contact_name').value = '';
-            document.getElementById('form_facebook').value = '';
-            document.getElementById('form_instagram').value = '';
-            document.getElementById('form_opening_hours').value = '';
-            document.getElementById('form_notes').value = '';
-            
-            document.getElementById('clientModal').classList.remove('hidden');
+            try {
+                const form = document.getElementById('clientForm');
+                form.action = "{{ route('dashboard.clients.store') }}";
+                document.getElementById('methodField').innerHTML = '';
+                document.getElementById('modalTitle').innerText = 'New Client';
+                document.getElementById('modalSubtitle').innerText = 'Add a new client to the database';
+                
+                document.getElementById('form_name').value = '';
+                document.getElementById('form_email').value = '';
+                document.getElementById('form_website').value = '';
+                document.getElementById('form_location').value = '';
+                document.getElementById('form_phone').value = '';
+                document.getElementById('form_industry').value = '';
+                
+                // Populate statuses before setting value
+                try {
+                    populateStatusSelect();
+                } catch (e) {
+                    console.error('Error populating statuses:', e);
+                }
+                
+                document.getElementById('form_status').value = 'created';
+                document.getElementById('form_email2').value = '';
+                document.getElementById('form_address').value = '';
+                document.getElementById('form_language').value = '';
+                document.getElementById('form_contact_name').value = '';
+                document.getElementById('form_facebook').value = '';
+                document.getElementById('form_instagram').value = '';
+                document.getElementById('form_opening_hours').value = '';
+                document.getElementById('form_notes').value = '';
+                
+                document.getElementById('clientModal').classList.remove('hidden');
+            } catch (e) {
+                console.error('Error opening modal:', e);
+                alert('Error opening modal: ' + e.message);
+            }
         }
 
         function openEditModal(client) {
-            const form = document.getElementById('clientForm');
-            form.action = `/dashboard/clients/${client.id}`;
-            document.getElementById('methodField').innerHTML = '<input type="hidden" name="_method" value="PATCH">';
-            document.getElementById('modalTitle').innerText = 'Edit Client';
-            document.getElementById('modalSubtitle').innerText = 'Updating: ' + client.name + ' • Status: ' + (client.status || 'queued').toUpperCase();
-            
-            document.getElementById('form_name').value = client.name;
-            document.getElementById('form_email').value = client.email;
-            document.getElementById('form_website').value = client.website || '';
-            document.getElementById('form_location').value = client.location || '';
-            document.getElementById('form_phone').value = client.phone || '';
-            document.getElementById('form_industry').value = client.industry || '';
-            // Populate statuses before setting value
-            populateStatusSelect();
-            document.getElementById('form_status').value = client.status || 'created';
-            document.getElementById('form_email2').value = client.email2 || '';
-            document.getElementById('form_address').value = client.address || '';
-            document.getElementById('form_language').value = client.language || '';
-            document.getElementById('form_contact_name').value = client.contact_name || '';
-            document.getElementById('form_facebook').value = client.facebook || '';
-            document.getElementById('form_instagram').value = client.instagram || '';
-            document.getElementById('form_opening_hours').value = client.opening_hours || '';
-            document.getElementById('form_notes').value = client.notes || '';
-            
-            document.getElementById('clientModal').classList.remove('hidden');
+            try {
+                const form = document.getElementById('clientForm');
+                form.action = `/dashboard/clients/${client.id}`;
+                document.getElementById('methodField').innerHTML = '<input type="hidden" name="_method" value="PATCH">';
+                document.getElementById('modalTitle').innerText = 'Edit Client';
+                document.getElementById('modalSubtitle').innerText = 'Updating: ' + client.name + ' • Status: ' + (client.status || 'queued').toUpperCase();
+                
+                document.getElementById('form_name').value = client.name;
+                document.getElementById('form_email').value = client.email;
+                document.getElementById('form_website').value = client.website || '';
+                document.getElementById('form_location').value = client.location || '';
+                document.getElementById('form_phone').value = client.phone || '';
+                document.getElementById('form_industry').value = client.industry || '';
+                
+                // Populate statuses before setting value
+                try {
+                    populateStatusSelect();
+                } catch (e) {
+                    console.error('Error populating statuses:', e);
+                }
+                
+                document.getElementById('form_status').value = client.status || 'created';
+                document.getElementById('form_email2').value = client.email2 || '';
+                document.getElementById('form_address').value = client.address || '';
+                document.getElementById('form_language').value = client.language || '';
+                document.getElementById('form_contact_name').value = client.contact_name || '';
+                document.getElementById('form_facebook').value = client.facebook || '';
+                document.getElementById('form_instagram').value = client.instagram || '';
+                document.getElementById('form_opening_hours').value = client.opening_hours || '';
+                document.getElementById('form_notes').value = client.notes || '';
+                
+                document.getElementById('clientModal').classList.remove('hidden');
+            } catch (e) {
+                console.error('Error opening edit modal:', e);
+                alert('Error opening modal: ' + e.message);
+            }
         }
 
         // Country data by language
