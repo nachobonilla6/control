@@ -432,6 +432,36 @@
     <script>
         let clientStatuses = [];
 
+        // Define populateStatusSelect early so it's available to modals
+        function populateStatusSelect() {
+            const select = document.getElementById('form_status');
+            select.innerHTML = '<option value="">-- Select Status --</option>';
+            
+            if (clientStatuses && clientStatuses.length > 0) {
+                clientStatuses.forEach(status => {
+                    const option = document.createElement('option');
+                    option.value = status.name;
+                    option.textContent = status.label;
+                    select.appendChild(option);
+                });
+            } else {
+                // Fallback if statuses not loaded
+                const fallbackStatuses = [
+                    {name: 'created', label: 'CREATED'},
+                    {name: 'extracted', label: 'EXTRACTED'},
+                    {name: 'queued', label: 'QUEUED'},
+                    {name: 'sent', label: 'SENT'},
+                    {name: 'cancelled', label: 'CANCELLED'}
+                ];
+                fallbackStatuses.forEach(status => {
+                    const option = document.createElement('option');
+                    option.value = status.name;
+                    option.textContent = status.label;
+                    select.appendChild(option);
+                });
+            }
+        }
+
         function openCreateModal() {
             try {
                 const form = document.getElementById('clientForm');
@@ -629,35 +659,6 @@
                 populateStatusSelect();
             } catch (e) {
                 console.error('Error loading statuses:', e);
-            }
-        }
-
-        function populateStatusSelect() {
-            const select = document.getElementById('form_status');
-            select.innerHTML = '<option value="">-- Select Status --</option>';
-            
-            if (clientStatuses && clientStatuses.length > 0) {
-                clientStatuses.forEach(status => {
-                    const option = document.createElement('option');
-                    option.value = status.name;
-                    option.textContent = status.label;
-                    select.appendChild(option);
-                });
-            } else {
-                // Fallback if statuses not loaded
-                const fallbackStatuses = [
-                    {name: 'created', label: 'CREATED'},
-                    {name: 'extracted', label: 'EXTRACTED'},
-                    {name: 'queued', label: 'QUEUED'},
-                    {name: 'sent', label: 'SENT'},
-                    {name: 'cancelled', label: 'CANCELLED'}
-                ];
-                fallbackStatuses.forEach(status => {
-                    const option = document.createElement('option');
-                    option.value = status.name;
-                    option.textContent = status.label;
-                    select.appendChild(option);
-                });
             }
         }
 
