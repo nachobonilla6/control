@@ -755,11 +755,28 @@
         async function loadStatuses() {
             try {
                 const response = await fetch('{{ route("dashboard.clients.statuses") }}');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
                 const data = await response.json();
                 clientStatuses = data;
                 populateStatusSelect();
+                console.log('Statuses loaded:', clientStatuses);
             } catch (e) {
                 console.error('Error loading statuses:', e);
+                // Fallback statuses if fetch fails
+                clientStatuses = [
+                    {name: 'extracted', label: 'EXTRACTED'},
+                    {name: 'created', label: 'CREATED'},
+                    {name: 'queued', label: 'QUEUED'},
+                    {name: 'sent', label: 'SENT'},
+                    {name: 'contacted', label: 'CONTACTED'},
+                    {name: 'interested', label: 'INTERESTED'},
+                    {name: 'negotiating', label: 'NEGOTIATING'},
+                    {name: 'converted', label: 'CONVERTED'},
+                    {name: 'rejected', label: 'REJECTED'}
+                ];
+                populateStatusSelect();
             }
         }
 
