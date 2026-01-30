@@ -605,7 +605,34 @@
                     populateStatusSelect();
                 }
                 document.getElementById('form_status').value = client.status || 'extracted';
-                
+                // Preserve current pagination/search so after update we return to the same page
+                try {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const page = urlParams.get('page') || '';
+                    const search = urlParams.get('search') || '';
+
+                    const form = document.getElementById('clientForm');
+                    let inputPage = form.querySelector('input[name="return_page"]');
+                    if (!inputPage) {
+                        inputPage = document.createElement('input');
+                        inputPage.type = 'hidden';
+                        inputPage.name = 'return_page';
+                        form.appendChild(inputPage);
+                    }
+                    inputPage.value = page;
+
+                    let inputSearch = form.querySelector('input[name="return_search"]');
+                    if (!inputSearch) {
+                        inputSearch = document.createElement('input');
+                        inputSearch.type = 'hidden';
+                        inputSearch.name = 'return_search';
+                        form.appendChild(inputSearch);
+                    }
+                    inputSearch.value = search;
+                } catch (e) {
+                    console.error('Could not set return page/search:', e);
+                }
+
                 document.getElementById('clientModal').classList.remove('hidden');
             } catch (e) {
                 console.error('Error opening edit modal:', e);
