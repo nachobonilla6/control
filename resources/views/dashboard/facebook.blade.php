@@ -234,7 +234,7 @@
                                 <div class="flex items-center space-x-2">
                                     <svg class="w-3.5 h-3.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                     <span class="text-[9px] font-black text-emerald-500 tracking-widest uppercase">
-                                        {{ $post->post_at->addHours(6)->format('Y-m-d H:i') }}
+                                        {{ \Carbon\Carbon::parse($post->post_at)->addHours(6)->format('Y-m-d H:i') }}
                                     </span>
                                 </div>
                                 @endif
