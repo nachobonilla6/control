@@ -708,8 +708,15 @@
                     data = { content: text };
                 }
 
-                // Try common keys for returned content
-                const generated = data.content || data.generated || data.text || data.message || (typeof data === 'string' ? data : '');
+                // Handle array responses (e.g., [{ "facebook_post": "..." }])
+                let generated = '';
+                if (Array.isArray(data) && data.length > 0) {
+                    const first = data[0];
+                    generated = first.facebook_post || first.facebookPost || first.content || first.generated || first.text || first.message || (typeof first === 'string' ? first : '');
+                } else {
+                    generated = data.facebook_post || data.facebookPost || data.content || data.generated || data.text || data.message || (typeof data === 'string' ? data : '');
+                }
+
                 if (generated) {
                     const text = (typeof generated === 'object') ? JSON.stringify(generated) : String(generated);
                     const cleaned = text.trim();
