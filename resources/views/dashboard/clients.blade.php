@@ -548,6 +548,42 @@
                 }
                 document.getElementById('form_status').value = client.status || 'extracted';
                 
+                // Preserve current pagination/search so after update we return to the same page
+                try {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const page = urlParams.get('page') || '';
+                    const search = urlParams.get('search') || '';
+
+                    let inputPage = form.querySelector('input[name="return_page"]');
+                    if (!inputPage) {
+                        inputPage = document.createElement('input');
+                        inputPage.type = 'hidden';
+                        inputPage.name = 'return_page';
+                        form.appendChild(inputPage);
+                    }
+                    inputPage.value = page;
+
+                    let inputSearch = form.querySelector('input[name="return_search"]');
+                    if (!inputSearch) {
+                        inputSearch = document.createElement('input');
+                        inputSearch.type = 'hidden';
+                        inputSearch.name = 'return_search';
+                        form.appendChild(inputSearch);
+                    }
+                    inputSearch.value = search;
+
+                    let inputFromView = form.querySelector('input[name="from_view"]');
+                    if (!inputFromView) {
+                        inputFromView = document.createElement('input');
+                        inputFromView.type = 'hidden';
+                        inputFromView.name = 'from_view';
+                        form.appendChild(inputFromView);
+                    }
+                    inputFromView.value = 'clients';
+                } catch (e) {
+                    console.error('Could not set return page/search:', e);
+                }
+                
                 // Hide AI section for editing and make form full width
                 document.getElementById('aiSection').classList.add('hidden');
                 document.getElementById('formContainer').classList.replace('lg:col-span-9', 'lg:col-span-full');

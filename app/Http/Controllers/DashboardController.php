@@ -606,15 +606,19 @@ class DashboardController extends Controller
             // If the form provided return page/search, redirect back to that pagination page
             $page = $request->input('return_page');
             $search = $request->input('return_search');
+            $fromView = $request->input('from_view', 'clients_all');
 
             if ($page || $search) {
                 $params = [];
                 if ($search) $params['search'] = $search;
                 if ($page) $params['page'] = $page;
-                return redirect()->route('dashboard.clients.all', $params)->with('success', 'Client successfully updated.');
+                
+                $route = ($fromView === 'clients') ? 'dashboard.clients' : 'dashboard.clients.all';
+                return redirect()->route($route, $params)->with('success', 'Client successfully updated.');
             }
 
-            return redirect()->route('dashboard.clients.all')->with('success', 'Client successfully updated.');
+            $route = ($fromView === 'clients') ? 'dashboard.clients' : 'dashboard.clients.all';
+            return redirect()->route($route)->with('success', 'Client successfully updated.');
         } catch (\Exception $e) {
             return back()->withInput()->withErrors(['error' => 'Update error: ' . $e->getMessage()]);
         }
