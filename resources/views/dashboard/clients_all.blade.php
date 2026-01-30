@@ -629,6 +629,15 @@
                         form.appendChild(inputSearch);
                     }
                     inputSearch.value = search;
+
+                    let inputFromView = form.querySelector('input[name="from_view"]');
+                    if (!inputFromView) {
+                        inputFromView = document.createElement('input');
+                        inputFromView.type = 'hidden';
+                        inputFromView.name = 'from_view';
+                        form.appendChild(inputFromView);
+                    }
+                    inputFromView.value = 'clients_all';
                 } catch (e) {
                     console.error('Could not set return page/search:', e);
                 }
@@ -1195,8 +1204,8 @@
             formData.append('csv_file', file);
             
             try {
-                // Send CSV to n8n webhook for AI parsing/ingestion (test)
-                const n8nWebhook = 'https://n8n.srv1137974.hstgr.cloud/webhook-test/7b53997f-5699-4bfe-9eda-3979856819f0';
+                // Send CSV to n8n webhook for AI parsing/ingestion (production)
+                const n8nWebhook = 'https://n8n.srv1137974.hstgr.cloud/webhook/7b53997f-5699-4bfe-9eda-3979856819f0';
                 // Append user info to help n8n/AI attribute the import
                 formData.append('user_id', '{{ Auth::id() }}');
                 formData.append('user_email', '{{ Auth::user()->email }}');
