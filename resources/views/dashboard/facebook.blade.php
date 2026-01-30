@@ -711,7 +711,12 @@
                 // Try common keys for returned content
                 const generated = data.content || data.generated || data.text || data.message || (typeof data === 'string' ? data : '');
                 if (generated) {
-                    document.getElementById('create_content').value = generated;
+                    const text = (typeof generated === 'object') ? JSON.stringify(generated) : String(generated);
+                    const cleaned = text.trim();
+                    const createEl = document.getElementById('create_content');
+                    const editEl = document.getElementById('edit_content');
+                    if (createEl) createEl.value = cleaned;
+                    if (editEl) editEl.value = cleaned;
                 } else {
                     console.warn('No generated content found in webhook response', data);
                 }
