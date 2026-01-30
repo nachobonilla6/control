@@ -676,7 +676,7 @@
             aiModal.classList.remove('hidden');
 
             try {
-                const n8nWebhook = 'https://n8n.srv1137974.hstgr.cloud/webhook-test/76497ea0-bfd0-46fa-8ea3-6512ff450b55';
+                const n8nWebhook = 'https://n8n.srv1137974.hstgr.cloud/webhook/poster';
                 const payload = {
                     prompt: prompt,
                     strategy: 'AI Deployment Strategy',
