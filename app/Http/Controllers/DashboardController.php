@@ -391,14 +391,14 @@ class DashboardController extends Controller
 
         $chatHistory = ChatHistory::where('chat_id', $currentChatId)->orderBy('created_at', 'asc')->get();
         
-        // Fetch unique threads using the schema info (role='user' usually starts the thread)
+        // Fetch unique threads: one conversation per username, ordered by most recent
         $threads = ChatHistory::where('role', 'user')
             ->select('chat_id', 'message', 'username', 'created_at')
             ->whereIn('id', function($query) {
-                $query->selectRaw('MIN(id)')
+                $query->selectRaw('MAX(id)')
                     ->from('josh_dev_chat_history')
                     ->where('role', 'user')
-                    ->groupBy('chat_id');
+                    ->groupBy('username');
             })
             ->orderBy('created_at', 'desc')
             ->take(15)
