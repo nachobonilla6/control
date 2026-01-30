@@ -53,8 +53,10 @@
             @if(count($threads) > 0)
                 @foreach($threads as $thread)
                     <a href="{{ route('dashboard.chat', ['bot' => $bot_id, 'chatId' => $thread->chat_id]) }}" 
-                       class="block px-3 py-3 rounded-xl hover:bg-slate-800/50 cursor-pointer text-sm truncate transition-all {{ $current_chat_id == $thread->chat_id ? 'bg-indigo-600/10 text-indigo-400 border border-indigo-500/20 shadow-lg' : 'text-slate-400' }}">
-                        {{ $thread->message }}
+                       class="block px-3 py-3 rounded-xl hover:bg-slate-800/50 cursor-pointer text-sm transition-all {{ $current_chat_id == $thread->chat_id ? 'bg-indigo-600/10 text-indigo-400 border border-indigo-500/20 shadow-lg' : 'text-slate-400' }}">
+                        <div class="truncate font-bold text-xs mb-1">{{ $thread->username ?? 'Anonymous' }}</div>
+                        <div class="truncate text-[11px] opacity-75">{{ Str::limit($thread->message, 45, '...') }}</div>
+                        <div class="truncate text-[9px] opacity-50 mt-1">ID: {{ Str::limit($thread->chat_id, 20, '...') }}</div>
                     </a>
                 @endforeach
             @else

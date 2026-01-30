@@ -393,7 +393,7 @@ class DashboardController extends Controller
         
         // Fetch unique threads using the schema info (role='user' usually starts the thread)
         $threads = ChatHistory::where('role', 'user')
-            ->select('chat_id', 'message', 'created_at')
+            ->select('chat_id', 'message', 'username', 'created_at')
             ->whereIn('id', function($query) {
                 $query->selectRaw('MIN(id)')
                     ->from('josh_dev_chat_history')
