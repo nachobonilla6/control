@@ -401,7 +401,7 @@ class DashboardController extends Controller
                     ->groupBy('username');
             })
             ->orderBy('created_at', 'desc')
-            ->take(15)
+            ->take(1)
             ->get();
 
         return view('dashboard.chat', [
