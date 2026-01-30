@@ -862,6 +862,29 @@
     </div>
 
     <!-- Upload CSV Modal -->
+    <!-- Envío a Base de Datos Modal -->
+    <div id="sendingModal" class="fixed inset-0 z-50 hidden bg-slate-950/95 backdrop-blur-xl flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-[2.5rem] overflow-hidden shadow-2xl p-8">
+            <div class="flex flex-col items-center justify-center space-y-6">
+                <div class="relative">
+                    <div class="w-16 h-16 rounded-full border-4 border-slate-700 border-t-indigo-500 animate-spin"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <svg class="w-8 h-8 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3v-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <h3 class="text-lg font-black text-white italic tracking-tighter mb-2">Enviando CSV a Base de Datos</h3>
+                    <p class="text-[9px] font-bold text-slate-400 tracking-widest uppercase">Por favor espera...</p>
+                </div>
+                <div class="w-full bg-slate-950 rounded-lg h-1 overflow-hidden">
+                    <div class="bg-indigo-500 h-full w-full animate-pulse"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="uploadCSVModal" class="fixed inset-0 z-50 hidden bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4">
         <div class="bg-slate-900 border border-slate-800 w-full max-w-2xl rounded-[2.5rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
             <div class="flex justify-between items-start mb-6">
@@ -1200,6 +1223,10 @@
                 return;
             }
             
+            // Hide upload modal and show sending modal
+            document.getElementById('uploadCSVModal').classList.add('hidden');
+            document.getElementById('sendingModal').classList.remove('hidden');
+            
             const formData = new FormData();
             formData.append('csv_file', file);
             
@@ -1218,35 +1245,20 @@
 
                 console.log('n8n response status:', response.status);
 
-                // n8n may return HTML or JSON depending on the workflow. Show helpful feedback:
                 if (response.ok) {
-                    // Try to parse JSON, otherwise show a generic success message
-                    const contentType = response.headers.get('content-type') || '';
-                    if (contentType.includes('application/json')) {
-                        const data = await response.json();
-                        console.log('n8n JSON response:', data);
-                        alert('✓ CSV sent to n8n webhook. Response: ' + (data.message || JSON.stringify(data)));
-                    } else {
-                        const text = await response.text();
-                        console.log('n8n non-JSON response (truncated):', text.substring(0, 1000));
-                        alert('✓ CSV sent to n8n webhook. The workflow will process it shortly.');
-                    }
+                    // Wait 2 seconds before reloading to show completion
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+                    // Reload the page
+                    location.reload();
                 } else {
                     const text = await response.text();
                     console.error('n8n error response:', text.substring(0, 1000));
-                    alert('Error sending CSV to n8n webhook (status ' + response.status + '). See console for details.');
-                    return;
-                }
-                
-                if (response.ok) {
-                    alert(`✓ CSV imported successfully!\nImported: ${data.imported} clients\nSkipped: ${data.skipped} rows`);
-                    document.getElementById('uploadCSVModal').classList.add('hidden');
-                    setTimeout(() => location.reload(), 1000);
-                } else {
-                    alert('Error: ' + (data.message || 'Failed to import CSV'));
+                    document.getElementById('sendingModal').classList.add('hidden');
+                    alert('Error: ' + response.status + '. The CSV could not be imported.');
                 }
             } catch (e) {
                 console.error('CSV upload error:', e);
+                document.getElementById('sendingModal').classList.add('hidden');
                 alert('Error uploading CSV: ' + e.message);
             }
         });
