@@ -234,7 +234,7 @@
                                 <div class="flex items-center space-x-2">
                                     <svg class="w-3.5 h-3.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                     <span class="text-[9px] font-black text-emerald-500 tracking-widest uppercase">
-                                        {{ $post->post_at }}
+                                        {{ $post->post_at->addHours(6)->format('Y-m-d H:i') }}
                                     </span>
                                 </div>
                                 @endif
@@ -592,9 +592,10 @@
         fetchNotifs();
 
         function openCreatePostModal() {
-            // Set current datetime as default
+            // Set current datetime + 6 hours as default
             const now = new Date();
-            const localDateTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+            const plus6Hours = new Date(now.getTime() + (6 * 60 * 60 * 1000));
+            const localDateTime = new Date(plus6Hours.getTime() - plus6Hours.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
             document.getElementById('post_at_input').value = localDateTime;
             
             // Open modal
