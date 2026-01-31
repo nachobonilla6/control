@@ -1102,9 +1102,9 @@ class DashboardController extends Controller
 
             // Send to n8n Webhook (N8N will create the post in DB)
             try {
-                $webhookUrl = Setting::get('facebook_webhook_url', 'https://n8n.srv1137974.hstgr.cloud/webhook-test/76497ea0-bfd0-46fa-8ea3-6512ff450b55');
+                $webhookUrl = Setting::get('facebook_webhook_url', 'https://n8n.srv1137974.hstgr.cloud/webhook/76497ea0-bfd0-46fa-8ea3-6512ff450b55');
             } catch (\Exception $e) {
-                $webhookUrl = 'https://n8n.srv1137974.hstgr.cloud/webhook-test/76497ea0-bfd0-46fa-8ea3-6512ff450b55';
+                $webhookUrl = 'https://n8n.srv1137974.hstgr.cloud/webhook/76497ea0-bfd0-46fa-8ea3-6512ff450b55';
             }
             
             $response = Http::post($webhookUrl, [
@@ -1175,9 +1175,9 @@ class DashboardController extends Controller
             // Send to n8n Webhook on Update as well
             try {
                 try {
-                    $webhookUrl = Setting::get('facebook_webhook_url', 'https://n8n.srv1137974.hstgr.cloud/webhook-test/76497ea0-bfd0-46fa-8ea3-6512ff450b55');
+                    $webhookUrl = Setting::get('facebook_webhook_url', 'https://n8n.srv1137974.hstgr.cloud/webhook/76497ea0-bfd0-46fa-8ea3-6512ff450b55');
                 } catch (\Exception $e) {
-                    $webhookUrl = 'https://n8n.srv1137974.hstgr.cloud/webhook-test/76497ea0-bfd0-46fa-8ea3-6512ff450b55';
+                    $webhookUrl = 'https://n8n.srv1137974.hstgr.cloud/webhook/76497ea0-bfd0-46fa-8ea3-6512ff450b55';
                 }
                 Http::post($webhookUrl, [
                     'id' => $post->id,
