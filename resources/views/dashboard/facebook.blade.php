@@ -338,16 +338,19 @@
                             <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Media Asset 01</label>
                             <input type="file" name="image1" accept="image/*"
                                    class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-[10px] font-bold text-slate-500 transition-all">
+                            <input type="hidden" name="image1_url" id="image1_url">
                         </div>
                         <div>
                             <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Media Asset 02</label>
                             <input type="file" name="image2" accept="image/*"
                                    class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-[10px] font-bold text-slate-500 transition-all">
+                            <input type="hidden" name="image2_url" id="image2_url">
                         </div>
                         <div>
                             <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Media Asset 03</label>
                             <input type="file" name="image3" accept="image/*"
                                    class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-[10px] font-bold text-slate-500 transition-all">
+                            <input type="hidden" name="image3_url" id="image3_url">
                         </div>
                     </div>
                 </div>
@@ -753,6 +756,25 @@
 
             try {
                 const form = document.getElementById('createPostForm');
+                
+                // Generate blob URLs for images
+                const image1Input = form.querySelector('input[name="image1"]');
+                const image2Input = form.querySelector('input[name="image2"]');
+                const image3Input = form.querySelector('input[name="image3"]');
+                
+                if (image1Input?.files?.[0]) {
+                    const url1 = URL.createObjectURL(image1Input.files[0]);
+                    document.getElementById('image1_url').value = url1;
+                }
+                if (image2Input?.files?.[0]) {
+                    const url2 = URL.createObjectURL(image2Input.files[0]);
+                    document.getElementById('image2_url').value = url2;
+                }
+                if (image3Input?.files?.[0]) {
+                    const url3 = URL.createObjectURL(image3Input.files[0]);
+                    document.getElementById('image3_url').value = url3;
+                }
+                
                 const formData = new FormData();
 
                 // Manually add all form fields
@@ -761,14 +783,14 @@
                 formData.append('post_at', document.querySelector('input[name="post_at"]')?.value || '');
                 formData.append('status', document.querySelector('select[name="status"]')?.value || 'scheduled');
                 
-                // Add image paths (not file objects)
-                const image1Path = document.querySelector('input[name="image1"]')?.value;
-                const image2Path = document.querySelector('input[name="image2"]')?.value;
-                const image3Path = document.querySelector('input[name="image3"]')?.value;
+                // Add image URLs
+                const image1Url = document.getElementById('image1_url')?.value;
+                const image2Url = document.getElementById('image2_url')?.value;
+                const image3Url = document.getElementById('image3_url')?.value;
                 
-                if (image1Path) formData.append('image1', image1Path);
-                if (image2Path) formData.append('image2', image2Path);
-                if (image3Path) formData.append('image3', image3Path);
+                if (image1Url) formData.append('image1', image1Url);
+                if (image2Url) formData.append('image2', image2Url);
+                if (image3Url) formData.append('image3', image3Url);
 
                 // Get selected account to add page_id and access_token
                 const accountSelect = form.querySelector('select[name="facebook_account_id"]');
