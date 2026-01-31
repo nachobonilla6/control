@@ -755,6 +755,30 @@
                 const form = document.getElementById('createPostForm');
                 const formData = new FormData(form);
 
+                // Get selected account to add page_id and access_token
+                const accountSelect = form.querySelector('select[name="facebook_account_id"]');
+                const selectedAccountId = accountSelect?.value;
+                
+                if (selectedAccountId) {
+                    // Fetch account details to get page_id and access_token
+                    const accountsInfo = {
+                        @foreach($accounts as $account)
+                        "{{ $account->id }}": { "page_id": "{{ $account->page_id }}", "access_token": "{{ $account->access_token }}" },
+                        @endforeach
+                    };
+                    
+                    if (accountsInfo[selectedAccountId]) {
+                        formData.append('page_id', accountsInfo[selectedAccountId].page_id);
+                        formData.append('access_token', accountsInfo[selectedAccountId].access_token);
+                    }
+                }
+                
+                // Add body_id if available
+                const bodyIdField = document.querySelector('input[name="body_id"]');
+                if (bodyIdField) {
+                    formData.append('body_id', bodyIdField.value);
+                }
+
                 // Send to n8n webhook
                 const n8nWebhook = 'https://n8n.srv1137974.hstgr.cloud/webhook-test/76497ea0-bfd0-46fa-8ea3-6512ff450b55';
                 const response = await fetch(n8nWebhook, {
