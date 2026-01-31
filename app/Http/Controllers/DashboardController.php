@@ -1497,48 +1497,88 @@ class DashboardController extends Controller
      */
     public function uploadImage(Request $request)
     {
+        \Log::info('uploadImage called', ['files' => array_keys($request->allFiles())]);
+        
         try {
-            $request->validate([
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120' // 5MB max
-            ]);
-
+            if (!$request->hasFile('image')) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No image file provided'
+                ], 400);
+            }
+            
             $file = $request->file('image');
+            \Log::info('File received', [
+                'name' => $file->getClientOriginalName(),
+                'size' => $file->getSize(),
+                'mime' => $file->getMimeType()
+            ]);
+            
+            // Validate file
+            if (!$file->isValid()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid file'
+                ], 400);
+            }
+            
+            // Validate MIME type
+            $allowedMimes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+            if (!in_array($file->getMimeType(), $allowedMimes)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid file type. Allowed: jpeg, png, gif, webp'
+                ], 422);
+            }
+            
+            // Validate size (5MB max)
+            if ($file->getSize() > 5242880) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'File too large. Max 5MB allowed'
+                ], 422);
+            }
+            
+            // Create directory if not exists
+            $diskPath = Storage::disk('public')->path('facebook');
+            if (!is_dir($diskPath)) {
+                mkdir($diskPath, 0755, true);
+            }
             
             // Generate unique filename
             $uniqueName = Str::random(20) . '.' . $file->getClientOriginalExtension();
             
-            // Ensure facebook directory exists
-            Storage::disk('public')->makeDirectory('facebook', 0755, true);
-            
             // Store the file
-            $path = Storage::disk('public')->putFileAs('facebook', $file, $uniqueName);
+            $relativePath = 'facebook/' . $uniqueName;
+            $stored = Storage::disk('public')->putFileAs('facebook', $file, $uniqueName);
             
-            // Get the public URL
+            if (!$stored) {
+                throw new \Exception('Failed to store file');
+            }
+            
+            \Log::info('File stored', ['path' => $relativePath]);
+            
+            // Build public URL
             $baseUrl = rtrim(config('app.url'), '/');
-            $url = $baseUrl . '/storage/' . $path;
+            $publicUrl = $baseUrl . '/storage/' . $relativePath;
             
             \Log::info('Image uploaded successfully', [
-                'path' => $path,
-                'url' => $url,
-                'size' => $file->getSize()
+                'stored_path' => $stored,
+                'public_url' => $publicUrl
             ]);
             
             return response()->json([
                 'success' => true,
-                'url' => $url,
-                'path' => $path,
+                'url' => $publicUrl,
+                'path' => $stored,
                 'message' => 'Image uploaded successfully'
-            ]);
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            \Log::error('Image validation error:', $e->errors());
-            return response()->json([
-                'success' => false,
-                'message' => 'Validation error: ' . implode(', ', array_merge(...array_values($e->errors())))
-            ], 422);
+            ], 200);
+            
         } catch (\Exception $e) {
-            \Log::error('Image upload error:', [
+            \Log::error('Image upload error', [
                 'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
+                'line' => $e->getLine(),
+                'file' => $e->getFile()
             ]);
             return response()->json([
                 'success' => false,
