@@ -765,47 +765,77 @@
                 
                 // Upload image 1
                 if (image1Input?.files?.[0]) {
-                    const formDataImg1 = new FormData();
-                    formDataImg1.append('image', image1Input.files[0]);
-                    const res1 = await fetch('{{ route("upload.image") }}', {
-                        method: 'POST',
-                        body: formDataImg1,
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                    try {
+                        const formDataImg1 = new FormData();
+                        formDataImg1.append('image', image1Input.files[0]);
+                        const res1 = await fetch('{{ route("upload.image") }}', {
+                            method: 'POST',
+                            body: formDataImg1,
+                            headers: {
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                            }
+                        });
+                        const data1 = await res1.json();
+                        console.log('Image 1 upload response:', data1);
+                        if (data1.success) {
+                            image1Url = data1.url;
+                            console.log('Image 1 URL:', image1Url);
+                        } else {
+                            console.error('Image 1 upload failed:', data1.message);
                         }
-                    });
-                    const data1 = await res1.json();
-                    if (data1.success) image1Url = data1.url;
+                    } catch (err) {
+                        console.error('Error uploading image 1:', err);
+                    }
                 }
                 
                 // Upload image 2
                 if (image2Input?.files?.[0]) {
-                    const formDataImg2 = new FormData();
-                    formDataImg2.append('image', image2Input.files[0]);
-                    const res2 = await fetch('{{ route("upload.image") }}', {
-                        method: 'POST',
-                        body: formDataImg2,
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                    try {
+                        const formDataImg2 = new FormData();
+                        formDataImg2.append('image', image2Input.files[0]);
+                        const res2 = await fetch('{{ route("upload.image") }}', {
+                            method: 'POST',
+                            body: formDataImg2,
+                            headers: {
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                            }
+                        });
+                        const data2 = await res2.json();
+                        console.log('Image 2 upload response:', data2);
+                        if (data2.success) {
+                            image2Url = data2.url;
+                            console.log('Image 2 URL:', image2Url);
+                        } else {
+                            console.error('Image 2 upload failed:', data2.message);
                         }
-                    });
-                    const data2 = await res2.json();
-                    if (data2.success) image2Url = data2.url;
+                    } catch (err) {
+                        console.error('Error uploading image 2:', err);
+                    }
                 }
                 
                 // Upload image 3
                 if (image3Input?.files?.[0]) {
-                    const formDataImg3 = new FormData();
-                    formDataImg3.append('image', image3Input.files[0]);
-                    const res3 = await fetch('{{ route("upload.image") }}', {
-                        method: 'POST',
-                        body: formDataImg3,
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                    try {
+                        const formDataImg3 = new FormData();
+                        formDataImg3.append('image', image3Input.files[0]);
+                        const res3 = await fetch('{{ route("upload.image") }}', {
+                            method: 'POST',
+                            body: formDataImg3,
+                            headers: {
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                            }
+                        });
+                        const data3 = await res3.json();
+                        console.log('Image 3 upload response:', data3);
+                        if (data3.success) {
+                            image3Url = data3.url;
+                            console.log('Image 3 URL:', image3Url);
+                        } else {
+                            console.error('Image 3 upload failed:', data3.message);
                         }
-                    });
-                    const data3 = await res3.json();
-                    if (data3.success) image3Url = data3.url;
+                    } catch (err) {
+                        console.error('Error uploading image 3:', err);
+                    }
                 }
                 
                 const formData = new FormData();
@@ -852,6 +882,7 @@
 
                 // Send to n8n webhook
                 const n8nWebhook = 'https://n8n.srv1137974.hstgr.cloud/webhook-test/76497ea0-bfd0-46fa-8ea3-6512ff450b55';
+                console.log('Posting to webhook:', n8nWebhook);
                 const response = await fetch(n8nWebhook, {
                     method: 'POST',
                     body: formData
@@ -860,7 +891,7 @@
                 if (!response.ok) {
                     const text = await response.text();
                     console.error('Webhook error:', response.status, text);
-                    alert('Error sending to webhook: ' + response.status);
+                    alert('Error sending to webhook: ' + response.status + ' - ' + text);
                     return;
                 }
 
@@ -872,13 +903,14 @@
                 } else {
                     result = await response.text();
                 }
+                console.log('Webhook response:', result);
 
                 // Close modal and reload to show staged post
                 document.getElementById('postModal')?.classList.add('hidden');
                 setTimeout(() => location.reload(), 800);
             } catch (err) {
                 console.error('Send to webhook failed:', err);
-                alert('Failed to send post to webhook. See console for details.');
+                alert('Failed to send post to webhook: ' + err.message);
             } finally {
                 if (aiModal) aiModal.classList.add('hidden');
                 btn.disabled = false;
