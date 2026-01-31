@@ -592,12 +592,11 @@
         fetchNotifs();
 
         function openCreatePostModal() {
-            // Set current datetime + 6 hours as default
+            // Set current datetime as default (no offset)
             const now = new Date();
-            const plus6Hours = new Date(now.getTime() + (6 * 60 * 60 * 1000));
             // Adjust for local timezone
-            const offset = plus6Hours.getTimezoneOffset();
-            const localDateTime = new Date(plus6Hours.getTime() - offset * 60000).toISOString().slice(0, 16);
+            const offset = now.getTimezoneOffset();
+            const localDateTime = new Date(now.getTime() - offset * 60000).toISOString().slice(0, 16);
             document.getElementById('post_at_input').value = localDateTime;
             
             // Open modal
