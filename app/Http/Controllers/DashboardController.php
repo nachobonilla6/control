@@ -1508,24 +1508,33 @@ class DashboardController extends Controller
             $filename = 'facebook/' . Str::random(20) . '.' . $file->getClientOriginalExtension();
             
             // Store the file in public disk
-            Storage::disk('public')->put($filename, file_get_contents($file->getRealPath()));
+            $path = Storage::disk('public')->putFileAs('facebook', $file, Str::random(20) . '.' . $file->getClientOriginalExtension());
             
-            // Get the public URL
-            $url = Storage::disk('public')->url($filename);
+            // Get the public URL - ensure it's absolute
+            $url = Storage::disk('public')->url($path);
+            
+            // If URL is relative, make it absolute
+            if (!str_starts_with($url, 'http')) {
+                $url = rtrim(config('app.url'), '/') . '/' . ltrim($url, '/');
+            }
+            
+            \Log::info('Image uploaded successfully', ['path' => $path, 'url' => $url]);
             
             return response()->json([
                 'success' => true,
                 'url' => $url,
+                'path' => $path,
                 'message' => 'Image uploaded successfully'
             ]);
         } catch (\Exception $e) {
-            \Log::error('Image upload error:', ['error' => $e->getMessage()]);
+            \Log::error('Image upload error:', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
             return response()->json([
                 'success' => false,
                 'message' => 'Error uploading image: ' . $e->getMessage()
             ], 500);
         }
     }
+
 
 }
 

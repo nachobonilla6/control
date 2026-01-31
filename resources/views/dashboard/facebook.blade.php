@@ -768,6 +768,7 @@
                     try {
                         const formDataImg1 = new FormData();
                         formDataImg1.append('image', image1Input.files[0]);
+                        console.log('Uploading image 1:', image1Input.files[0].name);
                         const res1 = await fetch('{{ route("upload.image") }}', {
                             method: 'POST',
                             body: formDataImg1,
@@ -775,17 +776,25 @@
                                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
                             }
                         });
-                        const data1 = await res1.json();
-                        console.log('Image 1 upload response:', data1);
-                        if (data1.success) {
-                            image1Url = data1.url;
-                            console.log('Image 1 URL:', image1Url);
+                        console.log('Image 1 response status:', res1.status);
+                        if (!res1.ok) {
+                            const errText = await res1.text();
+                            console.error('Image 1 upload HTTP error:', res1.status, errText);
                         } else {
-                            console.error('Image 1 upload failed:', data1.message);
+                            const data1 = await res1.json();
+                            console.log('Image 1 upload response:', data1);
+                            if (data1.success && data1.url) {
+                                image1Url = data1.url;
+                                console.log('✓ Image 1 URL:', image1Url);
+                            } else {
+                                console.error('Image 1 upload failed:', data1.message);
+                            }
                         }
                     } catch (err) {
-                        console.error('Error uploading image 1:', err);
+                        console.error('Error uploading image 1:', err.message);
                     }
+                } else {
+                    console.log('No image 1 selected');
                 }
                 
                 // Upload image 2
@@ -793,6 +802,7 @@
                     try {
                         const formDataImg2 = new FormData();
                         formDataImg2.append('image', image2Input.files[0]);
+                        console.log('Uploading image 2:', image2Input.files[0].name);
                         const res2 = await fetch('{{ route("upload.image") }}', {
                             method: 'POST',
                             body: formDataImg2,
@@ -800,17 +810,25 @@
                                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
                             }
                         });
-                        const data2 = await res2.json();
-                        console.log('Image 2 upload response:', data2);
-                        if (data2.success) {
-                            image2Url = data2.url;
-                            console.log('Image 2 URL:', image2Url);
+                        console.log('Image 2 response status:', res2.status);
+                        if (!res2.ok) {
+                            const errText = await res2.text();
+                            console.error('Image 2 upload HTTP error:', res2.status, errText);
                         } else {
-                            console.error('Image 2 upload failed:', data2.message);
+                            const data2 = await res2.json();
+                            console.log('Image 2 upload response:', data2);
+                            if (data2.success && data2.url) {
+                                image2Url = data2.url;
+                                console.log('✓ Image 2 URL:', image2Url);
+                            } else {
+                                console.error('Image 2 upload failed:', data2.message);
+                            }
                         }
                     } catch (err) {
-                        console.error('Error uploading image 2:', err);
+                        console.error('Error uploading image 2:', err.message);
                     }
+                } else {
+                    console.log('No image 2 selected');
                 }
                 
                 // Upload image 3
@@ -818,6 +836,7 @@
                     try {
                         const formDataImg3 = new FormData();
                         formDataImg3.append('image', image3Input.files[0]);
+                        console.log('Uploading image 3:', image3Input.files[0].name);
                         const res3 = await fetch('{{ route("upload.image") }}', {
                             method: 'POST',
                             body: formDataImg3,
@@ -825,17 +844,25 @@
                                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
                             }
                         });
-                        const data3 = await res3.json();
-                        console.log('Image 3 upload response:', data3);
-                        if (data3.success) {
-                            image3Url = data3.url;
-                            console.log('Image 3 URL:', image3Url);
+                        console.log('Image 3 response status:', res3.status);
+                        if (!res3.ok) {
+                            const errText = await res3.text();
+                            console.error('Image 3 upload HTTP error:', res3.status, errText);
                         } else {
-                            console.error('Image 3 upload failed:', data3.message);
+                            const data3 = await res3.json();
+                            console.log('Image 3 upload response:', data3);
+                            if (data3.success && data3.url) {
+                                image3Url = data3.url;
+                                console.log('✓ Image 3 URL:', image3Url);
+                            } else {
+                                console.error('Image 3 upload failed:', data3.message);
+                            }
                         }
                     } catch (err) {
-                        console.error('Error uploading image 3:', err);
+                        console.error('Error uploading image 3:', err.message);
                     }
+                } else {
+                    console.log('No image 3 selected');
                 }
                 
                 // Prepare payload for webhook
