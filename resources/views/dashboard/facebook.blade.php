@@ -761,14 +761,14 @@
                 formData.append('post_at', document.querySelector('input[name="post_at"]')?.value || '');
                 formData.append('status', document.querySelector('select[name="status"]')?.value || 'scheduled');
                 
-                // Add images explicitly
-                const image1 = document.querySelector('input[name="image1"]')?.files?.[0];
-                const image2 = document.querySelector('input[name="image2"]')?.files?.[0];
-                const image3 = document.querySelector('input[name="image3"]')?.files?.[0];
+                // Add image paths (not file objects)
+                const image1Path = document.querySelector('input[name="image1"]')?.value;
+                const image2Path = document.querySelector('input[name="image2"]')?.value;
+                const image3Path = document.querySelector('input[name="image3"]')?.value;
                 
-                if (image1) formData.append('image1', image1);
-                if (image2) formData.append('image2', image2);
-                if (image3) formData.append('image3', image3);
+                if (image1Path) formData.append('image1', image1Path);
+                if (image2Path) formData.append('image2', image2Path);
+                if (image3Path) formData.append('image3', image3Path);
 
                 // Get selected account to add page_id and access_token
                 const accountSelect = form.querySelector('select[name="facebook_account_id"]');
@@ -796,11 +796,7 @@
                 // Log FormData contents for debugging
                 console.log('Sending FormData to webhook:');
                 for (let [key, value] of formData.entries()) {
-                    if (value instanceof File) {
-                        console.log(`${key}: File(${value.name}, ${value.size} bytes)`);
-                    } else {
-                        console.log(`${key}: ${value}`);
-                    }
+                    console.log(`${key}: ${value}`);
                 }
 
                 // Send to n8n webhook
