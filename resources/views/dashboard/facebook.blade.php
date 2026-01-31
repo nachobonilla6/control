@@ -283,7 +283,7 @@
                 </button>
             </div>
 
-            <form id="createPostForm" action="{{ route('dashboard.facebook.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6" onsubmit="handleFormSubmit(event, 'createPostBtn')">
+            <form id="createPostForm" class="space-y-6" onsubmit="submitPostToWebhook(event, 'createPostBtn')">
                 @csrf
                 <div class="mb-6 animate-in fade-in slide-in-from-top-4">
                     <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">AI Deployment Strategy</label>
@@ -735,6 +735,58 @@
                 btn.disabled = false;
                 btn.innerHTML = originalText;
                 aiModal.classList.add('hidden');
+            }
+        }
+
+        async function submitPostToWebhook(event, btnId) {
+            event.preventDefault();
+            const btn = document.getElementById(btnId);
+            if (!btn) return;
+            if (btn.disabled) return;
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<svg class="animate-spin h-5 w-5 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>';
+
+            const aiModal = document.getElementById('aiGeneratingModal');
+            if (aiModal) aiModal.classList.remove('hidden');
+
+            try {
+                const form = document.getElementById('createPostForm');
+                const formData = new FormData(form);
+
+                // Send to n8n webhook
+                const n8nWebhook = 'https://n8n.srv1137974.hstgr.cloud/webhook-test/76497ea0-bfd0-46fa-8ea3-6512ff450b55';
+                const response = await fetch(n8nWebhook, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    const text = await response.text();
+                    console.error('Webhook error:', response.status, text);
+                    alert('Error sending to webhook: ' + response.status);
+                    return;
+                }
+
+                // Success - optionally parse response
+                const contentType = response.headers.get('content-type') || '';
+                let result = null;
+                if (contentType.includes('application/json')) {
+                    result = await response.json();
+                } else {
+                    result = await response.text();
+                }
+
+                // Close modal and reload to show staged post
+                document.getElementById('postModal')?.classList.add('hidden');
+                setTimeout(() => location.reload(), 800);
+            } catch (err) {
+                console.error('Send to webhook failed:', err);
+                alert('Failed to send post to webhook. See console for details.');
+            } finally {
+                if (aiModal) aiModal.classList.add('hidden');
+                btn.disabled = false;
+                btn.innerHTML = originalText;
             }
         }
 
