@@ -753,39 +753,28 @@
 
             try {
                 const form = document.getElementById('createPostForm');
-                const formData = new FormData(form);
+                const formData = new FormData();
 
-                // Ensure images are included explicitly
-                const image1Input = form.querySelector('input[name="image1"]');
-                const image2Input = form.querySelector('input[name="image2"]');
-                const image3Input = form.querySelector('input[name="image3"]');
+                // Manually add all form fields
+                formData.append('content', document.querySelector('textarea[name="content"]')?.value || '');
+                formData.append('facebook_account_id', document.querySelector('select[name="facebook_account_id"]')?.value || '');
+                formData.append('post_at', document.querySelector('input[name="post_at"]')?.value || '');
+                formData.append('status', document.querySelector('select[name="status"]')?.value || 'scheduled');
                 
-                if (image1Input?.files?.[0]) {
-                    formData.set('image1', image1Input.files[0]);
-                }
-                if (image2Input?.files?.[0]) {
-                    formData.set('image2', image2Input.files[0]);
-                }
-                if (image3Input?.files?.[0]) {
-                    formData.set('image3', image3Input.files[0]);
-                }
-
-                // Log FormData contents for debugging
-                console.log('FormData entries:');
-                for (let [key, value] of formData.entries()) {
-                    if (value instanceof File) {
-                        console.log(`${key}: File(${value.name})`);
-                    } else {
-                        console.log(`${key}: ${value}`);
-                    }
-                }
+                // Add images explicitly
+                const image1 = document.querySelector('input[name="image1"]')?.files?.[0];
+                const image2 = document.querySelector('input[name="image2"]')?.files?.[0];
+                const image3 = document.querySelector('input[name="image3"]')?.files?.[0];
+                
+                if (image1) formData.append('image1', image1);
+                if (image2) formData.append('image2', image2);
+                if (image3) formData.append('image3', image3);
 
                 // Get selected account to add page_id and access_token
                 const accountSelect = form.querySelector('select[name="facebook_account_id"]');
                 const selectedAccountId = accountSelect?.value;
                 
                 if (selectedAccountId) {
-                    // Fetch account details to get page_id and access_token
                     const accountsInfo = {
                         @foreach($accounts as $account)
                         "{{ $account->id }}": { "page_id": "{{ $account->page_id }}", "access_token": "{{ $account->access_token }}" },
@@ -800,8 +789,18 @@
                 
                 // Add body_id if available
                 const bodyIdField = document.querySelector('input[name="body_id"]');
-                if (bodyIdField) {
+                if (bodyIdField?.value) {
                     formData.append('body_id', bodyIdField.value);
+                }
+
+                // Log FormData contents for debugging
+                console.log('Sending FormData to webhook:');
+                for (let [key, value] of formData.entries()) {
+                    if (value instanceof File) {
+                        console.log(`${key}: File(${value.name}, ${value.size} bytes)`);
+                    } else {
+                        console.log(`${key}: ${value}`);
+                    }
                 }
 
                 // Send to n8n webhook
