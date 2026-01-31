@@ -838,22 +838,16 @@
                     }
                 }
                 
-                const formData = new FormData();
-
-                // Manually add all form fields
-                formData.append('content', document.querySelector('textarea[name="content"]')?.value || '');
-                formData.append('facebook_account_id', document.querySelector('select[name="facebook_account_id"]')?.value || '');
-                formData.append('post_at', document.querySelector('input[name="post_at"]')?.value || '');
-                formData.append('status', document.querySelector('select[name="status"]')?.value || 'scheduled');
-                
-                // Add image URLs
-                if (image1Url) formData.append('image1', image1Url);
-                if (image2Url) formData.append('image2', image2Url);
-                if (image3Url) formData.append('image3', image3Url);
-
-                // Get selected account to add page_id and access_token
+                // Prepare payload for webhook
+                const contentTextarea = document.querySelector('textarea[name="content"]');
                 const accountSelect = form.querySelector('select[name="facebook_account_id"]');
+                const postAtInput = document.querySelector('input[name="post_at"]');
+                const statusSelect = document.querySelector('select[name="status"]');
+                const bodyIdField = document.querySelector('input[name="body_id"]');
+                
                 const selectedAccountId = accountSelect?.value;
+                let pageId = '';
+                let accessToken = '';
                 
                 if (selectedAccountId) {
                     const accountsInfo = {
@@ -863,29 +857,37 @@
                     };
                     
                     if (accountsInfo[selectedAccountId]) {
-                        formData.append('page_id', accountsInfo[selectedAccountId].page_id);
-                        formData.append('access_token', accountsInfo[selectedAccountId].access_token);
+                        pageId = accountsInfo[selectedAccountId].page_id;
+                        accessToken = accountsInfo[selectedAccountId].access_token;
                     }
                 }
                 
-                // Add body_id if available
-                const bodyIdField = document.querySelector('input[name="body_id"]');
-                if (bodyIdField?.value) {
-                    formData.append('body_id', bodyIdField.value);
-                }
+                // Build payload as JSON
+                const payload = {
+                    content: contentTextarea?.value || '',
+                    facebook_account_id: selectedAccountId || '',
+                    post_at: postAtInput?.value || '',
+                    status: statusSelect?.value || 'scheduled',
+                    image1: image1Url || null,
+                    image2: image2Url || null,
+                    image3: image3Url || null,
+                    page_id: pageId,
+                    access_token: accessToken,
+                    body_id: bodyIdField?.value || ''
+                };
 
-                // Log FormData contents for debugging
-                console.log('Sending FormData to webhook:');
-                for (let [key, value] of formData.entries()) {
-                    console.log(`${key}: ${value}`);
-                }
+                // Log payload for debugging
+                console.log('Sending payload to webhook:', payload);
 
-                // Send to n8n webhook
+                // Send to n8n webhook as JSON
                 const n8nWebhook = 'https://n8n.srv1137974.hstgr.cloud/webhook-test/76497ea0-bfd0-46fa-8ea3-6512ff450b55';
                 console.log('Posting to webhook:', n8nWebhook);
                 const response = await fetch(n8nWebhook, {
                     method: 'POST',
-                    body: formData
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
                 });
 
                 if (!response.ok) {
