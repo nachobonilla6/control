@@ -755,6 +755,31 @@
                 const form = document.getElementById('createPostForm');
                 const formData = new FormData(form);
 
+                // Ensure images are included explicitly
+                const image1Input = form.querySelector('input[name="image1"]');
+                const image2Input = form.querySelector('input[name="image2"]');
+                const image3Input = form.querySelector('input[name="image3"]');
+                
+                if (image1Input?.files?.[0]) {
+                    formData.set('image1', image1Input.files[0]);
+                }
+                if (image2Input?.files?.[0]) {
+                    formData.set('image2', image2Input.files[0]);
+                }
+                if (image3Input?.files?.[0]) {
+                    formData.set('image3', image3Input.files[0]);
+                }
+
+                // Log FormData contents for debugging
+                console.log('FormData entries:');
+                for (let [key, value] of formData.entries()) {
+                    if (value instanceof File) {
+                        console.log(`${key}: File(${value.name})`);
+                    } else {
+                        console.log(`${key}: ${value}`);
+                    }
+                }
+
                 // Get selected account to add page_id and access_token
                 const accountSelect = form.querySelector('select[name="facebook_account_id"]');
                 const selectedAccountId = accountSelect?.value;
