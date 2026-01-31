@@ -772,17 +772,20 @@
                     
                     try {
                         const file = fileInput.files[0];
-                        console.log(`Uploading image ${imageNum}:`, file.name, `(${file.size} bytes)`);
+                        console.log(`[Image ${imageNum}] Uploading:`, file.name, `(${Math.round(file.size/1024)}KB)`);
                         
                         const formData = new FormData();
                         formData.append('image', file);
                         
-                        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
-                        if (!csrfToken) {
-                            console.warn('CSRF token not found');
-                        }
+                        console.log(`[Image ${imageNum}] Calling /upload-image endpoint...`);
                         
-                        const response = await fetch('{{ route("upload.image") }}', {
+                        const uploadUrl = '{{ route("upload.image") }}';
+                        console.log(`[Image ${imageNum}] Upload URL:`, uploadUrl);
+                        
+                        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+                        console.log(`[Image ${imageNum}] CSRF token available:`, csrfToken ? 'YES' : 'NO');
+                        
+                        const response = await fetch(uploadUrl, {
                             method: 'POST',
                             body: formData,
                             headers: {
@@ -790,36 +793,39 @@
                             }
                         });
                         
-                        console.log(`Image ${imageNum} response status:`, response.status, response.statusText);
+                        console.log(`[Image ${imageNum}] Response status:`, response.status, response.statusText);
+                        console.log(`[Image ${imageNum}] Content-Type:`, response.headers.get('content-type'));
                         
                         if (!response.ok) {
                             const errorText = await response.text();
-                            console.error(`Image ${imageNum} HTTP error:`, response.status, errorText);
+                            console.error(`[Image ${imageNum}] HTTP error:`, response.status, errorText);
                             return null;
                         }
                         
                         const data = await response.json();
-                        console.log(`Image ${imageNum} response:`, data);
+                        console.log(`[Image ${imageNum}] Response data:`, data);
                         
                         if (data.success && data.url) {
-                            console.log(`✓ Image ${imageNum} URL:`, data.url);
+                            console.log(`✅ [Image ${imageNum}] Success! URL:`, data.url);
                             return data.url;
                         } else {
-                            console.error(`Image ${imageNum} failed:`, data.message);
+                            console.error(`❌ [Image ${imageNum}] Failed:`, data.message);
                             return null;
                         }
                     } catch (err) {
-                        console.error(`Error uploading image ${imageNum}:`, err);
+                        console.error(`❌ [Image ${imageNum}] Exception:`, err.message, err);
                         return null;
                     }
                 };
                 
                 // Upload all images
+                console.log('=== Starting image uploads ===');
                 image1Url = await uploadImageFile(image1Input, 1);
                 image2Url = await uploadImageFile(image2Input, 2);
                 image3Url = await uploadImageFile(image3Input, 3);
                 
-                console.log('All image URLs:', { image1Url, image2Url, image3Url });
+                console.log('=== Image uploads complete ===');
+                console.log('Final image URLs:', { image1Url, image2Url, image3Url });
                 
                 // Prepare payload for webhook
                 const contentTextarea = document.querySelector('textarea[name="content"]');
