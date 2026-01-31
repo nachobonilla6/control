@@ -285,14 +285,13 @@
             showTyping();
 
             try {
-                const response = await fetch('{{ route('chat') }}', {
+                const response = await fetch('https://n8n.srv1137974.hstgr.cloud/webhook-test/776f766b-f300-4727-a778-c3be64254f8f', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        'Accept': 'application/json'
                     },
-                    body: JSON.stringify({ message: message })
+                    body: JSON.stringify({ message: message, bot_id: '{{ $bot_id }}' })
                 });
 
                 const data = await response.json();
