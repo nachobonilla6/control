@@ -1497,28 +1497,31 @@ class DashboardController extends Controller
      */
     public function uploadImage(Request $request)
     {
-        $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120' // 5MB max
-        ]);
-
         try {
+            $request->validate([
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120' // 5MB max
+            ]);
+
             $file = $request->file('image');
             
             // Generate unique filename
-            $filename = 'facebook/' . Str::random(20) . '.' . $file->getClientOriginalExtension();
+            $uniqueName = Str::random(20) . '.' . $file->getClientOriginalExtension();
             
-            // Store the file in public disk
-            $path = Storage::disk('public')->putFileAs('facebook', $file, Str::random(20) . '.' . $file->getClientOriginalExtension());
+            // Ensure facebook directory exists
+            Storage::disk('public')->makeDirectory('facebook', 0755, true);
             
-            // Get the public URL - ensure it's absolute
-            $url = Storage::disk('public')->url($path);
+            // Store the file
+            $path = Storage::disk('public')->putFileAs('facebook', $file, $uniqueName);
             
-            // If URL is relative, make it absolute
-            if (!str_starts_with($url, 'http')) {
-                $url = rtrim(config('app.url'), '/') . '/' . ltrim($url, '/');
-            }
+            // Get the public URL
+            $baseUrl = rtrim(config('app.url'), '/');
+            $url = $baseUrl . '/storage/' . $path;
             
-            \Log::info('Image uploaded successfully', ['path' => $path, 'url' => $url]);
+            \Log::info('Image uploaded successfully', [
+                'path' => $path,
+                'url' => $url,
+                'size' => $file->getSize()
+            ]);
             
             return response()->json([
                 'success' => true,
@@ -1526,14 +1529,24 @@ class DashboardController extends Controller
                 'path' => $path,
                 'message' => 'Image uploaded successfully'
             ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            \Log::error('Image validation error:', $e->errors());
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation error: ' . implode(', ', array_merge(...array_values($e->errors())))
+            ], 422);
         } catch (\Exception $e) {
-            \Log::error('Image upload error:', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
+            \Log::error('Image upload error:', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
             return response()->json([
                 'success' => false,
                 'message' => 'Error uploading image: ' . $e->getMessage()
             ], 500);
         }
     }
+
 
 
 }

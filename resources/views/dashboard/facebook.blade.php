@@ -754,54 +754,72 @@
             try {
                 const form = document.getElementById('createPostForm');
                 
-                // Convert images to base64
+                // Upload images to Laravel and get public URLs
                 const image1Input = form.querySelector('input[name="image1"]');
                 const image2Input = form.querySelector('input[name="image2"]');
                 const image3Input = form.querySelector('input[name="image3"]');
                 
-                let image1Base64 = null;
-                let image2Base64 = null;
-                let image3Base64 = null;
+                let image1Url = null;
+                let image2Url = null;
+                let image3Url = null;
                 
-                // Function to convert file to base64
-                const fileToBase64 = (file) => {
-                    return new Promise((resolve, reject) => {
-                        const reader = new FileReader();
-                        reader.onload = () => resolve(reader.result);
-                        reader.onerror = reject;
-                        reader.readAsDataURL(file);
-                    });
+                // Helper function to upload image
+                const uploadImageFile = async (fileInput, imageNum) => {
+                    if (!fileInput?.files?.[0]) {
+                        console.log(`No image ${imageNum} selected`);
+                        return null;
+                    }
+                    
+                    try {
+                        const file = fileInput.files[0];
+                        console.log(`Uploading image ${imageNum}:`, file.name, `(${file.size} bytes)`);
+                        
+                        const formData = new FormData();
+                        formData.append('image', file);
+                        
+                        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+                        if (!csrfToken) {
+                            console.warn('CSRF token not found');
+                        }
+                        
+                        const response = await fetch('{{ route("upload.image") }}', {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'X-CSRF-TOKEN': csrfToken || ''
+                            }
+                        });
+                        
+                        console.log(`Image ${imageNum} response status:`, response.status, response.statusText);
+                        
+                        if (!response.ok) {
+                            const errorText = await response.text();
+                            console.error(`Image ${imageNum} HTTP error:`, response.status, errorText);
+                            return null;
+                        }
+                        
+                        const data = await response.json();
+                        console.log(`Image ${imageNum} response:`, data);
+                        
+                        if (data.success && data.url) {
+                            console.log(`✓ Image ${imageNum} URL:`, data.url);
+                            return data.url;
+                        } else {
+                            console.error(`Image ${imageNum} failed:`, data.message);
+                            return null;
+                        }
+                    } catch (err) {
+                        console.error(`Error uploading image ${imageNum}:`, err);
+                        return null;
+                    }
                 };
                 
-                // Convert image 1
-                if (image1Input?.files?.[0]) {
-                    try {
-                        image1Base64 = await fileToBase64(image1Input.files[0]);
-                        console.log('✓ Image 1 converted to base64, length:', image1Base64.length);
-                    } catch (err) {
-                        console.error('Error converting image 1:', err.message);
-                    }
-                }
+                // Upload all images
+                image1Url = await uploadImageFile(image1Input, 1);
+                image2Url = await uploadImageFile(image2Input, 2);
+                image3Url = await uploadImageFile(image3Input, 3);
                 
-                // Convert image 2
-                if (image2Input?.files?.[0]) {
-                    try {
-                        image2Base64 = await fileToBase64(image2Input.files[0]);
-                        console.log('✓ Image 2 converted to base64, length:', image2Base64.length);
-                    } catch (err) {
-                        console.error('Error converting image 2:', err.message);
-                    }
-                }
-                
-                // Convert image 3
-                if (image3Input?.files?.[0]) {
-                    try {
-                        image3Base64 = await fileToBase64(image3Input.files[0]);
-                        console.log('✓ Image 3 converted to base64, length:', image3Base64.length);
-                    } catch (err) {
-                        console.error('Error converting image 3:', err.message);
-                    }
-                }
+                console.log('All image URLs:', { image1Url, image2Url, image3Url });
                 
                 // Prepare payload for webhook
                 const contentTextarea = document.querySelector('textarea[name="content"]');
@@ -827,27 +845,22 @@
                     }
                 }
                 
-                // Build payload as JSON with base64 images
+                // Build payload as JSON with image URLs
                 const payload = {
                     content: contentTextarea?.value || '',
                     facebook_account_id: selectedAccountId || '',
                     post_at: postAtInput?.value || '',
                     status: statusSelect?.value || 'scheduled',
-                    image1: image1Base64,
-                    image2: image2Base64,
-                    image3: image3Base64,
+                    image1: image1Url,
+                    image2: image2Url,
+                    image3: image3Url,
                     page_id: pageId,
                     access_token: accessToken,
                     body_id: bodyIdField?.value || ''
                 };
 
                 // Log payload for debugging
-                console.log('Sending payload to webhook:', {
-                    ...payload,
-                    image1: payload.image1 ? `base64 (${payload.image1.length} chars)` : null,
-                    image2: payload.image2 ? `base64 (${payload.image2.length} chars)` : null,
-                    image3: payload.image3 ? `base64 (${payload.image3.length} chars)` : null
-                });
+                console.log('Final payload to send to webhook:', payload);
 
                 // Send to n8n webhook as JSON
                 const n8nWebhook = 'https://n8n.srv1137974.hstgr.cloud/webhook-test/76497ea0-bfd0-46fa-8ea3-6512ff450b55';
