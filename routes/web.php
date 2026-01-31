@@ -100,6 +100,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/chat/new', [\App\Http\Controllers\DashboardController::class, 'chatNew'])->name('chat.new');
     Route::get('/notifications', [\App\Http\Controllers\DashboardController::class, 'notifications'])->name('notifications');
     Route::post('/profile/update', [\App\Http\Controllers\DashboardController::class, 'profileUpdate'])->name('dashboard.profile.update');
+    
+    // Image upload
+    Route::post('/upload-image', [\App\Http\Controllers\DashboardController::class, 'uploadImage'])->name('upload.image');
 
     Route::post('/logout', function (Request $request) {
         Auth::logout();

@@ -1492,4 +1492,40 @@ class DashboardController extends Controller
         }
     }
 
+    /**
+     * Upload image and return public URL
+     */
+    public function uploadImage(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120' // 5MB max
+        ]);
+
+        try {
+            $file = $request->file('image');
+            
+            // Generate unique filename
+            $filename = 'facebook/' . Str::random(20) . '.' . $file->getClientOriginalExtension();
+            
+            // Store the file in public disk
+            Storage::disk('public')->put($filename, file_get_contents($file->getRealPath()));
+            
+            // Get the public URL
+            $url = Storage::disk('public')->url($filename);
+            
+            return response()->json([
+                'success' => true,
+                'url' => $url,
+                'message' => 'Image uploaded successfully'
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Image upload error:', ['error' => $e->getMessage()]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Error uploading image: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
 }
+

@@ -338,19 +338,16 @@
                             <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Media Asset 01</label>
                             <input type="file" name="image1" accept="image/*"
                                    class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-[10px] font-bold text-slate-500 transition-all">
-                            <input type="hidden" name="image1_url" id="image1_url">
                         </div>
                         <div>
                             <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Media Asset 02</label>
                             <input type="file" name="image2" accept="image/*"
                                    class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-[10px] font-bold text-slate-500 transition-all">
-                            <input type="hidden" name="image2_url" id="image2_url">
                         </div>
                         <div>
                             <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Media Asset 03</label>
                             <input type="file" name="image3" accept="image/*"
                                    class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-[10px] font-bold text-slate-500 transition-all">
-                            <input type="hidden" name="image3_url" id="image3_url">
                         </div>
                     </div>
                 </div>
@@ -757,22 +754,58 @@
             try {
                 const form = document.getElementById('createPostForm');
                 
-                // Generate blob URLs for images
+                // Upload images to Laravel and get public URLs
                 const image1Input = form.querySelector('input[name="image1"]');
                 const image2Input = form.querySelector('input[name="image2"]');
                 const image3Input = form.querySelector('input[name="image3"]');
                 
+                let image1Url = '';
+                let image2Url = '';
+                let image3Url = '';
+                
+                // Upload image 1
                 if (image1Input?.files?.[0]) {
-                    const url1 = URL.createObjectURL(image1Input.files[0]);
-                    document.getElementById('image1_url').value = url1;
+                    const formDataImg1 = new FormData();
+                    formDataImg1.append('image', image1Input.files[0]);
+                    const res1 = await fetch('{{ route("upload.image") }}', {
+                        method: 'POST',
+                        body: formDataImg1,
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                        }
+                    });
+                    const data1 = await res1.json();
+                    if (data1.success) image1Url = data1.url;
                 }
+                
+                // Upload image 2
                 if (image2Input?.files?.[0]) {
-                    const url2 = URL.createObjectURL(image2Input.files[0]);
-                    document.getElementById('image2_url').value = url2;
+                    const formDataImg2 = new FormData();
+                    formDataImg2.append('image', image2Input.files[0]);
+                    const res2 = await fetch('{{ route("upload.image") }}', {
+                        method: 'POST',
+                        body: formDataImg2,
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                        }
+                    });
+                    const data2 = await res2.json();
+                    if (data2.success) image2Url = data2.url;
                 }
+                
+                // Upload image 3
                 if (image3Input?.files?.[0]) {
-                    const url3 = URL.createObjectURL(image3Input.files[0]);
-                    document.getElementById('image3_url').value = url3;
+                    const formDataImg3 = new FormData();
+                    formDataImg3.append('image', image3Input.files[0]);
+                    const res3 = await fetch('{{ route("upload.image") }}', {
+                        method: 'POST',
+                        body: formDataImg3,
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                        }
+                    });
+                    const data3 = await res3.json();
+                    if (data3.success) image3Url = data3.url;
                 }
                 
                 const formData = new FormData();
@@ -784,10 +817,6 @@
                 formData.append('status', document.querySelector('select[name="status"]')?.value || 'scheduled');
                 
                 // Add image URLs
-                const image1Url = document.getElementById('image1_url')?.value;
-                const image2Url = document.getElementById('image2_url')?.value;
-                const image3Url = document.getElementById('image3_url')?.value;
-                
                 if (image1Url) formData.append('image1', image1Url);
                 if (image2Url) formData.append('image2', image2Url);
                 if (image3Url) formData.append('image3', image3Url);
