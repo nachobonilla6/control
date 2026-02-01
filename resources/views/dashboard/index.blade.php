@@ -34,14 +34,16 @@
             <span class="text-slate-700 font-light text-xl italic">/</span>
             <span class="text-sm font-medium text-slate-400 tracking-wide uppercase group-hover/brand:text-indigo-400 transition-colors">Control Panel</span>
         </a>
-        <div class="flex items-center space-x-4">
-            <a href="{{ route('dashboard.chat') }}" class="flex items-center space-x-2 px-4 py-2 bg-indigo-600/10 hover:bg-indigo-600/20 border border-indigo-500/20 rounded-xl transition-all group">
+            <div class="flex items-center space-x-4">
+                <a href="{{ route('dashboard.chat') }}" class="flex items-center space-x-2 px-4 py-2 bg-indigo-600/10 hover:bg-indigo-600/20 border border-indigo-500/20 rounded-xl transition-all group">
                 <svg class="w-4 h-4 text-indigo-400 group-hover:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 <span class="text-[10px] font-black text-indigo-400 uppercase tracking-widest">Copilot</span>
             </a>
-            <!-- Account Dropdown -->
-            <div class="relative">
-                <button id="accountBtn" class="flex items-center justify-center w-10 h-10 bg-slate-800/50 border border-slate-800 rounded-full hover:border-indigo-500/30 transition-all focus:outline-none overflow-hidden group">
+                <!-- Account Dropdown -->
+                <div class="relative flex items-center space-x-3">
+                    @include('dashboard.components.theme-toggle')
+                    <div>
+                        <button id="accountBtn" class="flex items-center justify-center w-10 h-10 bg-slate-800/50 border border-slate-800 rounded-full hover:border-indigo-500/30 transition-all focus:outline-none overflow-hidden group">
                     @if(Auth::user()->profile_photo_url)
                     <img src="{{ asset(Auth::user()->profile_photo_url) }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
                     @else
