@@ -1,6 +1,21 @@
 <!DOCTYPE html>
 <html lang="es" class="h-full">
 <head>
+    <script>
+        (function(){
+            try{
+                var key = 'theme';
+                var theme = null;
+                try{ theme = localStorage.getItem(key); } catch(e){ theme = null; }
+                if(!theme){
+                    theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+                    try{ localStorage.setItem(key, theme); } catch(e){}
+                }
+                if(theme === 'dark') document.documentElement.classList.add('dark');
+                else document.documentElement.classList.remove('dark');
+            }catch(e){ /* noop */ }
+        })();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clients - Control Panel</title>
