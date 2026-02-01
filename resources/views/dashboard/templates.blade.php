@@ -33,27 +33,27 @@
     <nav class="h-20 bg-slate-900/50 backdrop-blur-md border-b border-slate-800/50 flex items-center justify-between px-6 sticky top-0 z-30">
         <div class="flex items-center space-x-4">
             <a href="{{ route('dashboard') }}" class="flex items-center space-x-4 group/brand">
-                <span class="text-xl font-bold text-indigo-400 font-inter group-hover/brand:text-white transition-colors">Mini Walee</span>
+                <span class="text-xl font-bold text-pink-400 font-inter group-hover/brand:text-white transition-colors">Mini Walee</span>
                 <span class="text-slate-700 font-light text-xl italic font-inter">/</span>
-                <span class="text-sm font-medium text-slate-400 tracking-wide uppercase font-inter group-hover/brand:text-indigo-400 transition-colors">Control Panel</span>
+                <span class="text-sm font-medium text-slate-400 tracking-wide uppercase font-inter group-hover/brand:text-pink-400 transition-colors">Control Panel</span>
             </a>
             <span class="text-slate-800 font-light text-xl italic font-inter">/</span>
             <a href="{{ route('dashboard.clients') }}" class="text-xs font-black text-slate-400 tracking-[0.2em] hover:text-white transition-colors uppercase font-inter">Clients</a>
             <span class="text-slate-800 font-light text-xl italic font-inter">/</span>
-            <a href="{{ route('dashboard.templates') }}" class="text-xs font-black text-indigo-500 tracking-[0.2em] hover:text-white transition-colors uppercase font-inter">Templates</a>
+            <a href="{{ route('dashboard.templates') }}" class="text-xs font-black text-pink-500 tracking-[0.2em] hover:text-white transition-colors uppercase font-inter">Templates</a>
         </div>
         <div class="flex items-center space-x-4">
-            <a href="{{ route('dashboard.chat') }}" class="flex items-center space-x-2 px-4 py-2 bg-indigo-600/10 hover:bg-indigo-600/20 border border-indigo-500/20 rounded-xl transition-all group">
-                <svg class="w-4 h-4 text-indigo-400 group-hover:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <span class="text-[10px] font-black text-indigo-400 uppercase tracking-widest">Copilot</span>
+            <a href="{{ route('dashboard.chat') }}" class="flex items-center space-x-2 px-4 py-2 bg-pink-600/10 hover:bg-pink-600/20 border border-pink-500/20 rounded-xl transition-all group">
+                <svg class="w-4 h-4 text-pink-400 group-hover:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span class="text-[10px] font-black text-pink-400 uppercase tracking-widest">Copilot</span>
             </a>
             <!-- Account Dropdown -->
             <div class="relative">
-                <button id="accountBtn" class="flex items-center justify-center w-10 h-10 bg-slate-800/50 border border-slate-800 rounded-full hover:border-indigo-500/30 transition-all focus:outline-none overflow-hidden group">
+                <button id="accountBtn" class="flex items-center justify-center w-10 h-10 bg-slate-800/50 border border-slate-800 rounded-full hover:border-pink-500/30 transition-all focus:outline-none overflow-hidden group">
                     @if(Auth::user()->profile_photo_url)
                         <img src="{{ asset(Auth::user()->profile_photo_url) }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
                     @else
-                        <div class="w-full h-full bg-indigo-600 flex items-center justify-center text-white text-xs font-black">
+                        <div class="w-full h-full bg-pink-600 flex items-center justify-center text-white text-xs font-black">
                             {{ substr(Auth::user()->name, 0, 1) }}
                         </div>
                     @endif
@@ -85,15 +85,15 @@
 
             <!-- Notifications Dropdown -->
             <div class="relative">
-                <button id="notifBtn" class="relative p-2.5 text-slate-400 hover:text-indigo-400 transition-colors focus:outline-none bg-slate-800/50 rounded-full border border-slate-800">
+                <button id="notifBtn" class="relative p-2.5 text-slate-400 hover:text-pink-400 transition-colors focus:outline-none bg-slate-800/50 rounded-full border border-slate-800">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span id="notifBadge" class="absolute top-0 right-0 bg-indigo-600 text-[10px] font-bold text-white rounded-full w-4 h-4 flex items-center justify-center border-2 border-slate-950 hidden">0</span>
+                    <span id="notifBadge" class="absolute top-0 right-0 bg-pink-600 text-[10px] font-bold text-white rounded-full w-4 h-4 flex items-center justify-center border-2 border-slate-950 hidden">0</span>
                 </button>
 
                 <!-- Notifications Dropdown Content -->
                 <div id="notifDropdown" class="absolute right-0 mt-3 w-80 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl opacity-0 invisible transition-all z-50 p-2 overflow-hidden">
                     <div class="p-4 border-b border-slate-800 flex items-center justify-between">
-                        <h3 class="text-xs font-black text-white uppercase tracking-widest text-indigo-400">Broadcasts</h3>
+                        <h3 class="text-xs font-black text-white uppercase tracking-widest text-pink-400">Broadcasts</h3>
                         <span class="text-[9px] font-bold text-slate-600 uppercase">Live Feed</span>
                     </div>
                     <div id="notifList" class="max-h-80 overflow-y-auto p-2 space-y-2">
@@ -131,11 +131,11 @@
 
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
                 <div>
-                    <h1 class="text-4xl font-black text-white italic tracking-tighter">Email <span class="text-indigo-500">Templates</span></h1>
+                    <h1 class="text-4xl font-black text-white italic tracking-tighter">Email <span class="text-pink-500">Templates</span></h1>
                     <p class="text-[10px] font-bold text-slate-500 tracking-[0.3em] mt-2 text-center md:text-left">Standardized messaging library</p>
                 </div>
                 
-                <button onclick="openCreateModal()" class="px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-indigo-600/20 active:scale-95 flex items-center">
+                <button onclick="openCreateModal()" class="px-8 py-4 bg-pink-600 hover:bg-pink-500 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-pink-600/20 active:scale-95 flex items-center">
                     <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     New Template
                 </button>
@@ -161,7 +161,7 @@
                                 </td>
                                 <td class="px-8 py-6">
                                     <div class="flex items-center space-x-4">
-                                        <div class="w-10 h-10 rounded-xl bg-indigo-600/10 flex items-center justify-center text-indigo-400 font-black text-xs border border-indigo-500/10">
+                                        <div class="w-10 h-10 rounded-xl bg-pink-600/10 flex items-center justify-center text-pink-400 font-black text-xs border border-pink-500/10">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                         </div>
                                         <div>
@@ -178,7 +178,7 @@
                                     <div class="flex items-center justify-end space-x-2">
                                         <button 
                                             onclick="openEditModal({{ json_encode($template) }})"
-                                            class="w-9 h-9 flex items-center justify-center bg-indigo-600/10 text-indigo-400 rounded-xl hover:bg-indigo-600 hover:text-white transition-all border border-indigo-500/10">
+                                            class="w-9 h-9 flex items-center justify-center bg-pink-600/10 text-pink-400 rounded-xl hover:bg-pink-600 hover:text-white transition-all border border-pink-500/10">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                         </button>
                                         <form action="{{ route('dashboard.templates.destroy', $template->id) }}" method="POST" onsubmit="return confirm('Delete template?')">
@@ -220,15 +220,15 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
                 <!-- AI Prompt Section -->
-                <div class="lg:col-span-3 bg-indigo-600/5 border border-indigo-500/20 rounded-3xl p-5 relative overflow-hidden group h-full">
-                    <div class="absolute -right-4 -top-4 w-20 h-20 bg-indigo-500/10 blur-2xl rounded-full"></div>
-                    <label class="block text-[9px] font-black text-indigo-400 tracking-[0.2em] mb-4 uppercase flex items-center">
+                <div class="lg:col-span-3 bg-pink-600/5 border border-pink-500/20 rounded-3xl p-5 relative overflow-hidden group h-full">
+                    <div class="absolute -right-4 -top-4 w-20 h-20 bg-pink-500/10 blur-2xl rounded-full"></div>
+                    <label class="block text-[9px] font-black text-pink-400 tracking-[0.2em] mb-4 uppercase flex items-center">
                         <svg class="w-3 h-3 mr-2 animate-pulse" fill="currentColor" viewBox="0 0 20 20"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM14 11a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1h-1a1 1 0 110-2h1v-1a1 1 0 011-1z"/></svg>
                         AI Genesis
                     </label>
                     <textarea id="aiPrompt" rows="4" placeholder="Describe the template (e.g. 'Cold email for real estate leads')..." 
-                              class="w-full bg-slate-950/50 border border-slate-800 rounded-2xl px-4 py-3 text-[11px] text-slate-300 focus:outline-none focus:border-indigo-500/50 transition-all resize-none mb-4 placeholder:text-slate-700 h-48"></textarea>
-                    <button type="button" onclick="generateAiTemplate()" id="aiGenBtn" class="w-full py-3 bg-indigo-600/20 hover:bg-indigo-600 text-indigo-400 hover:text-white rounded-xl text-[9px] font-black tracking-widest uppercase transition-all flex items-center justify-center">
+                              class="w-full bg-slate-950/50 border border-slate-800 rounded-2xl px-4 py-3 text-[11px] text-slate-300 focus:outline-none focus:border-pink-500/50 transition-all resize-none mb-4 placeholder:text-slate-700 h-48"></textarea>
+                    <button type="button" onclick="generateAiTemplate()" id="aiGenBtn" class="w-full py-3 bg-pink-600/20 hover:bg-pink-600 text-pink-400 hover:text-white rounded-xl text-[9px] font-black tracking-widest uppercase transition-all flex items-center justify-center">
                         <span>Ignite Intelligence</span>
                     </button>
                     <div class="mt-6">
@@ -245,25 +245,25 @@
                         <div id="methodField"></div>
                         
                         <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1 uppercase">Template Name</label>
+                            <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1 uppercase">Template Name</label>
                             <input type="text" name="name" id="form_name" required placeholder="e.g. Welcome Email" 
-                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case">
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                         </div>
 
                         <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1 uppercase">Email Subject</label>
+                            <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1 uppercase">Email Subject</label>
                             <input type="text" name="subject" id="form_subject" required placeholder="e.g. Welcome to our Platform" 
-                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case">
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                         </div>
 
                         <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1 uppercase">Message Body</label>
+                            <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1 uppercase">Message Body</label>
                             <textarea name="body" id="form_body" required rows="10" placeholder="Write your email content here..." 
-                                      class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case resize-none"></textarea>
+                                      class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case resize-none"></textarea>
                         </div>
 
                         <div class="flex items-center space-x-4 pt-4">
-                            <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-black py-4 rounded-2xl shadow-2xl shadow-indigo-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em] uppercase">
+                            <button type="submit" class="flex-1 bg-pink-600 hover:bg-pink-500 text-white font-black py-4 rounded-2xl shadow-2xl shadow-pink-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em] uppercase">
                                 Save Template
                             </button>
                         </div>
@@ -301,13 +301,13 @@
                 // Visual feedback
                 document.getElementById('aiPrompt').value = '';
                 btn.innerHTML = '<span>Gen Complete!</span>';
-                btn.classList.replace('bg-indigo-600/20', 'bg-emerald-600/20');
-                btn.classList.replace('text-indigo-400', 'text-emerald-400');
+                btn.classList.replace('bg-pink-600/20', 'bg-emerald-600/20');
+                btn.classList.replace('text-pink-400', 'text-emerald-400');
                 
                 setTimeout(() => {
                     btn.innerHTML = '<span>Ignite Intelligence</span>';
-                    btn.classList.replace('bg-emerald-600/20', 'bg-indigo-600/20');
-                    btn.classList.replace('text-emerald-400', 'text-indigo-400');
+                    btn.classList.replace('bg-emerald-600/20', 'bg-pink-600/20');
+                    btn.classList.replace('text-emerald-400', 'text-pink-400');
                     btn.disabled = false;
                 }, 2000);
 
@@ -367,7 +367,7 @@
                     badge.innerText = data.length;
                     badge.classList.remove('hidden');
                     list.innerHTML = data.map(n => `
-                        <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl hover:border-indigo-500/30 transition-all text-left">
+                        <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl hover:border-pink-500/30 transition-all text-left">
                             <div class="flex justify-between items-start mb-1">
                                 <h3 class="text-[11px] font-bold text-slate-200 leading-tight">${n.titulo}</h3>
                                 <span class="text-[9px] font-medium text-slate-600 whitespace-nowrap ml-2">${n.fecha_format}</span>

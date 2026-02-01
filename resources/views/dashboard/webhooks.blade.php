@@ -32,25 +32,25 @@
     <nav class="h-20 bg-slate-900/50 backdrop-blur-md border-b border-slate-800/50 flex items-center justify-between px-6 sticky top-0 z-30">
         <div class="flex items-center space-x-4">
             <a href="{{ route('dashboard') }}" class="flex items-center space-x-4 group/brand">
-                <span class="text-xl font-bold text-indigo-400 font-inter group-hover/brand:text-white transition-colors">Mini Walee</span>
+                <span class="text-xl font-bold text-pink-400 font-inter group-hover/brand:text-white transition-colors">Mini Walee</span>
                 <span class="text-slate-700 font-light text-xl italic font-inter">/</span>
-                <span class="text-sm font-medium text-slate-400 tracking-wide uppercase font-inter group-hover/brand:text-indigo-400 transition-colors">Control Panel</span>
+                <span class="text-sm font-medium text-slate-400 tracking-wide uppercase font-inter group-hover/brand:text-pink-400 transition-colors">Control Panel</span>
             </a>
             <span class="text-slate-800 font-light text-xl italic font-inter">/</span>
-            <a href="{{ route('dashboard.webhooks') }}" class="text-xs font-black text-indigo-500 tracking-[0.2em] hover:text-white transition-colors uppercase font-inter">Webhooks</a>
+            <a href="{{ route('dashboard.webhooks') }}" class="text-xs font-black text-pink-500 tracking-[0.2em] hover:text-white transition-colors uppercase font-inter">Webhooks</a>
         </div>
         <div class="flex items-center space-x-4">
-            <a href="{{ route('dashboard.chat') }}" class="flex items-center space-x-2 px-4 py-2 bg-indigo-600/10 hover:bg-indigo-600/20 border border-indigo-500/20 rounded-xl transition-all group">
-                <svg class="w-4 h-4 text-indigo-400 group-hover:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <span class="text-[10px] font-black text-indigo-400 uppercase tracking-widest">Copilot</span>
+            <a href="{{ route('dashboard.chat') }}" class="flex items-center space-x-2 px-4 py-2 bg-pink-600/10 hover:bg-pink-600/20 border border-pink-500/20 rounded-xl transition-all group">
+                <svg class="w-4 h-4 text-pink-400 group-hover:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span class="text-[10px] font-black text-pink-400 uppercase tracking-widest">Copilot</span>
             </a>
             <!-- Account Dropdown -->
             <div class="relative">
-                <button id="accountBtn" class="flex items-center justify-center w-10 h-10 bg-slate-800/50 border border-slate-800 rounded-full hover:border-indigo-500/30 transition-all focus:outline-none overflow-hidden group">
+                <button id="accountBtn" class="flex items-center justify-center w-10 h-10 bg-slate-800/50 border border-slate-800 rounded-full hover:border-pink-500/30 transition-all focus:outline-none overflow-hidden group">
                     @if(Auth::user()->profile_photo_url)
                         <img src="{{ Auth::user()->profile_photo_url }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
                     @else
-                        <div class="w-full h-full bg-indigo-600 flex items-center justify-center text-white text-xs font-black">
+                        <div class="w-full h-full bg-pink-600 flex items-center justify-center text-white text-xs font-black">
                             {{ substr(Auth::user()->name, 0, 1) }}
                         </div>
                     @endif
@@ -82,15 +82,15 @@
 
             <!-- Notifications Dropdown -->
             <div class="relative">
-                <button id="notifBtn" class="relative p-2.5 text-slate-400 hover:text-indigo-400 transition-colors focus:outline-none bg-slate-800/50 rounded-full border border-slate-800">
+                <button id="notifBtn" class="relative p-2.5 text-slate-400 hover:text-pink-400 transition-colors focus:outline-none bg-slate-800/50 rounded-full border border-slate-800">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span id="notifBadge" class="absolute top-0 right-0 bg-indigo-600 text-[10px] font-bold text-white rounded-full w-4 h-4 flex items-center justify-center border-2 border-slate-950 hidden">0</span>
+                    <span id="notifBadge" class="absolute top-0 right-0 bg-pink-600 text-[10px] font-bold text-white rounded-full w-4 h-4 flex items-center justify-center border-2 border-slate-950 hidden">0</span>
                 </button>
 
                 <!-- Notifications Dropdown Content -->
                 <div id="notifDropdown" class="absolute right-0 mt-3 w-80 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl opacity-0 invisible transition-all z-50 p-2 overflow-hidden">
                     <div class="p-4 border-b border-slate-800 flex items-center justify-between">
-                        <h3 class="text-xs font-black text-white uppercase tracking-widest text-indigo-400">Broadcasts</h3>
+                        <h3 class="text-xs font-black text-white uppercase tracking-widest text-pink-400">Broadcasts</h3>
                         <span class="text-[9px] font-bold text-slate-600 uppercase">Live Feed</span>
                     </div>
                     <div id="notifList" class="max-h-80 overflow-y-auto p-2 space-y-2">
@@ -126,7 +126,7 @@
                 <div class="lg:col-span-1">
                     <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8 sticky top-0 shadow-2xl">
                         <h2 class="text-xl font-bold text-white mb-6 uppercase tracking-tight flex items-center">
-                            <span class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-xs mr-3">+</span>
+                            <span class="w-8 h-8 rounded-lg bg-pink-600 flex items-center justify-center text-xs mr-3">+</span>
                             New Webhook
                         </h2>
                         
@@ -135,22 +135,22 @@
                             <div>
                                 <label class="block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-2">Friendly Name</label>
                                 <input type="text" name="name" required placeholder="e.g. n8n Production" 
-                                       class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 text-sm text-slate-200">
+                                       class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pink-500/50 text-sm text-slate-200">
                             </div>
                             
                             <div>
                                 <label class="block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-2">Endpoint URL</label>
                                 <input type="url" name="url" required placeholder="https://..." 
-                                       class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 text-sm text-slate-200">
+                                       class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pink-500/50 text-sm text-slate-200">
                             </div>
                             
                             <div>
                                 <label class="block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-2">Payload (Text to Send)</label>
                                 <textarea name="payload_text" rows="4" placeholder="Standard text or JSON structure..." 
-                                          class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 text-sm text-slate-200 resize-none"></textarea>
+                                          class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pink-500/50 text-sm text-slate-200 resize-none"></textarea>
                             </div>
                             
-                            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-4 rounded-xl shadow-lg shadow-indigo-600/20 transition-all active:scale-95">
+                            <button type="submit" class="w-full bg-pink-600 hover:bg-pink-500 text-white font-bold py-4 rounded-xl shadow-lg shadow-pink-600/20 transition-all active:scale-95">
                                 Register Pipeline
                             </button>
                         </form>
@@ -161,15 +161,15 @@
                 <div class="lg:col-span-2">
                     <div class="flex items-center justify-between mb-8">
                         <h2 class="text-2xl font-bold text-white uppercase tracking-tight">Active Pipelines</h2>
-                        <span class="text-[10px] font-black text-indigo-500 bg-indigo-500/10 px-3 py-1 rounded-full border border-indigo-500/20">
+                        <span class="text-[10px] font-black text-pink-500 bg-pink-500/10 px-3 py-1 rounded-full border border-pink-500/20">
                             {{ count($webhooks) }} REGISTERED
                         </span>
                     </div>
 
                     <div class="space-y-6">
                         @foreach($webhooks as $webhook)
-                        <div class="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 group hover:border-indigo-500/30 transition-all shadow-lg relative overflow-hidden">
-                            <div class="absolute -right-4 -top-4 w-24 h-24 bg-indigo-600/5 blur-[40px] opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div class="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 group hover:border-pink-500/30 transition-all shadow-lg relative overflow-hidden">
+                            <div class="absolute -right-4 -top-4 w-24 h-24 bg-pink-600/5 blur-[40px] opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             
                             <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
                                 <div class="flex-1">
@@ -181,7 +181,7 @@
                                     
                                     @if($webhook->payload_text)
                                     <div class="bg-slate-950/50 rounded-lg p-3 border border-slate-800/50">
-                                        <p class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest mb-1">Payload Content</p>
+                                        <p class="text-[10px] font-bold text-pink-500 uppercase tracking-widest mb-1">Payload Content</p>
                                         <p class="text-[11px] text-slate-400 italic line-clamp-2">"{{ $webhook->payload_text }}"</p>
                                     </div>
                                     @endif
@@ -205,7 +205,7 @@
                                     <!-- Trigger Webhook -->
                                     <form action="{{ route('dashboard.webhooks.trigger', $webhook->id) }}" method="POST">
                                         @csrf
-                                        <button type="submit" title="Activate Webhook" class="p-2.5 rounded-lg bg-indigo-600/10 text-indigo-400 border border-indigo-500/20 hover:bg-indigo-600 hover:text-white transition-all">
+                                        <button type="submit" title="Activate Webhook" class="p-2.5 rounded-lg bg-pink-600/10 text-pink-400 border border-pink-500/20 hover:bg-pink-600 hover:text-white transition-all">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                         </button>
                                     </form>
@@ -247,9 +247,9 @@
                 <div>
                     <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Avatar Source URL</label>
                     <input type="url" name="profile_photo_url" value="{{ Auth::user()->profile_photo_url }}" required placeholder="https://..." 
-                           class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-600/50">
+                           class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-pink-600/50">
                 </div>
-                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 py-3 rounded-xl font-bold transition-all shadow-lg active:scale-95">Sync Identity</button>
+                <button type="submit" class="w-full bg-pink-600 hover:bg-pink-500 py-3 rounded-xl font-bold transition-all shadow-lg active:scale-95">Sync Identity</button>
             </form>
         </div>
     </div>
@@ -270,19 +270,19 @@
                 <div>
                     <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Friendly Name</label>
                     <input type="text" name="name" id="edit_name" required 
-                           class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-600/50">
+                           class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-pink-600/50">
                 </div>
                 <div>
                     <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Endpoint URL</label>
                     <input type="url" name="url" id="edit_url" required 
-                           class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-600/50">
+                           class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-pink-600/50">
                 </div>
                 <div>
                     <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Payload (Text to Send)</label>
                     <textarea name="payload_text" id="edit_payload" rows="4" 
-                              class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-600/50 resize-none"></textarea>
+                              class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-pink-600/50 resize-none"></textarea>
                 </div>
-                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 py-3 rounded-xl font-bold transition-all shadow-lg active:scale-95">Update Configuration</button>
+                <button type="submit" class="w-full bg-pink-600 hover:bg-pink-500 py-3 rounded-xl font-bold transition-all shadow-lg active:scale-95">Update Configuration</button>
             </form>
         </div>
     </div>
@@ -308,7 +308,7 @@
                     badge.innerText = data.length;
                     badge.classList.remove('hidden');
                     list.innerHTML = data.map(n => `
-                        <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl hover:border-indigo-500/30 transition-all text-left">
+                        <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl hover:border-pink-500/30 transition-all text-left">
                             <div class="flex justify-between items-start mb-1">
                                 <h3 class="text-[11px] font-bold text-slate-200 leading-tight">${n.titulo}</h3>
                                 <span class="text-[9px] font-medium text-slate-600 whitespace-nowrap ml-2">${n.fecha_format}</span>

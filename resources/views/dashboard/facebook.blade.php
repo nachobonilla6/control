@@ -41,24 +41,24 @@
     <nav class="h-20 bg-slate-900/50 backdrop-blur-md border-b border-slate-800/50 flex items-center justify-between px-6 sticky top-0 z-30">
         <div class="flex items-center space-x-4">
             <a href="{{ route('dashboard') }}" class="flex items-center space-x-4 group/brand">
-                <span class="text-xl font-bold text-indigo-400 font-inter group-hover/brand:text-white transition-colors">Mini Walee</span>
+                <span class="text-xl font-bold text-pink-400 font-inter group-hover/brand:text-white transition-colors">Mini Walee</span>
                 <span class="text-slate-700 font-light text-xl italic font-inter">/</span>
-                <span class="text-sm font-medium text-slate-400 tracking-wide uppercase font-inter group-hover/brand:text-indigo-400 transition-colors">Control Panel</span>
+                <span class="text-sm font-medium text-slate-400 tracking-wide uppercase font-inter group-hover/brand:text-pink-400 transition-colors">Control Panel</span>
             </a>
             <span class="text-slate-800 font-light text-xl italic font-inter">/</span>
-            <a href="{{ route('dashboard.facebook') }}" class="text-xs font-black text-indigo-500 tracking-[0.2em] hover:text-white transition-colors uppercase font-inter">Facebook</a>
+            <a href="{{ route('dashboard.facebook') }}" class="text-xs font-black text-pink-500 tracking-[0.2em] hover:text-white transition-colors uppercase font-inter">Facebook</a>
         </div>
         <div class="flex items-center space-x-4">
-            <a href="{{ route('dashboard.chat') }}" class="flex items-center space-x-2 px-4 py-2 bg-indigo-600/10 hover:bg-indigo-600/20 border border-indigo-500/20 rounded-xl transition-all group">
-                <svg class="w-4 h-4 text-indigo-400 group-hover:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <span class="text-[10px] font-black text-indigo-400 uppercase tracking-widest">Copilot</span>
+            <a href="{{ route('dashboard.chat') }}" class="flex items-center space-x-2 px-4 py-2 bg-pink-600/10 hover:bg-pink-600/20 border border-pink-500/20 rounded-xl transition-all group">
+                <svg class="w-4 h-4 text-pink-400 group-hover:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span class="text-[10px] font-black text-pink-400 uppercase tracking-widest">Copilot</span>
             </a>
             <div class="relative">
-                <button id="accountBtn" class="flex items-center justify-center w-10 h-10 bg-slate-800/50 border border-slate-800 rounded-full hover:border-indigo-500/30 transition-all focus:outline-none overflow-hidden group">
+                <button id="accountBtn" class="flex items-center justify-center w-10 h-10 bg-slate-800/50 border border-slate-800 rounded-full hover:border-pink-500/30 transition-all focus:outline-none overflow-hidden group">
                     @if(Auth::user()->profile_photo_url)
                         <img src="{{ asset(Auth::user()->profile_photo_url) }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
                     @else
-                        <div class="w-full h-full bg-indigo-600 flex items-center justify-center text-white text-xs font-black">
+                        <div class="w-full h-full bg-pink-600 flex items-center justify-center text-white text-xs font-black">
                             {{ substr(Auth::user()->name, 0, 1) }}
                         </div>
                     @endif
@@ -90,15 +90,15 @@
 
             <!-- Notifications Dropdown -->
             <div class="relative">
-                <button id="notifBtn" class="relative p-2.5 text-slate-400 hover:text-indigo-400 transition-colors focus:outline-none bg-slate-800/50 rounded-full border border-slate-800">
+                <button id="notifBtn" class="relative p-2.5 text-slate-400 hover:text-pink-400 transition-colors focus:outline-none bg-slate-800/50 rounded-full border border-slate-800">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span id="notifBadge" class="absolute top-0 right-0 bg-indigo-600 text-[10px] font-bold text-white rounded-full w-4 h-4 flex items-center justify-center border-2 border-slate-950 hidden">0</span>
+                    <span id="notifBadge" class="absolute top-0 right-0 bg-pink-600 text-[10px] font-bold text-white rounded-full w-4 h-4 flex items-center justify-center border-2 border-slate-950 hidden">0</span>
                 </button>
 
                 <!-- Notifications Dropdown Content -->
                 <div id="notifDropdown" class="absolute right-0 mt-3 w-80 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl opacity-0 invisible transition-all z-50 p-2 overflow-hidden">
                     <div class="p-4 border-b border-slate-800 flex items-center justify-between">
-                        <h3 class="text-xs font-black text-white uppercase tracking-widest text-indigo-400">Broadcasts</h3>
+                        <h3 class="text-xs font-black text-white uppercase tracking-widest text-pink-400">Broadcasts</h3>
                         <span class="text-[9px] font-bold text-slate-600 uppercase">Live Feed</span>
                     </div>
                     <div id="notifList" class="max-h-80 overflow-y-auto p-2 space-y-2">
@@ -132,19 +132,19 @@
 
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
                 <div>
-                    <h1 class="text-4xl font-black text-white italic tracking-tighter">Facebook <span class="text-indigo-500">Post Manager</span></h1>
+                    <h1 class="text-4xl font-black text-white italic tracking-tighter">Facebook <span class="text-pink-500">Post Manager</span></h1>
                     <p class="text-[10px] font-bold text-slate-500 tracking-[0.3em] mt-2 italic">Automated social media orchestration</p>
                 </div>
                 
                 <div class="flex items-center space-x-3">
-                    <a href="{{ route('dashboard.facebook.accounts') }}" class="h-[58px] px-6 flex items-center justify-center bg-slate-900 border border-slate-800 rounded-2xl hover:border-indigo-500/30 transition-all text-slate-400 hover:text-white shadow-2xl active:scale-95 group space-x-3">
+                    <a href="{{ route('dashboard.facebook.accounts') }}" class="h-[58px] px-6 flex items-center justify-center bg-slate-900 border border-slate-800 rounded-2xl hover:border-pink-500/30 transition-all text-slate-400 hover:text-white shadow-2xl active:scale-95 group space-x-3">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                         <span class="text-[9px] font-black tracking-[0.2em] uppercase">Accounts</span>
                     </a>
-                    <button onclick="document.getElementById('settingsModal').classList.remove('hidden')" class="w-[58px] h-[58px] flex items-center justify-center bg-slate-900 border border-slate-800 rounded-2xl hover:border-indigo-500/30 transition-all text-slate-400 hover:text-white shadow-2xl active:scale-95 group">
+                    <button onclick="document.getElementById('settingsModal').classList.remove('hidden')" class="w-[58px] h-[58px] flex items-center justify-center bg-slate-900 border border-slate-800 rounded-2xl hover:border-pink-500/30 transition-all text-slate-400 hover:text-white shadow-2xl active:scale-95 group">
                         <svg class="w-5 h-5 group-hover:rotate-90 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.543-.426-1.543-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                     </button>
-                    <button onclick="openCreatePostModal()" class="h-[58px] px-8 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-indigo-600/20 active:scale-95 flex items-center">
+                    <button onclick="openCreatePostModal()" class="h-[58px] px-8 bg-pink-600 hover:bg-pink-500 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-pink-600/20 active:scale-95 flex items-center">
                         <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         Create Post
                     </button>
@@ -158,7 +158,7 @@
                     $images = array_filter([$post->image1, $post->image2, $post->image3]);
                     $imgCount = count($images);
                 @endphp
-                <div class="group bg-slate-900 border border-slate-800 rounded-[2.5rem] overflow-hidden transition-all duration-500 hover:border-indigo-500/30 hover:shadow-2xl flex flex-col h-full">
+                <div class="group bg-slate-900 border border-slate-800 rounded-[2.5rem] overflow-hidden transition-all duration-500 hover:border-pink-500/30 hover:shadow-2xl flex flex-col h-full">
                     <!-- Image Grid Area -->
                     <div class="relative bg-slate-950 aspect-video overflow-hidden" id="carousel-{{ $post->id }}" data-current="0">
                         @if($imgCount > 0)
@@ -201,7 +201,7 @@
                                     'cancelled' => 'bg-red-500',
                                     'queued' => 'bg-yellow-500',
                                     'scheduled' => 'bg-yellow-500',
-                                    default => 'bg-indigo-500',
+                                    default => 'bg-pink-500',
                                 };
                             @endphp
                             <span class="text-[7px] font-black {{ $statusColor }} text-white px-3 py-1 rounded-full uppercase tracking-[0.2em] shadow-lg">
@@ -215,7 +215,7 @@
                         <div class="flex-1">
                             <div class="flex items-center justify-between mb-4">
                                 <div class="flex items-center gap-2">
-                                    <span class="text-[8px] font-black text-indigo-400 tracking-widest uppercase bg-indigo-600/10 px-3 py-1 rounded-full border border-indigo-500/10">Facebook Post</span>
+                                    <span class="text-[8px] font-black text-pink-400 tracking-widest uppercase bg-pink-600/10 px-3 py-1 rounded-full border border-pink-500/10">Facebook Post</span>
                                     @if($post->account)
                                         <span class="text-[8px] font-bold text-slate-400 uppercase tracking-widest border border-slate-700/50 px-2 py-0.5 rounded-full">
                                             {{ $post->account->name }}
@@ -244,7 +244,7 @@
                                 <div class="flex items-center justify-end">
                                 <div class="flex items-center space-x-2">
                                     @if($post->status !== 'posted' && $post->status !== 'sent')
-                                        <button onclick="editPost({{ json_encode($post) }})" class="w-8 h-8 flex items-center justify-center bg-indigo-500/10 text-indigo-500 rounded-lg hover:bg-indigo-500 hover:text-white transition-all border border-indigo-500/10">
+                                        <button onclick="editPost({{ json_encode($post) }})" class="w-8 h-8 flex items-center justify-center bg-pink-500/10 text-pink-500 rounded-lg hover:bg-pink-500 hover:text-white transition-all border border-pink-500/10">
                                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                         </button>
                                     @endif
@@ -286,7 +286,7 @@
             <form id="createPostForm" class="space-y-6" onsubmit="submitPostToWebhook(event, 'createPostBtn')">
                 @csrf
                 <div class="mb-6 animate-in fade-in slide-in-from-top-4">
-                    <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">AI Deployment Strategy</label>
+                    <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 uppercase">AI Deployment Strategy</label>
                     <div class="relative group">
                         <textarea id="ai_prompt" rows="2" placeholder="Describe your objective (e.g., 'Generate an engaging promotional post for a new AI course focusing on business automation')" 
                                   class="w-full bg-slate-950/50 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 text-xs font-medium text-slate-300 resize-none transition-all placeholder:text-slate-700"></textarea>
@@ -300,13 +300,13 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div class="space-y-4">
                         <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Post Content</label>
+                            <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 uppercase">Post Content</label>
                             <textarea name="content" id="create_content" required rows="6" placeholder="What's happening on the network?" 
-                                      class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-medium text-slate-200 resize-none lowercase"></textarea>
+                                      class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-medium text-slate-200 resize-none lowercase"></textarea>
                         </div>
                         <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Target Account</label>
-                            <select name="facebook_account_id" class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all appearance-none">
+                            <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 uppercase">Target Account</label>
+                            <select name="facebook_account_id" class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all appearance-none">
                                 <option value="">Select Account (Optional)</option>
                                 @foreach($accounts as $account)
                                     <option value="{{ $account->id }}" {{ $account->id == 1 ? 'selected' : '' }}>{{ $account->name }}</option>
@@ -314,18 +314,18 @@
                             </select>
                         </div>
                             <div class="relative">
-                                <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Schedule Deployment</label>
+                                <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 uppercase">Schedule Deployment</label>
                                 <div class="relative">
                                     <input type="datetime-local" name="post_at" id="post_at_input"
-                                           class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all appearance-none">
-                                    <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-indigo-500/50">
+                                           class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all appearance-none">
+                                    <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-pink-500/50">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                     </div>
                                 </div>
                             </div>
                             <div>
-                                <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Initial Status</label>
-                                <select name="status" class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all appearance-none">
+                                <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 uppercase">Initial Status</label>
+                                <select name="status" class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all appearance-none">
                                     <option value="scheduled">Scheduled</option>
                                     <option value="posted">Posted</option>
                                     <option value="cancelled">Cancelled</option>
@@ -335,25 +335,25 @@
                     
                     <div class="space-y-4">
                         <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Media Asset 01</label>
+                            <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 uppercase">Media Asset 01</label>
                             <input type="file" name="image1" accept="image/*"
-                                   class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-[10px] font-bold text-slate-500 transition-all">
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-[10px] font-bold text-slate-500 transition-all">
                         </div>
                         <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Media Asset 02</label>
+                            <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 uppercase">Media Asset 02</label>
                             <input type="file" name="image2" accept="image/*"
-                                   class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-[10px] font-bold text-slate-500 transition-all">
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-[10px] font-bold text-slate-500 transition-all">
                         </div>
                         <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Media Asset 03</label>
+                            <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 uppercase">Media Asset 03</label>
                             <input type="file" name="image3" accept="image/*"
-                                   class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-[10px] font-bold text-slate-500 transition-all">
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-[10px] font-bold text-slate-500 transition-all">
                         </div>
                     </div>
                 </div>
 
                 <div class="pt-4">
-                    <button id="createPostBtn" type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-black py-5 rounded-2xl shadow-2xl shadow-indigo-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em] uppercase">
+                    <button id="createPostBtn" type="submit" class="w-full bg-pink-600 hover:bg-pink-500 text-white font-black py-5 rounded-2xl shadow-2xl shadow-pink-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em] uppercase">
                         Execute Staging
                     </button>
                 </div>
@@ -366,9 +366,9 @@
         <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-[2.5rem] overflow-hidden shadow-2xl p-8">
             <div class="flex flex-col items-center justify-center space-y-6">
                 <div class="relative">
-                    <div class="w-16 h-16 rounded-full border-4 border-slate-700 border-t-indigo-500 animate-spin"></div>
+                    <div class="w-16 h-16 rounded-full border-4 border-slate-700 border-t-pink-500 animate-spin"></div>
                     <div class="absolute inset-0 flex items-center justify-center">
-                        <svg class="w-8 h-8 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-8 h-8 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3v-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </div>
@@ -378,7 +378,7 @@
                     <p class="text-[9px] font-bold text-slate-400 tracking-widest uppercase">AI Deployment Strategy — Por favor espera...</p>
                 </div>
                 <div class="w-full bg-slate-950 rounded-lg h-1 overflow-hidden">
-                    <div class="bg-indigo-500 h-full w-full animate-pulse"></div>
+                    <div class="bg-pink-500 h-full w-full animate-pulse"></div>
                 </div>
             </div>
         </div>
@@ -403,24 +403,24 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div class="space-y-4">
                         <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Post Content</label>
+                            <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 uppercase">Post Content</label>
                             <textarea name="content" id="edit_content" required rows="6" placeholder="What's happening on the network?" 
-                                      class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-medium text-slate-200 resize-none lowercase"></textarea>
+                                      class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-medium text-slate-200 resize-none lowercase"></textarea>
                         </div>
                         <div class="relative">
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Schedule Deployment</label>
+                            <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 uppercase">Schedule Deployment</label>
                             <div class="relative">
                                 <input type="datetime-local" name="post_at" id="edit_post_at"
-                                       class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all appearance-none">
-                                <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-indigo-500/50">
+                                       class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all appearance-none">
+                                <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-pink-500/50">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                 </div>
                             </div>
                             </div>
                         </div>
                         <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Target Account</label>
-                            <select name="facebook_account_id" id="edit_facebook_account_id" class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all appearance-none">
+                            <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 uppercase">Target Account</label>
+                            <select name="facebook_account_id" id="edit_facebook_account_id" class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all appearance-none">
                                 <option value="">Select Account (Optional)</option>
                                 @foreach($accounts as $account)
                                     <option value="{{ $account->id }}">{{ $account->name }}</option>
@@ -428,8 +428,8 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Deployment Status</label>
-                            <select name="status" id="edit_status" class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all appearance-none">
+                            <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 uppercase">Deployment Status</label>
+                            <select name="status" id="edit_status" class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all appearance-none">
                                 <option value="scheduled">Scheduled</option>
                                 <option value="posted">Posted</option>
                                 <option value="cancelled">Cancelled</option>
@@ -440,25 +440,25 @@
                     <div class="space-y-4">
                         <p class="text-[8px] font-bold text-slate-500 uppercase tracking-widest mb-2">Overwrite Media Assets</p>
                         <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Media Asset 01</label>
+                            <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 uppercase">Media Asset 01</label>
                             <input type="file" name="image1" accept="image/*"
-                                   class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-[10px] font-bold text-slate-500 transition-all">
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-[10px] font-bold text-slate-500 transition-all">
                         </div>
                         <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Media Asset 02</label>
+                            <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 uppercase">Media Asset 02</label>
                             <input type="file" name="image2" accept="image/*"
-                                   class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-[10px] font-bold text-slate-500 transition-all">
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-[10px] font-bold text-slate-500 transition-all">
                         </div>
                         <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Media Asset 03</label>
+                            <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 uppercase">Media Asset 03</label>
                             <input type="file" name="image3" accept="image/*"
-                                   class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-[10px] font-bold text-slate-500 transition-all">
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-[10px] font-bold text-slate-500 transition-all">
                         </div>
                     </div>
                 </div>
 
                 <div class="pt-4">
-                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-black py-5 rounded-2xl shadow-2xl shadow-indigo-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em] uppercase">
+                    <button type="submit" class="w-full bg-pink-600 hover:bg-pink-500 text-white font-black py-5 rounded-2xl shadow-2xl shadow-pink-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em] uppercase">
                         Confirm Changes
                     </button>
                 </div>
@@ -480,14 +480,14 @@
             <form action="{{ route('dashboard.facebook.settings.update') }}" method="POST" class="space-y-6">
                 @csrf
                 <div>
-                    <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 uppercase">Facebook Webhook URL</label>
+                    <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 uppercase">Facebook Webhook URL</label>
                     <input type="url" name="facebook_webhook_url" required value="{{ $webhookUrl }}" 
-                           class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all">
+                           class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all">
                     <p class="text-[7px] text-slate-500 mt-2 tracking-widest leading-relaxed">This endpoint will receive post metadata including image assets when staging is executed.</p>
                 </div>
 
                 <div class="pt-4">
-                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-black py-5 rounded-2xl shadow-2xl shadow-indigo-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em] uppercase">
+                    <button type="submit" class="w-full bg-pink-600 hover:bg-pink-500 text-white font-black py-5 rounded-2xl shadow-2xl shadow-pink-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em] uppercase">
                         Save Configuration
                     </button>
                 </div>
@@ -507,7 +507,7 @@
             <form action="{{ route('dashboard.profile.update') }}" method="POST" class="space-y-4">
                 @csrf
                 <div class="flex flex-col items-center mb-4">
-                    <div class="w-24 h-24 rounded-full border-2 border-indigo-500/20 overflow-hidden bg-slate-950 mb-4 shadow-2xl">
+                    <div class="w-24 h-24 rounded-full border-2 border-pink-500/20 overflow-hidden bg-slate-950 mb-4 shadow-2xl">
                         <img id="profile_preview" src="{{ Auth::user()->profile_photo_url ?: 'https://ui-avatars.com/api/?name='.urlencode(Auth::user()->name).'&background=4f46e5&color=fff' }}" class="w-full h-full object-cover">
                     </div>
                     <p class="text-[8px] font-bold text-slate-600 uppercase tracking-widest">Active Identity Asset</p>
@@ -516,9 +516,9 @@
                     <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 px-1">Profile Photo URL</label>
                     <input type="url" name="profile_photo_url" id="profile_url_input" value="{{ Auth::user()->profile_photo_url }}" required placeholder="https://..." 
                            oninput="document.getElementById('profile_preview').src = this.value || 'https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=4f46e5&color=fff'"
-                           class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-600/50">
+                           class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-pink-600/50">
                 </div>
-                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 py-3 rounded-xl font-bold transition-all shadow-lg shadow-indigo-600/20 active:scale-95 text-xs uppercase tracking-widest">Update Profile Asset</button>
+                <button type="submit" class="w-full bg-pink-600 hover:bg-pink-500 py-3 rounded-xl font-bold transition-all shadow-lg shadow-pink-600/20 active:scale-95 text-xs uppercase tracking-widest">Update Profile Asset</button>
             </form>
         </div>
     </div>
@@ -544,7 +544,7 @@
                     badge.innerText = data.length;
                     badge.classList.remove('hidden');
                     list.innerHTML = data.map(n => `
-                        <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl hover:border-indigo-500/30 transition-all text-left">
+                        <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl hover:border-pink-500/30 transition-all text-left">
                             <div class="flex justify-between items-start mb-1">
                                 <h3 class="text-[11px] font-bold text-slate-200 leading-tight normal-case">${n.titulo}</h3>
                                 <span class="text-[9px] font-medium text-slate-600 whitespace-nowrap ml-2">${n.fecha_format}</span>

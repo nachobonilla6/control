@@ -30,22 +30,22 @@
     <!-- Navbar -->
     <nav class="h-20 bg-slate-900/50 backdrop-blur-md border-b border-slate-800/50 flex items-center justify-between px-6 sticky top-0 z-30">
         <a href="{{ route('dashboard') }}" class="flex items-center space-x-4 group/brand">
-            <span class="text-xl font-bold text-indigo-400 group-hover/brand:text-white transition-colors">Mini Walee</span>
+            <span class="text-xl font-bold text-pink-400 group-hover/brand:text-white transition-colors">Mini Walee</span>
             <span class="text-slate-700 font-light text-xl italic">/</span>
-            <span class="text-sm font-medium text-slate-400 tracking-wide uppercase group-hover/brand:text-indigo-400 transition-colors">Control Panel</span>
+            <span class="text-sm font-medium text-slate-400 tracking-wide uppercase group-hover/brand:text-pink-400 transition-colors">Control Panel</span>
         </a>
         <div class="flex items-center space-x-4">
-            <a href="{{ route('dashboard.chat') }}" class="flex items-center space-x-2 px-4 py-2 bg-indigo-600/10 hover:bg-indigo-600/20 border border-indigo-500/20 rounded-xl transition-all group">
-                <svg class="w-4 h-4 text-indigo-400 group-hover:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <span class="text-[10px] font-black text-indigo-400 uppercase tracking-widest">Copilot</span>
+            <a href="{{ route('dashboard.chat') }}" class="flex items-center space-x-2 px-4 py-2 bg-pink-600/10 hover:bg-pink-600/20 border border-pink-500/20 rounded-xl transition-all group">
+                <svg class="w-4 h-4 text-pink-400 group-hover:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span class="text-[10px] font-black text-pink-400 uppercase tracking-widest">Copilot</span>
             </a>
             <!-- Account Dropdown -->
             <div class="relative">
-                <button id="accountBtn" class="flex items-center justify-center w-10 h-10 bg-slate-800/50 border border-slate-800 rounded-full hover:border-indigo-500/30 transition-all focus:outline-none overflow-hidden group">
+                <button id="accountBtn" class="flex items-center justify-center w-10 h-10 bg-slate-800/50 border border-slate-800 rounded-full hover:border-pink-500/30 transition-all focus:outline-none overflow-hidden group">
                     @if(Auth::user()->profile_photo_url)
                     <img src="{{ asset(Auth::user()->profile_photo_url) }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
                     @else
-                        <div class="w-full h-full bg-indigo-600 flex items-center justify-center text-white text-xs font-black">
+                        <div class="w-full h-full bg-pink-600 flex items-center justify-center text-white text-xs font-black">
                             {{ substr(Auth::user()->name, 0, 1) }}
                         </div>
                     @endif
@@ -77,15 +77,15 @@
 
             <!-- Notifications Dropdown -->
             <div class="relative">
-                <button id="notifBtn" class="relative p-2.5 text-slate-400 hover:text-indigo-400 transition-colors focus:outline-none bg-slate-800/50 rounded-full border border-slate-800">
+                <button id="notifBtn" class="relative p-2.5 text-slate-400 hover:text-pink-400 transition-colors focus:outline-none bg-slate-800/50 rounded-full border border-slate-800">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span id="notifBadge" class="absolute top-0 right-0 bg-indigo-600 text-[10px] font-bold text-white rounded-full w-4 h-4 flex items-center justify-center border-2 border-slate-950 hidden">0</span>
+                    <span id="notifBadge" class="absolute top-0 right-0 bg-pink-600 text-[10px] font-bold text-white rounded-full w-4 h-4 flex items-center justify-center border-2 border-slate-950 hidden">0</span>
                 </button>
 
                 <!-- Notifications Dropdown Content -->
                 <div id="notifDropdown" class="absolute right-0 mt-3 w-80 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl opacity-0 invisible transition-all z-50 p-2 overflow-hidden">
                     <div class="p-4 border-b border-slate-800 flex items-center justify-between">
-                        <h3 class="text-xs font-black text-white uppercase tracking-widest text-indigo-400">Broadcasts</h3>
+                        <h3 class="text-xs font-black text-white uppercase tracking-widest text-pink-400">Broadcasts</h3>
                         <span class="text-[9px] font-bold text-slate-600 uppercase">Live Feed</span>
                     </div>
                     <div id="notifList" class="max-h-80 overflow-y-auto p-2 space-y-2">
@@ -100,7 +100,7 @@
         <div class="max-w-7xl mx-auto px-6 py-10">
             <div class="flex items-center justify-between mb-8">
                 <div>
-                    <h1 class="text-4xl font-black text-white italic tracking-tighter">All <span class="text-indigo-500">Clients</span></h1>
+                    <h1 class="text-4xl font-black text-white italic tracking-tighter">All <span class="text-pink-500">Clients</span></h1>
                     <p class="text-[10px] font-bold text-slate-500 tracking-[0.3em] mt-2">Complete client database</p>
                 </div>
                 <div class="flex gap-4">
@@ -108,11 +108,11 @@
                         <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 5h14v2H5V5zm0 6h14v2H5v-2zm0 6h14v2H5v-2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="currentColor"/></svg>
                         Queue
                     </a>
-                    <a href="{{ route('dashboard.templates') }}" class="px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-indigo-600/20 active:scale-95 flex items-center">
+                    <a href="{{ route('dashboard.templates') }}" class="px-8 py-4 bg-pink-600 hover:bg-pink-500 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-pink-600/20 active:scale-95 flex items-center">
                         <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         Templates
                     </a>
-                    <button onclick="openCreateModal()" class="px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-indigo-600/20 active:scale-95 flex items-center">
+                    <button onclick="openCreateModal()" class="px-8 py-4 bg-pink-600 hover:bg-pink-500 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-pink-600/20 active:scale-95 flex items-center">
                         <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         New Record
                     </button>
@@ -132,10 +132,10 @@
                 <form method="GET" action="{{ route('dashboard.clients.all') }}" class="flex gap-2">
                     <div class="flex-1 relative">
                         <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Search by name, email, website, phone, or industry..." 
-                               class="w-full bg-slate-900 border border-slate-800 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all placeholder:text-slate-600">
+                               class="w-full bg-slate-900 border border-slate-800 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all placeholder:text-slate-600">
                         <svg class="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </div>
-                    <button type="submit" class="px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-indigo-600/20 active:scale-95">
+                    <button type="submit" class="px-8 py-4 bg-pink-600 hover:bg-pink-500 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-pink-600/20 active:scale-95">
                         Search
                     </button>
                     @if($search)
@@ -181,7 +181,7 @@
                                 data-client-notes="{{ $client->notes }}">
                                 <td class="px-8 py-6">
                                     <div class="flex items-center space-x-4">
-                                        <div class="w-10 h-10 rounded-xl bg-indigo-600/10 flex items-center justify-center text-indigo-400 font-black text-xs border border-indigo-500/10">
+                                        <div class="w-10 h-10 rounded-xl bg-pink-600/10 flex items-center justify-center text-pink-400 font-black text-xs border border-pink-500/10">
                                             {{ substr($client->name, 0, 1) }}
                                         </div>
                                         <div>
@@ -192,7 +192,7 @@
                                 </td>
                                 <td class="px-8 py-6">
                                     @if($client->website)
-                                        <a href="{{ $client->website }}" target="_blank" class="text-xs font-bold text-indigo-400 hover:text-indigo-300 break-all" title="{{ $client->website }}">{{ Str::limit($client->website, 45, '...') }}</a>
+                                        <a href="{{ $client->website }}" target="_blank" class="text-xs font-bold text-pink-400 hover:text-indigo-300 break-all" title="{{ $client->website }}">{{ Str::limit($client->website, 45, '...') }}</a>
                                     @else
                                         <p class="text-xs font-bold text-slate-600">---</p>
                                     @endif
@@ -202,7 +202,7 @@
                                 </td>
                                 <td class="px-8 py-6">
                                     @if($client->industry)
-                                    <span class="inline-flex items-center px-3 py-1.5 bg-indigo-950/30 border border-indigo-500/50 rounded-lg text-[9px] font-black text-indigo-400 tracking-wider uppercase">{{ $client->industry }}</span>
+                                    <span class="inline-flex items-center px-3 py-1.5 bg-indigo-950/30 border border-pink-500/50 rounded-lg text-[9px] font-black text-pink-400 tracking-wider uppercase">{{ $client->industry }}</span>
                                     @else
                                     <span class="text-slate-600 italic text-[10px]">No tag</span>
                                     @endif
@@ -250,7 +250,7 @@
                                         </button>
                                         <button 
                                             onclick="openEditModal({{ json_encode($client) }})"
-                                            class="w-9 h-9 flex items-center justify-center bg-indigo-600/10 text-indigo-400 rounded-xl hover:bg-indigo-600 hover:text-white transition-all border border-indigo-500/10">
+                                            class="w-9 h-9 flex items-center justify-center bg-pink-600/10 text-pink-400 rounded-xl hover:bg-pink-600 hover:text-white transition-all border border-pink-500/10">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                         </button>
                                         <form action="{{ route('dashboard.clients.destroy', $client->id) }}" method="POST" onsubmit="return confirm('Delete client from system?')">
@@ -300,39 +300,39 @@
                     <div id="methodField"></div>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Full Name / Company</label>
+                            <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Full Name / Company</label>
                             <input type="text" name="name" id="form_name" required placeholder="e.g. Tech Solutions S.A." 
-                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case">
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                         </div>
                         <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Contact Email</label>
+                            <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Contact Email</label>
                             <input type="email" name="email" id="form_email" required placeholder="client@example.com" 
-                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case">
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                         </div>
                         <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Website</label>
+                            <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Website</label>
                             <input type="url" name="website" id="form_website" placeholder="https://example.com" 
-                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case">
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                         </div>
                         <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Location</label>
+                            <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Location</label>
                             <input type="text" name="location" id="form_location" placeholder="City, Country" 
-                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case">
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                         </div>
                         <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Phone</label>
+                            <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Phone</label>
                             <input type="text" name="phone" id="form_phone" placeholder="+00 0000-0000" 
-                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all">
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all">
                         </div>
                         <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Industry / Sector</label>
+                            <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Industry / Sector</label>
                             <input type="text" name="industry" id="form_industry" placeholder="e.g. Automotive" 
-                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case">
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                         </div>
                         <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Operation Status</label>
+                            <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Operation Status</label>
                             <div class="relative">
-                                <select name="status" id="form_status" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white appearance-none transition-all cursor-pointer">
+                                <select name="status" id="form_status" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white appearance-none transition-all cursor-pointer">
                                     <option value="">-- Select Status --</option>
                                 </select>
                                 <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
@@ -345,51 +345,51 @@
                     <!-- Second Row: Additional Fields -->
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Secondary Email</label>
+                            <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Secondary Email</label>
                             <input type="email" name="email2" id="form_email2" placeholder="alternative@example.com" 
-                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case">
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                         </div>
                         <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Address</label>
+                            <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Address</label>
                             <input type="text" name="address" id="form_address" placeholder="Street address" 
-                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case">
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                         </div>
                         <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Language</label>
+                            <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Language</label>
                             <input type="text" name="language" id="form_language" placeholder="e.g. Spanish, English" 
-                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case">
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                         </div>
                         <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Contact Name</label>
+                            <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Contact Name</label>
                             <input type="text" name="contact_name" id="form_contact_name" placeholder="Person to contact" 
-                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case">
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                         </div>
                         <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Facebook</label>
+                            <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Facebook</label>
                             <input type="url" name="facebook" id="form_facebook" placeholder="Facebook profile URL" 
-                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case">
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                         </div>
                         <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Instagram</label>
+                            <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Instagram</label>
                             <input type="url" name="instagram" id="form_instagram" placeholder="Instagram profile URL" 
-                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all normal-case">
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                         </div>
                         <div>
-                            <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Opening Hours</label>
+                            <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Opening Hours</label>
                             <input type="text" name="opening_hours" id="form_opening_hours" placeholder="e.g. 9AM-5PM" 
-                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all">
+                                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all">
                         </div>
                     </div>
 
                     <!-- Notes -->
                     <div>
-                        <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Notes</label>
+                        <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Notes</label>
                         <textarea name="notes" id="form_notes" rows="3" placeholder="Add any additional notes about the client..."
-                                  class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-[11px] text-slate-300 focus:outline-none focus:border-indigo-500/50 transition-all resize-none placeholder:text-slate-700"></textarea>
+                                  class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-[11px] text-slate-300 focus:outline-none focus:border-pink-500/50 transition-all resize-none placeholder:text-slate-700"></textarea>
                     </div>
 
                     <div class="flex items-center space-x-4 pt-0">
-                        <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-black py-4 rounded-2xl shadow-2xl shadow-indigo-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em]">
+                        <button type="submit" class="flex-1 bg-pink-600 hover:bg-pink-500 text-white font-black py-4 rounded-2xl shadow-2xl shadow-pink-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em]">
                             Update Record
                         </button>
                         <button type="button" onclick="document.getElementById('clientModal').classList.add('hidden')" class="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all">
@@ -797,9 +797,9 @@
                 @csrf
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Recipient Email</label>
+                        <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Recipient Email</label>
                         <div class="relative">
-                            <select id="emailTo" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white appearance-none transition-all cursor-pointer">
+                            <select id="emailTo" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white appearance-none transition-all cursor-pointer">
                                 <option value="">-- Select Email --</option>
                             </select>
                             <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
@@ -808,9 +808,9 @@
                         </div>
                     </div>
                     <div>
-                        <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Template</label>
+                        <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Template</label>
                         <div class="relative">
-                            <select id="email_template" onchange="loadTemplate()" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white appearance-none transition-all cursor-pointer">
+                            <select id="email_template" onchange="loadTemplate()" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white appearance-none transition-all cursor-pointer">
                                 <option value="">-- Select Template --</option>
                             </select>
                             <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
@@ -822,15 +822,15 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-3 px-1">Schedule Date & Time</label>
+                        <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-3 px-1">Schedule Date & Time</label>
                         <div class="grid grid-cols-2 gap-3">
                             <div>
                                 <label class="block text-[8px] font-bold text-slate-500 tracking-widest mb-2 px-1">Date</label>
-                                <input type="date" id="email_date" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all">
+                                <input type="date" id="email_date" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all">
                             </div>
                             <div>
                                 <label class="block text-[8px] font-bold text-slate-500 tracking-widest mb-2 px-1">Time</label>
-                                <input type="time" id="email_time" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all">
+                                <input type="time" id="email_time" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all">
                             </div>
                         </div>
                         <input type="hidden" id="email_datetime">
@@ -838,15 +838,15 @@
                 </div>
 
                 <div>
-                    <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Subject</label>
+                    <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Subject</label>
                     <input type="text" name="subject" id="email_subject" required placeholder="Email subject" 
-                           class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all">
+                           class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all">
                 </div>
 
                 <div>
-                    <label class="block text-[9px] font-black text-indigo-400 tracking-widest mb-2 px-1">Message</label>
+                    <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Message</label>
                     <textarea name="message" id="email_message" required placeholder="Email message" rows="8"
-                              class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 text-xs font-bold text-white transition-all resize-none"></textarea>
+                              class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all resize-none"></textarea>
                 </div>
 
                 <div class="flex items-center space-x-4 pt-4">
@@ -867,9 +867,9 @@
         <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-[2.5rem] overflow-hidden shadow-2xl p-8">
             <div class="flex flex-col items-center justify-center space-y-6">
                 <div class="relative">
-                    <div class="w-16 h-16 rounded-full border-4 border-slate-700 border-t-indigo-500 animate-spin"></div>
+                    <div class="w-16 h-16 rounded-full border-4 border-slate-700 border-t-pink-500 animate-spin"></div>
                     <div class="absolute inset-0 flex items-center justify-center">
-                        <svg class="w-8 h-8 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-8 h-8 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3v-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </div>
@@ -879,7 +879,7 @@
                     <p class="text-[9px] font-bold text-slate-400 tracking-widest uppercase">Por favor espera...</p>
                 </div>
                 <div class="w-full bg-slate-950 rounded-lg h-1 overflow-hidden">
-                    <div class="bg-indigo-500 h-full w-full animate-pulse"></div>
+                    <div class="bg-pink-500 h-full w-full animate-pulse"></div>
                 </div>
             </div>
         </div>
@@ -910,7 +910,7 @@
 
                 <div class="bg-slate-950/50 border border-slate-800 rounded-xl p-4">
                     <p class="text-[9px] font-bold text-slate-400 leading-relaxed">
-                        <span class="text-purple-400">Note:</span> The CSV file should have headers matching the client field names. At minimum, include <span class="text-indigo-400">name</span> and <span class="text-indigo-400">email</span>. Optional fields can be left empty.
+                        <span class="text-purple-400">Note:</span> The CSV file should have headers matching the client field names. At minimum, include <span class="text-pink-400">name</span> and <span class="text-pink-400">email</span>. Optional fields can be left empty.
                     </p>
                 </div>
 
