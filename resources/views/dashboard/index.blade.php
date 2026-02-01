@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-slate-950">
+<html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,7 +25,7 @@
         body { font-family: 'Inter', sans-serif; }
     </style>
 </head>
-<body class="h-full flex flex-col bg-slate-950 text-slate-200 overflow-hidden">
+<body class="h-full flex flex-col bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-200 overflow-hidden">
 
     <!-- Navbar -->
     <nav class="h-20 bg-slate-900/50 backdrop-blur-md border-b border-slate-800/50 flex items-center justify-between px-6 sticky top-0 z-30">
@@ -107,9 +107,9 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @foreach($categories as $category)
                 @if(isset($category['isExternal']) && $category['isExternal'])
-                <a href="{{ $category['url'] }}" target="_blank" rel="noopener noreferrer" class="group relative bg-slate-900 border border-slate-800 rounded-3xl p-8 transition-all duration-300 hover:scale-[1.03] hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/10 active:scale-100">
+                <a href="{{ $category['url'] }}" target="_blank" rel="noopener noreferrer" class="group relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 transition-all duration-300 hover:scale-[1.03] hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/10 active:scale-100">
                 @else
-                <a href="{{ route($category['route']) }}" class="group relative bg-slate-900 border border-slate-800 rounded-3xl p-8 transition-all duration-300 hover:scale-[1.03] hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/10 active:scale-100">
+                <a href="{{ route($category['route']) }}" class="group relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 transition-all duration-300 hover:scale-[1.03] hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/10 active:scale-100">
                 @endif
                     <div class="absolute -right-10 -top-10 w-40 h-40 bg-indigo-600/5 blur-[60px] group-hover:bg-indigo-600/15 transition-all"></div>
                     
@@ -117,8 +117,8 @@
                         {{ $category['icon'] }}
                     </div>
 
-                    <h2 class="text-2xl font-bold text-white mb-3 group-hover:text-indigo-400 transition-colors">{{ $category['name'] }}</h2>
-                    <p class="text-slate-400 leading-relaxed mb-6">{{ $category['description'] }}</p>
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-indigo-400 transition-colors">{{ $category['name'] }}</h2>
+                    <p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-6">{{ $category['description'] }}</p>
 
                     <div class="flex items-center text-indigo-400 font-bold text-xs uppercase tracking-widest">
                         {{ isset($category['isExternal']) && $category['isExternal'] ? 'Open' : 'Configure' }}
