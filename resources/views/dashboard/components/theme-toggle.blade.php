@@ -36,6 +36,7 @@
                 let stored = localStorage.getItem(key);
                 if(!stored){
                     stored = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                    try{ localStorage.setItem(key, stored); } catch(e) { /* noop */ }
                 }
                 applyTheme(stored);
             } catch(e){ applyTheme('light'); }
