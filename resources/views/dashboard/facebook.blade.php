@@ -187,7 +187,7 @@
                             <!-- Dots -->
                             <div class="absolute bottom-3 left-0 right-0 flex justify-center space-x-1.5 z-10">
                                 @foreach($images as $idx => $img)
-                                    <div class="w-1.5 h-1.5 rounded-full transition-all {{ $idx == 0 ? 'bg-white scale-125' : 'bg-white/40' }}" id="dot-{{ $post->id }}-{{ $idx }}"></div>
+                                    <div class="w-1.5 h-1.5 rounded-full transition-all {{ $idx == 0 ? 'bg-slate-950 scale-125' : 'bg-white/40' }}" id="dot-{{ $post->id }}-{{ $idx }}"></div>
                                 @endforeach
                             </div>
                         @endif

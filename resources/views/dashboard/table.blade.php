@@ -34,7 +34,7 @@
             color: #818cf8 !important;
             background-color: #1e293b !important;
         }
-        nav[role="navigation"] .bg-white {
+        nav[role="navigation"] .bg-slate-950 {
             background-color: #4f46e5 !important;
             color: white !important;
             border-color: #4f46e5 !important;

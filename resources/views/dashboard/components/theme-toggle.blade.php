@@ -1,5 +1,5 @@
 <div class="relative">
-    <button id="themeToggleBtn" title="Toggle theme" class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-200 hover:shadow-sm transition-colors">
+    <button id="themeToggleBtn" title="Toggle theme" class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-800 bg-slate-950 text-white hover:shadow-sm transition-colors">
         <!-- Sun -->
         <svg id="theme-sun" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364-6.364l-1.414 1.414M7.05 16.95l-1.414 1.414m12.728 0l-1.414-1.414M7.05 7.05L5.636 5.636M12 7a5 5 0 100 10 5 5 0 000-10z"/></svg>
         <!-- Moon -->

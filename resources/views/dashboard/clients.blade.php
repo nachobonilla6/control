@@ -42,10 +42,10 @@
         .font-inter { font-family: 'Inter', sans-serif; }
     </style>
 </head>
-<body class="h-full flex flex-col bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-200 overflow-hidden uppercase">
+<body class="h-full flex flex-col bg-slate-950 text-white overflow-hidden uppercase">
 
     <!-- Navbar -->
-    <nav class="h-20 bg-white/50 dark:bg-red backdrop-blur-md border-b border-slate-200/50 dark:border-slate-800/50 flex items-center justify-between px-6 sticky top-0 z-30">
+    <nav class="h-20 bg-white/50 backdrop-blur-md border-b border-slate-200/50 flex items-center justify-between px-6 sticky top-0 z-30">
         <div class="flex items-center space-x-4">
             <a href="{{ route('dashboard') }}" class="flex items-center space-x-4 group/brand">
                 <span class="text-xl font-bold text-indigo-400 font-inter group-hover/brand:text-white transition-colors">Mini Walee</span>
@@ -154,7 +154,7 @@
                     <p class="text-[10px] font-bold text-slate-500 tracking-[0.3em] mt-2 text-center md:text-left">Email queue and client database</p>
                 </div>
                 
-                <div class="flex items-center space-x-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-2 rounded-2xl">
+                <div class="flex items-center space-x-6 bg-slate-950 border border-slate-800 p-2 rounded-2xl">
                     <div class="px-6 py-2 text-center border-r border-slate-800">
                         <p class="text-[8px] font-black text-slate-500 uppercase tracking-widest mb-1">Total</p>
                         <p class="text-xl font-black text-white">{{ $totalClients }}</p>
@@ -211,17 +211,17 @@
             </div>
 
             <!-- Clients Table -->
-            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[2.5rem] overflow-hidden shadow-2xl">
+            <div class="bg-slate-950 border border-slate-800 rounded-[2.5rem] overflow-hidden shadow-2xl">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="border-b border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-950">
-                                <th class="px-8 py-6 text-[9px] font-black text-slate-600 dark:text-slate-500 tracking-[0.2em]">Name / Company</th>
-                                <th class="px-8 py-6 text-[9px] font-black text-slate-600 dark:text-slate-500 tracking-[0.2em]">Location</th>
-                                <th class="px-8 py-6 text-[9px] font-black text-slate-600 dark:text-slate-500 tracking-[0.2em]">Industry</th>
-                                <th class="px-8 py-6 text-[9px] font-black text-slate-600 dark:text-slate-500 tracking-[0.2em]">Status</th>
-                                <th class="px-8 py-6 text-[9px] font-black text-slate-600 dark:text-slate-500 tracking-[0.2em]">Time</th>
-                                <th class="px-8 py-6 text-[9px] font-black text-slate-600 dark:text-slate-500 tracking-[0.2em] text-right">Actions</th>
+                            <tr class="border-b border-slate-800 bg-slate-100">
+                                <th class="px-8 py-6 text-[9px] font-black text-slate-600 tracking-[0.2em]">Name / Company</th>
+                                <th class="px-8 py-6 text-[9px] font-black text-slate-600 tracking-[0.2em]">Location</th>
+                                <th class="px-8 py-6 text-[9px] font-black text-slate-600 tracking-[0.2em]">Industry</th>
+                                <th class="px-8 py-6 text-[9px] font-black text-slate-600 tracking-[0.2em]">Status</th>
+                                <th class="px-8 py-6 text-[9px] font-black text-slate-600 tracking-[0.2em]">Time</th>
+                                <th class="px-8 py-6 text-[9px] font-black text-slate-600 tracking-[0.2em] text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-800/50">
