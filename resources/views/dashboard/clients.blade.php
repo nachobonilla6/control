@@ -42,15 +42,15 @@
         .font-inter { font-family: 'Inter', sans-serif; }
     </style>
 </head>
-<body class="h-full flex flex-col bg-slate-950 text-white overflow-hidden uppercase">
+<body class="h-full flex flex-col bg-white dark:bg-slate-950 text-slate-900 dark:text-white overflow-hidden uppercase">
 
     <!-- Navbar -->
-    <nav class="h-20 bg-slate-900/50 backdrop-blur-md border-b border-slate-800/50 flex items-center justify-between px-6 sticky top-0 z-30">
+    <nav class="h-20 bg-white/50 dark:bg-slate-900/50 backdrop-blur-md border-b border-pink-200/30 dark:border-slate-800/50 flex items-center justify-between px-6 sticky top-0 z-30">
         <div class="flex items-center space-x-4">
             <a href="{{ route('dashboard') }}" class="flex items-center space-x-4 group/brand">
-                <span class="text-xl font-bold text-pink-400 font-inter group-hover/brand:text-white transition-colors">Mini Walee</span>
-                <span class="text-slate-700 font-light text-xl italic font-inter">/</span>
-                <span class="text-sm font-medium text-slate-400 tracking-wide uppercase font-inter group-hover/brand:text-pink-400 transition-colors">Control Panel</span>
+                <span class="text-xl font-bold text-pink-600 dark:text-pink-400 font-inter group-hover/brand:text-pink-700 dark:group-hover/brand:text-white transition-colors">Mini Walee</span>
+                <span class="text-slate-300 dark:text-slate-700 font-light text-xl italic font-inter">/</span>
+                <span class="text-sm font-medium text-slate-600 dark:text-slate-400 tracking-wide uppercase font-inter group-hover/brand:text-pink-700 dark:group-hover/brand:text-pink-400 transition-colors">Control Panel</span>
             </a>
             <span class="text-slate-800 font-light text-xl italic font-inter">/</span>
             <a href="{{ route('dashboard.clients') }}" class="text-xs font-black text-pink-500 tracking-[0.2em] hover:text-white transition-colors uppercase font-inter">Clients</a>
