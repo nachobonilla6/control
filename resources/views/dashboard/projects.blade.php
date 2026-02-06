@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en" class="h-full bg-white dark:bg-slate-950">
+<html lang="en" class="h-full bg-slate-950">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,7 +25,7 @@
         .font-inter { font-family: 'Inter', sans-serif; }
     </style>
 </head>
-<body class="h-full flex flex-col bg-white dark:bg-slate-950 text-slate-200 overflow-hidden">
+<body class="h-full flex flex-col bg-slate-950 text-slate-200 overflow-hidden">
 
     <!-- Navbar -->
     <nav class="h-20 bg-slate-950 backdrop-blur-md border-b border-white/10 flex items-center justify-between px-6 sticky top-0 z-30">
@@ -46,25 +45,25 @@
             </a>
             <!-- Account Dropdown -->
             <div class="relative">
-                <button id="accountBtn" class="flex items-center justify-center w-10 h-10 bg-slate-800/50 border border-pink-200 dark:border-slate-800 rounded-full hover:border-pink-500/30 transition-all focus:outline-none overflow-hidden group">
+                <button id="accountBtn" class="flex items-center justify-center w-10 h-10 bg-slate-800/50 border border-white/10 rounded-full hover:border-pink-500/30 transition-all focus:outline-none overflow-hidden group">
                     @if(Auth::user()->profile_photo_url)
                         <img src="{{ asset(Auth::user()->profile_photo_url) }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
                     @else
-                        <div class="w-full h-full bg-pink-600 flex items-center justify-center text-slate-900 dark:text-white text-xs font-black">
+                        <div class="w-full h-full bg-pink-600 flex items-center justify-center text-white text-xs font-black">
                             {{ substr(Auth::user()->name, 0, 1) }}
                         </div>
                     @endif
                 </button>
-                <div id="accountDropdown" class="absolute right-0 mt-3 w-56 bg-slate-100 dark:bg-slate-900 border border-pink-200 dark:border-slate-800 rounded-2xl shadow-2xl opacity-0 invisible transition-all z-50 p-2">
-                    <div class="px-4 py-3 border-b border-pink-200 dark:border-slate-800 mb-2">
+                <div id="accountDropdown" class="absolute right-0 mt-3 w-56 bg-slate-950 border border-white/10 rounded-2xl shadow-2xl opacity-0 invisible transition-all z-50 p-2">
+                    <div class="px-4 py-3 border-b border-white/10 mb-2">
                         <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest leading-none mb-1">Signed in as</p>
-                        <p class="text-xs font-bold text-slate-900 dark:text-white truncate">{{ Auth::user()->email }}</p>
+                        <p class="text-xs font-bold text-white truncate">{{ Auth::user()->email }}</p>
                     </div>
-                    <button onclick="document.getElementById('profileModal').classList.remove('hidden'); closeAllDropdowns();" class="w-full flex items-center space-x-3 px-4 py-3 text-sm text-slate-700 dark:text-slate-300 hover:bg-pink-100 dark:hover:bg-slate-800 rounded-xl transition-colors">
+                    <button onclick="document.getElementById('profileModal').classList.remove('hidden'); closeAllDropdowns();" class="w-full flex items-center space-x-3 px-4 py-3 text-sm text-slate-300 hover:bg-white/5 rounded-xl transition-colors">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         <span>Profile Settings</span>
                     </button>
-                    <div class="my-2 border-t border-pink-200 dark:border-slate-800"></div>
+                    <div class="my-2 border-t border-white/10"></div>
                     <form action="{{ route('logout') }}" method="POST" class="w-full">
                         @csrf
                         <button type="submit" class="w-full flex items-center space-x-3 px-4 py-3 text-sm text-red-500 hover:bg-red-500/10 rounded-xl transition-colors">
@@ -81,10 +80,10 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     <span id="notifBadge" class="absolute top-0 right-0 bg-pink-600 text-[10px] font-bold text-white rounded-full w-4 h-4 flex items-center justify-center border-2 border-slate-950 hidden">0</span>
                 </button>
-                <div id="notifDropdown" class="absolute right-0 mt-3 w-80 bg-slate-100 dark:bg-slate-900 border border-pink-200 dark:border-slate-800 rounded-2xl shadow-2xl opacity-0 invisible transition-all z-50 p-2 overflow-hidden">
-                    <div class="p-4 border-b border-pink-200 dark:border-slate-800 flex items-center justify-between">
-                        <h3 class="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest text-pink-400">Broadcasts</h3>
-                        <span class="text-[9px] font-bold text-slate-700 dark:text-slate-600 uppercase">Live Feed</span>
+                <div id="notifDropdown" class="absolute right-0 mt-3 w-80 bg-slate-950 border border-white/10 rounded-2xl shadow-2xl opacity-0 invisible transition-all z-50 p-2 overflow-hidden">
+                    <div class="p-4 border-b border-white/10 flex items-center justify-between">
+                        <h3 class="text-xs font-black text-white uppercase tracking-widest text-pink-500">Broadcasts</h3>
+                        <span class="text-[9px] font-bold text-slate-500 uppercase">Live Feed</span>
                     </div>
                     <div id="notifList" class="max-h-80 overflow-y-auto p-2 space-y-2">
                         <div class="text-center py-6 text-slate-700 dark:text-slate-600 text-[10px] italic uppercase tracking-widest">Scanning...</div>
@@ -312,21 +311,21 @@
 </script>
 
     <!-- Profile Modal (Same as other pages) -->
-    <div id="profileModal" class="fixed inset-0 z-50 hidden bg-white dark:bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
-        <div class="bg-slate-100 dark:bg-slate-900 border border-pink-200 dark:border-slate-800 w-full max-w-md rounded-3xl overflow-hidden shadow-2xl p-8">
+    <div id="profileModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-slate-950 border border-white/10 w-full max-w-md rounded-3xl overflow-hidden shadow-2xl p-8">
             <div class="flex justify-between items-center mb-6">
-                <h2 class="text-xl font-bold text-slate-900 dark:text-white uppercase tracking-tight">Identity Config</h2>
-                <button onclick="document.getElementById('profileModal').classList.add('hidden')" class="text-slate-500 hover:text-white">
+                <h2 class="text-xl font-bold text-white uppercase tracking-tight">Identity Config</h2>
+                <button onclick="document.getElementById('profileModal').classList.add('hidden')" class="text-slate-500 hover:text-white transition-colors">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </button>
             </div>
             <form action="{{ route('dashboard.profile.update') }}" method="POST" class="space-y-4">
                 @csrf
                 <div>
-                    <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Avatar URL</label>
-                    <input type="url" name="profile_photo_url" value="{{ Auth::user()->profile_photo_url }}" required class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200">
+                    <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 px-1">Avatar URL</label>
+                    <input type="url" name="profile_photo_url" value="{{ Auth::user()->profile_photo_url }}" required class="w-full bg-slate-950 border border-white/10 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-pink-600/50">
                 </div>
-                <button type="submit" class="w-full bg-pink-600 hover:bg-pink-500 py-3 rounded-xl font-bold transition-all shadow-lg">Sync Identity</button>
+                <button type="submit" class="w-full bg-pink-600 hover:bg-pink-500 text-white py-3 rounded-xl font-bold transition-all shadow-lg text-xs uppercase tracking-widest">Sync Identity</button>
             </form>
         </div>
     </div>

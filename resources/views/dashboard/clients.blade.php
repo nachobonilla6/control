@@ -132,7 +132,7 @@
 
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
                 <div>
-                    <h1 class="text-4xl font-black text-slate-900 dark:text-slate-900 italic tracking-tighter"><span class="text-blue-500">Queue</span> Management
+                    <h1 class="text-4xl font-black text-white italic tracking-tighter"><span class="text-blue-500">Queue</span> Management
                         @if($filter === 'no_email')
                             <span class="text-gray-400 text-lg ml-4">(Filtering: No Email)</span>
                         @endif
@@ -140,18 +140,18 @@
                     <p class="text-[10px] font-bold text-slate-500 tracking-[0.3em] mt-2 text-center md:text-left">Email queue and client database</p>
                 </div>
                 
-                <div class="flex items-center space-x-6 bg-white dark:bg-white border border-pink-200 dark:border-pink-200 p-2 rounded-2xl">
-                    <div class="px-6 py-2 text-center border-r border-pink-200 dark:border-slate-800">
+                <div class="flex items-center space-x-6 bg-slate-950 border border-white/10 p-2 rounded-2xl">
+                    <div class="px-6 py-2 text-center border-r border-white/10">
                         <p class="text-[8px] font-black text-slate-500 uppercase tracking-widest mb-1">Total</p>
-                        <p class="text-xl font-black text-slate-900 dark:text-slate-900">{{ $totalClients }}</p>
+                        <p class="text-xl font-black text-white">{{ $totalClients }}</p>
                     </div>
-                    <div class="px-6 py-2 text-center border-r border-pink-200 dark:border-pink-200">
+                    <div class="px-6 py-2 text-center border-r border-white/10">
                         <p class="text-[8px] font-black text-amber-500 uppercase tracking-widest mb-1">Queued</p>
-                        <p class="text-xl font-black text-slate-900 dark:text-slate-900">{{ $queuedCount }}</p>
+                        <p class="text-xl font-black text-white">{{ $queuedCount }}</p>
                     </div>
                     <div class="px-6 py-2 text-center">
                         <p class="text-[8px] font-black text-emerald-500 uppercase tracking-widest mb-1">Sent</p>
-                        <p class="text-xl font-black text-slate-900 dark:text-slate-900">{{ $sentCount }}</p>
+                        <p class="text-xl font-black text-white">{{ $sentCount }}</p>
                     </div>
                 </div>
 
@@ -182,7 +182,7 @@
                     @endif
                     <div class="flex-1 relative">
                         <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Search by name, email, website, phone, or industry..." 
-                               class="w-full bg-slate-100 dark:bg-white border border-pink-200 dark:border-pink-200 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-slate-900 transition-all placeholder:text-slate-600">
+                               class="w-full bg-slate-950 border border-white/10 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all placeholder:text-slate-600">
                         <svg class="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </div>
                     <button type="submit" class="px-8 py-4 bg-pink-600 hover:bg-pink-500 text-slate-900 dark:text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-pink-600/20 active:scale-95">
@@ -197,17 +197,17 @@
             </div>
 
             <!-- Clients Table -->
-            <div class="bg-white dark:bg-white border border-pink-200 dark:border-pink-200 rounded-[2.5rem] overflow-hidden shadow-2xl">
+            <div class="bg-slate-950 border border-white/10 rounded-[2.5rem] overflow-hidden shadow-2xl">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="border-b border-pink-200 dark:border-pink-200 bg-slate-100 dark:bg-slate-50">
-                                <th class="px-8 py-6 text-[9px] font-black text-slate-700 dark:text-slate-600 tracking-[0.2em]">Name / Company</th>
-                                <th class="px-8 py-6 text-[9px] font-black text-slate-700 dark:text-slate-600 tracking-[0.2em]">Location</th>
-                                <th class="px-8 py-6 text-[9px] font-black text-slate-700 dark:text-slate-600 tracking-[0.2em]">Industry</th>
-                                <th class="px-8 py-6 text-[9px] font-black text-slate-700 dark:text-slate-600 tracking-[0.2em]">Status</th>
-                                <th class="px-8 py-6 text-[9px] font-black text-slate-700 dark:text-slate-600 tracking-[0.2em]">Time</th>
-                                <th class="px-8 py-6 text-[9px] font-black text-slate-700 dark:text-slate-600 tracking-[0.2em] text-right">Actions</th>
+                            <tr class="border-b border-white/10 bg-slate-900">
+                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Name / Company</th>
+                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Location</th>
+                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Industry</th>
+                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Status</th>
+                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Time</th>
+                                <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em] text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-800/50">
@@ -219,19 +219,19 @@
                                             {{ substr($client->name, 0, 1) }}
                                         </div>
                                         <div>
-                                            <p class="text-sm font-bold text-slate-900 dark:text-slate-900 leading-none mb-1">{{ $client->name }}</p>
+                                            <p class="text-sm font-bold text-white leading-none mb-1">{{ $client->name }}</p>
                                             <p class="text-[9px] font-medium text-slate-500 lowercase">{{ $client->email }}</p>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="px-8 py-6">
-                                    <p class="text-xs font-bold text-slate-700 dark:text-slate-600 dark:text-slate-400">{{ $client->location ?: '---' }}</p>
+                                    <p class="text-xs font-bold text-white">{{ $client->location ?: '---' }}</p>
                                 </td>
                                 <td class="px-8 py-6">
                                     @if($client->industry)
-                                    <span class="px-3 py-1 bg-white dark:bg-white border border-pink-200 rounded-lg text-[9px] font-black text-slate-500">{{ $client->industry }}</span>
+                                    <span class="px-3 py-1 bg-slate-900 border border-white/10 rounded-lg text-[9px] font-black text-pink-400">{{ $client->industry }}</span>
                                     @else
-                                    <span class="text-slate-800 italic text-[10px]">No tag</span>
+                                    <span class="text-slate-600 italic text-[10px]">No tag</span>
                                     @endif
                                 </td>
                                 <td class="px-8 py-6">
@@ -251,8 +251,8 @@
                                             Queued
                                         </span>
                                     @else
-                                        <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-800/50 border border-slate-600/50 rounded-lg text-[9px] font-black text-slate-700 dark:text-slate-600 dark:text-slate-400 tracking-wider uppercase">
-                                            <span class="w-2 h-2 bg-slate-500 rounded-full"></span>
+                                        <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-800/50 border border-slate-700 rounded-lg text-[9px] font-black text-slate-400 tracking-wider uppercase">
+                                            <span class="w-2 h-2 bg-slate-600 rounded-full"></span>
                                             Unknown
                                         </span>
                                     @endif
@@ -271,13 +271,13 @@
                                     <div class="flex items-center justify-end space-x-2">
                                         <button 
                                             onclick="openEditModal({{ json_encode($client) }})"
-                                            class="w-9 h-9 flex items-center justify-center bg-pink-600/10 text-pink-400 rounded-xl hover:bg-pink-600 hover:text-slate-900 dark:text-white transition-all border border-pink-500/10">
+                                            class="w-9 h-9 flex items-center justify-center bg-pink-600/10 text-pink-400 rounded-xl hover:bg-pink-600 hover:text-white transition-all border border-pink-500/10">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                         </button>
                                         <form action="{{ route('dashboard.clients.destroy', $client->id) }}" method="POST" onsubmit="return confirm('Delete client from system?')">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="w-9 h-9 flex items-center justify-center bg-red-500/10 text-red-500 rounded-xl hover:bg-red-500 hover:text-slate-900 dark:text-white transition-all border border-red-500/10">
+                                            <button type="submit" class="w-9 h-9 flex items-center justify-center bg-red-500/10 text-red-500 rounded-xl hover:bg-red-500 hover:text-white transition-all border border-red-500/10">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                             </button>
                                         </form>
@@ -297,7 +297,7 @@
                 
                 <!-- Pagination -->
                 @if($clients->hasPages())
-                <div class="px-8 py-6 bg-slate-900/50 border-t border-pink-200 dark:border-slate-800/50">
+                <div class="px-8 py-6 bg-slate-900 border-t border-white/10">
                     {{ $clients->links() }}
                 </div>
                 @endif
@@ -306,14 +306,14 @@
     </main>
 
     <!-- Modal -->
-    <div id="clientModal" class="fixed inset-0 z-50 hidden bg-white dark:bg-white/90 backdrop-blur-xl flex items-center justify-center p-4">
-        <div class="bg-slate-100 dark:bg-white border border-pink-200 dark:border-pink-200 w-full max-w-7xl rounded-[2.5rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
+    <div id="clientModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-slate-950 border border-white/10 w-full max-w-7xl rounded-[2.5rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
             <div class="flex justify-between items-start mb-6">
                 <div>
-                    <h2 id="modalTitle" class="text-2xl font-black text-slate-900 dark:text-slate-900 italic tracking-tighter mb-0.5">New Record</h2>
+                    <h2 id="modalTitle" class="text-2xl font-black text-white italic tracking-tighter mb-0.5">New Record</h2>
                     <p id="modalSubtitle" class="text-[8px] font-bold text-slate-500 tracking-widest leading-none">Register business entity • {{ $queuedCount }} QUEUED | {{ $sentCount }} SENT</p>
                 </div>
-                <button onclick="document.getElementById('clientModal').classList.add('hidden')" class="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-xl text-slate-700 dark:text-slate-600 hover:text-slate-900 dark:text-white transition-all">
+                <button onclick="document.getElementById('clientModal').classList.add('hidden')" class="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-xl text-slate-500 hover:text-white transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </button>
             </div>
@@ -327,8 +327,8 @@
                         Magic Paste (AI Extractor)
                     </label>
                     <textarea id="magicText" rows="4" placeholder="Paste email signature or client info here..." 
-                               class="w-full bg-white dark:bg-white border border-pink-200 dark:border-pink-200 rounded-2xl px-4 py-3 text-[11px] text-slate-700 dark:text-slate-700 focus:outline-none focus:border-pink-500/50 transition-all resize-none mb-4 placeholder:text-slate-400 h-32"></textarea>
-                    <button type="button" onclick="parseMagicText()" id="magicBtn" class="w-full py-3 bg-pink-600/20 hover:bg-pink-600 text-pink-400 hover:text-slate-900 dark:text-white rounded-xl text-[9px] font-black tracking-widest uppercase transition-all flex items-center justify-center">
+                               class="w-full bg-slate-900 border border-white/10 rounded-2xl px-4 py-3 text-[11px] text-white focus:outline-none focus:border-pink-500/50 transition-all resize-none mb-4 placeholder:text-slate-600 h-32"></textarea>
+                    <button type="button" onclick="parseMagicText()" id="magicBtn" class="w-full py-3 bg-pink-600/20 hover:bg-pink-600 text-pink-400 hover:text-white rounded-xl text-[9px] font-black tracking-widest uppercase transition-all flex items-center justify-center">
                         <span>Auto-Sync Data</span>
                     </button>
                     <div class="mt-6">
@@ -347,57 +347,57 @@
                             <div>
                                 <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Full Name / Company</label>
                                 <input type="text" name="name" id="form_name" required placeholder="e.g. Tech Solutions S.A." 
-                                       class="w-full bg-white dark:bg-white border border-pink-200 dark:border-pink-200 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-slate-900 transition-all normal-case">
+                                       class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                             </div>
                             <div>
                                 <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Contact Email</label>
                                 <input type="email" name="email" id="form_email" required placeholder="client@example.com" 
-                                       class="w-full bg-white dark:bg-white border border-pink-200 dark:border-pink-200 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-slate-900 transition-all normal-case">
+                                       class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                             </div>
                             <div>
                                 <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Secondary Email</label>
                                 <input type="email" name="email2" id="form_email2" placeholder="alternative@example.com" 
-                                       class="w-full bg-white dark:bg-white border border-pink-200 dark:border-pink-200 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-slate-900 transition-all normal-case">
+                                       class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                             </div>
                             <div>
                                 <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Location</label>
                                 <input type="text" name="location" id="form_location" placeholder="City, Country" 
-                                       class="w-full bg-white dark:bg-white border border-pink-200 dark:border-pink-200 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-slate-900 transition-all normal-case">
+                                       class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                             </div>
                             <div>
                                 <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Address</label>
                                 <input type="text" name="address" id="form_address" placeholder="Street address" 
-                                       class="w-full bg-white dark:bg-white border border-pink-200 dark:border-pink-200 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-slate-900 transition-all normal-case">
+                                       class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                             </div>
                             <div>
                                 <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Website</label>
                                 <input type="url" name="website" id="form_website" placeholder="https://example.com" 
-                                       class="w-full bg-white dark:bg-white border border-pink-200 dark:border-pink-200 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-slate-900 transition-all normal-case">
+                                       class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                             </div>
                             <div>
                                 <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Phone</label>
                                 <input type="text" name="phone" id="form_phone" placeholder="+00 0000-0000" 
-                                       class="w-full bg-white dark:bg-white border border-pink-200 dark:border-pink-200 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-slate-900 transition-all">
+                                       class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all">
                             </div>
                             <div>
                                 <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Industry / Sector</label>
                                 <input type="text" name="industry" id="form_industry" placeholder="e.g. Automotive" 
-                                       class="w-full bg-white dark:bg-white border border-pink-200 dark:border-pink-200 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-slate-900 transition-all normal-case">
+                                       class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                             </div>
                             <div>
                                 <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Language</label>
                                 <input type="text" name="language" id="form_language" placeholder="e.g. Spanish, English" 
-                                       class="w-full bg-white dark:bg-white border border-pink-200 dark:border-pink-200 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-slate-900 transition-all normal-case">
+                                       class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                             </div>
                             <div>
                                 <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Contact Name</label>
                                 <input type="text" name="contact_name" id="form_contact_name" placeholder="Person to contact" 
-                                       class="w-full bg-white dark:bg-white border border-pink-200 dark:border-pink-200 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-slate-900 transition-all normal-case">
+                                       class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                             </div>
                             <div>
                                 <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Operation Status</label>
                                 <div class="relative">
-                                    <select name="status" id="form_status" required class="w-full bg-white dark:bg-white border border-pink-200 dark:border-pink-200 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-slate-900 appearance-none transition-all cursor-pointer">
+                                    <select name="status" id="form_status" required class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white appearance-none transition-all cursor-pointer">
                                         <option value="">-- Select Status --</option>
                                     </select>
                                     <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
@@ -412,17 +412,17 @@
                             <div>
                                 <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Facebook</label>
                                 <input type="url" name="facebook" id="form_facebook" placeholder="Facebook profile URL" 
-                                       class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-white transition-all normal-case">
+                                       class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                             </div>
                             <div>
                                 <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Instagram</label>
                                 <input type="url" name="instagram" id="form_instagram" placeholder="Instagram profile URL" 
-                                       class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-white transition-all normal-case">
+                                       class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                             </div>
                             <div>
                                 <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Opening Hours</label>
                                 <input type="text" name="opening_hours" id="form_opening_hours" placeholder="e.g. 9AM-5PM" 
-                                       class="w-full bg-white dark:bg-white border border-pink-200 dark:border-pink-200 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-slate-900 transition-all">
+                                       class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all">
                             </div>
                         </div>
 
@@ -430,11 +430,11 @@
                         <div>
                             <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Notes</label>
                             <textarea name="notes" id="form_notes" rows="3" placeholder="Add any additional notes about the client..."
-                                      class="w-full bg-white dark:bg-white border border-pink-200 dark:border-pink-200 rounded-xl px-4 py-3 text-[11px] text-slate-700 dark:text-slate-700 focus:outline-none focus:border-pink-500/50 transition-all resize-none placeholder:text-slate-400"></textarea>
+                                      class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-3 text-[11px] text-white focus:outline-none focus:border-pink-500/50 transition-all resize-none placeholder:text-slate-400"></textarea>
                         </div>
 
                         <div class="flex items-center space-x-4 pt-0">
-                            <button type="submit" class="flex-1 bg-pink-600 hover:bg-pink-500 text-slate-900 dark:text-white font-black py-4 rounded-2xl shadow-2xl shadow-pink-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em]">
+                            <button type="submit" class="flex-1 bg-pink-600 hover:bg-pink-500 text-white font-black py-4 rounded-2xl shadow-2xl shadow-pink-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em]">
                                 Process Record
                             </button>
                         </div>

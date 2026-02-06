@@ -26,7 +26,7 @@
         body { font-family: 'Inter', sans-serif; }
     </style>
 </head>
-<body class="h-full flex flex-col bg-white dark:bg-white text-slate-900 dark:text-slate-900 overflow-hidden">
+<body class="h-full flex flex-col bg-slate-950 text-white overflow-hidden">
 
     <!-- Navbar -->
     <nav class="h-20 bg-slate-950 backdrop-blur-md border-b border-white/10 flex items-center justify-between px-6 sticky top-0 z-30">
@@ -55,13 +55,13 @@
                 </button>
 
                 <!-- Dropdown Menu -->
-                <div id="accountDropdown" class="absolute right-0 mt-3 w-56 bg-white dark:bg-slate-900 border border-pink-200 dark:border-slate-800 rounded-2xl shadow-2xl opacity-0 invisible transition-all z-50 p-2">
-                    <div class="px-4 py-3 border-b border-pink-200 dark:border-slate-800 mb-2">
-                        <p class="text-[10px] font-black text-slate-600 dark:text-slate-500 uppercase tracking-widest leading-none mb-1">Signed in as</p>
-                        <p class="text-xs font-bold text-slate-900 dark:text-slate-900 truncate">{{ Auth::user()->email }}</p>
+                <div id="accountDropdown" class="absolute right-0 mt-3 w-56 bg-slate-950 border border-white/10 rounded-2xl shadow-2xl opacity-0 invisible transition-all z-50 p-2">
+                    <div class="px-4 py-3 border-b border-white/10 mb-2">
+                        <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest leading-none mb-1">Signed in as</p>
+                        <p class="text-xs font-bold text-white truncate">{{ Auth::user()->email }}</p>
                     </div>
                     
-                    <button onclick="document.getElementById('profileModal').classList.remove('hidden'); closeAllDropdowns();" class="w-full flex items-center space-x-3 px-4 py-3 text-sm text-slate-700 dark:text-slate-300 hover:bg-pink-100 dark:hover:bg-slate-800 rounded-xl transition-colors">
+                    <button onclick="document.getElementById('profileModal').classList.remove('hidden'); closeAllDropdowns();" class="w-full flex items-center space-x-3 px-4 py-3 text-sm text-slate-300 hover:bg-white/5 rounded-xl transition-colors">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         <span>Profile Settings</span>
                     </button>
@@ -86,10 +86,10 @@
                 </button>
 
                 <!-- Notifications Dropdown Content -->
-                <div id="notifDropdown" class="absolute right-0 mt-3 w-80 bg-white dark:bg-slate-900 border border-pink-200 dark:border-slate-800 rounded-2xl shadow-2xl opacity-0 invisible transition-all z-50 p-2 overflow-hidden">
-                    <div class="p-4 border-b border-pink-200 dark:border-slate-800 flex items-center justify-between">
-                        <h3 class="text-xs font-black text-slate-900 dark:text-slate-900 uppercase tracking-widest text-pink-600 dark:text-pink-600">Broadcasts</h3>
-                        <span class="text-[9px] font-bold text-slate-600 dark:text-slate-400 uppercase">Live Feed</span>
+                <div id="notifDropdown" class="absolute right-0 mt-3 w-80 bg-slate-950 border border-white/10 rounded-2xl shadow-2xl opacity-0 invisible transition-all z-50 p-2 overflow-hidden">
+                    <div class="p-4 border-b border-white/10 flex items-center justify-between">
+                        <h3 class="text-xs font-black text-pink-500 uppercase tracking-widest">Broadcasts</h3>
+                        <span class="text-[9px] font-bold text-slate-500 uppercase">Live Feed</span>
                     </div>
                     <div id="notifList" class="max-h-80 overflow-y-auto p-2 space-y-2">
                         <div class="text-center py-6 text-slate-600 dark:text-slate-400 text-[10px] italic uppercase tracking-widest">Scanning...</div>
@@ -100,11 +100,11 @@
     </nav>
 
     <!-- Main Content -->
-    <main class="flex-1 overflow-auto p-6 md:p-10 bg-gradient-to-b from-pink-50 dark:from-white to-white dark:to-white">
+    <main class="flex-1 overflow-auto p-6 md:p-10 bg-slate-950">
         <div class="max-w-7xl mx-auto">
             <div class="mb-10 text-center">
-                <h1 class="text-4xl font-black text-slate-900 dark:text-slate-900 mb-2">System Orchestration</h1>
-                <p class="text-slate-600 dark:text-slate-600">Select a category to manage your environment.</p>
+                <h1 class="text-4xl font-black text-white mb-2">System Orchestration</h1>
+                <p class="text-slate-500">Select a category to manage your environment.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -145,10 +145,10 @@
             <form action="{{ route('dashboard.profile.update') }}" method="POST" class="space-y-4">
                 @csrf
                 <div class="flex flex-col items-center mb-4">
-                    <div class="w-24 h-24 rounded-full border-2 border-pink-500/20 overflow-hidden bg-white mb-4 shadow-2xl">
+                    <div class="w-24 h-24 rounded-full border-2 border-pink-500/20 overflow-hidden bg-slate-950 mb-4 shadow-2xl">
                         <img id="profile_preview" src="{{ Auth::user()->profile_photo_url ?: 'https://ui-avatars.com/api/?name='.urlencode(Auth::user()->name).'&background=4f46e5&color=fff' }}" class="w-full h-full object-cover">
                     </div>
-                    <p class="text-[8px] font-bold text-slate-600 uppercase tracking-widest">Active Identity Asset</p>
+                    <p class="text-[8px] font-bold text-slate-500 uppercase tracking-widest">Active Identity Asset</p>
                 </div>
                 <div>
                     <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Profile Photo URL</label>
@@ -183,16 +183,16 @@
                     badge.innerText = data.length;
                     badge.classList.remove('hidden');
                     list.innerHTML = data.map(n => `
-                        <div class="p-3 bg-white border border-pink-200 rounded-xl hover:border-pink-500/30 transition-all">
+                        <div class="p-3 bg-slate-900 border border-white/10 rounded-xl hover:border-pink-500/30 transition-all">
                             <div class="flex justify-between items-start mb-1">
-                                <h3 class="text-[11px] font-bold text-slate-900 leading-tight">${n.titulo}</h3>
-                                <span class="text-[9px] font-medium text-slate-600 whitespace-nowrap ml-2">${n.fecha_format}</span>
+                                <h3 class="text-[11px] font-bold text-white leading-tight">${n.titulo}</h3>
+                                <span class="text-[9px] font-medium text-slate-500 whitespace-nowrap ml-2">${n.fecha_format}</span>
                             </div>
                             <p class="text-[10px] text-slate-500 leading-relaxed">${n.texto}</p>
                         </div>
                     `).join('');
                 } else {
-                    list.innerHTML = '<div class="text-center py-10 text-slate-600 text-[10px] uppercase font-bold">Clear Records</div>';
+                    list.innerHTML = '<div class="text-center py-10 text-slate-500 text-[10px] uppercase font-bold">Clear Records</div>';
                 }
             } catch (e) {}
         }

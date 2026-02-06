@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en" class="h-full bg-white dark:bg-slate-950">
+<html lang="en" class="h-full bg-slate-950">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,7 +25,7 @@
         .font-inter { font-family: 'Inter', sans-serif; }
     </style>
 </head>
-<body class="h-full flex flex-col bg-white dark:bg-slate-950 text-slate-200 overflow-hidden">
+<body class="h-full flex flex-col bg-slate-950 text-slate-200 overflow-hidden">
 
     <!-- Navbar -->
     <nav class="h-20 bg-slate-950 backdrop-blur-md border-b border-white/10 flex items-center justify-between px-6 sticky top-0 z-30">
@@ -46,29 +45,29 @@
             </a>
             <!-- Account Dropdown -->
             <div class="relative">
-                <button id="accountBtn" class="flex items-center justify-center w-10 h-10 bg-slate-800/50 border border-pink-200 dark:border-slate-800 rounded-full hover:border-pink-500/30 transition-all focus:outline-none overflow-hidden group">
+                <button id="accountBtn" class="flex items-center justify-center w-10 h-10 bg-slate-800/50 border border-white/10 rounded-full hover:border-pink-500/30 transition-all focus:outline-none overflow-hidden group">
                     @if(Auth::user()->profile_photo_url)
                         <img src="{{ Auth::user()->profile_photo_url }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
                     @else
-                        <div class="w-full h-full bg-pink-600 flex items-center justify-center text-slate-900 dark:text-white text-xs font-black">
+                        <div class="w-full h-full bg-pink-600 flex items-center justify-center text-white text-xs font-black">
                             {{ substr(Auth::user()->name, 0, 1) }}
                         </div>
                     @endif
                 </button>
 
                 <!-- Dropdown Menu -->
-                <div id="accountDropdown" class="absolute right-0 mt-3 w-56 bg-slate-100 dark:bg-slate-900 border border-pink-200 dark:border-slate-800 rounded-2xl shadow-2xl opacity-0 invisible transition-all z-50 p-2">
-                    <div class="px-4 py-3 border-b border-pink-200 dark:border-slate-800 mb-2">
+                <div id="accountDropdown" class="absolute right-0 mt-3 w-56 bg-slate-950 border border-white/10 rounded-2xl shadow-2xl opacity-0 invisible transition-all z-50 p-2">
+                    <div class="px-4 py-3 border-b border-white/10 mb-2">
                         <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest leading-none mb-1">Signed in as</p>
-                        <p class="text-xs font-bold text-slate-900 dark:text-white truncate">{{ Auth::user()->email }}</p>
+                        <p class="text-xs font-bold text-white truncate">{{ Auth::user()->email }}</p>
                     </div>
                     
-                    <button onclick="document.getElementById('profileModal').classList.remove('hidden'); closeAllDropdowns();" class="w-full flex items-center space-x-3 px-4 py-3 text-sm text-slate-700 dark:text-slate-300 hover:bg-pink-100 dark:hover:bg-slate-800 rounded-xl transition-colors">
+                    <button onclick="document.getElementById('profileModal').classList.remove('hidden'); closeAllDropdowns();" class="w-full flex items-center space-x-3 px-4 py-3 text-sm text-slate-300 hover:bg-white/5 rounded-xl transition-colors">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         <span>Profile Settings</span>
                     </button>
 
-                    <div class="my-2 border-t border-pink-200 dark:border-slate-800"></div>
+                    <div class="my-2 border-t border-white/10"></div>
 
                     <form action="{{ route('logout') }}" method="POST" class="w-full">
                         @csrf
@@ -88,10 +87,10 @@
                 </button>
 
                 <!-- Notifications Dropdown Content -->
-                <div id="notifDropdown" class="absolute right-0 mt-3 w-80 bg-slate-100 dark:bg-slate-900 border border-pink-200 dark:border-slate-800 rounded-2xl shadow-2xl opacity-0 invisible transition-all z-50 p-2 overflow-hidden">
-                    <div class="p-4 border-b border-pink-200 dark:border-slate-800 flex items-center justify-between">
-                        <h3 class="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest text-pink-400">Broadcasts</h3>
-                        <span class="text-[9px] font-bold text-slate-700 dark:text-slate-600 uppercase">Live Feed</span>
+                <div id="notifDropdown" class="absolute right-0 mt-3 w-80 bg-slate-950 border border-white/10 rounded-2xl shadow-2xl opacity-0 invisible transition-all z-50 p-2 overflow-hidden">
+                    <div class="p-4 border-b border-white/10 flex items-center justify-between">
+                        <h3 class="text-xs font-black text-white uppercase tracking-widest text-pink-500">Broadcasts</h3>
+                        <span class="text-[9px] font-bold text-slate-500 uppercase">Live Feed</span>
                     </div>
                     <div id="notifList" class="max-h-80 overflow-y-auto p-2 space-y-2">
                         <div class="text-center py-6 text-slate-700 dark:text-slate-600 text-[10px] italic uppercase tracking-widest">Scanning...</div>
@@ -106,10 +105,10 @@
         <div class="max-w-7xl mx-auto">
             <div class="mb-10 flex items-center justify-between">
                 <div>
-                    <h1 class="text-3xl font-bold text-slate-900 dark:text-white mb-1">Bot Fleet</h1>
+                    <h1 class="text-3xl font-bold text-white mb-1">Bot Fleet</h1>
                     <p class="text-slate-500">Monitor and view history for available assistants.</p>
                 </div>
-                <button class="bg-pink-600 hover:bg-pink-500 text-slate-900 dark:text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-lg shadow-pink-600/20 transition-all active:scale-95">
+                <button class="bg-pink-600 hover:bg-pink-500 text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-lg shadow-pink-600/20 transition-all active:scale-95">
                     Create New Bot
                 </button>
             </div>
@@ -141,22 +140,22 @@
     </main>
 
     <!-- Profile Modal -->
-    <div id="profileModal" class="fixed inset-0 z-50 hidden bg-white dark:bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
-        <div class="bg-slate-100 dark:bg-slate-900 border border-pink-200 dark:border-slate-800 w-full max-w-md rounded-3xl overflow-hidden shadow-2xl p-8 animate-in fade-in slide-in-from-bottom-4 duration-300">
+    <div id="profileModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-slate-950 border border-white/10 w-full max-w-md rounded-3xl overflow-hidden shadow-2xl p-8 animate-in fade-in slide-in-from-bottom-4 duration-300">
             <div class="flex justify-between items-center mb-6">
-                <h2 class="text-xl font-bold text-slate-900 dark:text-white uppercase tracking-tight">Identity Config</h2>
-                <button onclick="document.getElementById('profileModal').classList.add('hidden')" class="text-slate-500 hover:text-white">
+                <h2 class="text-xl font-bold text-white uppercase tracking-tight">Identity Config</h2>
+                <button onclick="document.getElementById('profileModal').classList.add('hidden')" class="text-slate-500 hover:text-white transition-colors">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </button>
             </div>
             <form action="{{ route('dashboard.profile.update') }}" method="POST" class="space-y-4">
                 @csrf
                 <div>
-                    <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Avatar Source URL</label>
+                    <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 px-1">Avatar Source URL</label>
                     <input type="url" name="profile_photo_url" value="{{ Auth::user()->profile_photo_url }}" required placeholder="https://..." 
-                           class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-pink-600/50">
+                           class="w-full bg-slate-950 border border-white/10 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-pink-600/50">
                 </div>
-                <button type="submit" class="w-full bg-pink-600 hover:bg-pink-500 py-3 rounded-xl font-bold transition-all shadow-lg active:scale-95">Sync Identity</button>
+                <button type="submit" class="w-full bg-pink-600 hover:bg-pink-500 text-white font-bold py-3 rounded-xl transition-all shadow-lg active:scale-95 text-xs uppercase tracking-widest">Sync Identity</button>
             </form>
         </div>
     </div>
@@ -183,10 +182,10 @@
                     badge.innerText = data.length;
                     badge.classList.remove('hidden');
                     list.innerHTML = data.map(n => `
-                        <div class="p-3 bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl hover:border-pink-500/30 transition-all text-left">
+                        <div class="p-3 bg-slate-950 border border-white/10 rounded-xl hover:border-pink-500/30 transition-all text-left">
                             <div class="flex justify-between items-start mb-1">
-                                <h3 class="text-[11px] font-bold text-slate-200 leading-tight">${n.titulo}</h3>
-                                <span class="text-[9px] font-medium text-slate-700 dark:text-slate-600 whitespace-nowrap ml-2">${n.fecha_format}</span>
+                                <h3 class="text-[11px] font-bold text-white leading-tight">${n.titulo}</h3>
+                                <span class="text-[9px] font-medium text-slate-500 whitespace-nowrap ml-2">${n.fecha_format}</span>
                             </div>
                             <p class="text-[10px] text-slate-500 leading-relaxed">${n.texto}</p>
                         </div>

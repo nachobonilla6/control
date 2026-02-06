@@ -206,14 +206,14 @@
     </main>
 
     <!-- Modal -->
-    <div id="templateModal" class="fixed inset-0 z-50 hidden bg-white dark:bg-white shadow-2xl backdrop-blur-xl flex items-center justify-center p-4">
-        <div class="bg-slate-100 dark:bg-white border border-pink-200 dark:border-pink-200 w-full max-w-7xl rounded-[2.5rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
+    <div id="templateModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-slate-950 border border-white/10 w-full max-w-7xl rounded-[2.5rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
             <div class="flex justify-between items-start mb-6">
                 <div>
-                    <h2 id="modalTitle" class="text-2xl font-black text-slate-900 dark:text-slate-900 italic tracking-tighter mb-0.5">New Template</h2>
+                    <h2 id="modalTitle" class="text-2xl font-black text-white italic tracking-tighter mb-0.5">New Template</h2>
                     <p id="modalSubtitle" class="text-[8px] font-bold text-slate-500 tracking-widest leading-none">Register email communication structure</p>
                 </div>
-                <button onclick="document.getElementById('templateModal').classList.add('hidden')" class="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-xl text-slate-700 dark:text-slate-600 hover:text-slate-900 dark:text-white transition-all">
+                <button onclick="document.getElementById('templateModal').classList.add('hidden')" class="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-xl text-slate-500 hover:text-white transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </button>
             </div>
@@ -227,8 +227,8 @@
                         AI Genesis
                     </label>
                     <textarea id="aiPrompt" rows="4" placeholder="Describe the template (e.g. 'Cold email for real estate leads')..." 
-                              class="w-full bg-white dark:bg-slate-950/50 border border-pink-200 dark:border-slate-800 rounded-2xl px-4 py-3 text-[11px] text-slate-700 dark:text-slate-300 focus:outline-none focus:border-pink-500/50 transition-all resize-none mb-4 placeholder:text-slate-700 h-48"></textarea>
-                    <button type="button" onclick="generateAiTemplate()" id="aiGenBtn" class="w-full py-3 bg-pink-600/20 hover:bg-pink-600 text-pink-400 hover:text-slate-900 dark:text-white rounded-xl text-[9px] font-black tracking-widest uppercase transition-all flex items-center justify-center">
+                              class="w-full bg-slate-900 border border-white/10 rounded-2xl px-4 py-3 text-[11px] text-white focus:outline-none focus:border-pink-500/50 transition-all resize-none mb-4 placeholder:text-slate-700 h-48"></textarea>
+                    <button type="button" onclick="generateAiTemplate()" id="aiGenBtn" class="w-full py-3 bg-pink-600/20 hover:bg-pink-600 text-pink-400 hover:text-white rounded-xl text-[9px] font-black tracking-widest uppercase transition-all flex items-center justify-center">
                         <span>Ignite Intelligence</span>
                     </button>
                     <div class="mt-6">
@@ -247,23 +247,23 @@
                         <div>
                             <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1 uppercase">Template Name</label>
                             <input type="text" name="name" id="form_name" required placeholder="e.g. Welcome Email" 
-                                   class="w-full bg-white dark:bg-white border border-pink-200 dark:border-pink-200 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-slate-900 transition-all normal-case">
+                                   class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                         </div>
 
                         <div>
                             <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1 uppercase">Email Subject</label>
                             <input type="text" name="subject" id="form_subject" required placeholder="e.g. Welcome to our Platform" 
-                                   class="w-full bg-white dark:bg-white border border-pink-200 dark:border-pink-200 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-slate-900 transition-all normal-case">
+                                   class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                         </div>
 
                         <div>
                             <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1 uppercase">Message Body</label>
                             <textarea name="body" id="form_body" required rows="10" placeholder="Write your email content here..." 
-                                      class="w-full bg-white dark:bg-white border border-pink-200 dark:border-pink-200 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-slate-900 transition-all normal-case resize-none"></textarea>
+                                      class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case resize-none"></textarea>
                         </div>
 
                         <div class="flex items-center space-x-4 pt-4">
-                            <button type="submit" class="flex-1 bg-pink-600 hover:bg-pink-500 text-slate-900 dark:text-white font-black py-4 rounded-2xl shadow-2xl shadow-pink-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em] uppercase">
+                            <button type="submit" class="flex-1 bg-pink-600 hover:bg-pink-500 text-white font-black py-4 rounded-2xl shadow-2xl shadow-pink-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em] uppercase">
                                 Save Template
                             </button>
                         </div>

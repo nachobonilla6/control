@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="es" class="h-full bg-white dark:bg-slate-950">
+<html lang="es" class="h-full bg-slate-950">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,18 +25,18 @@
         .font-inter { font-family: 'Inter', sans-serif; }
     </style>
 </head>
-<body class="h-full flex flex-col bg-white dark:bg-slate-950 text-slate-200 overflow-hidden uppercase">
+<body class="h-full flex flex-col bg-slate-950 text-slate-200 overflow-hidden uppercase">
 
     <!-- Navbar -->
-    <nav class="h-20 bg-slate-100 dark:bg-slate-900/50 backdrop-blur-md border-b border-pink-200 dark:border-slate-800/50 flex items-center justify-between px-6 sticky top-0 z-30">
+    <nav class="h-20 bg-slate-950 backdrop-blur-md border-b border-white/10 flex items-center justify-between px-6 sticky top-0 z-30">
         <div class="flex items-center space-x-4">
             <a href="{{ route('dashboard') }}" class="flex items-center space-x-4 group/brand">
-                <span class="text-xl font-bold text-pink-400 font-inter group-hover/brand:text-slate-900 dark:text-white transition-colors">Mini Walee</span>
-                <span class="text-slate-700 font-light text-xl italic font-inter">/</span>
-                <span class="text-sm font-medium text-slate-700 dark:text-slate-600 dark:text-slate-400 tracking-wide uppercase font-inter group-hover/brand:text-pink-400 transition-colors">Control Panel</span>
+                <span class="text-xl font-bold text-pink-600 font-inter group-hover/brand:text-pink-500 transition-colors">Mini Walee</span>
+                <span class="text-slate-600 font-light text-xl italic font-inter">/</span>
+                <span class="text-sm font-medium text-white tracking-wide uppercase font-inter transition-colors">Control Panel</span>
             </a>
             <span class="text-slate-800 font-light text-xl italic font-inter">/</span>
-            <a href="{{ route('dashboard.courses') }}" class="text-xs font-black text-pink-500 tracking-[0.2em] hover:text-slate-900 dark:text-white transition-colors uppercase font-inter">Courses</a>
+            <a href="{{ route('dashboard.courses') }}" class="text-xs font-black text-pink-500 tracking-[0.2em] hover:text-white transition-colors uppercase font-inter">Courses</a>
         </div>
         <div class="flex items-center space-x-4">
             <a href="{{ route('dashboard.chat') }}" class="flex items-center space-x-2 px-4 py-2 bg-pink-600/10 hover:bg-pink-600/20 border border-pink-500/20 rounded-xl transition-all group">
@@ -46,29 +45,29 @@
             </a>
             <!-- Account Dropdown -->
             <div class="relative">
-                <button id="accountBtn" class="flex items-center justify-center w-10 h-10 bg-slate-800/50 border border-pink-200 dark:border-slate-800 rounded-full hover:border-pink-500/30 transition-all focus:outline-none overflow-hidden group">
+                <button id="accountBtn" class="flex items-center justify-center w-10 h-10 bg-slate-800/50 border border-white/10 rounded-full hover:border-pink-500/30 transition-all focus:outline-none overflow-hidden group">
                     @if(Auth::user()->profile_photo_url)
                         <img src="{{ Auth::user()->profile_photo_url }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
                     @else
-                        <div class="w-full h-full bg-pink-600 flex items-center justify-center text-slate-900 dark:text-white text-xs font-black">
+                        <div class="w-full h-full bg-pink-600 flex items-center justify-center text-white text-xs font-black">
                             {{ substr(Auth::user()->name, 0, 1) }}
                         </div>
                     @endif
                 </button>
 
                 <!-- Dropdown Menu -->
-                <div id="accountDropdown" class="absolute right-0 mt-3 w-56 bg-slate-100 dark:bg-slate-900 border border-pink-200 dark:border-slate-800 rounded-2xl shadow-2xl opacity-0 invisible transition-all z-50 p-2">
-                    <div class="px-4 py-3 border-b border-pink-200 dark:border-slate-800 mb-2">
+                <div id="accountDropdown" class="absolute right-0 mt-3 w-56 bg-slate-950 border border-white/10 rounded-2xl shadow-2xl opacity-0 invisible transition-all z-50 p-2">
+                    <div class="px-4 py-3 border-b border-white/10 mb-2">
                         <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest leading-none mb-1">Signed in as</p>
-                        <p class="text-xs font-bold text-slate-900 dark:text-white truncate lowercase">{{ Auth::user()->email }}</p>
+                        <p class="text-xs font-bold text-white truncate lowercase">{{ Auth::user()->email }}</p>
                     </div>
                     
-                    <button onclick="document.getElementById('profileModal').classList.remove('hidden'); closeAllDropdowns();" class="w-full flex items-center space-x-3 px-4 py-3 text-sm text-slate-700 dark:text-slate-300 hover:bg-pink-100 dark:hover:bg-slate-800 rounded-xl transition-colors">
+                    <button onclick="document.getElementById('profileModal').classList.remove('hidden'); closeAllDropdowns();" class="w-full flex items-center space-x-3 px-4 py-3 text-sm text-slate-300 hover:bg-white/5 rounded-xl transition-colors">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         <span>Profile Settings</span>
                     </button>
 
-                    <div class="my-2 border-t border-pink-200 dark:border-slate-800"></div>
+                    <div class="my-2 border-t border-white/10"></div>
 
                     <form action="{{ route('logout') }}" method="POST" class="w-full">
                         @csrf
@@ -82,16 +81,16 @@
 
             <!-- Notifications Dropdown -->
             <div class="relative">
-                <button id="notifBtn" class="relative p-2.5 text-slate-700 dark:text-slate-600 dark:text-slate-400 hover:text-pink-400 transition-colors focus:outline-none bg-slate-800/50 rounded-full border border-pink-200 dark:border-slate-800">
+                <button id="notifBtn" class="relative p-2.5 text-slate-400 hover:text-pink-400 transition-colors focus:outline-none bg-white/5 rounded-full border border-white/10">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span id="notifBadge" class="absolute top-0 right-0 bg-pink-600 text-[10px] font-bold text-slate-900 dark:text-white rounded-full w-4 h-4 flex items-center justify-center border-2 border-slate-950 hidden">0</span>
+                    <span id="notifBadge" class="absolute top-0 right-0 bg-pink-600 text-[10px] font-bold text-white rounded-full w-4 h-4 flex items-center justify-center border-2 border-slate-950 hidden">0</span>
                 </button>
 
                 <!-- Notifications Dropdown Content -->
-                <div id="notifDropdown" class="absolute right-0 mt-3 w-80 bg-slate-100 dark:bg-slate-900 border border-pink-200 dark:border-slate-800 rounded-2xl shadow-2xl opacity-0 invisible transition-all z-50 p-2 overflow-hidden">
-                    <div class="p-4 border-b border-pink-200 dark:border-slate-800 flex items-center justify-between">
-                        <h3 class="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest text-pink-400">Broadcasts</h3>
-                        <span class="text-[9px] font-bold text-slate-700 dark:text-slate-600 uppercase">Live Feed</span>
+                <div id="notifDropdown" class="absolute right-0 mt-3 w-80 bg-slate-950 border border-white/10 rounded-2xl shadow-2xl opacity-0 invisible transition-all z-50 p-2 overflow-hidden">
+                    <div class="p-4 border-b border-white/10 flex items-center justify-between">
+                        <h3 class="text-xs font-black text-white uppercase tracking-widest text-pink-500">Broadcasts</h3>
+                        <span class="text-[9px] font-bold text-slate-500 uppercase">Live Feed</span>
                     </div>
                     <div id="notifList" class="max-h-80 overflow-y-auto p-2 space-y-2">
                         <div class="text-center py-6 text-slate-700 dark:text-slate-600 text-[10px] italic uppercase tracking-widest lowercase">Scanning...</div>
@@ -114,16 +113,16 @@
 
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
                 <div>
-                    <h1 class="text-4xl font-black text-slate-900 dark:text-white italic tracking-tighter">Manage <span class="text-pink-500">Courses</span></h1>
+                    <h1 class="text-4xl font-black text-white italic tracking-tighter">Manage <span class="text-pink-500">Courses</span></h1>
                     <p class="text-[10px] font-bold text-slate-500 tracking-[0.3em] mt-2">Learning journey and goals tracking</p>
                 </div>
                 
-                <div class="flex items-center space-x-6 bg-slate-100 dark:bg-slate-900 border border-pink-200 dark:border-slate-800 p-2 rounded-none">
-                    <div class="px-6 py-2 text-center border-r border-pink-200 dark:border-slate-800">
+                <div class="flex items-center space-x-6 bg-slate-950 border border-white/10 p-2 rounded-none">
+                    <div class="px-6 py-2 text-center border-r border-white/10">
                         <p class="text-[8px] font-black text-slate-500 uppercase tracking-widest mb-1">Total</p>
                         <p class="text-xl font-black text-white">{{ count($courses) }}</p>
                     </div>
-                    <div class="px-6 py-2 text-center border-r border-pink-200 dark:border-slate-800">
+                    <div class="px-6 py-2 text-center border-r border-white/10">
                         <p class="text-[8px] font-black text-pink-500 uppercase tracking-widest mb-1">Pending</p>
                         <p class="text-xl font-black text-white">{{ $courses->where('status', 'pending')->count() }}</p>
                     </div>
@@ -133,7 +132,7 @@
                     </div>
                 </div>
 
-                <button onclick="openCreateModal()" class="px-8 py-4 bg-pink-600 hover:bg-pink-500 text-slate-900 dark:text-white rounded-none text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-pink-600/20 active:scale-95 flex items-center">
+                <button onclick="openCreateModal()" class="px-8 py-4 bg-pink-600 hover:bg-pink-500 text-white rounded-none text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-pink-600/20 active:scale-95 flex items-center">
                     <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     New Course
                 </button>
@@ -142,7 +141,7 @@
             <!-- Courses Grid (YouTube Style) -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 @forelse($courses as $course)
-                <div class="group relative flex flex-col bg-slate-100 dark:bg-slate-900 border border-pink-200 dark:border-slate-800 rounded-none overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:border-pink-500/30 hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)] active:scale-95">
+                <div class="group relative flex flex-col bg-slate-950 border border-white/10 rounded-none overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:border-pink-500/30 hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)] active:scale-95">
                     
                     @php
                         $ytId = '';
@@ -167,7 +166,7 @@
                             <!-- Play Button (Center) -->
                             <button onclick="playVideo('{{ $course->id }}', '{{ $ytId }}')" class="absolute inset-0 flex items-center justify-center group/play z-10">
                                 <div class="w-16 h-16 bg-pink-600/80 group-hover/play:bg-pink-500 rounded-none flex items-center justify-center backdrop-blur-md border border-white/20 transition-all scale-90 group-hover/play:scale-110 shadow-2xl">
-                                    <svg class="w-6 h-6 text-slate-900 dark:text-white translate-x-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l10.29-6.86a1 1 0 0 0 0-1.72L9.5 4.28a1 1 0 0 0-1.5.86z"/></svg>
+                                    <svg class="w-6 h-6 text-white translate-x-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l10.29-6.86a1 1 0 0 0 0-1.72L9.5 4.28a1 1 0 0 0-1.5.86z"/></svg>
                                 </div>
                             </button>
                         @else
@@ -179,7 +178,7 @@
                         <form action="{{ route('dashboard.courses.toggle-status', $course->id) }}" method="POST" class="absolute top-4 right-4 z-20">
                             @csrf
                             @method('PATCH')
-                            <select name="status" onchange="this.form.submit()" class="{{ $config['color'] }} text-slate-900 dark:text-white border-none px-3 py-1.5 rounded-none text-[8px] font-black tracking-widest shadow-lg cursor-pointer focus:ring-0 focus:outline-none appearance-none hover:brightness-110 transition-all">
+                            <select name="status" onchange="this.form.submit()" class="{{ $config['color'] }} text-white border-none px-3 py-1.5 rounded-none text-[8px] font-black tracking-widest shadow-lg cursor-pointer focus:ring-0 focus:outline-none appearance-none hover:brightness-110 transition-all">
                                 <option value="pending" {{ $course->status == 'pending' ? 'selected' : '' }}>PENDING</option>
                                 <option value="postponed" {{ $course->status == 'postponed' ? 'selected' : '' }}>POSTPONED</option>
                                 <option value="done" {{ $course->status == 'done' ? 'selected' : '' }}>DONE</option>
@@ -192,7 +191,7 @@
                     <!-- Card Body -->
                     <div class="p-6 flex-1 flex flex-col justify-between">
                         <div>
-                            <h3 class="text-sm font-black text-slate-900 dark:text-white leading-tight mb-2 line-clamp-2 tracking-tight overflow-hidden italic">
+                            <h3 class="text-sm font-black text-white leading-tight mb-2 line-clamp-2 tracking-tight overflow-hidden italic">
                                 {{ $course->name }}
                             </h3>
                             @if($course->link)
@@ -209,13 +208,13 @@
                                 <span class="text-[9px] font-bold text-slate-700 dark:text-slate-600 tracking-widest">{{ $course->created_at->format('M / Y') }}</span>
                             </div>
                             <div class="flex items-center space-x-2">
-                                <button onclick="openEditModal({{ json_encode($course) }})" class="w-7 h-7 flex items-center justify-center bg-pink-600/10 text-pink-400 rounded-none hover:bg-pink-600 hover:text-slate-900 dark:text-white transition-all border border-pink-500/10 active:scale-90">
+                                <button onclick="openEditModal({{ json_encode($course) }})" class="w-7 h-7 flex items-center justify-center bg-pink-600/10 text-pink-400 rounded-none hover:bg-pink-600 hover:text-white transition-all border border-pink-500/10 active:scale-90">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                 </button>
                                 <form action="{{ route('dashboard.courses.destroy', $course->id) }}" method="POST" onsubmit="return confirm('Decommission this module?')">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="w-7 h-7 flex items-center justify-center bg-red-500/10 text-red-500 rounded-none hover:bg-red-600 hover:text-slate-900 dark:text-white transition-all border border-red-500/10 active:scale-90">
+                                    <button type="submit" class="w-7 h-7 flex items-center justify-center bg-red-500/10 text-red-500 rounded-none hover:bg-red-600 hover:text-white transition-all border border-red-500/10 active:scale-90">
                                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                     </button>
                                 </form>
@@ -236,14 +235,14 @@
     </main>
 
     <!-- Modal -->
-    <div id="courseModal" class="fixed inset-0 z-50 hidden bg-white dark:bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4">
-        <div class="bg-slate-100 dark:bg-slate-900 border border-pink-200 dark:border-slate-800 w-full max-w-md rounded-none overflow-hidden shadow-2xl p-10 animate-in fade-in zoom-in duration-300">
+    <div id="courseModal" class="fixed inset-0 z-50 hidden bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-white/10 w-full max-w-md rounded-none overflow-hidden shadow-2xl p-10 animate-in fade-in zoom-in duration-300">
             <div class="flex justify-between items-start mb-8">
                 <div>
-                    <h2 id="modalTitle" class="text-2xl font-black text-slate-900 dark:text-white italic tracking-tighter mb-1">New Course</h2>
+                    <h2 id="modalTitle" class="text-2xl font-black text-white italic tracking-tighter mb-1">New Course</h2>
                     <p id="modalSubtitle" class="text-[8px] font-bold text-slate-500 tracking-widest leading-none">Learning module integration</p>
                 </div>
-                <button onclick="document.getElementById('courseModal').classList.add('hidden')" class="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-none text-slate-700 dark:text-slate-600 hover:text-slate-900 dark:text-white transition-all">
+                <button onclick="document.getElementById('courseModal').classList.add('hidden')" class="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-none text-slate-500 hover:text-white transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </button>
             </div>
@@ -256,8 +255,8 @@
                         <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2">Resource Link / URL</label>
                         <div class="flex space-x-2">
                             <input type="url" name="link" id="form_link" placeholder="https://..." 
-                                   class="flex-1 bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-none px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-white transition-all lowercase">
-                            <button type="button" onclick="autoDetectMetadata()" id="syncBtn" class="px-4 bg-pink-600/10 border border-pink-500/20 text-pink-400 hover:bg-pink-600 hover:text-slate-900 dark:text-white transition-all group/btn">
+                                   class="flex-1 bg-slate-950 border border-white/10 rounded-none px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all lowercase">
+                            <button type="button" onclick="autoDetectMetadata()" id="syncBtn" class="px-4 bg-pink-600/10 border border-white/10 text-pink-400 hover:bg-pink-600 hover:text-white transition-all group/btn">
                                 <svg class="w-4 h-4 group-hover/btn:rotate-180 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
                             </button>
                         </div>
@@ -265,11 +264,11 @@
                     <div>
                         <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2">Course Name</label>
                         <input type="text" name="name" id="form_name" required placeholder="e.g. Mastering Laravel AI" 
-                               class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-none px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-white transition-all uppercase">
+                               class="w-full bg-slate-950 border border-white/10 rounded-none px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all uppercase">
                     </div>
                     <div>
                         <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2">Tiered Status</label>
-                        <select name="status" id="form_status" required class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-none px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-white appearance-none transition-all cursor-pointer">
+                        <select name="status" id="form_status" required class="w-full bg-slate-950 border border-white/10 rounded-none px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white appearance-none transition-all cursor-pointer">
                             <option value="pending">PENDING</option>
                             <option value="done">DONE</option>
                             <option value="postponed">POSTPONED</option>
@@ -278,7 +277,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="w-full bg-pink-600 hover:bg-pink-500 text-slate-900 dark:text-white font-black py-5 rounded-none shadow-2xl shadow-pink-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em]">
+                <button type="submit" class="w-full bg-pink-600 hover:bg-pink-500 text-white font-black py-5 rounded-none shadow-2xl shadow-pink-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em]">
                     Sync Module
                 </button>
             </form>
@@ -385,10 +384,10 @@
                     badge.innerText = data.length;
                     badge.classList.remove('hidden');
                     list.innerHTML = data.map(n => `
-                        <div class="p-3 bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl hover:border-pink-500/30 transition-all text-left">
+                        <div class="p-3 bg-slate-950 border border-white/10 rounded-xl hover:border-pink-500/30 transition-all text-left">
                             <div class="flex justify-between items-start mb-1">
-                                <h3 class="text-[11px] font-bold text-slate-200 leading-tight">${n.titulo}</h3>
-                                <span class="text-[9px] font-medium text-slate-700 dark:text-slate-600 whitespace-nowrap ml-2">${n.fecha_format}</span>
+                                <h3 class="text-[11px] font-bold text-white leading-tight">${n.titulo}</h3>
+                                <span class="text-[9px] font-medium text-slate-500 whitespace-nowrap ml-2">${n.fecha_format}</span>
                             </div>
                             <p class="text-[10px] text-slate-500 leading-relaxed">${n.texto}</p>
                         </div>
