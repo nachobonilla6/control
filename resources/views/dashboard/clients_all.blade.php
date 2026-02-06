@@ -283,7 +283,7 @@
 
     <!-- Client Edit Modal -->
     <div id="clientModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
-        <div class="bg-slate-950 border border-white/10 w-full max-w-4xl rounded-[2.5rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
+        <div class="bg-slate-950 border border-white/10 w-full max-w-4xl rounded-[2.5rem] overflow-hidden shadow-2xl p-6 md:p-8 animate-in fade-in zoom-in duration-300 max-h-[95vh] overflow-y-auto">
             <div class="flex justify-between items-start mb-6">
                 <div>
                     <h2 id="modalTitle" class="text-2xl font-black text-white italic tracking-tighter mb-0.5">Edit Client</h2>
@@ -302,37 +302,37 @@
                         <div>
                             <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Full Name / Company</label>
                             <input type="text" name="name" id="form_name" required placeholder="e.g. Tech Solutions S.A." 
-                                   class="w-full bg-white dark:bg-white border border-pink-200 dark:border-pink-200 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-slate-900 transition-all normal-case">
+                                   class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                         </div>
                         <div>
                             <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Contact Email</label>
                             <input type="email" name="email" id="form_email" required placeholder="client@example.com" 
-                                   class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-white transition-all normal-case">
+                                   class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                         </div>
                         <div>
                             <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Website</label>
                             <input type="url" name="website" id="form_website" placeholder="https://example.com" 
-                                   class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-white transition-all normal-case">
+                                   class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                         </div>
                         <div>
                             <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Location</label>
                             <input type="text" name="location" id="form_location" placeholder="City, Country" 
-                                   class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-white transition-all normal-case">
+                                   class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                         </div>
                         <div>
                             <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Phone</label>
                             <input type="text" name="phone" id="form_phone" placeholder="+00 0000-0000" 
-                                   class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-white transition-all">
+                                   class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all">
                         </div>
                         <div>
                             <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Industry / Sector</label>
                             <input type="text" name="industry" id="form_industry" placeholder="e.g. Automotive" 
-                                   class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-white transition-all normal-case">
+                                   class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                         </div>
                         <div>
                             <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Operation Status</label>
                             <div class="relative">
-                                <select name="status" id="form_status" required class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-white appearance-none transition-all cursor-pointer">
+                                <select name="status" id="form_status" required class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white appearance-none transition-all cursor-pointer">
                                     <option value="">-- Select Status --</option>
                                 </select>
                                 <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
@@ -347,37 +347,37 @@
                         <div>
                             <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Secondary Email</label>
                             <input type="email" name="email2" id="form_email2" placeholder="alternative@example.com" 
-                                   class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-white transition-all normal-case">
+                                   class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                         </div>
                         <div>
                             <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Address</label>
                             <input type="text" name="address" id="form_address" placeholder="Street address" 
-                                   class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-white transition-all normal-case">
+                                   class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                         </div>
                         <div>
                             <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Language</label>
                             <input type="text" name="language" id="form_language" placeholder="e.g. Spanish, English" 
-                                   class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-white transition-all normal-case">
+                                   class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                         </div>
                         <div>
                             <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Contact Name</label>
                             <input type="text" name="contact_name" id="form_contact_name" placeholder="Person to contact" 
-                                   class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-white transition-all normal-case">
+                                   class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                         </div>
                         <div>
                             <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Facebook</label>
                             <input type="url" name="facebook" id="form_facebook" placeholder="Facebook profile URL" 
-                                   class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-white transition-all normal-case">
+                                   class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                         </div>
                         <div>
                             <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Instagram</label>
                             <input type="url" name="instagram" id="form_instagram" placeholder="Instagram profile URL" 
-                                   class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-white transition-all normal-case">
+                                   class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
                         </div>
                         <div>
                             <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Opening Hours</label>
                             <input type="text" name="opening_hours" id="form_opening_hours" placeholder="e.g. 9AM-5PM" 
-                                   class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-white transition-all">
+                                   class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all">
                         </div>
                     </div>
 
@@ -385,14 +385,14 @@
                     <div>
                         <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Notes</label>
                         <textarea name="notes" id="form_notes" rows="3" placeholder="Add any additional notes about the client..."
-                                  class="w-full bg-white dark:bg-white border border-pink-200 dark:border-pink-200 rounded-xl px-4 py-3 text-[11px] text-slate-700 dark:text-slate-700 focus:outline-none focus:border-pink-500/50 transition-all resize-none placeholder:text-slate-400"></textarea>
+                                  class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-3 text-[11px] text-white focus:outline-none focus:border-pink-500/50 transition-all resize-none placeholder:text-slate-600"></textarea>
                     </div>
 
                     <div class="flex items-center space-x-4 pt-0">
-                        <button type="submit" class="flex-1 bg-pink-600 hover:bg-pink-500 text-slate-900 dark:text-white font-black py-4 rounded-2xl shadow-2xl shadow-pink-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em]">
+                        <button type="submit" class="flex-1 bg-pink-600 hover:bg-pink-500 text-white font-black py-4 rounded-2xl shadow-2xl shadow-pink-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em]">
                             Update Record
                         </button>
-                        <button type="button" onclick="document.getElementById('clientModal').classList.add('hidden')" class="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-slate-900 dark:text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all">
+                        <button type="button" onclick="document.getElementById('clientModal').classList.add('hidden')" class="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all">
                             Cancel
                         </button>
                     </div>
@@ -402,14 +402,14 @@
     </div>
 
     <!-- Extract Modal -->
-    <div id="extractModal" class="fixed inset-0 z-50 hidden bg-white dark:bg-white flex items-center justify-center p-4">
-        <div class="bg-slate-100 dark:bg-white border border-pink-200 dark:border-pink-200 w-full max-w-2xl rounded-[2.5rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
+    <div id="extractModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-slate-950 border border-white/10 w-full max-w-2xl rounded-[2.5rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300 max-h-[95vh] overflow-y-auto">
             <div class="flex justify-between items-start mb-6">
                 <div>
-                    <h2 class="text-2xl font-black text-slate-900 dark:text-slate-900 italic tracking-tighter mb-0.5">Extract Clients</h2>
-                    <p class="text-[8px] font-bold text-slate-500 tracking-widest leading-none">Filter & extract clients by language, country, city & industry</p>
+                    <h2 class="text-2xl font-black text-white italic tracking-tighter mb-0.5 uppercase">Extract Clients</h2>
+                    <p class="text-[8px] font-bold text-slate-500 tracking-widest leading-none uppercase">Filter & extract clients by language, country, city & industry</p>
                 </div>
-                <button onclick="document.getElementById('extractModal').classList.add('hidden')" class="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-xl text-slate-700 dark:text-slate-600 hover:text-slate-900 dark:text-white transition-all">
+                <button onclick="document.getElementById('extractModal').classList.add('hidden')" class="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-xl text-slate-500 hover:text-white transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </button>
             </div>
@@ -421,7 +421,7 @@
                     <div>
                         <label class="block text-[9px] font-black text-emerald-400 tracking-widest mb-2 px-1">Language</label>
                         <div class="relative">
-                            <select id="extract_language" required class="w-full bg-white dark:bg-white border border-pink-200 dark:border-pink-200 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 text-xs font-bold text-slate-900 dark:text-slate-900 appearance-none transition-all cursor-pointer">
+                            <select id="extract_language" required class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 text-xs font-bold text-white appearance-none transition-all cursor-pointer">
                                 <option value="">Select Language</option>
                                 <option value="english">English</option>
                                 <option value="spanish">Spanish</option>
@@ -438,7 +438,7 @@
                     <div>
                         <label class="block text-[9px] font-black text-emerald-400 tracking-widest mb-2 px-1">Country</label>
                         <div class="relative">
-                            <select id="extract_country" required class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 text-xs font-bold text-slate-900 dark:text-white appearance-none transition-all cursor-pointer">
+                            <select id="extract_country" required class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 text-xs font-bold text-white appearance-none transition-all cursor-pointer">
                                 <option value="">Select Country</option>
                             </select>
                             <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
@@ -451,7 +451,7 @@
                     <div>
                         <label class="block text-[9px] font-black text-emerald-400 tracking-widest mb-2 px-1">City</label>
                         <div class="relative">
-                            <select id="extract_city" required class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 text-xs font-bold text-slate-900 dark:text-white appearance-none transition-all cursor-pointer">
+                            <select id="extract_city" required class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 text-xs font-bold text-white appearance-none transition-all cursor-pointer">
                                 <option value="">Select City</option>
                             </select>
                             <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
@@ -464,7 +464,7 @@
                     <div>
                         <label class="block text-[9px] font-black text-emerald-400 tracking-widest mb-2 px-1">Industry</label>
                         <div class="relative">
-                            <select id="extract_industry" class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 text-xs font-bold text-slate-900 dark:text-white appearance-none transition-all cursor-pointer">
+                            <select id="extract_industry" class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 text-xs font-bold text-white appearance-none transition-all cursor-pointer">
                                 <option value="">All Industries</option>
                                 <option value="Technology">Technology</option>
                                 <option value="Finance">Finance</option>
@@ -490,10 +490,10 @@
                 </div>
 
                 <div class="flex items-center space-x-4 pt-4">
-                    <button type="submit" onclick="extractClients(event)" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-slate-900 dark:text-white font-black py-4 rounded-2xl shadow-2xl shadow-emerald-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em]">
+                    <button type="submit" onclick="extractClients(event)" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-black py-4 rounded-2xl shadow-2xl shadow-emerald-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em]">
                         Extract Records
                     </button>
-                    <button type="button" onclick="document.getElementById('extractModal').classList.add('hidden')" class="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-slate-900 dark:text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all">
+                    <button type="button" onclick="document.getElementById('extractModal').classList.add('hidden')" class="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all">
                         Cancel
                     </button>
                 </div>
@@ -781,14 +781,14 @@
     </script>
 
     <!-- Email Modal -->
-    <div id="emailModal" class="fixed inset-0 z-50 hidden bg-white dark:bg-white flex items-center justify-center p-4">
-        <div class="bg-slate-100 dark:bg-white border border-pink-200 dark:border-pink-200 w-full max-w-4xl rounded-[2.5rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
+    <div id="emailModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-slate-950 border border-white/10 w-full max-w-4xl rounded-[2.5rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300 max-h-[95vh] overflow-y-auto">
             <div class="flex justify-between items-start mb-6">
                 <div>
-                    <h2 id="emailModalTitle" class="text-2xl font-black text-slate-900 dark:text-white italic tracking-tighter mb-0.5">Send Email</h2>
-                    <p id="emailModalSubtitle" class="text-[8px] font-bold text-slate-500 tracking-widest leading-none">Send email to client via webhook</p>
+                    <h2 id="emailModalTitle" class="text-2xl font-black text-white italic tracking-tighter mb-0.5 uppercase">Send Email</h2>
+                    <p id="emailModalSubtitle" class="text-[8px] font-bold text-slate-500 tracking-widest leading-none uppercase">Send email to client via webhook</p>
                 </div>
-                <button onclick="document.getElementById('emailModal').classList.add('hidden')" class="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-xl text-slate-700 dark:text-slate-600 hover:text-slate-900 dark:text-white transition-all">
+                <button onclick="document.getElementById('emailModal').classList.add('hidden')" class="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-xl text-slate-500 hover:text-white transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </button>
             </div>
@@ -799,7 +799,7 @@
                     <div>
                         <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Recipient Email</label>
                         <div class="relative">
-                            <select id="emailTo" required class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-white appearance-none transition-all cursor-pointer">
+                            <select id="emailTo" required class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white appearance-none transition-all cursor-pointer">
                                 <option value="">-- Select Email --</option>
                             </select>
                             <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
@@ -810,7 +810,7 @@
                     <div>
                         <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Template</label>
                         <div class="relative">
-                            <select id="email_template" onchange="loadTemplate()" class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-white appearance-none transition-all cursor-pointer">
+                            <select id="email_template" onchange="loadTemplate()" class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white appearance-none transition-all cursor-pointer">
                                 <option value="">-- Select Template --</option>
                             </select>
                             <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
@@ -826,11 +826,11 @@
                         <div class="grid grid-cols-2 gap-3">
                             <div>
                                 <label class="block text-[8px] font-bold text-slate-500 tracking-widest mb-2 px-1">Date</label>
-                                <input type="date" id="email_date" required class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-white transition-all">
+                                <input type="date" id="email_date" required class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all">
                             </div>
                             <div>
                                 <label class="block text-[8px] font-bold text-slate-500 tracking-widest mb-2 px-1">Time</label>
-                                <input type="time" id="email_time" required class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-white transition-all">
+                                <input type="time" id="email_time" required class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all">
                             </div>
                         </div>
                         <input type="hidden" id="email_datetime">
@@ -840,20 +840,20 @@
                 <div>
                     <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Subject</label>
                     <input type="text" name="subject" id="email_subject" required placeholder="Email subject" 
-                           class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-white transition-all">
+                           class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all">
                 </div>
 
                 <div>
                     <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Message</label>
                     <textarea name="message" id="email_message" required placeholder="Email message" rows="8"
-                              class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-white transition-all resize-none"></textarea>
+                              class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all resize-none"></textarea>
                 </div>
 
                 <div class="flex items-center space-x-4 pt-4">
-                    <button type="submit" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-slate-900 dark:text-white font-black py-4 rounded-2xl shadow-2xl shadow-emerald-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em]">
+                    <button type="submit" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-black py-4 rounded-2xl shadow-2xl shadow-emerald-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em]">
                         Send Email
                     </button>
-                    <button type="button" onclick="document.getElementById('emailModal').classList.add('hidden')" class="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-slate-900 dark:text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all">
+                    <button type="button" onclick="document.getElementById('emailModal').classList.add('hidden')" class="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all">
                         Cancel
                     </button>
                 </div>
@@ -863,8 +863,8 @@
 
     <!-- Upload CSV Modal -->
     <!-- Envío a Base de Datos Modal -->
-    <div id="sendingModal" class="fixed inset-0 z-50 hidden bg-white dark:bg-slate-950/95 backdrop-blur-xl flex items-center justify-center p-4">
-        <div class="bg-slate-100 dark:bg-slate-900 border border-pink-200 dark:border-slate-800 w-full max-w-md rounded-[2.5rem] overflow-hidden shadow-2xl p-8">
+    <div id="sendingModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-slate-950 border border-white/10 w-full max-w-md rounded-[2.5rem] overflow-hidden shadow-2xl p-6 md:p-8 max-h-[90vh] overflow-y-auto">
             <div class="flex flex-col items-center justify-center space-y-6">
                 <div class="relative">
                     <div class="w-16 h-16 rounded-full border-4 border-slate-700 border-t-pink-500 animate-spin"></div>
@@ -878,19 +878,19 @@
                     <h3 class="text-lg font-black text-slate-900 dark:text-white italic tracking-tighter mb-2">Enviando CSV a Base de Datos</h3>
                     <p class="text-[9px] font-bold text-slate-700 dark:text-slate-600 dark:text-slate-400 tracking-widest uppercase">Por favor espera...</p>
                 </div>
-                <div class="w-full bg-white dark:bg-slate-950 rounded-lg h-1 overflow-hidden">
+                <div class="w-full bg-slate-900 rounded-lg h-1 overflow-hidden">
                     <div class="bg-pink-500 h-full w-full animate-pulse"></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="uploadCSVModal" class="fixed inset-0 z-50 hidden bg-white dark:bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4">
-        <div class="bg-slate-100 dark:bg-slate-900 border border-pink-200 dark:border-slate-800 w-full max-w-2xl rounded-[2.5rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
+    <div id="uploadCSVModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-slate-950 border border-white/10 w-full max-w-2xl rounded-[2.5rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300 max-h-[95vh] overflow-y-auto">
             <div class="flex justify-between items-start mb-6">
                 <div>
-                    <h2 class="text-2xl font-black text-slate-900 dark:text-white italic tracking-tighter mb-0.5">Upload Clients CSV</h2>
-                    <p class="text-[8px] font-bold text-slate-500 tracking-widest leading-none">Import clients from a CSV file</p>
+                    <h2 class="text-2xl font-black text-white italic tracking-tighter mb-0.5 uppercase">Upload Clients CSV</h2>
+                    <p class="text-[8px] font-bold text-slate-500 tracking-widest leading-none uppercase">Import clients from a CSV file</p>
                 </div>
                 <button onclick="document.getElementById('uploadCSVModal').classList.add('hidden')" class="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-xl text-slate-700 dark:text-slate-600 hover:text-slate-900 dark:text-white transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -903,22 +903,22 @@
                     <label class="block text-[9px] font-black text-purple-400 tracking-widest mb-3 px-1">Select CSV File</label>
                     <div class="relative">
                         <input type="file" id="csvFile" name="csv_file" accept=".csv" required 
-                               class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-purple-500/30 text-xs font-bold text-slate-900 dark:text-white transition-all file:mr-3 file:py-2 file:px-4 file:bg-purple-600 file:text-slate-900 dark:text-white file:border-0 file:rounded-lg file:font-bold file:cursor-pointer hover:file:bg-purple-500">
+                               class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-purple-500/30 text-xs font-bold text-white transition-all file:mr-3 file:py-2 file:px-4 file:bg-purple-600 file:text-white file:border-0 file:rounded-lg file:font-bold file:cursor-pointer hover:file:bg-purple-500">
                     </div>
                     <p class="text-[8px] text-slate-500 mt-2 px-1">Expected columns: name, email, website, location, phone, industry, email2, address, language, contact_name, facebook, instagram, opening_hours, notes, status</p>
                 </div>
 
-                <div class="bg-white dark:bg-slate-950/50 border border-pink-200 dark:border-slate-800 rounded-xl p-4">
+                <div class="bg-slate-900 border border-white/10 rounded-xl p-4">
                     <p class="text-[9px] font-bold text-slate-700 dark:text-slate-600 dark:text-slate-400 leading-relaxed">
                         <span class="text-purple-400">Note:</span> The CSV file should have headers matching the client field names. At minimum, include <span class="text-pink-400">name</span> and <span class="text-pink-400">email</span>. Optional fields can be left empty.
                     </p>
                 </div>
 
                 <div class="flex items-center space-x-4 pt-4">
-                    <button type="submit" class="flex-1 bg-purple-600 hover:bg-purple-500 text-slate-900 dark:text-white font-black py-4 rounded-2xl shadow-2xl shadow-purple-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em]">
+                    <button type="submit" class="flex-1 bg-purple-600 hover:bg-purple-500 text-white font-black py-4 rounded-2xl shadow-2xl shadow-purple-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em]">
                         Upload CSV
                     </button>
-                    <button type="button" onclick="document.getElementById('uploadCSVModal').classList.add('hidden')" class="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-slate-900 dark:text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all">
+                    <button type="button" onclick="document.getElementById('uploadCSVModal').classList.add('hidden')" class="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all">
                         Cancel
                     </button>
                 </div>
