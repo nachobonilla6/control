@@ -1,4 +1,4 @@
-<html lang="en" class="h-full bg-slate-950">
+<html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,18 +25,18 @@
         .font-inter { font-family: 'Inter', sans-serif; }
     </style>
 </head>
-<body class="h-full flex flex-col bg-slate-950 text-slate-200 overflow-hidden">
+<body class="h-full flex flex-col bg-white text-slate-900 overflow-hidden">
 
     <!-- Navbar -->
-    <nav class="h-20 bg-slate-950 backdrop-blur-md border-b border-white/10 flex items-center justify-between px-6 sticky top-0 z-30">
+    <nav class="h-20 bg-white backdrop-blur-md border-b border-slate-200 flex items-center justify-between px-6 sticky top-0 z-30">
         <div class="flex items-center space-x-4">
             <a href="{{ route('dashboard') }}" class="flex items-center space-x-4 group/brand">
                 <span class="text-xl font-bold text-pink-600 font-inter group-hover/brand:text-pink-500 transition-colors">Mini Walee</span>
-                <span class="text-slate-600 font-light text-xl italic font-inter">/</span>
-                <span class="text-sm font-medium text-white tracking-wide uppercase font-inter transition-colors">Control Panel</span>
+                <span class="text-slate-400 font-light text-xl italic font-inter">/</span>
+                <span class="text-sm font-medium text-slate-900 tracking-wide uppercase font-inter group-hover/brand:text-pink-400 transition-colors">Control Panel</span>
             </a>
-            <span class="text-slate-600 font-light text-xl italic font-inter">/</span>
-            <a href="{{ route('dashboard.projects') }}" class="text-xs font-black text-pink-500 tracking-[0.2em] hover:text-white transition-colors uppercase font-inter">Projects</a>
+            <span class="text-slate-400 font-light text-xl italic font-inter">/</span>
+            <a href="{{ route('dashboard.projects') }}" class="text-xs font-black text-pink-500 tracking-[0.2em] hover:text-slate-900 transition-colors uppercase font-inter">Projects</a>
         </div>
         <div class="flex items-center space-x-4">
             <a href="{{ route('dashboard.chat') }}" class="flex items-center space-x-2 px-4 py-2 bg-pink-600/10 hover:bg-pink-600/20 border border-pink-500/20 rounded-xl transition-all group">
@@ -120,10 +120,10 @@
 
             <div class="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-6">
                 <div>
-                    <h1 class="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tighter italic">Projects <span class="text-pink-500">Infrastructure</span></h1>
+                    <h1 class="text-3xl font-black text-slate-900 uppercase tracking-tighter italic">Projects <span class="text-pink-500">Infrastructure</span></h1>
                     <p class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em] mt-1">Digital asset management and deployments</p>
                 </div>
-                <button id="openModalBtn" onclick="event.stopPropagation(); document.getElementById('newProjectModal').classList.remove('hidden')" class="flex items-center space-x-3 px-8 py-4 bg-pink-600 hover:bg-pink-500 text-slate-900 dark:text-white rounded-2xl text-xs font-black uppercase tracking-[0.2em] transition-all shadow-2xl shadow-pink-600/20 active:scale-95 group">
+                <button id="openModalBtn" onclick="event.stopPropagation(); document.getElementById('newProjectModal').classList.remove('hidden')" class="flex items-center space-x-3 px-8 py-4 bg-pink-600 hover:bg-pink-500 text-white rounded-2xl text-xs font-black uppercase tracking-[0.2em] transition-all shadow-xl active:scale-95 group">
                     <svg class="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     <span>New Deployment</span>
                 </button>
@@ -135,7 +135,7 @@
                     $imgs = is_array($project->images) ? $project->images : json_decode($project->images, true);
                     if (!is_array($imgs)) $imgs = [];
                 @endphp
-                <div class="bg-slate-950 border border-white/10 rounded-3xl overflow-hidden group hover:border-pink-500/30 transition-all flex flex-col shadow-2xl relative">
+                <div class="bg-white border border-slate-200 rounded-3xl overflow-hidden group hover:border-pink-500/30 transition-all flex flex-col shadow-xl relative">
                     @if(count($imgs) > 0)
                     <a href="{{ route('projects.show', $project->id) }}" class="block h-56 relative overflow-hidden bg-white dark:bg-slate-950 group/img">
                         <img src="{{ asset($imgs[0]) }}" class="w-full h-full object-cover group-hover/img:scale-110 transition-transform duration-700 opacity-80 group-hover/img:opacity-100">

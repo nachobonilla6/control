@@ -1,4 +1,4 @@
-<html lang="en" class="h-full bg-slate-950">
+<html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,18 +34,18 @@
         }
     </style>
 </head>
-<body class="h-full flex flex-col bg-slate-950 text-slate-200 overflow-hidden uppercase">
+<body class="h-full flex flex-col bg-white text-slate-900 overflow-hidden uppercase">
 
     <!-- Navbar -->
-    <nav class="h-20 bg-slate-950 backdrop-blur-md border-b border-white/10 flex items-center justify-between px-6 sticky top-0 z-30">
+    <nav class="h-20 bg-white backdrop-blur-md border-b border-slate-200 flex items-center justify-between px-6 sticky top-0 z-30">
         <div class="flex items-center space-x-4">
             <a href="{{ route('dashboard') }}" class="flex items-center space-x-4 group/brand">
                 <span class="text-xl font-bold text-pink-600 font-inter group-hover/brand:text-pink-500 transition-colors">Mini Walee</span>
-                <span class="text-slate-600 font-light text-xl italic font-inter">/</span>
-                <span class="text-sm font-medium text-white tracking-wide uppercase font-inter group-hover/brand:text-pink-400 transition-colors">Control Panel</span>
+                <span class="text-slate-400 font-light text-xl italic font-inter">/</span>
+                <span class="text-sm font-medium text-slate-900 tracking-wide uppercase font-inter group-hover/brand:text-pink-400 transition-colors">Control Panel</span>
             </a>
-            <span class="text-slate-800 font-light text-xl italic font-inter">/</span>
-            <a href="{{ route('dashboard.facebook') }}" class="text-xs font-black text-pink-500 tracking-[0.2em] hover:text-white transition-colors uppercase font-inter">Facebook</a>
+            <span class="text-slate-400 font-light text-xl italic font-inter">/</span>
+            <a href="{{ route('dashboard.facebook') }}" class="text-xs font-black text-pink-500 tracking-[0.2em] hover:text-slate-900 transition-colors uppercase font-inter">Facebook</a>
         </div>
         <div class="flex items-center space-x-4">
             <a href="{{ route('dashboard.chat') }}" class="flex items-center space-x-2 px-4 py-2 bg-pink-600/10 hover:bg-pink-600/20 border border-pink-500/20 rounded-xl transition-all group">
@@ -131,16 +131,16 @@
 
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
                 <div>
-                    <h1 class="text-4xl font-black text-white italic tracking-tighter">Facebook <span class="text-pink-500">Post Manager</span></h1>
-                    <p class="text-[10px] font-bold text-slate-500 tracking-[0.3em] mt-2 italic">Automated social media orchestration</p>
+                    <h1 class="text-4xl font-black text-slate-900 italic tracking-tighter uppercase">Facebook <span class="text-pink-500">Post Manager</span></h1>
+                    <p class="text-[10px] font-bold text-slate-500 tracking-[0.3em] mt-2 italic uppercase">Automated social media orchestration</p>
                 </div>
                 
                 <div class="flex items-center space-x-3">
-                    <a href="{{ route('dashboard.facebook.accounts') }}" class="h-[58px] px-6 flex items-center justify-center bg-slate-900 border border-white/10 rounded-2xl hover:border-pink-500/30 transition-all text-slate-400 hover:text-white shadow-2xl active:scale-95 group space-x-3">
+                    <a href="{{ route('dashboard.facebook.accounts') }}" class="h-[58px] px-6 flex items-center justify-center bg-white border border-slate-200 rounded-2xl hover:border-pink-500/30 transition-all text-slate-500 hover:text-slate-900 shadow-xl active:scale-95 group space-x-3">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                         <span class="text-[9px] font-black tracking-[0.2em] uppercase">Accounts</span>
                     </a>
-                    <button onclick="document.getElementById('settingsModal').classList.remove('hidden')" class="w-[58px] h-[58px] flex items-center justify-center bg-slate-900 border border-white/10 rounded-2xl hover:border-pink-500/30 transition-all text-slate-400 hover:text-white shadow-2xl active:scale-95 group">
+                    <button onclick="document.getElementById('settingsModal').classList.remove('hidden')" class="w-[58px] h-[58px] flex items-center justify-center bg-white border border-slate-200 rounded-2xl hover:border-pink-500/30 transition-all text-slate-500 hover:text-slate-900 shadow-xl active:scale-95 group">
                         <svg class="w-5 h-5 group-hover:rotate-90 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.543-.426-1.543-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                     </button>
                     <button onclick="openCreatePostModal()" class="h-[58px] px-8 bg-pink-600 hover:bg-pink-500 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-pink-600/20 active:scale-95 flex items-center">
@@ -157,7 +157,7 @@
                     $images = array_filter([$post->image1, $post->image2, $post->image3]);
                     $imgCount = count($images);
                 @endphp
-                <div class="group bg-slate-900 border border-white/10 rounded-[2.5rem] overflow-hidden transition-all duration-500 hover:border-pink-500/30 hover:shadow-2xl flex flex-col h-full">
+                <div class="group bg-white border border-slate-200 rounded-[2.5rem] overflow-hidden transition-all duration-500 hover:border-pink-500/30 hover:shadow-2xl flex flex-col h-full">
                     <!-- Image Grid Area -->
                     <div class="relative bg-slate-950 aspect-video overflow-hidden" id="carousel-{{ $post->id }}" data-current="0">
                         @if($imgCount > 0)

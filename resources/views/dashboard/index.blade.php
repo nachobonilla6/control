@@ -26,14 +26,14 @@
         body { font-family: 'Inter', sans-serif; }
     </style>
 </head>
-<body class="h-full flex flex-col bg-slate-950 text-white overflow-hidden">
+<body class="h-full flex flex-col bg-white text-slate-900 overflow-hidden uppercase">
 
     <!-- Navbar -->
-    <nav class="h-20 bg-slate-950 backdrop-blur-md border-b border-white/10 flex items-center justify-between px-6 sticky top-0 z-30">
+    <nav class="h-20 bg-white backdrop-blur-md border-b border-slate-200 flex items-center justify-between px-6 sticky top-0 z-30">
         <a href="{{ route('dashboard') }}" class="flex items-center space-x-4 group/brand">
             <span class="text-xl font-bold text-pink-600 group-hover/brand:text-pink-500 transition-colors">Mini Walee</span>
-            <span class="text-slate-600 font-light text-xl italic">/</span>
-            <span class="text-sm font-medium text-white tracking-wide uppercase group-hover/brand:text-pink-400 transition-colors">Control Panel</span>
+            <span class="text-slate-400 font-light text-xl italic">/</span>
+            <span class="text-sm font-medium text-slate-900 tracking-wide uppercase group-hover/brand:text-pink-400 transition-colors">Control Panel</span>
         </a>
             <div class="flex items-center space-x-4">
                 <a href="{{ route('dashboard.chat') }}" class="flex items-center space-x-2 px-4 py-2 bg-pink-600/10 dark:bg-pink-600/10 hover:bg-pink-600/20 dark:hover:bg-pink-600/20 border border-pink-500/20 dark:border-pink-500/20 rounded-xl transition-all group">
@@ -100,19 +100,19 @@
     </nav>
 
     <!-- Main Content -->
-    <main class="flex-1 overflow-auto p-6 md:p-10 bg-slate-950">
+    <main class="flex-1 overflow-auto p-6 md:p-10 bg-white">
         <div class="max-w-7xl mx-auto">
             <div class="mb-10 text-center">
-                <h1 class="text-4xl font-black text-white mb-2">System Orchestration</h1>
+                <h1 class="text-4xl font-black text-slate-900 mb-2">System Orchestration</h1>
                 <p class="text-slate-500">Select a category to manage your environment.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @foreach($categories as $category)
                 @if(isset($category['isExternal']) && $category['isExternal'])
-                <a href="{{ $category['url'] }}" target="_blank" rel="noopener noreferrer" class="group relative bg-slate-950 border border-white/10 rounded-3xl p-8 transition-all duration-300 hover:scale-[1.03] hover:border-pink-500/50 hover:shadow-2xl hover:shadow-pink-500/10 active:scale-100">
+                <a href="{{ $category['url'] }}" target="_blank" rel="noopener noreferrer" class="group relative bg-white border border-slate-200 rounded-3xl p-8 transition-all duration-300 hover:scale-[1.03] hover:border-pink-500/50 hover:shadow-2xl hover:shadow-pink-500/10 active:scale-100">
                 @else
-                <a href="{{ route($category['route']) }}" class="group relative bg-slate-950 border border-white/10 rounded-3xl p-8 transition-all duration-300 hover:scale-[1.03] hover:border-pink-500/50 hover:shadow-2xl hover:shadow-pink-500/10 active:scale-100">
+                <a href="{{ route($category['route']) }}" class="group relative bg-white border border-slate-200 rounded-3xl p-8 transition-all duration-300 hover:scale-[1.03] hover:border-pink-500/50 hover:shadow-2xl hover:shadow-pink-500/10 active:scale-100">
                 @endif
                     <div class="absolute -right-10 -top-10 w-40 h-40 bg-pink-600/10 blur-[60px] group-hover:bg-pink-600/20 transition-all"></div>
                     
@@ -120,8 +120,8 @@
                         {{ $category['icon'] }}
                     </div>
 
-                    <h2 class="text-2xl font-bold text-white mb-3 group-hover:text-pink-500 transition-colors">{{ $category['name'] }}</h2>
-                    <p class="text-slate-400 leading-relaxed mb-6">{{ $category['description'] }}</p>
+                    <h2 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-pink-500 transition-colors">{{ $category['name'] }}</h2>
+                    <p class="text-slate-500 leading-relaxed mb-6">{{ $category['description'] }}</p>
 
                     <div class="flex items-center text-pink-600 font-bold text-xs uppercase tracking-widest">
                         {{ isset($category['isExternal']) && $category['isExternal'] ? 'Open' : 'Configure' }}
