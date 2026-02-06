@@ -110,20 +110,20 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @foreach($categories as $category)
                 @if(isset($category['isExternal']) && $category['isExternal'])
-                <a href="{{ $category['url'] }}" target="_blank" rel="noopener noreferrer" class="group relative bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-3xl p-8 transition-all duration-300 hover:scale-[1.03] hover:border-pink-500/50 dark:hover:border-pink-500/50 hover:shadow-2xl hover:shadow-pink-500/10 active:scale-100">
+                <a href="{{ $category['url'] }}" target="_blank" rel="noopener noreferrer" class="group relative bg-slate-950 border border-white/10 rounded-3xl p-8 transition-all duration-300 hover:scale-[1.03] hover:border-pink-500/50 hover:shadow-2xl hover:shadow-pink-500/10 active:scale-100">
                 @else
-                <a href="{{ route($category['route']) }}" class="group relative bg-white dark:bg-white border border-pink-200 dark:border-pink-200 rounded-3xl p-8 transition-all duration-300 hover:scale-[1.03] hover:border-pink-500/50 dark:hover:border-pink-500/50 hover:shadow-2xl hover:shadow-pink-500/10 active:scale-100">
+                <a href="{{ route($category['route']) }}" class="group relative bg-slate-950 border border-white/10 rounded-3xl p-8 transition-all duration-300 hover:scale-[1.03] hover:border-pink-500/50 hover:shadow-2xl hover:shadow-pink-500/10 active:scale-100">
                 @endif
-                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-pink-600/5 dark:bg-pink-600/5 blur-[60px] group-hover:bg-pink-600/15 transition-all"></div>
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-pink-600/10 blur-[60px] group-hover:bg-pink-600/20 transition-all"></div>
                     
-                    <div class="w-16 h-16 rounded-2xl bg-pink-500/10 dark:bg-pink-500/10 flex items-center justify-center text-3xl mb-6 border border-pink-500/20 dark:border-pink-500/20">
+                    <div class="w-16 h-16 rounded-2xl bg-pink-500/10 flex items-center justify-center text-3xl mb-6 border border-pink-500/20">
                         {{ $category['icon'] }}
                     </div>
 
-                    <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-900 mb-3 group-hover:text-pink-600 dark:group-hover:text-pink-600 transition-colors">{{ $category['name'] }}</h2>
-                    <p class="text-slate-600 dark:text-slate-600 leading-relaxed mb-6">{{ $category['description'] }}</p>
+                    <h2 class="text-2xl font-bold text-white mb-3 group-hover:text-pink-500 transition-colors">{{ $category['name'] }}</h2>
+                    <p class="text-slate-400 leading-relaxed mb-6">{{ $category['description'] }}</p>
 
-                    <div class="flex items-center text-pink-600 dark:text-pink-400 font-bold text-xs uppercase tracking-widest">
+                    <div class="flex items-center text-pink-600 font-bold text-xs uppercase tracking-widest">
                         {{ isset($category['isExternal']) && $category['isExternal'] ? 'Open' : 'Configure' }}
                         <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </div>

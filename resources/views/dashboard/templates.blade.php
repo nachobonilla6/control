@@ -85,9 +85,9 @@
 
             <!-- Notifications Dropdown -->
             <div class="relative">
-                <button id="notifBtn" class="relative p-2.5 text-slate-700 dark:text-slate-600 dark:text-slate-400 hover:text-pink-400 transition-colors focus:outline-none bg-slate-800/50 rounded-full border border-pink-200 dark:border-slate-800">
+                <button id="notifBtn" class="relative p-2.5 text-white hover:text-pink-400 transition-colors focus:outline-none bg-white/10 rounded-full border border-white/10">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span id="notifBadge" class="absolute top-0 right-0 bg-pink-600 text-[10px] font-bold text-slate-900 dark:text-white rounded-full w-4 h-4 flex items-center justify-center border-2 border-slate-950 hidden">0</span>
+                    <span id="notifBadge" class="absolute top-0 right-0 bg-pink-600 text-[10px] font-bold text-white rounded-full w-4 h-4 flex items-center justify-center border-2 border-slate-950 hidden">0</span>
                 </button>
 
                 <!-- Notifications Dropdown Content -->
@@ -119,7 +119,7 @@
             <div class="mb-8 bg-red-500/10 border border-red-500/20 text-red-400 px-6 py-4 rounded-2xl shadow-lg animate-in fade-in slide-in-from-top-4">
                 <div class="flex items-center mb-2">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span class="text-[10px] font-black tracking-widest uppercase">Attention: Errors detected</span>
+                    <span class="text-[10px] font-black tracking-widest uppercase text-white">Attention: Errors detected</span>
                 </div>
                 <ul class="list-disc list-inside space-y-1">
                     @foreach($errors->all() as $error)
@@ -131,7 +131,7 @@
 
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
                 <div>
-                    <h1 class="text-4xl font-black text-slate-900 dark:text-slate-900 italic tracking-tighter">Email <span class="text-pink-500">Templates</span></h1>
+                    <h1 class="text-4xl font-black text-white italic tracking-tighter">Email <span class="text-pink-500">Templates</span></h1>
                     <p class="text-[10px] font-bold text-slate-500 tracking-[0.3em] mt-2 text-center md:text-left">Standardized messaging library</p>
                 </div>
                 
@@ -142,11 +142,11 @@
             </div>
 
             <!-- Templates Table -->
-            <div class="bg-slate-100 dark:bg-white border border-pink-200 dark:border-pink-200 rounded-[2.5rem] overflow-hidden shadow-2xl">
+            <div class="bg-slate-950 border border-white/10 rounded-[2.5rem] overflow-hidden shadow-2xl">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="border-b border-pink-200 dark:border-pink-200 bg-white dark:bg-white">
+                            <tr class="border-b border-white/10 bg-slate-900">
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Name</th>
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Subject</th>
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Body Preview</th>
@@ -157,7 +157,7 @@
                             @forelse($templates as $template)
                             <tr class="hover:bg-white/[0.02] transition-colors group">
                                 <td class="px-8 py-6">
-                                    <p class="text-sm font-bold text-slate-900 dark:text-slate-900 leading-none normal-case">{{ $template->name ?? 'N/A' }}</p>
+                                    <p class="text-sm font-bold text-white leading-none normal-case">{{ $template->name ?? 'N/A' }}</p>
                                 </td>
                                 <td class="px-8 py-6">
                                     <div class="flex items-center space-x-4">
@@ -165,7 +165,7 @@
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                         </div>
                                         <div>
-                                            <p class="text-sm font-bold text-slate-900 dark:text-slate-900 leading-none normal-case">{{ $template->subject }}</p>
+                                            <p class="text-sm font-bold text-white leading-none normal-case">{{ $template->subject }}</p>
                                         </div>
                                     </div>
                                 </td>

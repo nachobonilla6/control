@@ -29,15 +29,15 @@
 <body class="h-full flex flex-col bg-white dark:bg-slate-950 text-slate-200 overflow-hidden">
 
     <!-- Navbar -->
-    <nav class="h-20 bg-slate-100 dark:bg-slate-900/50 backdrop-blur-md border-b border-pink-200 dark:border-slate-800/50 flex items-center justify-between px-6 sticky top-0 z-30">
+    <nav class="h-20 bg-slate-950 backdrop-blur-md border-b border-white/10 flex items-center justify-between px-6 sticky top-0 z-30">
         <div class="flex items-center space-x-4">
             <a href="{{ route('dashboard') }}" class="flex items-center space-x-4 group/brand">
-                <span class="text-xl font-bold text-pink-400 font-inter group-hover/brand:text-slate-900 dark:text-white transition-colors">Mini Walee</span>
-                <span class="text-slate-700 font-light text-xl italic font-inter">/</span>
-                <span class="text-sm font-medium text-slate-700 dark:text-slate-600 dark:text-slate-400 tracking-wide uppercase font-inter group-hover/brand:text-pink-400 transition-colors">Control Panel</span>
+                <span class="text-xl font-bold text-pink-600 font-inter group-hover/brand:text-pink-500 transition-colors">Mini Walee</span>
+                <span class="text-slate-600 font-light text-xl italic font-inter">/</span>
+                <span class="text-sm font-medium text-white tracking-wide uppercase font-inter transition-colors">Control Panel</span>
             </a>
-            <span class="text-slate-800 font-light text-xl italic font-inter">/</span>
-            <a href="{{ route('dashboard.bots') }}" class="text-xs font-black text-pink-500 tracking-[0.2em] hover:text-slate-900 dark:text-white transition-colors uppercase font-inter">AI Fleet</a>
+            <span class="text-slate-600 font-light text-xl italic font-inter">/</span>
+            <a href="{{ route('dashboard.bots') }}" class="text-xs font-black text-pink-500 tracking-[0.2em] hover:text-white transition-colors uppercase font-inter">AI Fleet</a>
         </div>
         <div class="flex items-center space-x-4">
             <a href="{{ route('dashboard.chat') }}" class="flex items-center space-x-2 px-4 py-2 bg-pink-600/10 hover:bg-pink-600/20 border border-pink-500/20 rounded-xl transition-all group">
@@ -82,9 +82,9 @@
 
             <!-- Notifications Dropdown -->
             <div class="relative">
-                <button id="notifBtn" class="relative p-2.5 text-slate-700 dark:text-slate-600 dark:text-slate-400 hover:text-pink-400 transition-colors focus:outline-none bg-slate-800/50 rounded-full border border-pink-200 dark:border-slate-800">
+                <button id="notifBtn" class="relative p-2.5 text-white hover:text-pink-400 transition-colors focus:outline-none bg-white/10 rounded-full border border-white/10">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span id="notifBadge" class="absolute top-0 right-0 bg-pink-600 text-[10px] font-bold text-slate-900 dark:text-white rounded-full w-4 h-4 flex items-center justify-center border-2 border-slate-950 hidden">0</span>
+                    <span id="notifBadge" class="absolute top-0 right-0 bg-pink-600 text-[10px] font-bold text-white rounded-full w-4 h-4 flex items-center justify-center border-2 border-slate-950 hidden">0</span>
                 </button>
 
                 <!-- Notifications Dropdown Content -->
@@ -116,21 +116,21 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @foreach($bots as $bot)
-                <a href="{{ route('dashboard.history', $bot['id']) }}" class="group bg-slate-100 dark:bg-slate-900 border border-pink-200 dark:border-slate-800 rounded-2xl p-6 transition-all hover:border-pink-500/30 hover:bg-pink-500/[0.02]">
+                <a href="{{ route('dashboard.history', $bot['id']) }}" class="group bg-slate-950 border border-white/10 rounded-2xl p-6 transition-all hover:border-pink-500/30 hover:bg-pink-500/[0.02]">
                     <div class="flex items-center justify-between mb-6">
                         <div class="w-14 h-14 rounded-2xl bg-pink-600/10 flex items-center justify-center text-pink-400 border border-pink-500/20 font-mono font-bold text-lg">
                             {{ $bot['icon'] }}
                         </div>
                         <span class="px-3 py-1 bg-emerald-500/10 text-emerald-400 text-[10px] font-bold uppercase rounded-full border border-emerald-500/20">Active</span>
                     </div>
-                    <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-2">{{ $bot['name'] }}</h2>
-                    <p class="text-sm text-slate-700 dark:text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">{{ $bot['description'] }}</p>
-                    <div class="pt-6 border-t border-pink-200 dark:border-slate-800/50 flex items-center justify-between">
+                    <h2 class="text-xl font-bold text-white mb-2">{{ $bot['name'] }}</h2>
+                    <p class="text-sm text-slate-400 mb-6 leading-relaxed">{{ $bot['description'] }}</p>
+                    <div class="pt-6 border-t border-white/5 flex items-center justify-between">
                         <div class="flex flex-col">
-                            <span class="text-[10px] font-bold text-slate-700 dark:text-slate-600 uppercase">Records</span>
+                            <span class="text-[10px] font-bold text-slate-500 uppercase">Records</span>
                             <span class="text-pink-400 font-mono">{{ number_format($bot['count']) }}</span>
                         </div>
-                        <div class="p-2 rounded-lg bg-slate-800 group-hover:bg-pink-600 group-hover:text-slate-900 dark:text-white transition-all">
+                        <div class="p-2 rounded-lg bg-slate-800 text-white group-hover:bg-pink-600 transition-all">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         </div>
                     </div>

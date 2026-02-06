@@ -29,15 +29,15 @@
 <body class="h-full flex flex-col bg-white dark:bg-slate-950 text-slate-200 overflow-hidden">
 
     <!-- Navbar -->
-    <nav class="h-20 bg-slate-100 dark:bg-slate-900/50 backdrop-blur-md border-b border-pink-200 dark:border-slate-800/50 flex items-center justify-between px-6 sticky top-0 z-30">
+    <nav class="h-20 bg-slate-950 backdrop-blur-md border-b border-white/10 flex items-center justify-between px-6 sticky top-0 z-30">
         <div class="flex items-center space-x-4">
             <a href="{{ route('dashboard') }}" class="flex items-center space-x-4 group/brand">
-                <span class="text-xl font-bold text-pink-400 font-inter group-hover/brand:text-slate-900 dark:text-white transition-colors">Mini Walee</span>
-                <span class="text-slate-700 font-light text-xl italic font-inter">/</span>
-                <span class="text-sm font-medium text-slate-700 dark:text-slate-600 dark:text-slate-400 tracking-wide uppercase font-inter group-hover/brand:text-pink-400 transition-colors">Control Panel</span>
+                <span class="text-xl font-bold text-pink-600 font-inter group-hover/brand:text-pink-500 transition-colors">Mini Walee</span>
+                <span class="text-slate-600 font-light text-xl italic font-inter">/</span>
+                <span class="text-sm font-medium text-white tracking-wide uppercase font-inter transition-colors">Control Panel</span>
             </a>
-            <span class="text-slate-800 font-light text-xl italic font-inter">/</span>
-            <a href="{{ route('dashboard.webhooks') }}" class="text-xs font-black text-pink-500 tracking-[0.2em] hover:text-slate-900 dark:text-white transition-colors uppercase font-inter">Webhooks</a>
+            <span class="text-slate-600 font-light text-xl italic font-inter">/</span>
+            <a href="{{ route('dashboard.webhooks') }}" class="text-xs font-black text-pink-500 tracking-[0.2em] hover:text-white transition-colors uppercase font-inter">Webhooks</a>
         </div>
         <div class="flex items-center space-x-4">
             <a href="{{ route('dashboard.chat') }}" class="flex items-center space-x-2 px-4 py-2 bg-pink-600/10 hover:bg-pink-600/20 border border-pink-500/20 rounded-xl transition-all group">
@@ -82,9 +82,9 @@
 
             <!-- Notifications Dropdown -->
             <div class="relative">
-                <button id="notifBtn" class="relative p-2.5 text-slate-700 dark:text-slate-600 dark:text-slate-400 hover:text-pink-400 transition-colors focus:outline-none bg-slate-800/50 rounded-full border border-pink-200 dark:border-slate-800">
+                <button id="notifBtn" class="relative p-2.5 text-white hover:text-pink-400 transition-colors focus:outline-none bg-white/10 rounded-full border border-white/10">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span id="notifBadge" class="absolute top-0 right-0 bg-pink-600 text-[10px] font-bold text-slate-900 dark:text-white rounded-full w-4 h-4 flex items-center justify-center border-2 border-slate-950 hidden">0</span>
+                    <span id="notifBadge" class="absolute top-0 right-0 bg-pink-600 text-[10px] font-bold text-white rounded-full w-4 h-4 flex items-center justify-center border-2 border-slate-950 hidden">0</span>
                 </button>
 
                 <!-- Notifications Dropdown Content -->
@@ -124,9 +124,9 @@
                 
                 <!-- Form Column -->
                 <div class="lg:col-span-1">
-                    <div class="bg-slate-100 dark:bg-slate-900 border border-pink-200 dark:border-slate-800 rounded-3xl p-8 sticky top-0 shadow-2xl">
-                        <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-6 uppercase tracking-tight flex items-center">
-                            <span class="w-8 h-8 rounded-lg bg-pink-600 flex items-center justify-center text-xs mr-3">+</span>
+                    <div class="bg-slate-950 border border-white/10 rounded-3xl p-8 sticky top-0 shadow-2xl">
+                        <h2 class="text-xl font-bold text-white mb-6 uppercase tracking-tight flex items-center">
+                            <span class="w-8 h-8 rounded-lg bg-pink-600 flex items-center justify-center text-xs mr-3 text-slate-950">+</span>
                             New Webhook
                         </h2>
                         
@@ -168,7 +168,7 @@
 
                     <div class="space-y-6">
                         @foreach($webhooks as $webhook)
-                        <div class="bg-slate-100 dark:bg-slate-900/50 border border-pink-200 dark:border-slate-800 rounded-2xl p-6 group hover:border-pink-500/30 transition-all shadow-lg relative overflow-hidden">
+                        <div class="bg-slate-950 border border-white/10 rounded-2xl p-6 group hover:border-pink-500/30 transition-all shadow-lg relative overflow-hidden">
                             <div class="absolute -right-4 -top-4 w-24 h-24 bg-pink-600/5 blur-[40px] opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             
                             <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
