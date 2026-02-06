@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-white dark:bg-slate-950">
+<html lang="en" class="h-full bg-white dark:bg-white">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,14 +25,14 @@
         body { font-family: 'Inter', sans-serif; }
     </style>
 </head>
-<body class="h-full flex flex-col bg-white dark:bg-slate-950 text-slate-200 overflow-hidden">
+<body class="h-full flex flex-col bg-white dark:bg-white text-slate-900 dark:text-slate-900 overflow-hidden">
 
     <!-- Navbar -->
-    <nav class="h-20 bg-slate-100 dark:bg-slate-900/50 backdrop-blur-md border-b border-pink-200 dark:border-slate-800/50 flex items-center justify-between px-6 sticky top-0 z-30">
+    <nav class="h-20 bg-slate-100 dark:bg-white backdrop-blur-md border-b border-pink-200 dark:border-pink-200 flex items-center justify-between px-6 sticky top-0 z-30">
         <a href="{{ route('dashboard') }}" class="flex items-center space-x-4 group/brand">
-            <span class="text-xl font-bold text-pink-400 group-hover/brand:text-slate-900 dark:text-white transition-colors">Mini Walee</span>
+            <span class="text-xl font-bold text-pink-400 group-hover/brand:text-slate-900 dark:text-pink-600 transition-colors">Mini Walee</span>
             <span class="text-slate-700 font-light text-xl italic">/</span>
-            <span class="text-sm font-medium text-slate-700 dark:text-slate-600 dark:text-slate-400 tracking-wide uppercase group-hover/brand:text-pink-400 transition-colors">Control Panel</span>
+            <span class="text-sm font-medium text-slate-700 dark:text-slate-700 tracking-wide uppercase group-hover/brand:text-pink-400 transition-colors">Control Panel</span>
         </a>
         <div class="flex items-center space-x-4">
             <a href="{{ route('dashboard.chat') }}" class="flex items-center space-x-2 px-4 py-2 bg-pink-600/10 hover:bg-pink-600/20 border border-pink-500/20 rounded-xl transition-all group">
@@ -55,7 +55,7 @@
                 <div id="accountDropdown" class="absolute right-0 mt-3 w-56 bg-slate-100 dark:bg-slate-900 border border-pink-200 dark:border-slate-800 rounded-2xl shadow-2xl opacity-0 invisible transition-all z-50 p-2">
                     <div class="px-4 py-3 border-b border-pink-200 dark:border-slate-800 mb-2">
                         <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest leading-none mb-1">Signed in as</p>
-                        <p class="text-xs font-bold text-slate-900 dark:text-white truncate">{{ Auth::user()->email }}</p>
+                        <p class="text-xs font-bold text-slate-900 dark:text-slate-900 truncate">{{ Auth::user()->email }}</p>
                     </div>
                     
                     <button onclick="document.getElementById('profileModal').classList.remove('hidden'); closeAllDropdowns();" class="w-full flex items-center space-x-3 px-4 py-3 text-sm text-slate-700 dark:text-slate-300 hover:bg-pink-100 dark:hover:bg-slate-800 rounded-xl transition-colors">
@@ -100,7 +100,7 @@
         <div class="max-w-7xl mx-auto px-6 py-10">
             <div class="flex items-center justify-between mb-8">
                 <div>
-                    <h1 class="text-4xl font-black text-slate-900 dark:text-white italic tracking-tighter">All <span class="text-pink-500">Clients</span></h1>
+                    <h1 class="text-4xl font-black text-slate-900 dark:text-slate-900 italic tracking-tighter">All <span class="text-pink-500">Clients</span></h1>
                     <p class="text-[10px] font-bold text-slate-500 tracking-[0.3em] mt-2">Complete client database</p>
                 </div>
                 <div class="flex gap-4">
@@ -132,7 +132,7 @@
                 <form method="GET" action="{{ route('dashboard.clients.all') }}" class="flex gap-2">
                     <div class="flex-1 relative">
                         <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Search by name, email, website, phone, or industry..." 
-                               class="w-full bg-slate-100 dark:bg-slate-900 border border-pink-200 dark:border-slate-800 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-white transition-all placeholder:text-slate-700 dark:text-slate-600">
+                               class="w-full bg-slate-100 dark:bg-white border border-pink-200 dark:border-pink-200 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-slate-900 transition-all placeholder:text-slate-400">
                         <svg class="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-700 dark:text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </div>
                     <button type="submit" class="px-8 py-4 bg-pink-600 hover:bg-pink-500 text-slate-900 dark:text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-pink-600/20 active:scale-95">
@@ -147,11 +147,11 @@
             </div>
 
             <!-- Clients Table -->
-            <div class="bg-slate-100 dark:bg-slate-900 border border-pink-200 dark:border-slate-800 rounded-[2.5rem] overflow-hidden shadow-2xl">
+            <div class="bg-slate-100 dark:bg-white border border-pink-200 dark:border-pink-200 rounded-[2.5rem] overflow-hidden shadow-2xl">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="border-b border-pink-200 dark:border-slate-800 bg-white dark:bg-slate-950">
+                            <tr class="border-b border-pink-200 dark:border-pink-200 bg-white dark:bg-white">
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Name / Company</th>
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Website</th>
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Location</th>
@@ -185,7 +185,7 @@
                                             {{ substr($client->name, 0, 1) }}
                                         </div>
                                         <div>
-                                            <p class="text-sm font-bold text-slate-900 dark:text-white leading-none mb-1">{{ $client->name }}</p>
+                                            <p class="text-sm font-bold text-slate-900 dark:text-slate-900 leading-none mb-1">{{ $client->name }}</p>
                                             <p class="text-[9px] font-medium text-slate-500 lowercase">{{ $client->email }}</p>
                                         </div>
                                     </div>
@@ -282,11 +282,11 @@
     </div>
 
     <!-- Client Edit Modal -->
-    <div id="clientModal" class="fixed inset-0 z-50 hidden bg-white dark:bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4">
-        <div class="bg-slate-100 dark:bg-slate-900 border border-pink-200 dark:border-slate-800 w-full max-w-4xl rounded-[2.5rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
+    <div id="clientModal" class="fixed inset-0 z-50 hidden bg-white dark:bg-white flex items-center justify-center p-4">
+        <div class="bg-slate-100 dark:bg-white border border-pink-200 dark:border-pink-200 w-full max-w-4xl rounded-[2.5rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
             <div class="flex justify-between items-start mb-6">
                 <div>
-                    <h2 id="modalTitle" class="text-2xl font-black text-slate-900 dark:text-white italic tracking-tighter mb-0.5">Edit Client</h2>
+                    <h2 id="modalTitle" class="text-2xl font-black text-slate-900 dark:text-slate-900 italic tracking-tighter mb-0.5">Edit Client</h2>
                     <p id="modalSubtitle" class="text-[8px] font-bold text-slate-500 tracking-widest leading-none">Update client information</p>
                 </div>
                 <button onclick="document.getElementById('clientModal').classList.add('hidden')" class="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-xl text-slate-700 dark:text-slate-600 hover:text-slate-900 dark:text-white transition-all">
@@ -302,7 +302,7 @@
                         <div>
                             <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Full Name / Company</label>
                             <input type="text" name="name" id="form_name" required placeholder="e.g. Tech Solutions S.A." 
-                                   class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-white transition-all normal-case">
+                                   class="w-full bg-white dark:bg-white border border-pink-200 dark:border-pink-200 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-slate-900 transition-all normal-case">
                         </div>
                         <div>
                             <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Contact Email</label>
@@ -385,7 +385,7 @@
                     <div>
                         <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Notes</label>
                         <textarea name="notes" id="form_notes" rows="3" placeholder="Add any additional notes about the client..."
-                                  class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl px-4 py-3 text-[11px] text-slate-700 dark:text-slate-300 focus:outline-none focus:border-pink-500/50 transition-all resize-none placeholder:text-slate-700"></textarea>
+                                  class="w-full bg-white dark:bg-white border border-pink-200 dark:border-pink-200 rounded-xl px-4 py-3 text-[11px] text-slate-700 dark:text-slate-700 focus:outline-none focus:border-pink-500/50 transition-all resize-none placeholder:text-slate-400"></textarea>
                     </div>
 
                     <div class="flex items-center space-x-4 pt-0">
@@ -402,11 +402,11 @@
     </div>
 
     <!-- Extract Modal -->
-    <div id="extractModal" class="fixed inset-0 z-50 hidden bg-white dark:bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4">
-        <div class="bg-slate-100 dark:bg-slate-900 border border-pink-200 dark:border-slate-800 w-full max-w-2xl rounded-[2.5rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
+    <div id="extractModal" class="fixed inset-0 z-50 hidden bg-white dark:bg-white flex items-center justify-center p-4">
+        <div class="bg-slate-100 dark:bg-white border border-pink-200 dark:border-pink-200 w-full max-w-2xl rounded-[2.5rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
             <div class="flex justify-between items-start mb-6">
                 <div>
-                    <h2 class="text-2xl font-black text-slate-900 dark:text-white italic tracking-tighter mb-0.5">Extract Clients</h2>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-slate-900 italic tracking-tighter mb-0.5">Extract Clients</h2>
                     <p class="text-[8px] font-bold text-slate-500 tracking-widest leading-none">Filter & extract clients by language, country, city & industry</p>
                 </div>
                 <button onclick="document.getElementById('extractModal').classList.add('hidden')" class="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-xl text-slate-700 dark:text-slate-600 hover:text-slate-900 dark:text-white transition-all">
@@ -421,7 +421,7 @@
                     <div>
                         <label class="block text-[9px] font-black text-emerald-400 tracking-widest mb-2 px-1">Language</label>
                         <div class="relative">
-                            <select id="extract_language" required class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 text-xs font-bold text-slate-900 dark:text-white appearance-none transition-all cursor-pointer">
+                            <select id="extract_language" required class="w-full bg-white dark:bg-white border border-pink-200 dark:border-pink-200 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 text-xs font-bold text-slate-900 dark:text-slate-900 appearance-none transition-all cursor-pointer">
                                 <option value="">Select Language</option>
                                 <option value="english">English</option>
                                 <option value="spanish">Spanish</option>
@@ -781,8 +781,8 @@
     </script>
 
     <!-- Email Modal -->
-    <div id="emailModal" class="fixed inset-0 z-50 hidden bg-white dark:bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4">
-        <div class="bg-slate-100 dark:bg-slate-900 border border-pink-200 dark:border-slate-800 w-full max-w-4xl rounded-[2.5rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
+    <div id="emailModal" class="fixed inset-0 z-50 hidden bg-white dark:bg-white flex items-center justify-center p-4">
+        <div class="bg-slate-100 dark:bg-white border border-pink-200 dark:border-pink-200 w-full max-w-4xl rounded-[2.5rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
             <div class="flex justify-between items-start mb-6">
                 <div>
                     <h2 id="emailModalTitle" class="text-2xl font-black text-slate-900 dark:text-white italic tracking-tighter mb-0.5">Send Email</h2>
