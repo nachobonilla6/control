@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-white dark:bg-slate-950">
+<html lang="en" class="h-full bg-white dark:bg-white">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,10 +31,10 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="h-full flex bg-white dark:bg-slate-950 text-slate-200 overflow-hidden">
+<body class="h-full flex bg-white dark:bg-white text-slate-900 dark:text-slate-900 overflow-hidden">
 
     <!-- Sidebar (ChatGPT style) -->
-    <aside class="w-72 bg-slate-100 dark:bg-slate-900 border-r border-pink-200 dark:border-slate-800 flex flex-col hidden md:flex">
+    <aside class="w-72 bg-slate-100 dark:bg-white border-r border-pink-200 dark:border-pink-200 flex flex-col hidden md:flex">
         <div class="p-4 border-b border-pink-200 dark:border-slate-800 flex items-center justify-between">
             <a href="{{ route('dashboard') }}" class="flex items-center space-x-2 text-pink-400 hover:text-indigo-300 transition-colors">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -53,7 +53,7 @@
             @if(count($threads) > 0)
                 @foreach($threads as $thread)
                     <a href="{{ route('dashboard.chat', ['bot' => $bot_id, 'chatId' => $thread->chat_id]) }}" 
-                       class="block px-3 py-3 rounded-xl hover:bg-slate-800/50 cursor-pointer text-sm transition-all {{ $current_chat_id == $thread->chat_id ? 'bg-pink-600/10 text-pink-400 border border-pink-500/20 shadow-lg' : 'text-slate-700 dark:text-slate-600 dark:text-slate-400' }}">
+                       class="block px-3 py-3 rounded-xl hover:bg-pink-50 cursor-pointer text-sm transition-all {{ $current_chat_id == $thread->chat_id ? 'bg-pink-600/10 text-pink-600 border border-pink-500/20 shadow-lg' : 'text-slate-700 dark:text-slate-600' }}">
                         <div class="truncate font-bold text-xs mb-1">{{ $thread->username ?? 'Anonymous' }}</div>
                         <div class="truncate text-[11px] opacity-75">{{ Str::limit($thread->message, 45, '...') }}</div>
                         <div class="truncate text-[9px] opacity-50 mt-1">ID: {{ Str::limit($thread->chat_id, 20, '...') }}</div>
@@ -80,7 +80,7 @@
     <!-- Main Content -->
     <main class="flex-1 flex flex-col relative h-full">
         <!-- Navbar -->
-        <nav class="h-16 bg-white dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-900/50 flex items-center justify-between px-6 sticky top-0 z-30">
+        <nav class="h-16 bg-white dark:bg-white/80 backdrop-blur-md border-b border-pink-200 dark:border-pink-200/50 flex items-center justify-between px-6 sticky top-0 z-30">
             <div class="flex items-center space-x-3">
                 <div class="md:hidden">
                      <a href="{{ route('dashboard') }}" class="text-slate-700 dark:text-slate-600 dark:text-slate-400"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
@@ -142,7 +142,7 @@
                                 <div class="w-9 h-9 rounded-xl bg-pink-600 flex items-center justify-center text-slate-900 dark:text-white text-[11px] font-black flex-shrink-0 shadow-lg shadow-pink-600/30">JD</div>
                             @endif
                             <div class="relative group max-w-[80%]">
-                                <div class="px-5 py-3 rounded-2xl transition-all {{ $msg->role == 'user' ? 'bg-pink-600/10 border border-pink-500/30 text-slate-100 shadow-xl shadow-pink-900/10' : 'bg-transparent text-slate-700 dark:text-slate-300' }}">
+                                <div class="px-5 py-3 rounded-2xl transition-all {{ $msg->role == 'user' ? 'bg-pink-600/10 border border-pink-500/30 text-slate-900 shadow-xl shadow-pink-900/5' : 'bg-transparent text-slate-700 dark:text-slate-800' }}">
                                     <p class="leading-relaxed text-sm whitespace-pre-wrap">{{ $msg->message }}</p>
                                 </div>
                                 <span class="absolute -bottom-6 {{ $msg->role == 'user' ? 'right-2' : 'left-2' }} text-[9px] text-slate-700 dark:text-slate-600 font-bold uppercase tracking-tighter opacity-0 group-hover:opacity-100 transition-opacity">
@@ -166,7 +166,7 @@
                     <input type="hidden" name="bot_id" value="{{ $bot_id }}">
                     <div class="relative flex items-center">
                         <input type="text" name="message" id="chatInput" required autocomplete="off" 
-                               class="w-full bg-slate-100 dark:bg-slate-900 border border-pink-200 dark:border-slate-800 rounded-2xl px-6 py-5 pr-16 focus:outline-none focus:ring-2 focus:ring-pink-600/50 focus:border-pink-600 transition-all shadow-[0_20px_50px_rgba(0,0,0,0.5)] placeholder-slate-600 text-slate-200" 
+                               class="w-full bg-slate-100 dark:bg-white border border-pink-200 dark:border-pink-200 rounded-2xl px-6 py-5 pr-16 focus:outline-none focus:ring-2 focus:ring-pink-600/50 focus:border-pink-600 transition-all shadow-[0_20px_50px_rgba(0,0,0,0.1)] placeholder-slate-400 text-slate-900" 
                                placeholder="Type a message to {{ str_replace('-', ' ', $bot_id) }}...">
                         <button type="submit" id="sendBtn" class="absolute right-3.5 p-2.5 bg-pink-600 hover:bg-pink-500 text-slate-900 dark:text-white rounded-xl transition-all shadow-lg active:scale-95 disabled:opacity-50">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>

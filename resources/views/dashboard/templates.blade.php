@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="h-full bg-white dark:bg-slate-950">
+<html lang="es" class="h-full bg-white dark:bg-white">
 @use('Illuminate\Support\Str')
 <head>
     <meta charset="UTF-8">
@@ -27,13 +27,13 @@
         .font-inter { font-family: 'Inter', sans-serif; }
     </style>
 </head>
-<body class="h-full flex flex-col bg-white dark:bg-slate-950 text-slate-200 overflow-hidden uppercase">
+<body class="h-full flex flex-col bg-white dark:bg-white text-slate-900 overflow-hidden uppercase">
 
     <!-- Navbar -->
-    <nav class="h-20 bg-slate-100 dark:bg-slate-900/50 backdrop-blur-md border-b border-pink-200 dark:border-slate-800/50 flex items-center justify-between px-6 sticky top-0 z-30">
+    <nav class="h-20 bg-slate-100 dark:bg-white backdrop-blur-md border-b border-pink-200 dark:border-pink-200 flex items-center justify-between px-6 sticky top-0 z-30">
         <div class="flex items-center space-x-4">
             <a href="{{ route('dashboard') }}" class="flex items-center space-x-4 group/brand">
-                <span class="text-xl font-bold text-pink-400 font-inter group-hover/brand:text-slate-900 dark:text-white transition-colors">Mini Walee</span>
+                <span class="text-xl font-bold text-pink-400 font-inter group-hover/brand:text-slate-900 dark:text-pink-600 transition-colors">Mini Walee</span>
                 <span class="text-slate-700 font-light text-xl italic font-inter">/</span>
                 <span class="text-sm font-medium text-slate-700 dark:text-slate-600 dark:text-slate-400 tracking-wide uppercase font-inter group-hover/brand:text-pink-400 transition-colors">Control Panel</span>
             </a>
@@ -131,7 +131,7 @@
 
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
                 <div>
-                    <h1 class="text-4xl font-black text-slate-900 dark:text-white italic tracking-tighter">Email <span class="text-pink-500">Templates</span></h1>
+                    <h1 class="text-4xl font-black text-slate-900 dark:text-slate-900 italic tracking-tighter">Email <span class="text-pink-500">Templates</span></h1>
                     <p class="text-[10px] font-bold text-slate-500 tracking-[0.3em] mt-2 text-center md:text-left">Standardized messaging library</p>
                 </div>
                 
@@ -142,11 +142,11 @@
             </div>
 
             <!-- Templates Table -->
-            <div class="bg-slate-100 dark:bg-slate-900 border border-pink-200 dark:border-slate-800 rounded-[2.5rem] overflow-hidden shadow-2xl">
+            <div class="bg-slate-100 dark:bg-white border border-pink-200 dark:border-pink-200 rounded-[2.5rem] overflow-hidden shadow-2xl">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="border-b border-pink-200 dark:border-slate-800 bg-white dark:bg-slate-950">
+                            <tr class="border-b border-pink-200 dark:border-pink-200 bg-white dark:bg-white">
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Name</th>
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Subject</th>
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Body Preview</th>
@@ -157,7 +157,7 @@
                             @forelse($templates as $template)
                             <tr class="hover:bg-white/[0.02] transition-colors group">
                                 <td class="px-8 py-6">
-                                    <p class="text-sm font-bold text-slate-900 dark:text-white leading-none normal-case">{{ $template->name ?? 'N/A' }}</p>
+                                    <p class="text-sm font-bold text-slate-900 dark:text-slate-900 leading-none normal-case">{{ $template->name ?? 'N/A' }}</p>
                                 </td>
                                 <td class="px-8 py-6">
                                     <div class="flex items-center space-x-4">
@@ -165,7 +165,7 @@
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                         </div>
                                         <div>
-                                            <p class="text-sm font-bold text-slate-900 dark:text-white leading-none normal-case">{{ $template->subject }}</p>
+                                            <p class="text-sm font-bold text-slate-900 dark:text-slate-900 leading-none normal-case">{{ $template->subject }}</p>
                                         </div>
                                     </div>
                                 </td>
@@ -206,11 +206,11 @@
     </main>
 
     <!-- Modal -->
-    <div id="templateModal" class="fixed inset-0 z-50 hidden bg-white dark:bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4">
-        <div class="bg-slate-100 dark:bg-slate-900 border border-pink-200 dark:border-slate-800 w-full max-w-7xl rounded-[2.5rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
+    <div id="templateModal" class="fixed inset-0 z-50 hidden bg-white dark:bg-white shadow-2xl backdrop-blur-xl flex items-center justify-center p-4">
+        <div class="bg-slate-100 dark:bg-white border border-pink-200 dark:border-pink-200 w-full max-w-7xl rounded-[2.5rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
             <div class="flex justify-between items-start mb-6">
                 <div>
-                    <h2 id="modalTitle" class="text-2xl font-black text-slate-900 dark:text-white italic tracking-tighter mb-0.5">New Template</h2>
+                    <h2 id="modalTitle" class="text-2xl font-black text-slate-900 dark:text-slate-900 italic tracking-tighter mb-0.5">New Template</h2>
                     <p id="modalSubtitle" class="text-[8px] font-bold text-slate-500 tracking-widest leading-none">Register email communication structure</p>
                 </div>
                 <button onclick="document.getElementById('templateModal').classList.add('hidden')" class="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-xl text-slate-700 dark:text-slate-600 hover:text-slate-900 dark:text-white transition-all">
@@ -247,19 +247,19 @@
                         <div>
                             <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1 uppercase">Template Name</label>
                             <input type="text" name="name" id="form_name" required placeholder="e.g. Welcome Email" 
-                                   class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-white transition-all normal-case">
+                                   class="w-full bg-white dark:bg-white border border-pink-200 dark:border-pink-200 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-slate-900 transition-all normal-case">
                         </div>
 
                         <div>
                             <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1 uppercase">Email Subject</label>
                             <input type="text" name="subject" id="form_subject" required placeholder="e.g. Welcome to our Platform" 
-                                   class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-white transition-all normal-case">
+                                   class="w-full bg-white dark:bg-white border border-pink-200 dark:border-pink-200 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-slate-900 transition-all normal-case">
                         </div>
 
                         <div>
                             <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1 uppercase">Message Body</label>
                             <textarea name="body" id="form_body" required rows="10" placeholder="Write your email content here..." 
-                                      class="w-full bg-white dark:bg-slate-950 border border-pink-200 dark:border-slate-800 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-white transition-all normal-case resize-none"></textarea>
+                                      class="w-full bg-white dark:bg-white border border-pink-200 dark:border-pink-200 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-slate-900 transition-all normal-case resize-none"></textarea>
                         </div>
 
                         <div class="flex items-center space-x-4 pt-4">
