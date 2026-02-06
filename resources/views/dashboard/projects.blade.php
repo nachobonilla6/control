@@ -217,8 +217,8 @@
     </main>
 
     <!-- Dynamic Project Modal (Create/Edit) -->
-    <div id="newProjectModal" class="fixed inset-0 z-50 hidden bg-white dark:bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4">
-        <div class="bg-slate-100 dark:bg-slate-900 border border-pink-200 dark:border-slate-800 w-full max-w-md rounded-[2.5rem] overflow-hidden shadow-[0_0_100px_rgba(0,0,0,0.8)] p-8 animate-in fade-in zoom-in duration-300">
+    <div id="newProjectModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-slate-950 border border-white/10 w-full max-w-md rounded-[2.5rem] overflow-hidden shadow-2xl p-6 md:p-8 animate-in fade-in zoom-in duration-300 max-h-[95vh] overflow-y-auto">
             <div class="flex justify-between items-start mb-6">
                 <div>
                     <h2 id="modalTitle" class="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tight leading-none mb-1 italic">Deploy Asset</h2>
@@ -312,7 +312,7 @@
 
     <!-- Profile Modal (Same as other pages) -->
     <div id="profileModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
-        <div class="bg-slate-950 border border-white/10 w-full max-w-md rounded-3xl overflow-hidden shadow-2xl p-8">
+        <div class="bg-slate-950 border border-white/10 w-full max-w-md rounded-3xl overflow-hidden shadow-2xl p-6 md:p-8 max-h-[95vh] overflow-y-auto">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-xl font-bold text-white uppercase tracking-tight">Identity Config</h2>
                 <button onclick="document.getElementById('profileModal').classList.add('hidden')" class="text-slate-500 hover:text-white transition-colors">

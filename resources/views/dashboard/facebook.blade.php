@@ -270,8 +270,8 @@
     </main>
 
     <!-- Post Modal -->
-    <div id="postModal" class="fixed inset-0 z-50 hidden bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-white/10 w-full max-w-2xl rounded-[3rem] overflow-hidden shadow-2xl p-10 animate-in fade-in zoom-in duration-300">
+    <div id="postModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-slate-950 border border-white/10 w-full max-w-2xl rounded-[2.5rem] overflow-hidden shadow-2xl p-6 md:p-8 animate-in fade-in zoom-in duration-300 max-h-[95vh] overflow-y-auto">
             <div class="flex justify-between items-start mb-8">
                 <div>
                     <h2 class="text-2xl font-black text-white italic tracking-tighter mb-1 uppercase">Initialize Deployment</h2>
@@ -384,8 +384,8 @@
     </div>
 
     <!-- Edit Post Modal -->
-    <div id="editPostModal" class="fixed inset-0 z-50 hidden bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-white/10 w-full max-w-2xl rounded-[3rem] overflow-hidden shadow-2xl p-10 animate-in fade-in zoom-in duration-300">
+    <div id="editPostModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-slate-950 border border-white/10 w-full max-w-2xl rounded-[2.5rem] overflow-hidden shadow-2xl p-6 md:p-8 animate-in fade-in zoom-in duration-300 max-h-[95vh] overflow-y-auto">
             <div class="flex justify-between items-start mb-8">
                 <div>
                     <h2 class="text-2xl font-black text-white italic tracking-tighter mb-1 uppercase">Modify Deployment</h2>
@@ -464,8 +464,8 @@
             </form>
         </div>
     </div>
-    <div id="settingsModal" class="fixed inset-0 z-50 hidden bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4">
-        <div class="bg-slate-950 border border-white/10 w-full max-w-lg rounded-[3rem] overflow-hidden shadow-2xl p-10 animate-in fade-in zoom-in duration-300">
+    <div id="settingsModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-slate-950 border border-white/10 w-full max-w-lg rounded-[2.5rem] overflow-hidden shadow-2xl p-6 md:p-8 animate-in fade-in zoom-in duration-300 max-h-[95vh] overflow-y-auto">
             <div class="flex justify-between items-start mb-8">
                 <div>
                     <h2 class="text-2xl font-black text-white italic tracking-tighter mb-1 uppercase">Configuration</h2>
@@ -496,7 +496,7 @@
 
     <!-- Profile Modal -->
     <div id="profileModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
-        <div class="bg-slate-950 border border-white/10 w-full max-w-md rounded-3xl overflow-hidden shadow-2xl p-8">
+        <div class="bg-slate-950 border border-white/10 w-full max-w-md rounded-3xl overflow-hidden shadow-2xl p-6 md:p-8 max-h-[95vh] overflow-y-auto">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-xl font-bold text-white uppercase tracking-tight">User Profile</h2>
                 <button onclick="document.getElementById('profileModal').classList.add('hidden')" class="text-slate-500 hover:text-white">

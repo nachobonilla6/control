@@ -207,7 +207,7 @@
 
     <!-- Modal -->
     <div id="templateModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
-        <div class="bg-slate-950 border border-white/10 w-full max-w-7xl rounded-[2.5rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
+        <div class="bg-slate-950 border border-white/10 w-full max-w-7xl rounded-[2.5rem] overflow-hidden shadow-2xl p-6 md:p-8 animate-in fade-in zoom-in duration-300 max-h-[95vh] overflow-y-auto">
             <div class="flex justify-between items-start mb-6">
                 <div>
                     <h2 id="modalTitle" class="text-2xl font-black text-white italic tracking-tighter mb-0.5">New Template</h2>
