@@ -132,7 +132,7 @@
 
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
                 <div>
-                    <h1 class="text-4xl font-black text-slate-900 italic tracking-tighter uppercase">Clients Management
+                    <h1 class="text-4xl font-black text-slate-900 italic tracking-tighter uppercase">Clients <span class="text-pink-500">Management</span>
                         @if($filter === 'no_email')
                             <span class="text-gray-400 text-lg ml-4">(Filtering: No Email)</span>
                         @endif
