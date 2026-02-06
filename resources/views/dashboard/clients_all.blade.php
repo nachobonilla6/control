@@ -100,7 +100,7 @@
         <div class="max-w-7xl mx-auto px-6 py-10">
             <div class="flex items-center justify-between mb-8">
                 <div>
-                    <h1 class="text-4xl font-black text-white italic tracking-tighter">All <span class="text-pink-500">Clients</span></h1>
+                    <h1 class="text-4xl font-black text-slate-900 italic tracking-tighter">All <span class="text-pink-500">Clients</span></h1>
                     <p class="text-[10px] font-bold text-slate-500 tracking-[0.3em] mt-2">Complete client database</p>
                 </div>
                 <div class="flex gap-4">

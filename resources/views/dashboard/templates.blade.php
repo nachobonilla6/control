@@ -131,7 +131,7 @@
 
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
                 <div>
-                    <h1 class="text-4xl font-black text-white italic tracking-tighter">Email <span class="text-pink-500">Templates</span></h1>
+                    <h1 class="text-4xl font-black text-slate-900 italic tracking-tighter">Email <span class="text-pink-500">Templates</span></h1>
                     <p class="text-[10px] font-bold text-slate-500 tracking-[0.3em] mt-2 text-center md:text-left">Standardized messaging library</p>
                 </div>
                 
