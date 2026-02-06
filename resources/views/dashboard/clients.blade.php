@@ -169,7 +169,7 @@
                     @endif
                     <button onclick="openCreateModal()" class="px-8 py-4 bg-pink-600 hover:bg-pink-500 text-slate-900 dark:text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-pink-600/20 active:scale-95 flex items-center">
                         <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        New Record
+                        New Client
                     </button>
                 </div>
             </div>
@@ -287,7 +287,7 @@
                             @empty
                             <tr>
                                 <td colspan="5" class="px-8 py-20 text-center">
-                                    <p class="text-xs font-black text-slate-700 tracking-[0.3em] italic">No active client records found</p>
+                                    <p class="text-xs font-black text-slate-700 tracking-[0.3em] italic">No active clients found</p>
                                 </td>
                             </tr>
                             @endforelse
@@ -310,7 +310,7 @@
         <div class="bg-slate-950 border border-white/10 w-full max-w-7xl rounded-[2.5rem] overflow-hidden shadow-2xl p-6 md:p-8 animate-in fade-in zoom-in duration-300 max-h-[95vh] overflow-y-auto">
             <div class="flex justify-between items-start mb-6">
                 <div>
-                    <h2 id="modalTitle" class="text-2xl font-black text-white italic tracking-tighter mb-0.5">New Record</h2>
+                    <h2 id="modalTitle" class="text-2xl font-black text-white italic tracking-tighter mb-0.5 uppercase">New Client</h2>
                     <p id="modalSubtitle" class="text-[8px] font-bold text-slate-500 tracking-widest leading-none">Register business entity • {{ $queuedCount }} QUEUED | {{ $sentCount }} SENT</p>
                 </div>
                 <button onclick="document.getElementById('clientModal').classList.add('hidden')" class="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-xl text-slate-500 hover:text-white transition-all">
@@ -435,7 +435,7 @@
 
                         <div class="flex items-center space-x-4 pt-0">
                             <button type="submit" class="flex-1 bg-pink-600 hover:bg-pink-500 text-white font-black py-4 rounded-2xl shadow-2xl shadow-pink-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em]">
-                                Process Record
+                                Process Client
                             </button>
                         </div>
                     </form>
@@ -487,7 +487,7 @@
                 const form = document.getElementById('clientForm');
                 form.action = "{{ route('dashboard.clients.store') }}";
                 document.getElementById('methodField').innerHTML = '';
-                document.getElementById('modalTitle').innerText = 'New Record';
+                document.getElementById('modalTitle').innerText = 'New Client';
                 document.getElementById('modalSubtitle').innerText = 'Register business entity • {{ $queuedCount }} QUEUED | {{ $sentCount }} SENT';
                 
                 document.getElementById('form_name').value = '';
@@ -676,7 +676,7 @@
                         </div>
                     `).join('');
                 } else {
-                    list.innerHTML = '<div class="text-center py-10 text-slate-700 dark:text-slate-600 text-[10px] uppercase font-bold">Clear Records</div>';
+                    list.innerHTML = '<div class="text-center py-10 text-slate-700 dark:text-slate-600 text-[10px] uppercase font-bold">Clear Clients</div>';
                 }
             } catch (e) {}
         }

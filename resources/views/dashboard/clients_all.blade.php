@@ -114,7 +114,7 @@
                     </a>
                     <button onclick="openCreateModal()" class="px-8 py-4 bg-pink-600 hover:bg-pink-500 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-pink-600/20 active:scale-95 flex items-center">
                         <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        New Record
+                        New Client
                     </button>
                     <button onclick="openExtractModal()" class="px-8 py-4 bg-purple-600 hover:bg-purple-500 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-purple-600/20 active:scale-95 flex items-center">
                         <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -266,7 +266,7 @@
                             @empty
                             <tr>
                                 <td colspan="6" class="px-8 py-20 text-center">
-                                    <p class="text-xs font-black text-slate-700 tracking-[0.3em] italic">No active client records found</p>
+                                    <p class="text-xs font-black text-slate-700 tracking-[0.3em] italic">No active clients found</p>
                                 </td>
                             </tr>
                             @endforelse
@@ -390,7 +390,7 @@
 
                     <div class="flex items-center space-x-4 pt-0">
                         <button type="submit" class="flex-1 bg-pink-600 hover:bg-pink-500 text-white font-black py-4 rounded-2xl shadow-2xl shadow-pink-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em]">
-                            Update Record
+                            Update Client
                         </button>
                         <button type="button" onclick="document.getElementById('clientModal').classList.add('hidden')" class="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all">
                             Cancel
@@ -491,7 +491,7 @@
 
                 <div class="flex items-center space-x-4 pt-4">
                     <button type="submit" onclick="extractClients(event)" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-black py-4 rounded-2xl shadow-2xl shadow-emerald-600/20 transition-all active:scale-95 text-[10px] tracking-[0.3em]">
-                        Extract Records
+                        Extract Clients
                     </button>
                     <button type="button" onclick="document.getElementById('extractModal').classList.add('hidden')" class="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all">
                         Cancel
