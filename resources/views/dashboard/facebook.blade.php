@@ -37,15 +37,15 @@
 <body class="h-full flex flex-col bg-white text-slate-900 overflow-hidden uppercase">
 
     <!-- Navbar -->
-    <nav class="h-20 bg-white backdrop-blur-md border-b border-slate-200 flex items-center justify-between px-6 sticky top-0 z-30">
+    <nav class="h-20 bg-slate-950 backdrop-blur-md border-b border-white/10 flex items-center justify-between px-6 sticky top-0 z-30">
         <div class="flex items-center space-x-4">
             <a href="{{ route('dashboard') }}" class="flex items-center space-x-4 group/brand">
                 <span class="text-xl font-bold text-pink-600 font-inter group-hover/brand:text-pink-500 transition-colors">Mini Walee</span>
-                <span class="text-slate-400 font-light text-xl italic font-inter">/</span>
-                <span class="text-sm font-medium text-slate-900 tracking-wide uppercase font-inter group-hover/brand:text-pink-400 transition-colors">Control Panel</span>
+                <span class="text-slate-600 font-light text-xl italic font-inter">/</span>
+                <span class="text-sm font-medium text-white tracking-wide uppercase font-inter group-hover/brand:text-pink-400 transition-colors">Control Panel</span>
             </a>
-            <span class="text-slate-400 font-light text-xl italic font-inter">/</span>
-            <a href="{{ route('dashboard.facebook') }}" class="text-xs font-black text-pink-500 tracking-[0.2em] hover:text-slate-900 transition-colors uppercase font-inter">Facebook</a>
+            <span class="text-slate-800 font-light text-xl italic font-inter">/</span>
+            <a href="{{ route('dashboard.facebook') }}" class="text-xs font-black text-pink-500 tracking-[0.2em] hover:text-white transition-colors uppercase font-inter">Facebook</a>
         </div>
         <div class="flex items-center space-x-4">
             <a href="{{ route('dashboard.chat') }}" class="flex items-center space-x-2 px-4 py-2 bg-pink-600/10 hover:bg-pink-600/20 border border-pink-500/20 rounded-xl transition-all group">
