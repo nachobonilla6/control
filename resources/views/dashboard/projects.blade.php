@@ -135,14 +135,14 @@
                     $imgs = is_array($project->images) ? $project->images : json_decode($project->images, true);
                     if (!is_array($imgs)) $imgs = [];
                 @endphp
-                <div class="bg-white border border-slate-200 rounded-3xl overflow-hidden group hover:border-pink-500/30 transition-all flex flex-col shadow-xl relative">
+                <div class="bg-slate-950 border border-white/10 rounded-3xl overflow-hidden group hover:border-pink-500/30 transition-all flex flex-col shadow-2xl relative">
                     @if(count($imgs) > 0)
                     <a href="{{ route('projects.show', $project->id) }}" class="block h-56 relative overflow-hidden bg-white dark:bg-slate-950 group/img">
                         <img src="{{ asset($imgs[0]) }}" class="w-full h-full object-cover group-hover/img:scale-110 transition-transform duration-700 opacity-80 group-hover/img:opacity-100">
                         <div class="absolute inset-0 bg-pink-900/40 opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
-                            <span class="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-[0.4em] border border-white/20 px-4 py-2 rounded-lg">View Details</span>
+                            <span class="text-[10px] font-black text-white uppercase tracking-[0.4em] border border-white/20 px-4 py-2 rounded-lg">View Details</span>
                         </div>
-                        <div class="absolute top-4 right-4 bg-white dark:bg-slate-950/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 text-[9px] font-black text-slate-900 dark:text-white uppercase tracking-widest flex items-center shadow-2xl">
+                        <div class="absolute top-4 right-4 bg-slate-950/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 text-[9px] font-black text-white uppercase tracking-widest flex items-center shadow-2xl">
                             <svg class="w-3 h-3 mr-1.5 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"/></svg>
                             {{ count($imgs) }} Visuals
                         </div>

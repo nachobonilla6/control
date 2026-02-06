@@ -110,9 +110,9 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @foreach($categories as $category)
                 @if(isset($category['isExternal']) && $category['isExternal'])
-                <a href="{{ $category['url'] }}" target="_blank" rel="noopener noreferrer" class="group relative bg-white border border-slate-200 rounded-3xl p-8 transition-all duration-300 hover:scale-[1.03] hover:border-pink-500/50 hover:shadow-2xl hover:shadow-pink-500/10 active:scale-100">
+                <a href="{{ $category['url'] }}" target="_blank" rel="noopener noreferrer" class="group relative bg-slate-950 border border-white/10 rounded-3xl p-8 transition-all duration-300 hover:scale-[1.03] hover:border-pink-500/50 hover:shadow-2xl hover:shadow-pink-500/10 active:scale-100">
                 @else
-                <a href="{{ route($category['route']) }}" class="group relative bg-white border border-slate-200 rounded-3xl p-8 transition-all duration-300 hover:scale-[1.03] hover:border-pink-500/50 hover:shadow-2xl hover:shadow-pink-500/10 active:scale-100">
+                <a href="{{ route($category['route']) }}" class="group relative bg-slate-950 border border-white/10 rounded-3xl p-8 transition-all duration-300 hover:scale-[1.03] hover:border-pink-500/50 hover:shadow-2xl hover:shadow-pink-500/10 active:scale-100">
                 @endif
                     <div class="absolute -right-10 -top-10 w-40 h-40 bg-pink-600/10 blur-[60px] group-hover:bg-pink-600/20 transition-all"></div>
                     
@@ -120,8 +120,8 @@
                         {{ $category['icon'] }}
                     </div>
 
-                    <h2 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-pink-500 transition-colors">{{ $category['name'] }}</h2>
-                    <p class="text-slate-500 leading-relaxed mb-6">{{ $category['description'] }}</p>
+                    <h2 class="text-2xl font-bold text-white mb-3 group-hover:text-pink-500 transition-colors">{{ $category['name'] }}</h2>
+                    <p class="text-slate-400 leading-relaxed mb-6">{{ $category['description'] }}</p>
 
                     <div class="flex items-center text-pink-600 font-bold text-xs uppercase tracking-widest">
                         {{ isset($category['isExternal']) && $category['isExternal'] ? 'Open' : 'Configure' }}

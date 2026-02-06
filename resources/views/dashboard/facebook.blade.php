@@ -157,7 +157,7 @@
                     $images = array_filter([$post->image1, $post->image2, $post->image3]);
                     $imgCount = count($images);
                 @endphp
-                <div class="group bg-white border border-slate-200 rounded-[2.5rem] overflow-hidden transition-all duration-500 hover:border-pink-500/30 hover:shadow-2xl flex flex-col h-full">
+                <div class="group bg-slate-950 border border-white/10 rounded-[2.5rem] overflow-hidden transition-all duration-500 hover:border-pink-500/30 hover:shadow-2xl flex flex-col h-full">
                     <!-- Image Grid Area -->
                     <div class="relative bg-slate-950 aspect-video overflow-hidden" id="carousel-{{ $post->id }}" data-current="0">
                         @if($imgCount > 0)
@@ -222,7 +222,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <p class="text-[11px] text-slate-700 dark:text-slate-700 dark:text-slate-300 leading-relaxed line-clamp-4 font-medium lowercase mb-6">
+                            <p class="text-[11px] text-slate-300 leading-relaxed line-clamp-4 font-medium lowercase mb-6">
                                 {{ $post->content }}
                             </p>
                         </div>
