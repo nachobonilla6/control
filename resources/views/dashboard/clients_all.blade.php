@@ -28,11 +28,11 @@
 <body class="h-full flex flex-col bg-white dark:bg-white text-slate-900 dark:text-slate-900 overflow-hidden">
 
     <!-- Navbar -->
-    <nav class="h-20 bg-slate-100 dark:bg-white backdrop-blur-md border-b border-pink-200 dark:border-pink-200 flex items-center justify-between px-6 sticky top-0 z-30">
+    <nav class="h-20 bg-slate-950 backdrop-blur-md border-b border-white/10 flex items-center justify-between px-6 sticky top-0 z-30">
         <a href="{{ route('dashboard') }}" class="flex items-center space-x-4 group/brand">
-            <span class="text-xl font-bold text-pink-400 group-hover/brand:text-slate-900 dark:text-pink-600 transition-colors">Mini Walee</span>
-            <span class="text-slate-700 font-light text-xl italic">/</span>
-            <span class="text-sm font-medium text-slate-700 dark:text-slate-700 tracking-wide uppercase group-hover/brand:text-pink-400 transition-colors">Control Panel</span>
+            <span class="text-xl font-bold text-pink-600 group-hover/brand:text-pink-500 transition-colors">Mini Walee</span>
+            <span class="text-slate-600 font-light text-xl italic">/</span>
+            <span class="text-sm font-medium text-white tracking-wide uppercase group-hover/brand:text-pink-400 transition-colors">Control Panel</span>
         </a>
         <div class="flex items-center space-x-4">
             <a href="{{ route('dashboard.chat') }}" class="flex items-center space-x-2 px-4 py-2 bg-pink-600/10 hover:bg-pink-600/20 border border-pink-500/20 rounded-xl transition-all group">
@@ -77,9 +77,9 @@
 
             <!-- Notifications Dropdown -->
             <div class="relative">
-                <button id="notifBtn" class="relative p-2.5 text-slate-700 dark:text-slate-600 dark:text-slate-400 hover:text-pink-400 transition-colors focus:outline-none bg-slate-800/50 rounded-full border border-pink-200 dark:border-slate-800">
+                <button id="notifBtn" class="relative p-2.5 text-white hover:text-pink-400 transition-colors focus:outline-none bg-white/10 rounded-full border border-white/10">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span id="notifBadge" class="absolute top-0 right-0 bg-pink-600 text-[10px] font-bold text-slate-900 dark:text-white rounded-full w-4 h-4 flex items-center justify-center border-2 border-slate-950 hidden">0</span>
+                    <span id="notifBadge" class="absolute top-0 right-0 bg-pink-600 text-[10px] font-bold text-white rounded-full w-4 h-4 flex items-center justify-center border-2 border-slate-950 hidden">0</span>
                 </button>
 
                 <!-- Notifications Dropdown Content -->

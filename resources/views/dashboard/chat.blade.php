@@ -80,10 +80,10 @@
     <!-- Main Content -->
     <main class="flex-1 flex flex-col relative h-full">
         <!-- Navbar -->
-        <nav class="h-16 bg-white dark:bg-white/80 backdrop-blur-md border-b border-pink-200 dark:border-pink-200/50 flex items-center justify-between px-6 sticky top-0 z-30">
+        <nav class="h-16 bg-slate-950 backdrop-blur-md border-b border-white/10 flex items-center justify-between px-6 sticky top-0 z-30">
             <div class="flex items-center space-x-3">
                 <div class="md:hidden">
-                     <a href="{{ route('dashboard') }}" class="text-slate-700 dark:text-slate-600 dark:text-slate-400"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                     <a href="{{ route('dashboard') }}" class="text-white"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
                 </div>
                 <span class="text-xs font-bold uppercase tracking-widest text-pink-400">{{ str_replace('-', ' ', $bot_id) }}</span>
             </div>
@@ -93,9 +93,9 @@
                     <span class="text-[10px] font-black text-pink-400 uppercase tracking-widest">Copilot</span>
                 </a>
 
-                <button id="notifBtn" class="relative p-2 text-slate-700 dark:text-slate-600 dark:text-slate-400 hover:text-pink-400 transition-colors focus:outline-none">
+                <button id="notifBtn" class="relative p-2 text-white hover:text-pink-400 transition-colors focus:outline-none bg-white/5 rounded-lg border border-white/5">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span id="notifBadge" class="absolute top-1 right-1 bg-pink-600 text-[10px] font-bold text-slate-900 dark:text-white rounded-full w-4 h-4 flex items-center justify-center border-2 border-slate-950 hidden">0</span>
+                    <span id="notifBadge" class="absolute top-1 right-1 bg-pink-600 text-[10px] font-bold text-white rounded-full w-4 h-4 flex items-center justify-center border-2 border-slate-950 hidden">0</span>
                 </button>
                 <span class="w-px h-6 bg-slate-800"></span>
                 <div class="relative">
