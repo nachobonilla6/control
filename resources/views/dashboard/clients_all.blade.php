@@ -100,27 +100,27 @@
         <div class="max-w-7xl mx-auto px-6 py-10">
             <div class="flex items-center justify-between mb-8">
                 <div>
-                    <h1 class="text-4xl font-black text-slate-900 dark:text-slate-900 italic tracking-tighter">All <span class="text-pink-500">Clients</span></h1>
+                    <h1 class="text-4xl font-black text-white italic tracking-tighter">All <span class="text-pink-500">Clients</span></h1>
                     <p class="text-[10px] font-bold text-slate-500 tracking-[0.3em] mt-2">Complete client database</p>
                 </div>
                 <div class="flex gap-4">
-                    <a href="{{ route('dashboard.clients') }}" class="px-8 py-4 bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all border border-blue-500/20 active:scale-95 flex items-center shadow-2xl shadow-blue-600/20">
+                    <a href="{{ route('dashboard.clients') }}" class="px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all border border-blue-500/20 active:scale-95 flex items-center shadow-2xl shadow-blue-600/20">
                         <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 5h14v2H5V5zm0 6h14v2H5v-2zm0 6h14v2H5v-2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="currentColor"/></svg>
                         Queue
                     </a>
-                    <a href="{{ route('dashboard.templates') }}" class="px-8 py-4 bg-pink-600 hover:bg-pink-500 text-slate-900 dark:text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-pink-600/20 active:scale-95 flex items-center">
+                    <a href="{{ route('dashboard.templates') }}" class="px-8 py-4 bg-pink-600 hover:bg-pink-500 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-pink-600/20 active:scale-95 flex items-center">
                         <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         Templates
                     </a>
-                    <button onclick="openCreateModal()" class="px-8 py-4 bg-pink-600 hover:bg-pink-500 text-slate-900 dark:text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-pink-600/20 active:scale-95 flex items-center">
+                    <button onclick="openCreateModal()" class="px-8 py-4 bg-pink-600 hover:bg-pink-500 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-pink-600/20 active:scale-95 flex items-center">
                         <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         New Record
                     </button>
-                    <button onclick="openExtractModal()" class="px-8 py-4 bg-purple-600 hover:bg-purple-500 text-slate-900 dark:text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-purple-600/20 active:scale-95 flex items-center">
+                    <button onclick="openExtractModal()" class="px-8 py-4 bg-purple-600 hover:bg-purple-500 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-purple-600/20 active:scale-95 flex items-center">
                         <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         Extract
                     </button>
-                    <button onclick="openUploadCSVModal()" class="px-8 py-4 bg-emerald-600 hover:bg-emerald-500 text-slate-900 dark:text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-emerald-600/20 active:scale-95 flex items-center">
+                    <button onclick="openUploadCSVModal()" class="px-8 py-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-emerald-600/20 active:scale-95 flex items-center">
                         <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 16v-4m0 0V8m0 4H8m4 0h4M4 20h16a2 2 0 002-2V6a2 2 0 00-2-2H4a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         Upload CSV
                     </button>
@@ -132,14 +132,14 @@
                 <form method="GET" action="{{ route('dashboard.clients.all') }}" class="flex gap-2">
                     <div class="flex-1 relative">
                         <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Search by name, email, website, phone, or industry..." 
-                               class="w-full bg-slate-100 dark:bg-white border border-pink-200 dark:border-pink-200 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-slate-900 dark:text-slate-900 transition-all placeholder:text-slate-400">
-                        <svg class="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-700 dark:text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                               class="w-full bg-slate-950 border border-white/10 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all placeholder:text-slate-500">
+                        <svg class="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </div>
                     <button type="submit" class="px-8 py-4 bg-pink-600 hover:bg-pink-500 text-slate-900 dark:text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all shadow-2xl shadow-pink-600/20 active:scale-95">
                         Search
                     </button>
                     @if($search)
-                    <a href="{{ route('dashboard.clients.all') }}" class="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-slate-900 dark:text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all border border-slate-700 active:scale-95">
+                    <a href="{{ route('dashboard.clients.all') }}" class="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white rounded-2xl text-[10px] font-black tracking-[0.2em] transition-all border border-slate-700 active:scale-95">
                         Clear
                     </a>
                     @endif
@@ -147,11 +147,11 @@
             </div>
 
             <!-- Clients Table -->
-            <div class="bg-slate-100 dark:bg-white border border-pink-200 dark:border-pink-200 rounded-[2.5rem] overflow-hidden shadow-2xl">
+            <div class="bg-slate-950 border border-white/10 rounded-[2.5rem] overflow-hidden shadow-2xl">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="border-b border-pink-200 dark:border-pink-200 bg-white dark:bg-white">
+                            <tr class="border-b border-white/10 bg-slate-900">
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Name / Company</th>
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Website</th>
                                 <th class="px-8 py-6 text-[9px] font-black text-slate-500 tracking-[0.2em]">Location</th>
@@ -185,7 +185,7 @@
                                             {{ substr($client->name, 0, 1) }}
                                         </div>
                                         <div>
-                                            <p class="text-sm font-bold text-slate-900 dark:text-slate-900 leading-none mb-1">{{ $client->name }}</p>
+                                            <p class="text-sm font-bold text-white leading-none mb-1">{{ $client->name }}</p>
                                             <p class="text-[9px] font-medium text-slate-500 lowercase">{{ $client->email }}</p>
                                         </div>
                                     </div>
@@ -194,17 +194,17 @@
                                     @if($client->website)
                                         <a href="{{ $client->website }}" target="_blank" class="text-xs font-bold text-pink-400 hover:text-indigo-300 break-all" title="{{ $client->website }}">{{ Str::limit($client->website, 45, '...') }}</a>
                                     @else
-                                        <p class="text-xs font-bold text-slate-700 dark:text-slate-600">---</p>
+                                        <p class="text-xs font-bold text-slate-600">---</p>
                                     @endif
                                 </td>
                                 <td class="px-8 py-6">
-                                    <p class="text-xs font-bold text-slate-700 dark:text-slate-600 dark:text-slate-400">{{ $client->location ?: '---' }}</p>
+                                    <p class="text-xs font-bold text-white">{{ $client->location ?: '---' }}</p>
                                 </td>
                                 <td class="px-8 py-6">
                                     @if($client->industry)
                                     <span class="inline-flex items-center px-3 py-1.5 bg-indigo-950/30 border border-pink-500/50 rounded-lg text-[9px] font-black text-pink-400 tracking-wider uppercase">{{ $client->industry }}</span>
                                     @else
-                                    <span class="text-slate-700 dark:text-slate-600 italic text-[10px]">No tag</span>
+                                    <span class="text-slate-600 italic text-[10px]">No tag</span>
                                     @endif
                                 </td>
                                 <td class="px-8 py-6">
@@ -234,8 +234,8 @@
                                             Cancelled
                                         </span>
                                     @else
-                                        <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-800/50 border border-slate-600/50 rounded-lg text-[9px] font-black text-slate-700 dark:text-slate-600 dark:text-slate-400 tracking-wider uppercase">
-                                            <span class="w-2 h-2 bg-slate-500 rounded-full"></span>
+                                        <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-800/50 border border-slate-700 rounded-lg text-[9px] font-black text-slate-400 tracking-wider uppercase">
+                                            <span class="w-2 h-2 bg-slate-600 rounded-full"></span>
                                             {{ $client->status ?: 'No Status' }}
                                         </span>
                                     @endif
@@ -244,19 +244,19 @@
                                     <div class="flex items-center justify-end space-x-2">
                                         <button type="button"
                                             onclick="openEmailModal({{ $client->id }}, '{{ addslashes($client->name) }}', '{{ $client->email }}', '{{ $client->email2 }}')"
-                                            class="w-9 h-9 flex items-center justify-center bg-emerald-600/10 text-emerald-400 rounded-xl hover:bg-emerald-600 hover:text-slate-900 dark:text-white transition-all border border-emerald-500/10"
+                                            class="w-9 h-9 flex items-center justify-center bg-emerald-600/10 text-emerald-400 rounded-xl hover:bg-emerald-600 hover:text-white transition-all border border-emerald-500/10"
                                             title="Send Email">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                         </button>
                                         <button 
                                             onclick="openEditModal({{ json_encode($client) }})"
-                                            class="w-9 h-9 flex items-center justify-center bg-pink-600/10 text-pink-400 rounded-xl hover:bg-pink-600 hover:text-slate-900 dark:text-white transition-all border border-pink-500/10">
+                                            class="w-9 h-9 flex items-center justify-center bg-pink-600/10 text-pink-400 rounded-xl hover:bg-pink-600 hover:text-white transition-all border border-pink-500/10">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                         </button>
                                         <form action="{{ route('dashboard.clients.destroy', $client->id) }}" method="POST" onsubmit="return confirm('Delete client from system?')">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="w-9 h-9 flex items-center justify-center bg-red-500/10 text-red-500 rounded-xl hover:bg-red-500 hover:text-slate-900 dark:text-white transition-all border border-red-500/10">
+                                            <button type="submit" class="w-9 h-9 flex items-center justify-center bg-red-500/10 text-red-500 rounded-xl hover:bg-red-500 hover:text-white transition-all border border-red-500/10">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                             </button>
                                         </form>
@@ -273,7 +273,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="px-8 py-6 border-t border-pink-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900/50">
+                <div class="px-8 py-6 border-t border-white/10 bg-slate-900">
                     {{ $clients->links() }}
                 </div>
                 <!-- Extract button moved to top next to Back -->
@@ -282,14 +282,14 @@
     </div>
 
     <!-- Client Edit Modal -->
-    <div id="clientModal" class="fixed inset-0 z-50 hidden bg-white dark:bg-white flex items-center justify-center p-4">
-        <div class="bg-slate-100 dark:bg-white border border-pink-200 dark:border-pink-200 w-full max-w-4xl rounded-[2.5rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
+    <div id="clientModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-slate-950 border border-white/10 w-full max-w-4xl rounded-[2.5rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
             <div class="flex justify-between items-start mb-6">
                 <div>
-                    <h2 id="modalTitle" class="text-2xl font-black text-slate-900 dark:text-slate-900 italic tracking-tighter mb-0.5">Edit Client</h2>
+                    <h2 id="modalTitle" class="text-2xl font-black text-white italic tracking-tighter mb-0.5">Edit Client</h2>
                     <p id="modalSubtitle" class="text-[8px] font-bold text-slate-500 tracking-widest leading-none">Update client information</p>
                 </div>
-                <button onclick="document.getElementById('clientModal').classList.add('hidden')" class="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-xl text-slate-700 dark:text-slate-600 hover:text-slate-900 dark:text-white transition-all">
+                <button onclick="document.getElementById('clientModal').classList.add('hidden')" class="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-xl text-slate-500 hover:text-white transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </button>
             </div>
