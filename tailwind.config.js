@@ -3,7 +3,6 @@
  * Enables class-based dark mode and extends the theme with indigo palette.
  */
 module.exports = {
-  darkMode: 'class', // use 'class' strategy for dark mode
   content: [
     './resources/**/*.blade.php',
     './resources/**/*.js',

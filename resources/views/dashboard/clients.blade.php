@@ -1,28 +1,14 @@
 <!DOCTYPE html>
 <html lang="es" class="h-full">
 <head>
-    <script>
-        (function(){
-            try{
-                var key = 'theme';
-                var theme = null;
-                try{ theme = localStorage.getItem(key); } catch(e){ theme = null; }
-                if(!theme){
-                    theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
-                    try{ localStorage.setItem(key, theme); } catch(e){}
-                }
-                if(theme === 'dark') document.documentElement.classList.add('dark');
-                else document.documentElement.classList.remove('dark');
-            }catch(e){ /* noop */ }
-        })();
-    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clients - Control Panel</title>
     <script src="https://cdn.tailwindcss.com"></script>
         <script>
             tailwind.config = {
-                darkMode: 'class',
+
                 theme: {
                     extend: {
             colors: {
@@ -62,7 +48,7 @@
             </a>
             <!-- Account Dropdown -->
             <div class="relative flex items-center space-x-3">
-                @include('dashboard.components.theme-toggle')
+
                 <div>
                     <button id="accountBtn" class="flex items-center justify-center w-10 h-10 bg-slate-800/50 border border-pink-200 dark:border-slate-800 rounded-full hover:border-pink-500/30 transition-all focus:outline-none overflow-hidden group">
                     @if(Auth::user()->profile_photo_url)
