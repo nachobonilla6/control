@@ -381,8 +381,56 @@
                             </div>
                             <div>
                                 <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Industry / Sector</label>
-                                <input type="text" name="industry" id="form_industry" placeholder="e.g. Automotive" 
-                                       class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white transition-all normal-case">
+                                <div class="relative">
+                                    <select name="industry" id="form_industry" class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/30 text-xs font-bold text-white appearance-none transition-all cursor-pointer">
+                                        <option value="">-- Select Industry --</option>
+                                        <option value="Agriculture / Farm Products">Agriculture / Farm Products</option>
+                                        <option value="Organic Agriculture">Organic Agriculture</option>
+                                        <option value="Association / Cooperative – Food & Consumer Products">Association / Cooperative – Food & Consumer Products</option>
+                                        <option value="B2B Wholesaler – Container Sales">B2B Wholesaler – Container Sales</option>
+                                        <option value="Organic Chain">Organic Chain</option>
+                                        <option value="Cooperative Organic">Cooperative Organic</option>
+                                        <option value="Organic Cosmetics">Organic Cosmetics</option>
+                                        <option value="Chain">Chain</option>
+                                        <option value="Supermarket Chain">Supermarket Chain</option>
+                                        <option value="Specialized Chain">Specialized Chain</option>
+                                        <option value="Cooperative">Cooperative</option>
+                                        <option value="Cosmetics">Cosmetics</option>
+                                        <option value="Discount">Discount</option>
+                                        <option value="Discount / Independent Supermarkets">Discount / Independent Supermarkets</option>
+                                        <option value="B2B Distributor">B2B Distributor</option>
+                                        <option value="Insect Farming – Insect Proteins">Insect Farming – Insect Proteins</option>
+                                        <option value="Fine & Local Grocery">Fine & Local Grocery</option>
+                                        <option value="Local Grocery Store">Local Grocery Store</option>
+                                        <option value="Farm + Shop">Farm + Shop</option>
+                                        <option value="Certified Farm">Certified Farm</option>
+                                        <option value="Artisan Cheese Producer">Artisan Cheese Producer</option>
+                                        <option value="Wholesaler">Wholesaler</option>
+                                        <option value="Organic Wholesaler">Organic Wholesaler</option>
+                                        <option value="B2B Natural Products Wholesaler">B2B Natural Products Wholesaler</option>
+                                        <option value="Hypermarket">Hypermarket</option>
+                                        <option value="Organic Importer">Organic Importer</option>
+                                        <option value="Organic Store">Organic Store</option>
+                                        <option value="Agricultural Market">Agricultural Market</option>
+                                        <option value="Honey & Beekeeping Products">Honey & Beekeeping Products</option>
+                                        <option value="Artisan Bakery / Pastry Shop">Artisan Bakery / Pastry Shop</option>
+                                        <option value="Farm Products">Farm Products</option>
+                                        <option value="Local Agri-Food Promotion">Local Agri-Food Promotion</option>
+                                        <option value="Online & Physical Clothing Store">Online & Physical Clothing Store</option>
+                                        <option value="Supermarket">Supermarket</option>
+                                        <option value="Independent Supermarket">Independent Supermarket</option>
+                                        <option value="Organic Supermarket">Organic Supermarket</option>
+                                        <option value="Neighborhood Supermarket">Neighborhood Supermarket</option>
+                                        <option value="Family-Owned Supermarket">Family-Owned Supermarket</option>
+                                        <option value="Premium Supermarket">Premium Supermarket</option>
+                                        <option value="Regional Supermarket">Regional Supermarket</option>
+                                        <option value="Specialized Supermarket">Specialized Supermarket</option>
+                                        <option value="Food Processing & Food Packaging">Food Processing & Food Packaging</option>
+                                    </select>
+                                    <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    </div>
+                                </div>
                             </div>
                             <div>
                                 <label class="block text-[9px] font-black text-pink-400 tracking-widest mb-2 px-1">Language</label>
