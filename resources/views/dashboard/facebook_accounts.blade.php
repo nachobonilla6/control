@@ -80,6 +80,13 @@
                 </div>
             </div>
 
+            <!-- World Clock Button -->
+            <div class="relative">
+                <button onclick="document.getElementById('clockModal').classList.remove('hidden')" class="p-2.5 text-white hover:text-pink-400 transition-colors focus:outline-none bg-white/10 rounded-full border border-white/10 group">
+                    <svg class="w-5 h-5 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </div>
+
             <!-- Notifications Dropdown -->
             <div class="relative">
                 <button id="notifBtn" class="relative p-2.5 text-slate-400 hover:text-pink-400 transition-colors focus:outline-none bg-white/5 rounded-full border border-white/10">
@@ -368,6 +375,27 @@
             }
         });
 
+        // World Clock Implementation
+        function updateWorldClocks() {
+            const timezones = [
+                { id: 'ny', zone: 'America/New_York' },
+                { id: 'ld', zone: 'Europe/London' },
+                { id: 'md', zone: 'Europe/Madrid' },
+                { id: 'db', zone: 'Asia/Dubai' },
+                { id: 'tk', zone: 'Asia/Tokyo' },
+                { id: 'sd', zone: 'Australia/Sydney' }
+            ];
+            const now = new Date();
+            timezones.forEach(tz => {
+                const timeEl = document.getElementById(`clock_${tz.id}`);
+                const dateEl = document.getElementById(`date_${tz.id}`);
+                if (timeEl) timeEl.innerText = now.toLocaleTimeString('en-US', { timeZone: tz.zone, hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                if (dateEl) dateEl.innerText = now.toLocaleDateString('en-US', { timeZone: tz.zone, day: '2-digit', month: 'short' });
+            });
+        }
+        setInterval(updateWorldClocks, 1000);
+        updateWorldClocks();
+
         fetchNotifs();
 
         function openEditModal(account) {
@@ -381,5 +409,52 @@
             document.getElementById('editAccountModal').classList.remove('hidden');
         }
     </script>
+    <!-- World Clock Modal -->
+    <div id="clockModal" class="fixed inset-0 z-[100] hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-slate-950 border border-white/10 w-full max-w-5xl rounded-[2rem] overflow-hidden shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
+            <div class="flex justify-between items-center mb-8">
+                <div>
+                    <h2 class="text-2xl font-black text-white italic tracking-tighter uppercase mb-1">World Clock Protocol</h2>
+                    <p class="text-[10px] font-bold text-slate-500 tracking-widest uppercase">Global Operations Synchronizer</p>
+                </div>
+                <button onclick="document.getElementById('clockModal').classList.add('hidden')" class="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-xl text-slate-500 hover:text-white transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <div class="bg-slate-900/50 border border-white/5 rounded-2xl p-4 text-center group hover:border-pink-500/30 transition-all">
+                    <p class="text-[9px] font-black text-pink-500 uppercase tracking-widest mb-2">New York (EST)</p>
+                    <div id="clock_ny" class="text-2xl font-black text-white font-mono tabular-nums leading-none mb-1">--:--:--</div>
+                    <p id="date_ny" class="text-[8px] font-bold text-slate-600 uppercase">-- ---</p>
+                </div>
+                <div class="bg-slate-900/50 border border-white/5 rounded-2xl p-4 text-center group hover:border-emerald-500/30 transition-all">
+                    <p class="text-[9px] font-black text-emerald-500 uppercase tracking-widest mb-2">London (GMT)</p>
+                    <div id="clock_ld" class="text-2xl font-black text-white font-mono tabular-nums leading-none mb-1">--:--:--</div>
+                    <p id="date_ld" class="text-[8px] font-bold text-slate-600 uppercase">-- ---</p>
+                </div>
+                <div class="bg-slate-900/50 border border-white/5 rounded-2xl p-4 text-center border-emerald-500/20 shadow-lg shadow-emerald-500/5 group hover:border-emerald-400 transition-all">
+                    <p class="text-[9px] font-black text-emerald-400 uppercase tracking-widest mb-2">Madrid (CET)</p>
+                    <div id="clock_md" class="text-2xl font-black text-white font-mono tabular-nums leading-none mb-1">--:--:--</div>
+                    <p id="date_md" class="text-[8px] font-bold text-slate-600 uppercase">-- ---</p>
+                </div>
+                <div class="bg-slate-900/50 border border-white/5 rounded-2xl p-4 text-center group hover:border-orange-500/30 transition-all">
+                    <p class="text-[9px] font-black text-orange-500 uppercase tracking-widest mb-2">Dubai (GST)</p>
+                    <div id="clock_db" class="text-2xl font-black text-white font-mono tabular-nums leading-none mb-1">--:--:--</div>
+                    <p id="date_db" class="text-[8px] font-bold text-slate-600 uppercase">-- ---</p>
+                </div>
+                <div class="bg-slate-900/50 border border-white/5 rounded-2xl p-4 text-center group hover:border-indigo-500/30 transition-all">
+                    <p class="text-[9px] font-black text-indigo-500 uppercase tracking-widest mb-2">Tokyo (JST)</p>
+                    <div id="clock_tk" class="text-2xl font-black text-white font-mono tabular-nums leading-none mb-1">--:--:--</div>
+                    <p id="date_tk" class="text-[8px] font-bold text-slate-600 uppercase">-- ---</p>
+                </div>
+                <div class="bg-slate-900/50 border border-white/5 rounded-2xl p-4 text-center group hover:border-purple-500/30 transition-all">
+                    <p class="text-[9px] font-black text-purple-500 uppercase tracking-widest mb-2">Sydney (AEDT)</p>
+                    <div id="clock_sd" class="text-2xl font-black text-white font-mono tabular-nums leading-none mb-1">--:--:--</div>
+                    <p id="date_sd" class="text-[8px] font-bold text-slate-600 uppercase">-- ---</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
