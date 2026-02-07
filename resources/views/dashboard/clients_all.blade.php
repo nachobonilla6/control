@@ -472,9 +472,38 @@
                             <select id="extract_language" required class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 text-xs font-bold text-white appearance-none transition-all cursor-pointer">
                                 <option value="">Select Language</option>
                                 <option value="english">English</option>
+                                <option value="mandarin">Mandarin Chinese</option>
                                 <option value="spanish">Spanish</option>
+                                <option value="hindi">Hindi</option>
+                                <option value="arabic">Arabic</option>
                                 <option value="french">French</option>
+                                <option value="bengali">Bengali</option>
                                 <option value="portuguese">Portuguese</option>
+                                <option value="russian">Russian</option>
+                                <option value="japanese">Japanese</option>
+                                <option disabled class="text-pink-400 font-black uppercase text-[10px] bg-slate-800">—— European Languages ——</option>
+                                <option value="german">German</option>
+                                <option value="italian">Italian</option>
+                                <option value="dutch">Dutch</option>
+                                <option value="norwegian">Norwegian</option>
+                                <option value="danish">Danish</option>
+                                <option value="polish">Polish</option>
+                                <option value="greek">Greek</option>
+                                <option value="czech">Czech</option>
+                                <option disabled class="text-pink-400 font-black uppercase text-[10px] bg-slate-800">—— African Languages ——</option>
+                                <option value="swahili">Swahili</option>
+                                <option value="amharic">Amharic</option>
+                                <option value="yoruba">Yoruba</option>
+                                <option value="zulu">Zulu</option>
+                                <option value="hausa">Hausa</option>
+                                <option value="oromo">Oromo</option>
+                                <option disabled class="text-pink-400 font-black uppercase text-[10px] bg-slate-800">—— Asian Languages ——</option>
+                                <option value="korean">Korean</option>
+                                <option value="turkish">Turkish</option>
+                                <option value="vietnamese">Vietnamese</option>
+                                <option value="thai">Thai</option>
+                                <option value="malay">Malay / Indonesian</option>
+                                <option value="punjabi">Punjabi</option>
                             </select>
                             <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -726,34 +755,69 @@
 
         // Country data by language
         const countryData = {
-            english: {
-                usa: ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia', 'San Antonio', 'San Diego'],
-                uk: ['London', 'Manchester', 'Birmingham', 'Leeds', 'Glasgow', 'Liverpool', 'Newcastle', 'Sheffield'],
-                canada: ['Toronto', 'Vancouver', 'Montreal', 'Calgary', 'Ottawa', 'Edmonton', 'Winnipeg', 'Quebec City'],
-                australia: ['Sydney', 'Melbourne', 'Brisbane', 'Perth', 'Adelaide', 'Gold Coast', 'Canberra', 'Newcastle']
-            },
-            spanish: {
-                spain: ['Madrid', 'Barcelona', 'Valencia', 'Seville', 'Bilbao', 'Malaga', 'Cordoba', 'Alicante'],
-                mexico: ['Mexico City', 'Guadalajara', 'Monterrey', 'Puebla', 'Cancun', 'Playa del Carmen', 'Los Cabos', 'Acapulco'],
-                argentina: ['Buenos Aires', 'Cordoba', 'Rosario', 'Mendoza', 'San Juan', 'La Plata', 'Mar del Plata', 'Quilmes'],
-                colombia: ['Bogota', 'Medellín', 'Cali', 'Barranquilla', 'Cartagena', 'Bucaramanga', 'Santa Marta', 'Pereira']
-            },
-            french: {
-                france: ['Paris', 'Lyon', 'Marseille', 'Toulouse', 'Nice', 'Nantes', 'Strasbourg', 'Bordeaux'],
-                canada: ['Montreal', 'Quebec City', 'Ottawa', 'Gatineau', 'Sherbrooke', 'Trois-Rivières', 'Laval', 'Longueuil']
-            },
-            portuguese: {
-                brazil: ['São Paulo', 'Rio de Janeiro', 'Brasília', 'Salvador', 'Fortaleza', 'Belo Horizonte', 'Manaus', 'Recife'],
-                portugal: ['Lisbon', 'Porto', 'Braga', 'Covilhã', 'Aveiro', 'Funchal', 'Covilhan', 'Guarda']
-            }
+            english: { usa: ['New York', 'Los Angeles', 'Chicago'], uk: ['London', 'Manchester'], canada: ['Toronto', 'Vancouver'], australia: ['Sydney', 'Melbourne'] },
+            mandarin: { china: ['Beijing', 'Shanghai', 'Guangzhou'], taiwan: ['Taipei'], singapore: ['Singapore'] },
+            spanish: { spain: ['Madrid', 'Barcelona'], mexico: ['Mexico City', 'Guadalajara'], argentina: ['Buenos Aires'], colombia: ['Bogota'] },
+            hindi: { india: ['Mumbai', 'Delhi', 'Bangalore'] },
+            arabic: { saudi_arabia: ['Riyadh', 'Jeddah'], uae: ['Dubai', 'Abu Dhabi'], egypt: ['Cairo'] },
+            french: { france: ['Paris', 'Lyon'], canada: ['Montreal', 'Quebec City'], belgium: ['Brussels'], switzerland: ['Geneva'] },
+            bengali: { bangladesh: ['Dhaka', 'Chittagong'], india: ['Kolkata'] },
+            portuguese: { brazil: ['São Paulo', 'Rio de Janeiro'], portugal: ['Lisbon', 'Porto'], angola: ['Luanda'] },
+            russian: { russia: ['Moscow', 'Saint Petersburg'], kazakhstan: ['Almaty'] },
+            japanese: { japan: ['Tokyo', 'Osaka', 'Kyoto'] },
+            german: { germany: ['Berlin', 'Munich'], austria: ['Vienna'], switzerland: ['Zurich'] },
+            italian: { italy: ['Rome', 'Milan', 'Florence'] },
+            dutch: { netherlands: ['Amsterdam', 'Rotterdam'], belgium: ['Antwerp'] },
+            norwegian: { norway: ['Oslo', 'Bergen'] },
+            danish: { denmark: ['Copenhagen', 'Aarhus'] },
+            polish: { poland: ['Warsaw', 'Krakow'] },
+            greek: { greece: ['Athens', 'Thessaloniki'] },
+            czech: { czech_republic: ['Prague', 'Brno'] },
+            swahili: { kenya: ['Nairobi', 'Mombasa'], tanzania: ['Dar es Salaam'], uganda: ['Kampala'] },
+            amharic: { ethiopia: ['Addis Ababa'] },
+            yoruba: { nigeria: ['Lagos', 'Ibadan'], benin: ['Porto-Novo'] },
+            zulu: { south_africa: ['Johannesburg', 'Durban'] },
+            hausa: { nigeria: ['Kano'], niger: ['Niamey'] },
+            oromo: { ethiopia: ['Addis Ababa'], kenya: ['Nairobi'] },
+            korean: { south_korea: ['Seoul', 'Busan'] },
+            turkish: { turkey: ['Istanbul', 'Ankara'] },
+            vietnamese: { vietnam: ['Ho Chi Minh City', 'Hanoi'] },
+            thai: { thailand: ['Bangkok', 'Chiang Mai'] },
+            malay: { malaysia: ['Kuala Lumpur'], indonesia: ['Jakarta'] },
+            punjabi: { pakistan: ['Lahore'], india: ['Amritsar', 'Ludhiana'] }
         };
 
-        // Map country keys to readable names
         const countryNames = {
-            english: { usa: 'USA', uk: 'United Kingdom', canada: 'Canada', australia: 'Australia' },
+            english: { usa: 'USA', uk: 'UK', canada: 'Canada', australia: 'Australia' },
+            mandarin: { china: 'China', taiwan: 'Taiwan', singapore: 'Singapore' },
             spanish: { spain: 'Spain', mexico: 'Mexico', argentina: 'Argentina', colombia: 'Colombia' },
-            french: { france: 'France', canada: 'Canada (FR)' },
-            portuguese: { brazil: 'Brazil', portugal: 'Portugal' }
+            hindi: { india: 'India' },
+            arabic: { saudi_arabia: 'Saudi Arabia', uae: 'UAE', egypt: 'Egypt' },
+            french: { france: 'France', canada: 'Canada (FR)', belgium: 'Belgium', switzerland: 'Switzerland' },
+            bengali: { bangladesh: 'Bangladesh', india: 'India (WB)' },
+            portuguese: { brazil: 'Brazil', portugal: 'Portugal', angola: 'Angola' },
+            russian: { russia: 'Russia', kazakhstan: 'Kazakhstan' },
+            japanese: { japan: 'Japan' },
+            german: { germany: 'Germany', austria: 'Austria', switzerland: 'Switzerland' },
+            italian: { italy: 'Italy' },
+            dutch: { netherlands: 'Netherlands', belgium: 'Belgium (NL)' },
+            norwegian: { norway: 'Norway' },
+            danish: { denmark: 'Denmark' },
+            polish: { poland: 'Poland' },
+            greek: { greece: 'Greece' },
+            czech: { czech_republic: 'Czech Republic' },
+            swahili: { kenya: 'Kenya', tanzania: 'Tanzania', uganda: 'Uganda' },
+            amharic: { ethiopia: 'Ethiopia' },
+            yoruba: { nigeria: 'Nigeria (YO)', benin: 'Benin' },
+            zulu: { south_africa: 'South Africa (ZU)' },
+            hausa: { nigeria: 'Nigeria (HA)', niger: 'Niger' },
+            oromo: { ethiopia: 'Ethiopia (OR)', kenya: 'Kenya (OR)' },
+            korean: { south_korea: 'South Korea' },
+            turkish: { turkey: 'Turkey' },
+            vietnamese: { vietnam: 'Vietnam' },
+            thai: { thailand: 'Thailand' },
+            malay: { malaysia: 'Malaysia', indonesia: 'Indonesia' },
+            punjabi: { pakistan: 'Pakistan (PU)', india: 'India (PU)' }
         };
 
         function openExtractModal() {
@@ -812,9 +876,35 @@
             // Language code mapping
             const languageCode = {
                 'english': 'eng',
+                'mandarin': 'cmn',
                 'spanish': 'spa',
+                'hindi': 'hin',
+                'arabic': 'ara',
                 'french': 'fra',
-                'portuguese': 'por'
+                'bengali': 'ben',
+                'portuguese': 'por',
+                'russian': Russian = 'rus',
+                'japanese': 'jpn',
+                'german': 'deu',
+                'italian': 'ita',
+                'dutch': 'nld',
+                'norwegian': 'nor',
+                'danish': 'dan',
+                'polish': 'pol',
+                'greek': 'ell',
+                'czech': 'ces',
+                'swahili': 'swa',
+                'amharic': 'amh',
+                'yoruba': 'yor',
+                'zulu': 'zul',
+                'hausa': 'hau',
+                'oromo': 'orm',
+                'korean': 'kor',
+                'turkish': 'tur',
+                'vietnamese': 'vie',
+                'thai': 'tha',
+                'malay': 'msa',
+                'punjabi': 'pan'
             };
 
             // Build the extraction text: lang_code country city industry (in one line)
